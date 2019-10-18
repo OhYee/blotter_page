@@ -9,3 +9,4 @@ rules:
   no-debugger: true
   no-reference: true
   semicolon: true
+  jsx-no-multiline-js: false

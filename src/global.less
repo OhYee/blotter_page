@@ -1,0 +1,48 @@
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+}
+
+.shadow {
+  -moz-box-shadow: 2px 2px 2px #ccc;
+  -webkit-box-shadow: 2px 2px 2px #ccc;
+  box-shadow: 2px 2px 2px #ccc;
+}
+
+.right5 {
+  display: inline;
+  ::after {
+    content: ' ';
+    margin-right: 5px;
+    display: inline-block;
+  }
+}
+
+.right10 {
+  display: inline;
+  ::after {
+    content: ' ';
+    margin-right: 10px;
+    display: inline-block;
+  }
+}
+
+.right20 {
+  display: inline;
+  ::after {
+    content: ' ';
+    margin-right: 20px;
+    display: inline-block;
+  }
+}
+
+.divider_closer {
+  .ant-divider-inner-text {
+    padding: 0 5px;
+  }
+}

@@ -4,7 +4,7 @@ class FooterPart extends React.Component<{}, {}> {
     super(props);
   }
   render() {
-    return null;
+    return <p>Footer</p>;
   }
 }
 
