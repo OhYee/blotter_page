@@ -8,7 +8,7 @@ import HeaderPart from './header';
 import SiderPart from './sider';
 import FooterPart from './footer';
 
-import styles from './index.css';
+import styles from './index.less';
 
 class BasicLayout extends React.Component<any, { collapsed: boolean; broken: boolean }> {
   constructor(props: any) {
@@ -22,6 +22,25 @@ class BasicLayout extends React.Component<any, { collapsed: boolean; broken: boo
     this.setState(() => ({ collapsed: broken }));
   }
   onCollapseButtonClick = () => this.setState(state => ({ collapsed: !state.collapsed }));
+
+  renderCollapseButton = () => (
+    <Affix
+      offsetTop={this.state.broken ? window.innerHeight - 60 : 20}
+      style={Object.assign(
+        { position: 'absolute', marginLeft: 20, zIndex: 100 },
+        this.state.broken ? { bottom: 20 } : { top: 20 },
+      )}
+    >
+      <Button
+        type="primary"
+        shape="circle"
+        size="large"
+        icon={this.state.collapsed ? 'bars' : 'left'}
+        className="shadow"
+        onClick={this.onCollapseButtonClick}
+      />
+    </Affix>
+  )
 
   render() {
     return (
@@ -44,22 +63,8 @@ class BasicLayout extends React.Component<any, { collapsed: boolean; broken: boo
           </Header> */}
         <Layout>
           <Content>
-            {this.props.children}
-            <Affix
-              style={Object.assign(
-                { position: 'absolute', marginLeft: 20, zIndex: 100 },
-                this.state.broken ? { bottom: 20 } : { top: 20 },
-              )}
-            >
-              <Button
-                type="primary"
-                shape="circle"
-                size="large"
-                icon={this.state.collapsed ? 'bars' : 'left'}
-                className="shadow"
-                onClick={this.onCollapseButtonClick}
-              />
-            </Affix>
+            <div className={styles.main_content}>{this.props.children}</div>
+            {this.renderCollapseButton()}
             <BackTop />
           </Content>
           <Footer>
