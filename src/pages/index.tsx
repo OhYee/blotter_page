@@ -3,6 +3,7 @@ import styles from './index.css';
 import { request } from '../utils/request';
 import PostCard from '../components/post_card';
 import { Row, Col } from 'antd';
+import Container from '../components/container';
 
 type IndexState = {
   posts: Blotter.PostCard[];
@@ -24,11 +25,9 @@ export class Index extends React.Component<{}, IndexState> {
     return (
       <div>
         {this.state.posts.map((post: Blotter.PostCard, index: number) => (
-          <Row key={index} type="flex" justify="center" gutter={[20, 40]}>
-            <Col lg={12} xs={20}>
-              <PostCard post={post} />
-            </Col>
-          </Row>
+          <Container key={index}>
+            <PostCard post={post} />
+          </Container>
         ))}
       </div>
     );
