@@ -14,35 +14,21 @@ body {
   box-shadow: 2px 2px 2px #ccc;
 }
 
-.right5 {
-  display: inline;
-  ::after {
-    content: ' ';
-    margin-right: 5px;
-    display: inline-block;
-  }
-}
-
-.right10 {
-  display: inline;
-  ::after {
-    content: ' ';
-    margin-right: 10px;
-    display: inline-block;
-  }
-}
-
+.right5,
+.right10,
 .right20 {
   display: inline;
-  ::after {
+  &::after {
     content: ' ';
-    margin-right: 20px;
     display: inline-block;
   }
 }
-
-.divider_closer {
-  .ant-divider-inner-text {
-    padding: 0 5px;
-  }
+.right5::after {
+  margin-right: 5px;
+}
+.right10::after {
+  margin-right: 10px;
+}
+.right20::after {
+  margin-right: 20px;
 }

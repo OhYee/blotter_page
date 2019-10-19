@@ -17,7 +17,7 @@ class SiderPart extends React.Component<{ collapsed: boolean }, {}> {
           <Logo width={100} height={100} style={{ background: 'white', borderRadius: '100px' }} />
         </Row>
 
-        <Divider className={this.props.collapsed ? 'divider_closer' : undefined}>
+        <Divider className={this.props.collapsed ? styles.divider : undefined}>
           <b className={styles.divider}>OhYee</b>
         </Divider>
 
