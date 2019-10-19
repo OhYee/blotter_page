@@ -1,0 +1,25 @@
+{
+    "component": {
+        "scope": "typescriptreact",
+        "prefix": "component",
+        "body": [
+            "import React, { ComponentProps } from 'react';",
+            "",
+            "type $1Props = {} & ComponentProps<'base'>;",
+            "",
+            "type $1State = {};",
+            "",
+            "class $1 extends React.Component<$1Props, $1State> {",
+            "\tconstructor(props: $1Props) {",
+            "\t\tsuper(props);",
+            "\t}",
+            "\trender() {",
+            "\t\treturn ($0);",
+            "\t}",
+            "}",
+            "",
+            "export default $1;",
+        ],
+        "description": "React Component"
+    }
+}
