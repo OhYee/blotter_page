@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './index.css';
-import { request } from '../utils/request';
+import { request } from '@/utils/request';
 import PostCard from '../components/post_card';
 import { Row, Col } from 'antd';
 import Container from '../components/container';
@@ -15,7 +15,7 @@ export class Index extends React.Component<{}, IndexState> {
   }
 
   componentDidMount() {
-    request('/api/index/post', {}, (data: { posts: Blotter.PostCard[] }) => {
+    request('post', '/api/index/post', {}, (data: { posts: Blotter.PostCard[] }) => {
       this.setState(() => ({ posts: data.posts }));
     });
   }
