@@ -1,10 +1,12 @@
 import React, { Props } from 'react';
 
 import { Menu, Icon } from 'antd';
-import { request } from '../utils/request';
+import { request } from '@/utils/request';
 import { RouteComponentProps, withRouter } from 'react-router';
 
 import router from 'umi/router';
+import Link from 'umi/link';
+
 import { ClickParam } from 'antd/lib/menu';
 
 type MenuProps = {} & RouteComponentProps;
@@ -17,14 +19,9 @@ class MenuPart extends React.Component<MenuProps, MenuState> {
   }
 
   componentDidMount() {
-    request('/api/menu', {}, (data: ResponseMenu) => {
+    request('post', '/api/menu', {}, (data: ResponseMenu) => {
       this.setState(() => ({ menu_list: data.menu_list }));
     });
-  }
-
-  goToPage = (param: ClickParam) => {
-    // 在React中使用lambda表达式会导致每一次检测都认为是新的属性，并重新渲染组件
-    router.push(param.item.props['click-args']);
   }
 
   render() {
@@ -37,9 +34,11 @@ class MenuPart extends React.Component<MenuProps, MenuState> {
       >
         {this.state.menu_list.map((item: ResponseMenuObject) => {
           return (
-            <Menu.Item key={item.link} onClick={this.goToPage} click-args={item.link}>
-              {item.link ? <Icon type={item.icon} /> : null}
-              <span> {item.name}</span>
+            <Menu.Item key={item.link}>
+              <Link to={item.link}>
+                {item.link ? <Icon type={item.icon} /> : null}
+                <span> {item.name}</span>
+              </Link>
             </Menu.Item>
           );
         })}
