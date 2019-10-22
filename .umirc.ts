@@ -2,22 +2,26 @@ import { IConfig } from 'umi-types'; // ref: https://umijs.org/config/
 
 const config: IConfig = {
   treeShaking: true,
-  routes: [
-    {
-      path: '/',
-      component: '../layouts/index',
-      routes: [
-        {
-          path: '/post',
-          component: './post',
-        },
-        {
-          path: '/',
-          component: '../pages/index',
-        },
-      ],
-    },
-  ],
+//   routes: [
+//     {
+//       path: '/',
+//       component: '../layouts/index',
+//       routes: [
+//         {
+//           path: '/post/:url',
+//           component: './post',
+//         },
+//         {
+//           path: '/about',
+//           component: './about',
+//         },
+//         {
+//           path: '/',
+//           component: './index',
+//         },
+//       ],
+//     },
+//   ],
   plugins: [
     // ref: https://umijs.org/plugin/umi-plugin-react.html
     [
