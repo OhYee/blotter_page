@@ -13,6 +13,24 @@ export default {
         head_image: '',
       },
       {
+        title: 'WSL2(Arch Linux)使用systemd',
+        abstract: '在WSL2中以pid 1运行systemd',
+        view: 383,
+        url: 'wsl2_systemd',
+        publish_time: '2019-09-11 14:39:39',
+        edit_time: '2019-09-11 14:39:39',
+        tags: [
+          { id: 'wsl', name: 'WSL', icon: '', color: '' },
+          {
+            id: 'arch',
+            name: 'Arch',
+            icon: 'https://www.oyohyee.com/static/img/tags/arch.png',
+            color: 'blue',
+          },
+        ],
+        head_image: '',
+      },
+      {
         title: 'Arch Linux的使用',
         abstract: '如何安装Arch Linux',
         url: '/',

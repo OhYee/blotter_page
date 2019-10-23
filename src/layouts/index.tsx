@@ -13,13 +13,19 @@ import styles from './index.less';
 class BasicLayout extends React.Component<any, { collapsed: boolean; broken: boolean }> {
   constructor(props: any) {
     super(props);
-    this.state = { collapsed: false, broken: true };
+    this.state = { collapsed: true, broken: false };
   }
 
-  onCollapse = (collapsed: boolean) => this.setState({ collapsed });
+  onCollapse = (collapsed: boolean, type: string) => {
+    if (type == 'responsive') {
+      this.setState({ collapsed: true });
+    } else {
+      this.setState({ collapsed });
+    }
+  }
   onBreakpoint = (broken: boolean) => {
     this.setState(() => ({ broken: broken }));
-    this.setState(() => ({ collapsed: broken }));
+    this.setState(() => ({ collapsed: true }));
   }
   onCollapseButtonClick = () => this.setState(state => ({ collapsed: !state.collapsed }));
 
@@ -27,7 +33,7 @@ class BasicLayout extends React.Component<any, { collapsed: boolean; broken: boo
     <Affix
       offsetTop={this.state.broken ? window.innerHeight - 60 : 20}
       style={Object.assign(
-        { position: 'absolute', marginLeft: 20, zIndex: 100 },
+        { position: 'fixed', marginLeft: 20, zIndex: 100 },
         this.state.broken ? { bottom: 20 } : { top: 20 },
       )}
     >
@@ -44,27 +50,34 @@ class BasicLayout extends React.Component<any, { collapsed: boolean; broken: boo
 
   render() {
     return (
-      <Layout style={{ minHeight: '100%' }}>
-        <Sider
-          theme="light"
-          className="shadow"
-          trigger={null}
-          breakpoint="lg"
-          collapsible={true}
-          collapsed={this.state.collapsed}
-          onCollapse={this.onCollapse}
-          collapsedWidth={this.state.broken ? 0 : 80}
-          onBreakpoint={this.onBreakpoint}
+      <Layout
+        style={{ minHeight: '100%' }}
+        className={this.state.collapsed ? undefined : styles.dimmed}
+      >
+        <Layout
+          className={'shadow'}
+          style={{ position: 'fixed', zIndex: 100, height: '100vh', overflow: 'auto' }}
         >
-          <SiderPart collapsed={this.state.collapsed} />
-        </Sider>
+          <Sider
+            theme="light"
+            trigger={null}
+            breakpoint="xl"
+            collapsible={true}
+            collapsed={this.state.collapsed}
+            onCollapse={this.onCollapse}
+            collapsedWidth={this.state.broken ? 0 : 80}
+            onBreakpoint={this.onBreakpoint}
+          >
+            <SiderPart collapsed={this.state.collapsed} />
+          </Sider>
+          <Content>{this.renderCollapseButton()}</Content>
+        </Layout>
         {/* <Header style={{ background: '#666' }}>
             <HeaderPart title="首页" router={{ router: [{ path: '/', breadcrumName: '首页' }] }} />
           </Header> */}
-        <Layout>
+        <Layout style={this.state.collapsed ? {} : {}}>
           <Content>
             <div className={styles.main_content}>{this.props.children}</div>
-            {this.renderCollapseButton()}
             <BackTop />
           </Content>
           <Footer>
