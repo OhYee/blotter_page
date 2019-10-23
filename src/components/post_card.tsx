@@ -1,14 +1,21 @@
 import React from 'react';
+
 import { Card, Typography, Divider, Icon, Row, Col } from 'antd';
 const { Meta } = Card;
-import TagPart from './tag';
+import Link from 'umi/link';
+
+import TagPart from '@/components/tag';
 
 const { Title, Paragraph, Text } = Typography;
 
 type PostCardProps = {
   post: Blotter.PostCard;
+  hoverable?: boolean;
 };
 class PostCard extends React.Component<PostCardProps, {}> {
+  static defaultProps = {
+    hoverable: true,
+  };
   constructor(props: PostCardProps) {
     super(props);
   }
@@ -18,7 +25,7 @@ class PostCard extends React.Component<PostCardProps, {}> {
       <Card
         className="shadow"
         bordered={false}
-        hoverable={true}
+        hoverable={this.props.hoverable}
         cover={
           this.props.post.head_image ? (
             <div style={{ maxHeight: '200px', overflow: 'hidden' }}>
@@ -31,9 +38,11 @@ class PostCard extends React.Component<PostCardProps, {}> {
           ) : null
         }
       >
-        <Title level={4} ellipsis={true}>
-          {this.props.post.title}
-        </Title>
+        <Link to={`/post/${this.props.post.url}`}>
+          <Title level={4} ellipsis={true}>
+            {this.props.post.title}
+          </Title>
+        </Link>
         <Paragraph ellipsis={{ rows: 5, expandable: true }}>{this.props.post.abstract}</Paragraph>
         <Row>
           <Col span={4}>
