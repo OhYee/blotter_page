@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-var posts: { [key: string]: Blotter.Post } = {
+const posts: { [key: string]: Blotter.Post } = {
   wsl2_systemd: {
     title: 'WSL2(Arch Linux)使用systemd',
     abstract: '在WSL2中以pid 1运行systemd',
@@ -11,8 +11,8 @@ var posts: { [key: string]: Blotter.Post } = {
     tags: [
       { id: 'wsl', name: 'WSL', icon: '', color: '' },
       {
-        id: 'wsl',
-        name: 'WSL',
+        id: 'arch',
+        name: 'Arch',
         icon: 'https://www.oyohyee.com/static/img/tags/arch.png',
         color: 'blue',
       },
@@ -49,7 +49,6 @@ export default {
   'GET /api/post': (req: Request, res: Response) => {
     var url = req.query['url'];
     var post = posts[url];
-    console.log(url);
     if (post) {
       res.send(post);
     } else {

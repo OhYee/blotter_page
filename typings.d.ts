@@ -41,4 +41,12 @@ declare namespace Blotter {
     head_image: string;
     content: string;
   };
+  type Comment = {
+    id: number;
+    email: string;
+    avatar: string;
+    date: string;
+    content: string;
+    children: Comment[];
+  };
 }

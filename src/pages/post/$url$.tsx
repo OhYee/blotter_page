@@ -1,11 +1,14 @@
 import React, { ComponentProps } from 'react';
 
-import { Card, PageHeader, Typography, Skeleton, Icon, Anchor } from 'antd';
+import { Card, PageHeader, Skeleton, Icon, Anchor } from 'antd';
 const { Link } = Anchor;
-const { Title, Paragraph, Text } = Typography;
 
 import Container from '@/components/container';
-import Breadcrumb from '@/components/breadcrumb';
+import Visiable from '@/components/visiable';
+import TagPart from '@/components/tag';
+import Comment from '@/components/comment';
+
+import styles from './post.less';
 
 import { withRouter, RouteComponentProps } from 'react-router';
 import { requestCallback } from '@/utils/request';
@@ -48,7 +51,6 @@ class PostPart extends React.Component<PostPartProps, PostPartState> {
 
     do {
       var result = re.exec(text);
-      console.log(result);
       if (result !== null) {
         result_list.push({
           id: `#${result[2]}`,
@@ -62,7 +64,6 @@ class PostPart extends React.Component<PostPartProps, PostPartState> {
     var anchors: AnchorType[] = [];
 
     var insert = (lst: AnchorType[], value: AnchorType) => {
-      console.log(lst, value);
       if (lst.length > 0 && lst[lst.length - 1].level < value.level) {
         insert(lst[lst.length - 1].children, value);
       } else {
@@ -74,8 +75,12 @@ class PostPart extends React.Component<PostPartProps, PostPartState> {
       insert(anchors, anchor);
     });
 
-    console.log(anchors);
-
+    anchors.push({
+      id: '#blotter-comment',
+      name: '评论区',
+      level: 1,
+      children: [],
+    });
     this.setState({ anchors: anchors });
   }
 
@@ -84,8 +89,8 @@ class PostPart extends React.Component<PostPartProps, PostPartState> {
       return <Skeleton active={true} />;
     } else {
       return (
-        <article>
-          <PageHeader title={this.state.post.title}>
+        <article className={styles.post}>
+          <PageHeader className="shadow" title={this.state.post.title}>
             <div>
               <div className="right20">
                 <Icon type="eye" className="right5" />
@@ -101,12 +106,20 @@ class PostPart extends React.Component<PostPartProps, PostPartState> {
                   {this.state.post.edit_time}
                 </div>
               )}
-
               <blockquote>{this.state.post.abstract}</blockquote>
+              <div>
+                <Icon type="tag" className="right20" />
+                {this.state.post.tags.map((tag: Blotter.Tag) => (
+                  <TagPart key={tag.id} tag={tag} />
+                ))}
+              </div>
             </div>
           </PageHeader>
 
-          <section dangerouslySetInnerHTML={{ __html: this.state.post.content }}/>
+          <section
+            className="post-content"
+            dangerouslySetInnerHTML={{ __html: this.state.post.content }}
+          />
         </article>
       );
     }
@@ -124,13 +137,19 @@ class PostPart extends React.Component<PostPartProps, PostPartState> {
     return (
       <Container lg={16}>
         <Card>{this.render_post()}</Card>
-        <Anchor
-          offsetTop={10}
-          style={{ background: 'transparent', position: 'fixed', top: '50px', right: '30px' }}
-        >
-          {this.state.anchors.map(this.render_anchor)}
-        </Anchor>
-        ,
+        <Card>
+          <Comment/>
+        </Card>
+
+        <Visiable visiable_bigger="xl">
+          <Anchor
+            offsetTop={10}
+            targetOffset={window.innerHeight / 3}
+            style={{ background: 'transparent', position: 'fixed', top: '50px', right: '30px' }}
+          >
+            {this.state.anchors.map(this.render_anchor)}
+          </Anchor>
+        </Visiable>
       </Container>
     );
   }
