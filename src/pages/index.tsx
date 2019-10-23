@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './index.css';
-import { request } from '@/utils/request';
+import { requestCallback } from '@/utils/request';
 import PostCard from '../components/post_card';
 import { Row, Col } from 'antd';
 import Container from '../components/container';
@@ -15,13 +15,12 @@ export class Index extends React.Component<{}, IndexState> {
   }
 
   componentDidMount() {
-    request('post', '/api/index/post', {}, (data: { posts: Blotter.PostCard[] }) => {
+    requestCallback('post', '/api/index/post', {}, (data: { posts: Blotter.PostCard[] }) => {
       this.setState(() => ({ posts: data.posts }));
     });
   }
 
   render() {
-    console.log(this.state.posts);
     return (
       <div>
         {this.state.posts.map((post: Blotter.PostCard, index: number) => (

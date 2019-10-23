@@ -8,7 +8,7 @@ import Container from '@/components/container';
 import Breadcrumb from '@/components/breadcrumb';
 
 import { withRouter, RouteComponentProps } from 'react-router';
-import { request } from '@/utils/request';
+import { requestCallback } from '@/utils/request';
 
 type AnchorType = {
   name: string;
@@ -31,10 +31,15 @@ class PostPart extends React.Component<PostPartProps, PostPartState> {
   }
 
   componentDidMount() {
-    request('get', '/api/post', { url: 'wsl2_systemd' }, (data: Blotter.Post) => {
-      this.setState(() => ({ post: data }));
-      this.find_anchor(data.content);
-    });
+    requestCallback(
+      'get',
+      '/api/post',
+      { url: (this.props.match.params as any).url },
+      (data: Blotter.Post) => {
+        this.setState(() => ({ post: data }));
+        this.find_anchor(data.content);
+      },
+    );
   }
 
   find_anchor = (text: string) => {

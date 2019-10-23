@@ -1,7 +1,7 @@
 import React, { Props } from 'react';
 
 import { Menu, Icon } from 'antd';
-import { request } from '@/utils/request';
+import { requestCallback } from '@/utils/request';
 import { RouteComponentProps, withRouter } from 'react-router';
 
 import router from 'umi/router';
@@ -19,7 +19,7 @@ class MenuPart extends React.Component<MenuProps, MenuState> {
   }
 
   componentDidMount() {
-    request('post', '/api/menu', {}, (data: ResponseMenu) => {
+    requestCallback('post', '/api/menu', {}, (data: ResponseMenu) => {
       this.setState(() => ({ menu_list: data.menu_list }));
     });
   }
