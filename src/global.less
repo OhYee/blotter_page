@@ -11,7 +11,7 @@ body {
 .shadow {
   -moz-box-shadow: 2px 2px 2px #ccc;
   -webkit-box-shadow: 2px 2px 2px #ccc;
-  box-shadow: 2px 2px 2px #ccc;
+  box-shadow: 2px 2px 2px 2px #ccc;
 }
 
 .right5,
@@ -31,4 +31,26 @@ body {
 }
 .right20::after {
   margin-right: 20px;
+}
+
+blockquote {
+  padding: 0.5em 1em;
+  color: #6a737d;
+  border-left: 0.25em solid #dfe2e5;
+  margin: 20px 0;
+}
+code {
+  padding: 0.2em 0.4em;
+  margin: 0 0.5em;
+  font-size: 85%;
+  background-color: rgba(27, 31, 35, 0.05);
+  border-radius: 3px;
+  font-family: Cascadia Code, Source Code Variable, SFMono-Regular, Consolas, Liberation Mono, Menlo,
+    monospace;
+}
+
+.ant-comment-content {
+  .ant-form-item-label > label {
+    color: rgba(0, 0, 0, 0.65);
+  }
 }
