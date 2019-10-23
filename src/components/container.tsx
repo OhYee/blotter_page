@@ -8,6 +8,7 @@ type ContainerProps = {
   md?: number;
   lg?: number;
   xl?: number;
+  xxl?: number;
   gutter_h?: number;
   gutter_v?: number;
 } & ComponentProps<'base'>;
@@ -16,11 +17,12 @@ type ContainerState = {};
 
 class Container extends React.Component<ContainerProps, ContainerState> {
   static defaultProps: ContainerProps = {
-    xs: 20,
-    sm: undefined,
-    md: undefined,
+    xs: 24,
+    sm: 20,
+    md: 16,
     lg: 12,
     xl: undefined,
+    xxl: undefined,
     gutter_h: 20,
     gutter_v: 40,
   };
@@ -40,6 +42,7 @@ class Container extends React.Component<ContainerProps, ContainerState> {
           md={this.props.md}
           lg={this.props.lg}
           xl={this.props.xl}
+          xxl={this.props.xxl}
         >
           {this.props.children}
         </Col>
