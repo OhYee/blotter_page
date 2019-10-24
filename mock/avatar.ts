@@ -8,7 +8,6 @@ export default {
     var data: any = await requestAsync('get', 'https://api.github.com/search/users', {
       q: `${email} in:email`,
     });
-    console.log(data);
     var avatar = '';
     if (data['items'] && data['items'].length > 0) {
       avatar = data['items'][0]['avatar_url'];
