@@ -42,8 +42,8 @@ class PostCard extends React.Component<PostCardProps, {}> {
           <Title level={4} ellipsis={true}>
             {this.props.post.title}
           </Title>
+          <Paragraph>{this.props.post.abstract}</Paragraph>
         </Link>
-        <Paragraph ellipsis={{ rows: 5, expandable: true }}>{this.props.post.abstract}</Paragraph>
         <Row>
           <Col span={4}>
             <Text ellipsis={true} />
