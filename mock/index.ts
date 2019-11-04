@@ -70,4 +70,12 @@ export default {
       },
     ],
   } as { posts: Blotter.PostCard[] },
+  'GET /api/site': <Blotter.Site>{
+    view: 1536631,
+    beian: '豫ICP备17000379号',
+    friends: [
+      { name: 'ACBlackTea', link: 'http://blog.csdn.net/acblacktea' },
+      { name: 'Wilbert', link: 'http://blog.csdn.net/snow_me' },
+    ],
+  },
 };
