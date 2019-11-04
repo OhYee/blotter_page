@@ -49,4 +49,13 @@ declare namespace Blotter {
     content: string;
     children: Comment[];
   };
+  type Site = {
+    view: number;
+    beian: string;
+    friends: FriendSimple[];
+  };
+  type FriendSimple = {
+    link: string;
+    name: string;
+  };
 }
