@@ -58,4 +58,11 @@ declare namespace Blotter {
     link: string;
     name: string;
   };
+  type Friend = {
+    image: string;
+    link: string;
+    name: string;
+    description: string;
+    posts: { title: string; link: string }[];
+  };
 }
