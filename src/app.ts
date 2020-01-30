@@ -1,4 +1,3 @@
-
 export const dva = {
   config: {
     onError(err: ErrorEvent) {
@@ -6,7 +5,5 @@ export const dva = {
       console.error(err.message);
     },
   },
-  initialState: {
-  },
+  initialState: {},
 };
-
