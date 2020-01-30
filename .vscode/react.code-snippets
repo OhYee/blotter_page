@@ -5,11 +5,11 @@
         "body": [
             "import React, { ComponentProps } from 'react';",
             "",
-            "type $1Props = {} & ComponentProps<'base'>;",
+            "type $1Props = {};",
             "",
             "type $1State = {};",
             "",
-            "class $1 extends React.Component<$1Props, $1State> {",
+            "class $1 extends React.Component<$1Props & ComponentProps<'base'>, $1State> {",
             "\tconstructor(props: $1Props) {",
             "\t\tsuper(props);",
             "\t}",
