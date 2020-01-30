@@ -9,6 +9,7 @@ import { withRouter, RouteComponentProps } from 'react-router';
 type CommentProps = {} & ComponentProps<'base'> & FormComponentProps & RouteComponentProps;
 
 type CommentState = {
+  total: number;
   comments: Blotter.Comment[];
   avatar: string;
   reply: { [keys: number]: boolean };
@@ -17,13 +18,18 @@ type CommentState = {
 class Comment extends React.Component<CommentProps, CommentState> {
   constructor(props: CommentProps) {
     super(props);
-    this.state = { avatar: 'https://secure.gravatar.com/avatar/null', reply: {}, comments: [] };
+    this.state = {
+      avatar: 'https://secure.gravatar.com/avatar/null',
+      reply: {},
+      total: 0,
+      comments: [],
+    };
     requestCallback(
       'get',
-      '/api/comment',
+      '/api/comments',
       { url: this.props.location.pathname },
-      (data: Blotter.Comment[]) => {
-        this.setState(() => ({ comments: data }));
+      (data: { total: number; comments: Blotter.Comment[] }) => {
+        this.setState(() => ({ total: data.total, comments: data.comments }));
       },
     );
   }
@@ -33,7 +39,7 @@ class Comment extends React.Component<CommentProps, CommentState> {
       state.reply[id] = reply;
       return { reply: state.reply };
     });
-  }
+  };
 
   onEmailBlur = (e: React.FocusEvent) => {
     var email = this.props.form.getFieldValue('email');
@@ -43,7 +49,7 @@ class Comment extends React.Component<CommentProps, CommentState> {
         avatar: data,
       }));
     });
-  }
+  };
 
   onSubmitClick = (id: number) => {
     this.props.form.validateFieldsAndScroll(
@@ -60,7 +66,7 @@ class Comment extends React.Component<CommentProps, CommentState> {
         }
       },
     );
-  }
+  };
 
   render_comment = (comment: Blotter.Comment) => {
     var onReplyClick = () => {
@@ -88,10 +94,10 @@ class Comment extends React.Component<CommentProps, CommentState> {
           }
           author={comment.email}
           avatar={<Avatar src={comment.avatar} alt={comment.email} />}
-          content={<p>{comment.content}</p>}
+          content={<div dangerouslySetInnerHTML={{ __html: comment.content }}></div>}
           datetime={
-            <Tooltip title={moment(comment.date).format('YYYY-MM-DD HH:mm:ss')}>
-              <span>{moment(comment.date).fromNow()}</span>
+            <Tooltip title={moment(comment.time).format('YYYY-MM-DD HH:mm:ss')}>
+              <span>{moment(comment.time).fromNow()}</span>
             </Tooltip>
           }
         >
@@ -100,14 +106,14 @@ class Comment extends React.Component<CommentProps, CommentState> {
         </Cm>
       </li>
     );
-  }
+  };
 
   render_comment_list = (comments: Blotter.Comment[], root: boolean) => {
     if (comments.length || root) {
       return (
         <List
           className="comment-list"
-          header={root ? `${comments.length} 条评论` : null}
+          header={root ? `${this.state.total} 条评论` : null}
           itemLayout="horizontal"
           dataSource={comments}
           renderItem={this.render_comment}
@@ -116,7 +122,7 @@ class Comment extends React.Component<CommentProps, CommentState> {
     } else {
       return null;
     }
-  }
+  };
 
   render_editor = (id: number) => {
     var onSubmitClick = () => {
@@ -169,7 +175,7 @@ class Comment extends React.Component<CommentProps, CommentState> {
         }
       />
     );
-  }
+  };
 
   render() {
     return (
