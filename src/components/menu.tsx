@@ -19,8 +19,8 @@ class MenuPart extends React.Component<MenuProps, MenuState> {
   }
 
   componentDidMount() {
-    requestCallback('post', '/api/menu', {}, (data: ResponseMenu) => {
-      this.setState(() => ({ menu_list: data.menu_list }));
+    requestCallback('post', '/api/menu', {}, (data: any) => {
+      this.setState(() => ({ menu_list: data }));
     });
   }
 
