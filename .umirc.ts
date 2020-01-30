@@ -2,26 +2,8 @@ import { IConfig } from 'umi-types'; // ref: https://umijs.org/config/
 
 const config: IConfig = {
   treeShaking: true,
-//   routes: [
-//     {
-//       path: '/',
-//       component: '../layouts/index',
-//       routes: [
-//         {
-//           path: '/post/:url',
-//           component: './post',
-//         },
-//         {
-//           path: '/about',
-//           component: './about',
-//         },
-//         {
-//           path: '/',
-//           component: './index',
-//         },
-//       ],
-//     },
-//   ],
+  ssr: true,
+  hash: process.env.NODE_ENV === 'production',
   plugins: [
     // ref: https://umijs.org/plugin/umi-plugin-react.html
     [
@@ -29,9 +11,9 @@ const config: IConfig = {
       {
         antd: true,
         dva: true,
-        dynamicImport: true,
+        dynamicImport:true,
         title: 'blotter_page',
-        dll: false,
+        dll: true,
         routes: {
           exclude: [
             /models\//,
