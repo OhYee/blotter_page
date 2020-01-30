@@ -16,7 +16,7 @@ declare type ResponseMenu = {
 declare namespace Blotter {
   type Tag = {
     name: string;
-    id: string;
+    short: string;
     icon: string;
     color: string;
   };
@@ -45,7 +45,7 @@ declare namespace Blotter {
     id: number;
     email: string;
     avatar: string;
-    date: string;
+    time: string;
     content: string;
     children: Comment[];
   };
