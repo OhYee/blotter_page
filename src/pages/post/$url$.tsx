@@ -110,7 +110,7 @@ class PostPart extends React.Component<PostPartProps, PostPartState> {
               <div>
                 <Icon type="tag" className="right20" />
                 {this.state.post.tags.map((tag: Blotter.Tag) => (
-                  <TagPart key={tag.id} tag={tag} />
+                  <TagPart key={tag.short} tag={tag} />
                 ))}
               </div>
             </div>
