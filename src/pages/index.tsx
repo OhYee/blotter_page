@@ -15,9 +15,18 @@ export class Index extends React.Component<{}, IndexState> {
   }
 
   componentDidMount() {
-    requestCallback('post', '/api/index/post', {}, (data: { posts: Blotter.PostCard[] }) => {
-      this.setState(() => ({ posts: data.posts }));
-    });
+    requestCallback(
+      'post',
+      '/api/posts',
+      {
+        type: 'index',
+        number: 10,
+        offset: 0,
+      },
+      (data: { posts: Blotter.PostCard[] }) => {
+        this.setState(() => ({ posts: data.posts }));
+      },
+    );
   }
 
   render() {
