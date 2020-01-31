@@ -17,7 +17,6 @@ const headerMap = {
 
 http
   .createServer(async (req, res) => {
-    console.log(req.url);
     const ext = extname(req.url);
     const header = {
       'Content-Type': headerMap[ext] || 'text/html',
@@ -36,7 +35,6 @@ http
     } else {
       // static file url
       if (process.env.NODE_ENV === 'development') {
-        console.log(req.url);
         var sreq = http.request(
           {
             hostname: '127.0.0.1',
