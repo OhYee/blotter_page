@@ -34,12 +34,12 @@ export const requestCallback = (
     .catch(err => console.log(err));
 };
 
-export const request = async (
+export const request = async <T>(
   method: 'post' | 'get',
   url: string,
   data: any,
-  callback?: (data: any) => void,
-) => {
+  callback?: (data: T) => void,
+): Promise<T> => {
   var r = await axios({
     method: method,
     url: parseURL(url),
