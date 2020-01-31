@@ -1,11 +1,15 @@
 import React from 'react';
-import MenuPart from '../components/menu';
-import { ReactComponent as Logo } from '../assets/logo.svg';
 import { Row, Divider } from 'antd';
+
+import MenuPart from '@/components/menu';
+import { ReactComponent as Logo } from '@/assets/logo.svg';
 
 import styles from './sider.less';
 
-class SiderPart extends React.Component<{ collapsed: boolean }, {}> {
+type SiderPartProps = { menus: Blotter.Menu[]; collapsed: boolean };
+type SiderPartState = {};
+
+class SiderPart extends React.Component<SiderPartProps, SiderPartState> {
   constructor(props: any) {
     super(props);
   }
@@ -21,7 +25,7 @@ class SiderPart extends React.Component<{ collapsed: boolean }, {}> {
           <b className={styles.divider}>OhYee</b>
         </Divider>
 
-        <MenuPart />
+        <MenuPart menus={this.props.menus} />
       </div>
     );
   }

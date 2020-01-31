@@ -1,16 +1,24 @@
 import React from 'react';
-
 import { Affix, Button, Layout, BackTop } from 'antd';
-
 const { Header, Footer, Sider, Content } = Layout;
 
-import HeaderPart from './header';
-import SiderPart from './sider';
-import FooterPart from './footer';
+import HeaderPart from '@/layouts/header';
+import SiderPart from '@/layouts/sider';
+import FooterPart from '@/layouts/footer';
+import { layout } from '@/utils/api';
 
 import styles from './index.less';
 
-class BasicLayout extends React.Component<any, { collapsed: boolean; broken: boolean }> {
+type BasicLayoutProps = { menus: Blotter.Menu[]; beian: string; view: number };
+type BasicLayoutState = { collapsed: boolean; broken: boolean };
+
+class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
+  static async getInitialProps(args: any) {
+    console.log('BasicLayout', args);
+    var r = await layout();
+    return r;
+  }
+
   constructor(props: any) {
     super(props);
     this.state = { collapsed: true, broken: false };
@@ -22,11 +30,11 @@ class BasicLayout extends React.Component<any, { collapsed: boolean; broken: boo
     } else {
       this.setState({ collapsed });
     }
-  }
+  };
   onBreakpoint = (broken: boolean) => {
     this.setState(() => ({ broken: broken }));
     this.setState(() => ({ collapsed: true }));
-  }
+  };
   onCollapseButtonClick = () => this.setState(state => ({ collapsed: !state.collapsed }));
 
   renderCollapseButton = () => (
@@ -46,7 +54,7 @@ class BasicLayout extends React.Component<any, { collapsed: boolean; broken: boo
         onClick={this.onCollapseButtonClick}
       />
     </Affix>
-  )
+  );
 
   render() {
     return (
@@ -68,7 +76,7 @@ class BasicLayout extends React.Component<any, { collapsed: boolean; broken: boo
             collapsedWidth={this.state.broken ? 0 : 80}
             onBreakpoint={this.onBreakpoint}
           >
-            <SiderPart collapsed={this.state.collapsed} />
+            <SiderPart collapsed={this.state.collapsed} menus={this.props.menus} />
           </Sider>
           <Content>{this.renderCollapseButton()}</Content>
         </Layout>
@@ -81,7 +89,7 @@ class BasicLayout extends React.Component<any, { collapsed: boolean; broken: boo
             <BackTop />
           </Content>
           <Footer>
-            <FooterPart />
+            <FooterPart beian={this.props.beian} view={this.props.view} />
           </Footer>
         </Layout>
       </Layout>

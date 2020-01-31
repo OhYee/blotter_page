@@ -1,27 +1,16 @@
-import React, { Props } from 'react';
-
-import { Menu, Icon } from 'antd';
-import { requestCallback } from '@/utils/request';
+import React from 'react';
 import { RouteComponentProps, withRouter } from 'react-router';
-
-import router from 'umi/router';
+import { Menu, Icon } from 'antd';
 import Link from 'umi/link';
 
-import { ClickParam } from 'antd/lib/menu';
+type MenuProps = { menus: Blotter.Menu[] };
+type MenuState = {};
 
-type MenuProps = {} & RouteComponentProps;
-type MenuState = { menu_list: ResponseMenuObject[]; collapsed: boolean };
+class MenuPart extends React.Component<MenuProps & RouteComponentProps, MenuState> {
+  static defaultProps: MenuProps = { menus: [] };
 
-class MenuPart extends React.Component<MenuProps, MenuState> {
-  constructor(props: MenuProps) {
+  constructor(props: MenuProps & RouteComponentProps) {
     super(props);
-    this.state = { menu_list: [], collapsed: false };
-  }
-
-  componentDidMount() {
-    requestCallback('post', '/api/menu', {}, (data: any) => {
-      this.setState(() => ({ menu_list: data }));
-    });
   }
 
   render() {
@@ -32,7 +21,7 @@ class MenuPart extends React.Component<MenuProps, MenuState> {
         mode="inline"
         inlineIndent={10}
       >
-        {this.state.menu_list.map((item: ResponseMenuObject) => {
+        {this.props.menus.map((item: Blotter.Menu) => {
           return (
             <Menu.Item key={item.link}>
               <Link to={item.link}>
@@ -47,5 +36,4 @@ class MenuPart extends React.Component<MenuProps, MenuState> {
   }
 }
 
-var MenuPartWithRoute = withRouter(MenuPart);
-export default MenuPartWithRoute;
+export default withRouter(MenuPart);

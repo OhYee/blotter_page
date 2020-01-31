@@ -1,44 +1,32 @@
-import React from 'react';
-import styles from './index.css';
-import { requestCallback } from '@/utils/request';
-import PostCard from '../components/post_card';
-import { Row, Col } from 'antd';
-import Container from '../components/container';
+import React, { ComponentProps } from 'react';
 
-type IndexState = {
+import PostList from '@/components/post_list';
+
+import { indexPosts, InitialPropsParam } from '@/utils/api';
+
+type IndexProps = {
   posts: Blotter.PostCard[];
 };
-export class Index extends React.Component<{}, IndexState> {
-  constructor(props: any) {
-    super(props);
-    this.state = { posts: [] };
+
+type IndexState = {};
+
+class Index extends React.Component<IndexProps & ComponentProps<'base'>, IndexState> {
+  static defaultProps: IndexProps = { posts: [] };
+
+  static async getInitialProps(args: InitialPropsParam) {
+    var data = await indexPosts();
+    return {
+      posts: data.posts,
+    } as IndexProps;
   }
 
-  componentDidMount() {
-    requestCallback(
-      'post',
-      '/api/posts',
-      {
-        type: 'index',
-        number: 10,
-        offset: 0,
-      },
-      (data: { posts: Blotter.PostCard[] }) => {
-        this.setState(() => ({ posts: data.posts }));
-      },
-    );
+  constructor(props: any) {
+    super(props);
+    this.state = {};
   }
 
   render() {
-    return (
-      <div>
-        {this.state.posts.map((post: Blotter.PostCard, index: number) => (
-          <Container key={index}>
-            <PostCard post={post} />
-          </Container>
-        ))}
-      </div>
-    );
+    return <PostList posts={this.props.posts} />;
   }
 }
 
