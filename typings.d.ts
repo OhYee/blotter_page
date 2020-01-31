@@ -3,17 +3,12 @@ declare module '*.png';
 declare module '*.svg';
 declare module '*.less';
 
-declare type ResponseMenuObject = {
-  icon: string;
-  name: string;
-  link: string;
-};
-
-declare type ResponseMenu = {
-  menu_list: ResponseMenuObject[];
-};
-
 declare namespace Blotter {
+  type Menu = {
+    icon: string;
+    name: string;
+    link: string;
+  };
   type Tag = {
     name: string;
     short: string;
