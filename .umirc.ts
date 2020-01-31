@@ -11,7 +11,7 @@ const config: IConfig = {
       {
         antd: true,
         dva: true,
-        dynamicImport:true,
+        dynamicImport: false,
         title: 'blotter_page',
         dll: true,
         routes: {
