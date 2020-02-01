@@ -6,12 +6,13 @@ const { Link } = Anchor;
 import Container from '@/components/container';
 import Visiable from '@/components/visiable';
 import TagPart from '@/components/tag';
-import Comment from '@/components/comment';
+import CommentPart from '@/components/comment';
 
 import styles from './post.less';
 
 import { withRouter, RouteComponentProps } from 'react-router';
 import { requestCallback } from '@/utils/request';
+import { InitialPropsParam, post } from '@/utils/api';
 
 type AnchorType = {
   name: string;
@@ -20,32 +21,32 @@ type AnchorType = {
   children: AnchorType[];
 };
 
-type PostPartProps = {} & ComponentProps<'base'> & RouteComponentProps;
-
-type PostPartState = {
-  post: Blotter.Post | undefined;
+type PostPageProps = {
+  post: Blotter.Post;
   anchors: AnchorType[];
 };
 
-class PostPart extends React.Component<PostPartProps, PostPartState> {
-  constructor(props: PostPartProps) {
+type PostPageState = {};
+
+class PostPage extends React.Component<
+  PostPageProps & ComponentProps<'base'> & RouteComponentProps,
+  PostPageState
+> {
+  static defaultProps = {
+    anchors: [],
+  };
+  static async getInitialProps(args: InitialPropsParam) {
+    var r = await post(args.route.params.url);
+    var anchors = this.findAnchor(r.content);
+    return { post: r, anchors: anchors } as PostPageProps;
+  }
+
+  constructor(props: PostPageProps & ComponentProps<'base'> & RouteComponentProps) {
     super(props);
-    this.state = { post: undefined, anchors: [] };
+    this.state = {};
   }
 
-  componentDidMount() {
-    requestCallback(
-      'get',
-      '/api/post',
-      { url: (this.props.match.params as any).url },
-      (data: Blotter.Post) => {
-        this.setState(() => ({ post: data }));
-        this.find_anchor(data.content);
-      },
-    );
-  }
-
-  find_anchor = (text: string) => {
+  static findAnchor(text: string): AnchorType[] {
     var re = new RegExp(`<h([1-6]) id="(.*)">(.*)</h\\1>`, 'g');
     var result_list: AnchorType[] = [];
 
@@ -81,35 +82,36 @@ class PostPart extends React.Component<PostPartProps, PostPartState> {
       level: 1,
       children: [],
     });
-    this.setState({ anchors: anchors });
+
+    return anchors;
   }
 
   render_post = () => {
-    if (this.state.post === undefined) {
+    if (this.props.post === undefined) {
       return <Skeleton active={true} />;
     } else {
       return (
         <article className={styles.post}>
-          <PageHeader className="shadow" title={this.state.post.title}>
+          <PageHeader className="shadow" title={this.props.post.title}>
             <div>
               <div className="right20">
                 <Icon type="eye" className="right5" />
-                {this.state.post.view}
+                {this.props.post.view}
               </div>
               <div className="right20">
                 <Icon type="calendar" className="right5" />
-                {this.state.post.publish_time}
+                {this.props.post.publish_time}
               </div>
-              {this.state.post.publish_time == this.state.post.edit_time ? null : (
+              {this.props.post.publish_time == this.props.post.edit_time ? null : (
                 <div className="right20">
                   <Icon type="edit" className="right5" />
-                  {this.state.post.edit_time}
+                  {this.props.post.edit_time}
                 </div>
               )}
-              <blockquote>{this.state.post.abstract}</blockquote>
+              <blockquote>{this.props.post.abstract}</blockquote>
               <div>
                 <Icon type="tag" className="right20" />
-                {this.state.post.tags.map((tag: Blotter.Tag) => (
+                {this.props.post.tags.map((tag: Blotter.Tag) => (
                   <TagPart key={tag.short} tag={tag} />
                 ))}
               </div>
@@ -118,12 +120,12 @@ class PostPart extends React.Component<PostPartProps, PostPartState> {
 
           <section
             className="post-content"
-            dangerouslySetInnerHTML={{ __html: this.state.post.content }}
+            dangerouslySetInnerHTML={{ __html: this.props.post.content }}
           />
         </article>
       );
     }
-  }
+  };
 
   render_anchor = (anchor: AnchorType) => {
     return (
@@ -131,14 +133,14 @@ class PostPart extends React.Component<PostPartProps, PostPartState> {
         {anchor.children.map(this.render_anchor)}
       </Link>
     );
-  }
+  };
 
   render() {
     return (
       <Container lg={16}>
         <Card>{this.render_post()}</Card>
         <Card>
-          <Comment/>
+          <CommentPart url={this.props.location.pathname} />
         </Card>
 
         <Visiable visiable_bigger="xl">
@@ -147,7 +149,7 @@ class PostPart extends React.Component<PostPartProps, PostPartState> {
             targetOffset={window.innerHeight / 3}
             style={{ background: 'transparent', position: 'fixed', top: '50px', right: '30px' }}
           >
-            {this.state.anchors.map(this.render_anchor)}
+            {this.props.anchors.map(this.render_anchor)}
           </Anchor>
         </Visiable>
       </Container>
@@ -155,4 +157,4 @@ class PostPart extends React.Component<PostPartProps, PostPartState> {
   }
 }
 
-export default withRouter(PostPart);
+export default withRouter(PostPage);
