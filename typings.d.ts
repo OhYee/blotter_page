@@ -15,6 +15,9 @@ declare namespace Blotter {
     icon: string;
     color: string;
   };
+  type TagWithCount = Tag & {
+    count: number;
+  };
   type PostCard = {
     title: string;
     abstract: string;
@@ -37,12 +40,15 @@ declare namespace Blotter {
     content: string;
   };
   type Comment = {
-    id: number;
+    id: string;
     email: string;
     avatar: string;
     time: string;
     content: string;
     children: Comment[];
+    ad: boolean;
+    show: boolean;
+    recv: boolean;
   };
   type Site = {
     view: number;
