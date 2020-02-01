@@ -11,7 +11,7 @@ type ArchivesProps = {
   page: number;
   total: number;
   size: number;
-  posts: Blotter.PostCard[];
+  posts: (Blotter.PostCard | undefined)[];
 };
 
 type ArchivesState = {
@@ -26,7 +26,7 @@ export class Archives extends React.Component<
     page: 1,
     total: 1,
     size: 10,
-    posts: [],
+    posts: Array(10).fill(undefined),
   };
 
   static async getInitialProps(args: InitialPropsParam) {

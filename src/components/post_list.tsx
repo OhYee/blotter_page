@@ -6,7 +6,7 @@ import PostCard from '@/components/post_card';
 import Container from '@/components/container';
 
 type PostListProps = {
-  posts: Blotter.PostCard[];
+  posts: (Blotter.PostCard | undefined)[];
   loading?: boolean;
   page?: number;
   size?: number;
@@ -59,8 +59,8 @@ class PostList extends React.Component<PostListProps & ComponentProps<'base'>, P
   render() {
     return (
       <div>
-        {this.props.posts.map((post: Blotter.PostCard, index: number) => (
-          <Container key={post.url}>
+        {this.props.posts.map((post: Blotter.PostCard | undefined, index: number) => (
+          <Container key={typeof post === 'undefined' ? index : post.url}>
             <PostCard post={post} loading={this.props.loading} />
           </Container>
         ))}
