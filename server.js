@@ -3,10 +3,22 @@ const server = require('umi-server');
 const http = require('http');
 const { createReadStream } = require('fs');
 const { join, extname } = require('path');
+const { getTitle } = require('./src/utils/prerender');
 
 const root = join(__dirname, 'dist');
 const render = server({
   root,
+  postProcessHtml: [
+    ($, path) => {
+      const title = getTitle();
+      if (title) {
+        $('title').html()
+          ? $('title').text(title)
+          : $('html head').prepend(`<title>${title}</title>`);
+      }
+      return $;
+    },
+  ],
 });
 const headerMap = {
   '.js': 'text/javascript',
