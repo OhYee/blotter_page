@@ -9,6 +9,7 @@ import { tags, InitialPropsParam } from '@/utils/api';
 import { sortTagsByPinYin, TagGroup } from '@/utils/sort';
 
 import styles from './tags.less';
+import { setTitle } from '@/utils/prerender';
 
 type TagsProps = {
   total: number;
@@ -26,6 +27,7 @@ class Tags extends React.Component<TagsProps & ComponentProps<'base'>, TagsState
   constructor(props: any) {
     super(props);
     this.state = {};
+    setTitle('标签列表');
   }
 
   static async getInitialProps(args: InitialPropsParam) {

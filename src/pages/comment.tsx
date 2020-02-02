@@ -8,6 +8,7 @@ import CommentPart from '@/components/comment';
 
 import { withRouter, RouteComponentProps } from 'react-router';
 import { InitialPropsParam } from '@/utils/api';
+import { setTitle } from '@/utils/prerender';
 
 type CommentPageProps = {};
 
@@ -23,6 +24,7 @@ class CommentPage extends React.Component<
 
   constructor(props: CommentPageProps & ComponentProps<'base'> & RouteComponentProps) {
     super(props);
+    setTitle('评论区');
   }
 
   render() {

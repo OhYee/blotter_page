@@ -8,6 +8,7 @@ import PostList from '@/components/post_list';
 import { InitialPropsParam, tagPosts } from '@/utils/api';
 import { parseNumberParams } from '@/utils/parse';
 import { Card } from 'antd';
+import { setTitle } from '@/utils/prerender';
 
 type TagDetailProps = {
   page: number;
@@ -36,6 +37,7 @@ class TagDetail extends React.Component<
     };
 
     console.log('TagDetail constructor', this.props, this.state);
+    setTitle(`标签页`);
   }
 
   static async getInitialProps(args: InitialPropsParam) {

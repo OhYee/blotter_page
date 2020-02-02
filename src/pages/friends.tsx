@@ -5,6 +5,7 @@ import Container from '@/components/container';
 
 import styles from './friends.less';
 import { friends, InitialPropsParam } from '@/utils/api';
+import { setTitle } from '@/utils/prerender';
 
 type FriendsProps = {
   friends: Blotter.Friend[];
@@ -27,6 +28,7 @@ class Friends extends React.Component<FriendsProps & ComponentProps<'base'>, Fri
     this.state = {
       loading: false,
     };
+    setTitle('友情链接');
   }
 
   renderListItem = (posts: { title: string; link: string }) => {

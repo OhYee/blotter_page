@@ -6,6 +6,7 @@ import PostList from '@/components/post_list';
 
 import { archives, InitialPropsParam } from '@/utils/api';
 import { parseNumberParams } from '@/utils/parse';
+import { setTitle } from '@/utils/prerender';
 
 type ArchivesProps = {
   page: number;
@@ -66,6 +67,7 @@ export class Archives extends React.Component<
   };
 
   render() {
+    setTitle(`第${this.props.page}页|文章归档`);
     console.log('render', this.props, this.state);
     return (
       <PostList

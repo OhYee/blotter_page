@@ -13,6 +13,7 @@ import styles from './post.less';
 import { withRouter, RouteComponentProps } from 'react-router';
 import { requestCallback } from '@/utils/request';
 import { InitialPropsParam, post } from '@/utils/api';
+import { setTitle } from '@/utils/prerender';
 
 type AnchorType = {
   name: string;
@@ -136,6 +137,7 @@ class PostPage extends React.Component<
   };
 
   render() {
+    this.props.post && setTitle(this.props.post.title);
     return (
       <Container lg={16}>
         <Card>{this.render_post()}</Card>

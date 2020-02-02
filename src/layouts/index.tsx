@@ -6,15 +6,16 @@ import HeaderPart from '@/layouts/header';
 import SiderPart from '@/layouts/sider';
 import FooterPart from '@/layouts/footer';
 import { layout } from '@/utils/api';
+import { setSiteName, setTitle } from '@/utils/prerender';
 
 import styles from './index.less';
 
-type BasicLayoutProps = { menus: Blotter.Menu[]; beian: string; view: number };
+type BasicLayoutProps = { menus: Blotter.Menu[]; beian: string; view: number; blog_name: string };
 type BasicLayoutState = { collapsed: boolean; broken: boolean };
 
 class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
   static async getInitialProps(args: any) {
-    console.log('BasicLayout', args);
+    // console.log('BasicLayout', args);
     var r = await layout();
     return r;
   }
@@ -22,6 +23,8 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
   constructor(props: any) {
     super(props);
     this.state = { collapsed: true, broken: false };
+    setSiteName(this.props.blog_name);
+    setTitle('首页');
   }
 
   onCollapse = (collapsed: boolean, type: string) => {
@@ -62,6 +65,7 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
         style={{ minHeight: '100%' }}
         className={this.state.collapsed ? undefined : styles.dimmed}
       >
+        {/* <DocumentTitle title={this.props.blog_name} /> */}
         <Layout
           className={'shadow'}
           style={{ position: 'fixed', zIndex: 100, height: '100vh', overflow: 'auto' }}
