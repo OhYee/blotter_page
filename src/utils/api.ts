@@ -65,7 +65,12 @@ export const friends = async (callback?: RequestCallback<Blotter.Friend[]>) => {
 };
 
 export const layout = async (
-  callback?: RequestCallback<{ menus: Blotter.Menu[]; view: number; beian: string }>,
+  callback?: RequestCallback<{
+    menus: Blotter.Menu[];
+    view: number;
+    beian: string;
+    blog_name: string;
+  }>,
 ) => {
   return await request('get', '/api/layout', {}, callback);
 };
