@@ -146,8 +146,13 @@ class PostPage extends React.Component<
         <Visiable visiable_bigger="xl">
           <Anchor
             offsetTop={10}
-            targetOffset={window.innerHeight / 3}
-            style={{ background: 'transparent', position: 'fixed', top: '50px', right: '30px' }}
+            style={{
+              maxHeight: 'calc(100% - 100px)',
+              background: 'transparent',
+              position: 'fixed',
+              top: '50px',
+              right: '30px',
+            }}
           >
             {this.props.anchors.map(this.render_anchor)}
           </Anchor>
