@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const domain = 'http://127.0.0.1:50000';
+const domain = '';
 
 function parseURL(url: string): string {
   return domain + url;
