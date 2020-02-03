@@ -1,6 +1,7 @@
 import axios from 'axios';
+import { isBroswer } from '@/utils/prerender';
 
-const domain = '';
+const domain = isBroswer() ? '' : '127.0.0.1:50000';
 
 function parseURL(url: string): string {
   return domain + url;
