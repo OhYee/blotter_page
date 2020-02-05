@@ -107,3 +107,7 @@ export declare type AddCommentArgs = {
 export const addComment = async (args: AddCommentArgs, callback?: RequestCallback<APIResponse>) => {
   return await request('get', '/api/comment/add', args, callback);
 };
+
+export const markdown = async (source: string, callback?: RequestCallback<{ html: string }>) => {
+  return await request('get', '/api/markdown', { source }, callback);
+};
