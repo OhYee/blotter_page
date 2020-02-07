@@ -15,10 +15,6 @@ type PostCardWithTotal = {
   total: number;
   posts: Blotter.PostCard[];
 };
-type APIResponse = {
-  success: boolean;
-  message: string;
-};
 
 export const indexPosts = async (callback?: RequestCallback<PostCardWithTotal>) => {
   return await archives(1, 10);
@@ -104,7 +100,10 @@ export declare type AddCommentArgs = {
   raw: string;
 };
 
-export const addComment = async (args: AddCommentArgs, callback?: RequestCallback<APIResponse>) => {
+export const addComment = async (
+  args: AddCommentArgs,
+  callback?: RequestCallback<Blotter.APIResponse>,
+) => {
   return await request('get', '/api/comment/add', args, callback);
 };
 

@@ -4,6 +4,11 @@ declare module '*.svg';
 declare module '*.less';
 
 declare namespace Blotter {
+  interface APIResponse {
+    success: boolean;
+    title: string;
+    content: string;
+  }
   type Menu = {
     icon: string;
     name: string;

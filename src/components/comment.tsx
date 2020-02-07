@@ -11,12 +11,12 @@ import {
   Button,
   Popover,
   Checkbox,
-  notification,
 } from 'antd';
 import { FormComponentProps } from 'antd/es/form';
 import moment from 'moment';
 
 import { comments, avatar, addComment } from '@/utils/api';
+import ShowNotification from '@/utils/notification';
 
 const adWarning = <b>广告评论，已被屏蔽</b>;
 const delWarning = <b>该评论已被删除</b>;
@@ -100,16 +100,9 @@ class CommentPart extends React.Component<
               raw: value[`content${id}`],
             },
             data => {
-              if (data.success) {
-                notification.success({
-                  message: data.message,
-                });
+              if (ShowNotification(data)) {
                 this.props.form.resetFields([`email${id}`, `recv${id}`, `content${id}`]);
                 this.initialComment();
-              } else {
-                notification.error({
-                  message: data.message,
-                });
               }
               this.setState(state => {
                 state.editor_loading[id] = false;
