@@ -41,8 +41,20 @@ http
         req,
         res,
       };
-      const { ssrHtml } = await render(ctx);
-      res.write(ssrHtml);
+
+      try {
+        const { ssrHtml } = await render(ctx);
+        res.write(ssrHtml);
+      } catch (e) {
+        // console.log(e);
+        const { status, statusText } = e;
+        if (typeof status !== 'undefined') {
+          res.writeHead(e.status);
+        } else {
+          res.writeHead(500);
+        }
+      }
+
       res.end();
     } else {
       // static file url
