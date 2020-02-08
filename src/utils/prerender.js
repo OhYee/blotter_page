@@ -17,7 +17,7 @@ function setTitle(title) {
 }
 
 function getTitle() {
-  if (global._title == '') {
+  if (global._title === '') {
     return global._siteName;
   }
   return `${global._title}|${global._siteName}`;
