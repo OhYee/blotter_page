@@ -9,21 +9,21 @@ declare namespace Blotter {
     title: string;
     content: string;
   }
-  type Menu = {
+  interface Menu {
     icon: string;
     name: string;
     link: string;
-  };
-  type Tag = {
+  }
+  interface Tag {
     name: string;
     short: string;
     icon: string;
     color: string;
-  };
-  type TagWithCount = Tag & {
+  }
+  interface TagWithCount extends Tag {
     count: number;
-  };
-  type PostCard = {
+  }
+  interface PostCard {
     title: string;
     abstract: string;
     view: number;
@@ -32,19 +32,16 @@ declare namespace Blotter {
     edit_time: string;
     tags: Tag[];
     head_image: string;
-  };
-  type Post = {
-    title: string;
-    abstract: string;
-    view: number;
-    url: string;
-    publish_time: string;
-    edit_time: string;
-    tags: Tag[];
-    head_image: string;
+  }
+  interface Post extends PostCard {
     content: string;
-  };
-  type Comment = {
+  }
+  interface PostAll extends Post {
+    id: string;
+    raw: string;
+    published: boolean;
+  }
+  interface Comment {
     id: string;
     email: string;
     avatar: string;
@@ -54,21 +51,21 @@ declare namespace Blotter {
     ad: boolean;
     show: boolean;
     recv: boolean;
-  };
-  type Site = {
+  }
+  interface Site {
     view: number;
     beian: string;
     friends: FriendSimple[];
-  };
-  type FriendSimple = {
+  }
+  interface FriendSimple {
     link: string;
     name: string;
-  };
-  type Friend = {
+  }
+  interface Friend {
     image: string;
     link: string;
     name: string;
     description: string;
     posts: { title: string; link: string }[];
-  };
+  }
 }
