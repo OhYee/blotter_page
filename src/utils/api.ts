@@ -16,8 +16,20 @@ type PostCardWithTotal = {
   posts: Blotter.PostCard[];
 };
 
+export const posts = async (
+  params: {
+    number?: number;
+    offset?: number;
+    tag?: string;
+    sort_field?: string;
+    sort_type?: -1 | 1;
+  },
+  callback?: RequestCallback<PostCardWithTotal>,
+) => {
+  return await request('get', '/api/posts', params, callback);
+};
 export const indexPosts = async (callback?: RequestCallback<PostCardWithTotal>) => {
-  return await archives(1, 10);
+  return await posts({ offset: 0, number: 10 }, callback);
 };
 
 export const archives = async (
@@ -25,16 +37,7 @@ export const archives = async (
   size: number,
   callback?: RequestCallback<PostCardWithTotal>,
 ) => {
-  return await request(
-    'get',
-    '/api/posts',
-    {
-      type: 'index',
-      number: size,
-      offset: (page - 1) * size,
-    },
-    callback,
-  );
+  return await posts({ offset: (page - 1) * size, number: size }, callback);
 };
 
 export const tagPosts = async (
@@ -43,14 +46,22 @@ export const tagPosts = async (
   size: number,
   callback?: RequestCallback<PostCardWithTotal>,
 ) => {
-  return await request(
-    'get',
-    '/api/posts',
+  return await posts({ offset: (page - 1) * size, number: size, tag }, callback);
+};
+
+export const adminPosts = async (
+  page: number,
+  size: number,
+  field: string,
+  up: boolean,
+  callback?: RequestCallback<PostCardWithTotal>,
+) => {
+  return await posts(
     {
-      type: 'tag',
-      number: size,
       offset: (page - 1) * size,
-      arg: tag,
+      number: size,
+      sort_field: field,
+      sort_type: up ? 1 : -1,
     },
     callback,
   );
@@ -81,6 +92,10 @@ export const post = async (url: string, callback?: RequestCallback<Blotter.Post>
   return await request('get', '/api/post', { url }, callback);
 };
 
+export const adminPost = async (url: string, callback?: RequestCallback<Blotter.PostAll>) => {
+         return await request('get', '/api/admin/post', { url }, callback);
+       };
+
 export const comments = async (
   url: string,
   callback?: RequestCallback<{ total: number; comments: Blotter.Comment[] }>,
@@ -109,4 +124,27 @@ export const addComment = async (
 
 export const markdown = async (source: string, callback?: RequestCallback<{ html: string }>) => {
   return await request('get', '/api/markdown', { source }, callback);
+};
+
+export const tagsSearch = async (
+  keyword: string,
+  callback?: RequestCallback<{ total: number; tags: Blotter.Tag[] }>,
+) => {
+  return await request('get', '/api/tags', { keyword, number: 10, offset: 0 }, callback);
+};
+
+export const login = async (
+  username: string,
+  password: string,
+  callback?: RequestCallback<Blotter.APIResponse & { token: string }>,
+) => {
+  return await request('get', '/api/login', { username, password }, callback);
+};
+
+export const logout = async (callback?: RequestCallback<Blotter.APIResponse>) => {
+  return await request('get', '/api/logout', {}, callback);
+};
+
+export const info = async (callback?: RequestCallback<{ token: string }>) => {
+  return await request('get', '/api/info', {}, callback);
 };
