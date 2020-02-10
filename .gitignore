@@ -13,8 +13,6 @@
 # misc
 .DS_Store
 
-# umi
-.umi
-.umi-production
+.next
 
 public
