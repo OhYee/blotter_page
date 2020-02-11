@@ -58,7 +58,7 @@ class AdminPostList extends React.Component<AdminPostListProps, AdminPostListSta
       key: 'title',
       dataIndex: 'title',
       render: (text, record, index) => (
-        <Link href={`/post/${record.url}`}>
+        <Link href={'/post/[url]'} as={`/post/${record.url}`}>
           <a>{record.title}</a>
         </Link>
       ),

@@ -29,7 +29,7 @@ class TagPart extends React.Component<TagProps, {}> {
           this.props.onClose!(this.props.tag!);
         }}
       >
-        <Link href={`/tag/${this.props.tag.short}`}>
+        <Link href={'/tag/[tag]'} as={`/tag/${this.props.tag.short}`}>
           <a>
             {this.props.tag.icon ? (
               <Avatar size={15} shape="circle" src={this.props.tag.icon} />

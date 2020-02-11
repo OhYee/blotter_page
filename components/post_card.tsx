@@ -25,7 +25,7 @@ class PostCard extends React.Component<PostCardProps, {}> {
   render_post(post: Blotter.PostCard) {
     return (
       <div>
-        <Link href={`/post/${post.url}`}>
+        <Link href="/post/[url]" as={`/post/${post.url}`}>
           <a>
             <Title level={4} ellipsis={true}>
               {post.title}
