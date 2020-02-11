@@ -1,49 +1,57 @@
 import React from 'react';
-import App from 'next/app';
+import App, { AppProps } from 'next/app';
 
 import BasicLayout from '@/components/layout';
 const Layout = BasicLayout as any;
 
-export default class MyApp extends App {
+import { Context, defaultContext, GlobalProps } from '@/utils/global';
+
+interface MyAppProps extends AppProps {
+  globalProps: GlobalProps;
+}
+interface MyAppState extends GlobalProps {}
+
+export default class MyApp extends App<MyAppProps, {}, MyAppState> {
+  static contextType = Context;
   constructor(props: any) {
     super(props);
-    console.log('APP', props);
+    this.state = {
+      ...this.props.globalProps,
+      callback: props => {
+        this.setState(props);
+      },
+    };
   }
-  static pageProps = {
-    layoutProps: {},
-    componentProps: {},
-  };
+
   static async getInitialProps({ Component, router, ctx }) {
     const isServer = !!ctx.req;
-    try {
-      var layoutPromise = {};
-      var componentPromise = {};
 
-      console.log(Layout.getInitialProps);
+    var globalProps = defaultContext;
+    var pageProps = {};
+
+    try {
       if (isServer && Layout.getInitialProps) {
-        layoutPromise = Layout.getInitialProps(ctx);
+        globalProps = await Layout.getInitialProps(ctx);
       }
       if (Component.getInitialProps) {
-        componentPromise = Component.getInitialProps(ctx);
+        pageProps = await Component.getInitialProps(ctx);
       }
-      if (isServer) {
-        MyApp.pageProps.layoutProps = await layoutPromise;
-      }
-      MyApp.pageProps.componentProps = await componentPromise;
     } catch (e) {
       console.log(e);
     }
 
-    return { pageProps: MyApp.pageProps };
+    return { pageProps, globalProps };
   }
 
   render() {
     const { Component, pageProps } = this.props;
 
     return (
-      <Layout {...pageProps.layoutProps}>
-        <Component {...pageProps.layoutProps} {...pageProps.componentProps} />
-      </Layout>
+      <Context.Provider value={this.state}>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </Context.Provider>
     );
   }
 }

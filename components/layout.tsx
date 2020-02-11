@@ -13,19 +13,15 @@ import Container from '@/components/container';
 
 import { layout, login, logout } from '@/utils/api';
 import ShowNotification from '@/utils/notification';
-import { GlobalProps } from '@/utils/global';
+import { GlobalProps, Context } from '@/utils/global';
 
 import styles from './layout.less';
 
-interface BasicLayoutProps
-  extends GlobalProps,
-    ComponentProps<'base'>,
-    FormComponentProps,
-    WithRouterProps {
-  menus: Blotter.Menu[];
-  beian: string;
-  view: number;
-  blog_name: string;
+interface BasicLayoutProps extends ComponentProps<'base'>, FormComponentProps, WithRouterProps {
+  //   menus: Blotter.Menu[];
+  //   beian: string;
+  //   view: number;
+  //   blog_name: string;
 }
 interface BasicLayoutState {
   collapsed: boolean;
@@ -33,7 +29,9 @@ interface BasicLayoutState {
   loginModel: boolean;
   password: string;
   okDisabled: boolean;
-  token: string;
+
+  //   blog_name: string;
+  //   token: string;
 }
 
 class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
@@ -50,7 +48,7 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
       loginModel: false,
       password: '',
       okDisabled: false,
-      token: '',
+      //   token: this.context.token,
     };
     // setSiteName(this.props.blog_name);
     // setTitle('首页');
@@ -117,17 +115,17 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
     this.setState({ loginModel: false });
   };
 
-  renderMenus = () => {
-    var hasLogin = this.state.token !== '';
+  renderMenus = (menus: Blotter.Menu[]) => {
+    var hasLogin = this.context.token !== '';
     return (
       <Menu
         theme="light"
-        selectedKeys={[this.props.router.pathname]}
+        // selectedKeys={[this.props.router.pathname]}
         mode="inline"
         inlineIndent={10}
       >
                 
-        {this.props.menus.map((item: Blotter.Menu) => {
+        {menus.map((item: Blotter.Menu) => {
           return (
             <Menu.Item key={item.link}>
               <Link href={item.link}>
@@ -216,8 +214,7 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
           <Divider className={this.state.collapsed ? styles.divider : undefined}>
             <b className={styles.divider}>OhYee</b>
           </Divider>
-
-          {this.renderMenus()}
+          <Context.Consumer>{context => this.renderMenus(context.menus)}</Context.Consumer>
         </div>
       </Sider>
     );
@@ -226,20 +223,26 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
   renderFooter = () => {
     return (
       <Container>
-        <div className={styles.footer}>
-          <p>© 2017 – {new Date().getFullYear()}</p>
-          <p>
-            <Icon type="eye" style={{ fontSize: '0.75em' }} /> 全站访问量 {this.props.view}
-          </p>
-          <p>
-            <a href="http://beian.miit.gov.cn/">{this.props.beian}</a>
-          </p>
-          <p>
-            Powered by
-            <a href="https://github.com/OhYee/blotter">Blotter</a>
-            (Go + React)
-          </p>
-        </div>
+        <Context.Consumer>
+          {context => {
+            return (
+              <div className={styles.footer}>
+                <p>© 2017 – {new Date().getFullYear()}</p>
+                <p>
+                  <Icon type="eye" style={{ fontSize: '0.75em' }} /> 全站访问量 {context.view}
+                </p>
+                <p>
+                  <a href="http://beian.miit.gov.cn/">{context.beian}</a>
+                </p>
+                <p>
+                  Powered by
+                  <a href="https://github.com/OhYee/blotter">Blotter</a>
+                  (Go + React)
+                </p>
+              </div>
+            );
+          }}
+        </Context.Consumer>
       </Container>
     );
   };
@@ -251,7 +254,7 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
         className={this.state.collapsed ? undefined : styles.dimmed}
       >
         <Head>
-          <title>{this.props.blog_name}</title>
+          <title>{this.context.blog_name}</title>
         </Head>
         <Layout
           className={'shadow'}
