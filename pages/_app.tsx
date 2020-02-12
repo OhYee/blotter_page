@@ -5,6 +5,7 @@ import BasicLayout from '@/components/layout';
 const Layout = BasicLayout as any;
 
 import { Context, defaultContext, GlobalProps } from '@/utils/global';
+import { getCookie } from '@/utils/cookies';
 
 interface MyAppProps extends AppProps {
   globalProps: GlobalProps;
@@ -16,7 +17,9 @@ export default class MyApp extends App<MyAppProps, {}, MyAppState> {
   constructor(props: any) {
     super(props);
     this.state = {
+      ...defaultContext,
       ...this.props.globalProps,
+      token: getCookie('token'),
       callback: props => {
         this.setState(props);
       },

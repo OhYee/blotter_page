@@ -6,12 +6,12 @@ import { Row, Col, Card, Avatar, List, Divider, Tooltip, Typography } from 'antd
 
 import Container from '@/components/container';
 
-import { GlobalProps, InitialPropsParam } from '@/utils/global';
+import { InitialPropsParam, Context } from '@/utils/global';
 import { friends } from '@/utils/api';
 
 import styles from './friends.less';
 
-interface FriendsProps extends GlobalProps, ComponentProps<'base'> {
+interface FriendsProps extends  ComponentProps<'base'> {
   friends: Blotter.Friend[];
 }
 
@@ -80,9 +80,13 @@ class Friends extends React.Component<FriendsProps, FriendsState> {
   render() {
     return (
       <Container>
-        <Head>
-          <title>{`友情链接|${this.props.blog_name}`}</title>
-        </Head>
+        <Context.Consumer>
+          {context => (
+            <Head>
+              <title>{`友情链接|${context.blog_name}`}</title>
+            </Head>
+          )}
+        </Context.Consumer>
         <Row gutter={[10, 10]}>
           {this.props.friends.map((friend: Blotter.Friend) => this.renderCard(friend))}
         </Row>

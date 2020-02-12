@@ -6,9 +6,9 @@ import { Card } from 'antd';
 
 import Container from '@/components/container';
 
-import { GlobalProps } from '@/utils/global';
+import { InitialPropsParam, Context } from '@/utils/global';
 
-interface AboutPageProps extends GlobalProps, ComponentProps<'base'> {}
+interface AboutPageProps extends  ComponentProps<'base'> {}
 interface AboutPageState {}
 
 export class AboutPage extends React.Component<AboutPageProps, AboutPageState> {
@@ -22,9 +22,13 @@ export class AboutPage extends React.Component<AboutPageProps, AboutPageState> {
   render() {
     return (
       <Container>
-        <Head>
-          <title>{`关于我|${this.props.blog_name}`}</title>
-        </Head>
+        <Context.Consumer>
+          {context => (
+            <Head>
+              <title>{`关于我|${context.blog_name}`}</title>
+            </Head>
+          )}
+        </Context.Consumer>
         <Card></Card>
       </Container>
     );

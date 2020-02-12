@@ -8,9 +8,9 @@ import PostList from '@/components/post_list';
 
 import { parseNumberParams } from '@/utils/parse';
 import { tagPosts } from '@/utils/api';
-import { GlobalProps, InitialPropsParam } from '@/utils/global';
+import { InitialPropsParam, Context } from '@/utils/global';
 
-interface TagDetailProps extends GlobalProps, ComponentProps<'base'>, WithRouterProps {
+interface TagDetailProps extends  ComponentProps<'base'>, WithRouterProps {
   page: number;
   total: number;
   size: number;
@@ -65,9 +65,13 @@ class TagDetail extends React.Component<TagDetailProps, TagDetailState> {
     console.log('render', this.props, this.state);
     return (
       <div>
-        <Head>
-          <title>{`标签页|${this.props.blog_name}`}</title>
-        </Head>
+        <Context.Consumer>
+          {context => (
+            <Head>
+              <title>{`标签页|${context.blog_name}`}</title>
+            </Head>
+          )}
+        </Context.Consumer>
         <PostList
           posts={this.props.posts}
           page={this.props.page}

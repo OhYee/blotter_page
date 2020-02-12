@@ -1,4 +1,4 @@
-import React, { ComponentProps } from 'react';
+import React, { ComponentProps, Fragment } from 'react';
 
 import Link from 'next/link';
 import Head from 'next/head';
@@ -14,6 +14,7 @@ import Container from '@/components/container';
 import { layout, login, logout } from '@/utils/api';
 import ShowNotification from '@/utils/notification';
 import { GlobalProps, Context } from '@/utils/global';
+import { setCookie } from '@/utils/cookies';
 
 import styles from './layout.less';
 
@@ -35,6 +36,8 @@ interface BasicLayoutState {
 }
 
 class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
+  static contextType = Context;
+
   static async getInitialProps(args: any) {
     var r = await layout();
     return r;
@@ -48,11 +51,7 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
       loginModel: false,
       password: '',
       okDisabled: false,
-      //   token: this.context.token,
     };
-    // setSiteName(this.props.blog_name);
-    // setTitle('首页');
-    // console.log(this.props.menus);
   }
 
   onCollapse = (collapsed: boolean, type: string) => {
@@ -96,16 +95,17 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
   onLogoutClick = async () => {
     var r = await logout();
     if (ShowNotification(r)) {
-      //   this.props.dispatch({ type: 'token/set', token: '' });
+      setCookie('token', '', 0);
     }
+    this.context.callback({ token: '' });
   };
 
   loginOK = async () => {
-    // console.log(this.props.form.getFieldValue('password'));
     this.setState({ okDisabled: true });
     var { username, password } = this.props.form.getFieldsValue(['username', 'password']);
     var r = await login(username, password);
     if (ShowNotification(r)) {
+      this.context.callback({ token: r.token });
       this.setState({ loginModel: false, okDisabled: false });
     } else {
       this.setState({ okDisabled: false });
@@ -115,16 +115,14 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
     this.setState({ loginModel: false });
   };
 
-  renderMenus = (menus: Blotter.Menu[]) => {
-    var hasLogin = this.context.token !== '';
+  renderMenus = (menus: Blotter.Menu[], token: string) => {
     return (
       <Menu
         theme="light"
-        // selectedKeys={[this.props.router.pathname]}
+        selectedKeys={[this.props.router.pathname]}
         mode="inline"
         inlineIndent={10}
       >
-                
         {menus.map((item: Blotter.Menu) => {
           return (
             <Menu.Item key={item.link}>
@@ -137,28 +135,27 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
             </Menu.Item>
           );
         })}
-        {hasLogin ? (
-          <Menu.Item key="login" onClick={this.onLoginClick}>
-            <Link href="/admin">
-              <a>
-                <Icon type="setting" />
-                <span>后台</span>
-              </a>
-            </Link>
-          </Menu.Item>
-        ) : null}
-        {!hasLogin ? (
+        {token == '' ? (
           <Menu.Item key="login" onClick={this.onLoginClick}>
             <Icon type="login" />
             <span>登录</span>
           </Menu.Item>
         ) : (
-          <Menu.Item key="logout" onClick={this.onLogoutClick}>
-            <Icon type="logout" />
-            <span>登出</span>
-          </Menu.Item>
+          [
+            <Menu.Item key="setting">
+              <Link href="/admin">
+                <a>
+                  <Icon type="setting" />
+                  <span>后台</span>
+                </a>
+              </Link>
+            </Menu.Item>,
+            <Menu.Item key="logout" onClick={this.onLogoutClick}>
+              <Icon type="logout" />
+              <span>登出</span>
+            </Menu.Item>,
+          ]
         )}
-                
         <Modal
           title="登录"
           visible={this.state.loginModel}
@@ -180,6 +177,7 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
                 <Input.Password
                   prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
                   placeholder="密码"
+                  onPressEnter={this.loginOK}
                 />,
               )}
             </Form.Item>
@@ -214,7 +212,9 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
           <Divider className={this.state.collapsed ? styles.divider : undefined}>
             <b className={styles.divider}>OhYee</b>
           </Divider>
-          <Context.Consumer>{context => this.renderMenus(context.menus)}</Context.Consumer>
+          <Context.Consumer>
+            {context => this.renderMenus(context.menus, context.token)}
+          </Context.Consumer>
         </div>
       </Sider>
     );
@@ -253,9 +253,14 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
         style={{ minHeight: '100%' }}
         className={this.state.collapsed ? undefined : styles.dimmed}
       >
-        <Head>
-          <title>{this.context.blog_name}</title>
-        </Head>
+        <Context.Consumer>
+          {context => (
+            <Head>
+              <title>{context.blog_name}</title>
+            </Head>
+          )}
+        </Context.Consumer>
+
         <Layout
           className={'shadow'}
           style={{ position: 'fixed', zIndex: 100, height: '100vh', overflow: 'auto' }}

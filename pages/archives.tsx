@@ -9,9 +9,9 @@ import PostList from '@/components/post_list';
 
 import { archives } from '@/utils/api';
 import { parseNumberParams } from '@/utils/parse';
-import { GlobalProps, InitialPropsParam } from '@/utils/global';
+import { InitialPropsParam, Context } from '@/utils/global';
 
-interface ArchivesProps extends GlobalProps, ComponentProps<'base'>, WithRouterProps {
+interface ArchivesProps extends  ComponentProps<'base'>, WithRouterProps {
   page: number;
   total: number;
   size: number;
@@ -60,9 +60,13 @@ export class Archives extends React.Component<ArchivesProps, ArchivesState> {
   render() {
     return (
       <div>
-        <Head>
-          <title>{`第${this.props.page}页|文章归档|${this.props.blog_name}`}</title>
-        </Head>
+        <Context.Consumer>
+          {context => (
+            <Head>
+              <title>{`第${this.props.page}页|归档页|${context.blog_name}`}</title>
+            </Head>
+          )}
+        </Context.Consumer>
         <PostList
           posts={this.props.posts}
           page={this.props.page}

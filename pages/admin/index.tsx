@@ -6,9 +6,9 @@ import { Card } from 'antd';
 
 import Container from '@/components/container';
 
-import { GlobalProps } from '@/utils/global';
+import { Context } from '@/utils/global';
 
-interface AdminIndexProps extends GlobalProps, ComponentProps<'base'> {}
+interface AdminIndexProps extends ComponentProps<'base'> {}
 
 interface AdminIndexState {}
 
@@ -25,9 +25,13 @@ class AdminIndex extends React.Component<AdminIndexProps, AdminIndexState> {
   render() {
     return (
       <Container>
-        <Head>
-          <title>{`后台|${this.props.blog_name}`}</title>
-        </Head>
+        <Context.Consumer>
+          {context => (
+            <Head>
+              <title>{`后台|${context.blog_name}`}</title>
+            </Head>
+          )}
+        </Context.Consumer>
         <Card></Card>
       </Container>
     );

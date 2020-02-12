@@ -8,12 +8,12 @@ import TagPart from '@/components/tag';
 import Container from '@/components/container';
 
 import { tags } from '@/utils/api';
-import { GlobalProps, InitialPropsParam } from '@/utils/global';
+import { InitialPropsParam, Context } from '@/utils/global';
 import { sortTagsByPinYin, TagGroup } from '@/utils/sort';
 
 import styles from './tags.less';
 
-interface TagsProps extends GlobalProps, ComponentProps<'base'> {
+interface TagsProps extends ComponentProps<'base'> {
   total: number;
   tags: TagGroup[];
 }
@@ -67,9 +67,14 @@ class Tags extends React.Component<TagsProps, TagsState> {
   render() {
     return (
       <Container>
-        <Head>
-          <title>{`标签列表|${this.props.blog_name}`}</title>
-        </Head>
+        <Context.Consumer>
+          {context => (
+            <Head>
+              <title>{`标签列表|${context.blog_name}`}</title>
+            </Head>
+          )}
+        </Context.Consumer>
+
         {this.props.tags.map(this.render_group)}
       </Container>
     );

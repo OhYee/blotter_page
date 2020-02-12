@@ -9,9 +9,9 @@ import { Card, Anchor } from 'antd';
 import Container from '@/components/container';
 import CommentPart from '@/components/comment';
 
-import { GlobalProps } from '@/utils/global';
+import {  Context } from '@/utils/global';
 
-interface CommentPageProps extends GlobalProps, ComponentProps<'base'>, WithRouterProps {}
+interface CommentPageProps extends ComponentProps<'base'>, WithRouterProps {}
 interface CommentPageState {}
 
 class CommentPage extends React.Component<CommentPageProps, CommentPageState> {
@@ -22,9 +22,13 @@ class CommentPage extends React.Component<CommentPageProps, CommentPageState> {
   render() {
     return (
       <Container lg={16}>
-        <Head>
-          <title>{`评论区|${this.props.blog_name}`}</title>
-        </Head>
+        <Context.Consumer>
+          {context => (
+            <Head>
+              <title>{`评论区|${context.blog_name}`}</title>
+            </Head>
+          )}
+        </Context.Consumer>
         <Card>
           <CommentPart url={this.props.router.asPath} />
         </Card>

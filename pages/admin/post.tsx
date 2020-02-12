@@ -31,13 +31,9 @@ import { dimensionMaxMap } from '@/utils/responsive';
 
 import styles from '@/pages/post/post.less';
 
-import { GlobalProps } from '@/utils/global';
+import { InitialPropsParam, Context } from '@/utils/global';
 
-interface PostEditProps
-  extends GlobalProps,
-    ComponentProps<'base'>,
-    FormComponentProps,
-    WithRouterProps {}
+interface PostEditProps extends ComponentProps<'base'>, FormComponentProps, WithRouterProps {}
 
 interface PostEditState {
   raw: string;
@@ -305,9 +301,13 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
   render() {
     return (
       <Container xxl={20} xl={20} lg={20} md={24} sm={24} xs={24}>
-        <Head>
-          <title>{`文章编辑|后台|${this.props.blog_name}`}</title>
-        </Head>
+        <Context.Consumer>
+          {context => (
+            <Head>
+              <title>{`文章编辑|后台|${context.blog_name}`}</title>
+            </Head>
+          )}
+        </Context.Consumer>
         <MediaQuery minDeviceWidth={dimensionMaxMap.lg} onChange={this.onBigScreen}>
           {null}
         </MediaQuery>

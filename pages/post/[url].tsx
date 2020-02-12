@@ -13,7 +13,7 @@ import CommentPart from '@/components/comment';
 import Container from '@/components/container';
 
 import { post } from '@/utils/api';
-import { GlobalProps, InitialPropsParam } from '@/utils/global';
+import { InitialPropsParam, Context } from '@/utils/global';
 
 import styles from './post.less';
 
@@ -24,7 +24,7 @@ interface AnchorType {
   children: AnchorType[];
 }
 
-interface PostPageProps extends GlobalProps, ComponentProps<'base'>, WithRouterProps {
+interface PostPageProps extends  ComponentProps<'base'>, WithRouterProps {
   post: Blotter.Post;
   anchors: AnchorType[];
 }
@@ -139,9 +139,13 @@ class PostPage extends React.Component<PostPageProps, PostPageState> {
   render() {
     return typeof this.props.post === 'undefined' ? null : (
       <Container lg={16}>
-        <Head>
-          <title>{`${this.props.post.title}|${this.props.blog_name}`}</title>
-        </Head>
+        <Context.Consumer>
+          {context => (
+            <Head>
+              <title>{`${this.props.post.title}|${context.blog_name}`}</title>
+            </Head>
+          )}
+        </Context.Consumer>
         <Card>{this.render_post()}</Card>
         <Card>
           <CommentPart url={`/post/${this.props.router.query.url as string}`} />

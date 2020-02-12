@@ -15,11 +15,11 @@ import Container from '@/components/container';
 import TagPart from '@/components/tag';
 
 import { adminPosts } from '@/utils/api';
-import { GlobalProps } from '@/utils/global';
+import { InitialPropsParam, Context } from '@/utils/global';
 
 interface T extends Blotter.PostCard {}
 
-interface AdminPostListProps extends GlobalProps, ComponentProps<'base'> {}
+interface AdminPostListProps extends  ComponentProps<'base'> {}
 
 interface AdminPostListState {
   loading: boolean;
@@ -154,9 +154,13 @@ class AdminPostList extends React.Component<AdminPostListProps, AdminPostListSta
   render() {
     return (
       <Container lg={20} md={20} sm={24} xs={24}>
-        <Head>
-          <title>{`文章列表|后台|${this.props.blog_name}`}</title>
-        </Head>
+        <Context.Consumer>
+          {context => (
+            <Head>
+              <title>{`文章列表|后台|${context.blog_name}`}</title>
+            </Head>
+          )}
+        </Context.Consumer>
         <Card>
           <div style={{ textAlign: 'right' }}>
             <Link href="/admin/post">

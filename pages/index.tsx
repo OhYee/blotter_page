@@ -1,15 +1,17 @@
 import React, { ComponentProps } from 'react';
 
+import Head from 'next/head';
+
 import { Input, Card } from 'antd';
 
 import Container from '@/components/container';
 import PostList from '@/components/post_list';
 
-import { GlobalProps, InitialPropsParam } from '@/utils/global';
+import { InitialPropsParam, Context } from '@/utils/global';
 
 import { indexPosts } from '@/utils/api';
 
-interface IndexProps extends GlobalProps, ComponentProps<'base'> {
+interface IndexProps extends ComponentProps<'base'> {
   posts: Blotter.PostCard[];
 }
 
@@ -42,6 +44,13 @@ class Index extends React.Component<IndexProps, IndexState> {
   render() {
     return (
       <div>
+        <Context.Consumer>
+          {context => (
+            <Head>
+              <title>{`首页|${context.blog_name}`}</title>
+            </Head>
+          )}
+        </Context.Consumer>
         {this.render_search()}
         <PostList posts={this.props.posts} />
       </div>
