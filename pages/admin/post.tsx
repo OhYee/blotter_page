@@ -5,17 +5,17 @@ import { withRouter } from 'next/router';
 import { WithRouterProps } from 'next/dist/client/with-router';
 
 import {
+  Button,
   Card,
-  Row,
-  Col,
-  Input,
+  DatePicker,
+  Divider,
   Form,
   Icon,
-  Button,
-  DatePicker,
+  Input,
   InputNumber,
   Switch,
-  Divider,
+  Row,
+  Col,
 } from 'antd';
 import { FormComponentProps } from 'antd/lib/form';
 
@@ -31,7 +31,7 @@ import { dimensionMaxMap } from '@/utils/responsive';
 
 import styles from '@/pages/post/post.less';
 
-import { InitialPropsParam, Context } from '@/utils/global';
+import { Context } from '@/utils/global';
 
 interface PostEditProps extends ComponentProps<'base'>, FormComponentProps, WithRouterProps {}
 
@@ -68,8 +68,7 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
   getData = async () => {
     var url = this.props.router.query.url as string;
     var r = await adminPost(url);
-    // this.props.form.setFieldsValue(;
-    var forms = {
+    this.props.form.setFieldsValue({
       id: r.id,
       title: r.title,
       url: r.url,
@@ -80,13 +79,25 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
       edit_time: moment(new Date(r.edit_time)),
       published: r.published,
       raw: r.raw,
-    } as any;
-
-    Object.keys(this.props.form.getFieldsValue()).forEach(key => {
-      const obj = {} as any;
-      obj[key] = forms[key] || null;
-      this.props.form.setFieldsValue(obj);
     });
+    // var forms = {
+    //   id: r.id,
+    //   title: r.title,
+    //   url: r.url,
+    //   abstract: r.abstract,
+    //   head_image: r.head_image,
+    //   view: r.view,
+    //   publish_time: moment(new Date(r.publish_time)),
+    //   edit_time: moment(new Date(r.edit_time)),
+    //   published: r.published,
+    //   raw: r.raw,
+    // } as any;
+
+    // Object.keys(this.props.form.getFieldsValue()).forEach(key => {
+    //   const obj = {} as any;
+    //   obj[key] = forms[key];
+    //   this.props.form.setFieldsValue(obj);
+    // });
     this.setState({ tags: r.tags, html: r.content });
   };
 
@@ -139,19 +150,6 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
   };
 
   submit = () => {
-    //  this.props.form.setFieldsValue({
-    //    id: r.id,
-    //    title: r.title,
-    //    url: r.url,
-    //    abstract: r.abstract,
-    //    head_image: r.head_image,
-    //    view: r.view,
-    //    publish_time: moment(new Date(r.publish_time)),
-    //    edit_time: moment(new Date(r.edit_time)),
-    //    published: r.published,
-    //    raw: r.raw,
-    //  });
-    //  this.setState({ tags: r.tags, html: r.content });
     var obj = this.props.form.getFieldsValue([
       'id',
       'title',
@@ -171,7 +169,7 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
   renderEditor = () => {
     return (
       <Form.Item>
-        {this.props.form.getFieldDecorator(`raw`, { normalize: this.onChange })(
+        {this.props.form.getFieldDecorator(`raw`, { initialValue: '', normalize: this.onChange })(
           <Input.TextArea autoSize={{ minRows: 15 }} spellCheck="false"></Input.TextArea>,
         )}
       </Form.Item>
@@ -197,14 +195,14 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
       <Row gutter={15}>
         <Col lg={24}>
           <Form.Item>
-            {this.props.form.getFieldDecorator(`id`)(
+            {this.props.form.getFieldDecorator(`id`, { initialValue: '' })(
               <Input disabled placeholder="文章ID" addonBefore="ID"></Input>,
             )}
           </Form.Item>
         </Col>
         <Col lg={md ? 12 : 6} md={12}>
           <Form.Item>
-            {this.props.form.getFieldDecorator(`url`)(
+            {this.props.form.getFieldDecorator(`url`, { initialValue: '' })(
               <Input placeholder="文章链接" addonBefore="/post/"></Input>,
             )}
           </Form.Item>
@@ -236,13 +234,15 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
 
         <Col lg={md ? 12 : 10} md={12}>
           <Form.Item>
-            {this.props.form.getFieldDecorator(`title`)(<Input placeholder="文章标题"></Input>)}
+            {this.props.form.getFieldDecorator(`title`, { initialValue: '' })(
+              <Input placeholder="文章标题"></Input>,
+            )}
           </Form.Item>
         </Col>
 
         <Col lg={md ? 12 : 8} md={12}>
           <Form.Item>
-            {this.props.form.getFieldDecorator(`head_image`)(
+            {this.props.form.getFieldDecorator(`head_image`, { initialValue: '' })(
               <Input
                 placeholder="头图"
                 onChange={e => {
@@ -266,7 +266,8 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
           <Form.Item>
             {this.props.form.getFieldDecorator(`published`, {
               initialValue: false,
-            })(<Switch checkedChildren="发布" unCheckedChildren="草稿" defaultChecked />)}
+              valuePropName: 'checked',
+            })(<Switch checkedChildren="发布" unCheckedChildren="草稿" />)}
           </Form.Item>
         </Col>
 
@@ -286,7 +287,7 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
 
         <Col lg={24}>
           <Form.Item>
-            {this.props.form.getFieldDecorator(`abstract`)(
+            {this.props.form.getFieldDecorator(`abstract`, { initialValue: '' })(
               <Input.TextArea
                 autoSize={{ minRows: 5 }}
                 spellCheck="false"
