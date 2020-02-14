@@ -14,12 +14,16 @@ import {
 import Container from '@/components/container';
 import TagPart from '@/components/tag';
 
-import { adminPosts } from '@/utils/api';
+import { adminPosts, postDelete } from '@/utils/api';
 import { InitialPropsParam, Context } from '@/utils/global';
+import ShowNotification from '@/utils/notification';
 
-interface T extends Blotter.PostCard {}
+interface T extends Blotter.PostCard {
+  id: string;
+  published: boolean;
+}
 
-interface AdminPostListProps extends  ComponentProps<'base'> {}
+interface AdminPostListProps extends ComponentProps<'base'> {}
 
 interface AdminPostListState {
   loading: boolean;
@@ -62,7 +66,7 @@ class AdminPostList extends React.Component<AdminPostListProps, AdminPostListSta
           <a>{record.title}</a>
         </Link>
       ),
-      width: '20%',
+      width: '15%',
     },
     {
       title: '链接',
@@ -92,6 +96,19 @@ class AdminPostList extends React.Component<AdminPostListProps, AdminPostListSta
       width: '10%',
     },
     {
+      title: '已发布',
+      key: 'published',
+      dataIndex: 'published',
+      sorter: true,
+      width: '10%',
+      render: (text, record, index) =>
+        text ? (
+          <Icon type="eye" style={{ color: 'green' }}></Icon>
+        ) : (
+          <Icon type="eye-invisible" style={{ color: 'red' }}></Icon>
+        ),
+    },
+    {
       title: '标签',
       key: 'tags',
       dataIndex: 'tags',
@@ -107,19 +124,25 @@ class AdminPostList extends React.Component<AdminPostListProps, AdminPostListSta
     {
       title: '操作',
       key: 'op',
-      width: '20%',
+      width: '15%',
       render: (text, record, index) => (
         <Row gutter={5}>
           <Col span={12}>
             <Link href={`/admin/post?url=${record.url}`}>
-              <Button>
+              <Button size="small">
                 <Icon type="edit" />
                 编辑
               </Button>
             </Link>
           </Col>
           <Col span={12}>
-            <Button type="danger">
+            <Button
+              size="small"
+              type="danger"
+              onClick={() => {
+                this.onDelete(record.id);
+              }}
+            >
               <Icon type="delete" />
               删除
             </Button>
@@ -128,6 +151,12 @@ class AdminPostList extends React.Component<AdminPostListProps, AdminPostListSta
       ),
     },
   ];
+
+  onDelete = async (id: string) => {
+    var r = await postDelete(id);
+    ShowNotification(r);
+    this.setState(state => ({ data: state.data.filter(post => post.id != id) }));
+  };
 
   onTableChange = (
     pagination: PaginationConfig,

@@ -15,6 +15,7 @@ declare namespace Blotter {
     link: string;
   }
   interface Tag {
+    id: string;
     name: string;
     short: string;
     icon: string;

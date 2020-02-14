@@ -7,6 +7,7 @@ import { Card } from 'antd';
 import Container from '@/components/container';
 
 import { Context } from '@/utils/global';
+import Link from 'next/link';
 
 interface AdminIndexProps extends ComponentProps<'base'> {}
 
@@ -32,7 +33,11 @@ class AdminIndex extends React.Component<AdminIndexProps, AdminIndexState> {
             </Head>
           )}
         </Context.Consumer>
-        <Card></Card>
+        <Card>
+          <Link href="/admin/posts">
+            <a>文章管理</a>
+          </Link>
+        </Card>
       </Container>
     );
   }

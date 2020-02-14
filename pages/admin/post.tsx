@@ -26,12 +26,13 @@ import Container from '@/components/container';
 import TagSearch from '@/components/tag_search';
 
 import { waitUntil } from '@/utils/debounce';
-import { markdown, adminPost } from '@/utils/api';
+import { markdown, adminPost, postExist, postEdit } from '@/utils/api';
 import { dimensionMaxMap } from '@/utils/responsive';
 
 import styles from '@/pages/post/post.less';
 
 import { Context } from '@/utils/global';
+import ShowNotification from '@/utils/notification';
 
 interface PostEditProps extends ComponentProps<'base'>, FormComponentProps, WithRouterProps {}
 
@@ -43,6 +44,7 @@ interface PostEditState {
   loading: boolean;
   tags: Blotter.Tag[];
   headImage: string;
+  submitDisabled: boolean;
 }
 
 class PostEdit extends React.Component<PostEditProps, PostEditState> {
@@ -58,6 +60,7 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
       loading: false,
       tags: [],
       headImage: '',
+      submitDisabled: false,
     };
   }
 
@@ -76,28 +79,10 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
       head_image: r.head_image,
       view: r.view,
       publish_time: moment(new Date(r.publish_time)),
-      edit_time: moment(new Date(r.edit_time)),
+    //   edit_time: moment(new Date(r.edit_time)),
       published: r.published,
       raw: r.raw,
     });
-    // var forms = {
-    //   id: r.id,
-    //   title: r.title,
-    //   url: r.url,
-    //   abstract: r.abstract,
-    //   head_image: r.head_image,
-    //   view: r.view,
-    //   publish_time: moment(new Date(r.publish_time)),
-    //   edit_time: moment(new Date(r.edit_time)),
-    //   published: r.published,
-    //   raw: r.raw,
-    // } as any;
-
-    // Object.keys(this.props.form.getFieldsValue()).forEach(key => {
-    //   const obj = {} as any;
-    //   obj[key] = forms[key];
-    //   this.props.form.setFieldsValue(obj);
-    // });
     this.setState({ tags: r.tags, html: r.content });
   };
 
@@ -125,6 +110,22 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
     return current;
   };
 
+  //   urlValidator = async (rule, value, callback, s, o) => {
+  //     waitUntil(
+  //       'post_edit_url',
+  //       async () => {
+  //         console.log(rule, value, callback, s, o);
+  //         var r = await postExist(value);
+  //         if (r.existed) {
+  //           callback();
+  //         } else {
+  //           callback('123');
+  //         }
+  //       },
+  //       1000,
+  //     );
+  //   };
+
   previewClick = () => {
     if (!this.state.preview) {
       this.renderMarkdown(this.props.form.getFieldValue('raw'));
@@ -149,7 +150,8 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
     });
   };
 
-  submit = () => {
+  submit = async () => {
+    this.setState({ submitDisabled: true });
     var obj = this.props.form.getFieldsValue([
       'id',
       'title',
@@ -162,8 +164,13 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
       'published',
       'raw',
     ]);
-    obj.tags = this.state.tags;
+    obj.tags = this.state.tags.map(tag => tag.id);
+    obj.publish_time = obj.publish_time.unix();
+    obj.edit_time = obj.edit_time.unix();
     console.log(obj);
+    var r = await postEdit(obj as Blotter.PostAll);
+    ShowNotification(r);
+    this.setState({ submitDisabled: false });
   };
 
   renderEditor = () => {
@@ -202,9 +209,10 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
         </Col>
         <Col lg={md ? 12 : 6} md={12}>
           <Form.Item>
-            {this.props.form.getFieldDecorator(`url`, { initialValue: '' })(
-              <Input placeholder="文章链接" addonBefore="/post/"></Input>,
-            )}
+            {this.props.form.getFieldDecorator(`url`, {
+              initialValue: '',
+              rules: [{ required: true, message: '文章必须有链接', whitespace: true }],
+            })(<Input placeholder="文章链接" addonBefore="/post/"></Input>)}
           </Form.Item>
         </Col>
 
@@ -273,7 +281,7 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
 
         <Col lg={md ? 12 : 2} md={12}>
           <Form.Item>
-            <Button onClick={this.submit} type="primary">
+            <Button loading={this.state.submitDisabled} onClick={this.submit} type="primary">
               提交
             </Button>
           </Form.Item>

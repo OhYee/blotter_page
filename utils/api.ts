@@ -45,9 +45,14 @@ export const adminPosts = async (
   size: number,
   field: string,
   up: boolean,
-  callback?: RequestCallback<PostCardWithTotal>,
+  callback?: RequestCallback<{
+    total: number;
+    posts: (Blotter.PostCard & { id: string; published: boolean })[];
+  }>,
 ) => {
-  return await posts(
+  return await request(
+    'get',
+    '/api/admin/posts',
     {
       offset: (page - 1) * size,
       number: size,
@@ -138,4 +143,19 @@ export const logout = async (callback?: RequestCallback<Blotter.APIResponse>) =>
 
 export const info = async (callback?: RequestCallback<{ token: string }>) => {
   return await request('get', '/api/info', {}, callback);
+};
+
+export const postExist = async (url: string, callback?: RequestCallback<{ existed: boolean }>) => {
+  return await request('get', '/api/post/existed', { url }, callback);
+};
+
+export const postEdit = async (
+  args: Blotter.PostAll,
+  callback?: RequestCallback<Blotter.APIResponse>,
+) => {
+  return await request('post', '/api/admin/post/edit', args, callback);
+};
+
+export const postDelete = async (id: string, callback?: RequestCallback<Blotter.APIResponse>) => {
+  return await request('get', '/api/admin/post/delete', { id }, callback);
 };
