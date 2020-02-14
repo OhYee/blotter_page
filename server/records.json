@@ -1,0 +1,75 @@
+{
+  "modules": {
+    "byIdentifier": {
+      "multi private-next-pages/_app.tsx": 0,
+      "multi private-next-pages/_document.tsx": 1,
+      "multi private-next-pages/_error.tsx": 2,
+      "multi private-next-pages/about.tsx": 3,
+      "multi private-next-pages/admin/index.tsx": 4,
+      "multi private-next-pages/admin/post.tsx": 5,
+      "multi private-next-pages/admin/posts.tsx": 6,
+      "multi private-next-pages/archives.tsx": 7,
+      "multi private-next-pages/comment.tsx": 8,
+      "multi private-next-pages/friends.tsx": 9,
+      "multi private-next-pages/index.tsx": 10,
+      "multi private-next-pages/post/[url].tsx": 11,
+      "multi private-next-pages/tag/[tag].tsx": 12,
+      "multi private-next-pages/tags.tsx": 13
+    },
+    "usedIds": {
+      "0": 0,
+      "1": 1,
+      "2": 2,
+      "3": 3,
+      "4": 4,
+      "5": 5,
+      "6": 6,
+      "7": 7,
+      "8": 8,
+      "9": 9,
+      "10": 10,
+      "11": 11,
+      "12": 12,
+      "13": 13
+    }
+  },
+  "chunks": {
+    "byName": {
+      "init-server.js": 0,
+      "on-error-server.js": 1,
+      "static/jO3xR-u7qv51ePEc5zH7A/pages/_app.js": 2,
+      "static/jO3xR-u7qv51ePEc5zH7A/pages/_document.js": 3,
+      "static/jO3xR-u7qv51ePEc5zH7A/pages/_error.js": 4,
+      "static/jO3xR-u7qv51ePEc5zH7A/pages/about.js": 5,
+      "static/jO3xR-u7qv51ePEc5zH7A/pages/admin.js": 6,
+      "static/jO3xR-u7qv51ePEc5zH7A/pages/admin/post.js": 7,
+      "static/jO3xR-u7qv51ePEc5zH7A/pages/admin/posts.js": 8,
+      "static/jO3xR-u7qv51ePEc5zH7A/pages/archives.js": 9,
+      "static/jO3xR-u7qv51ePEc5zH7A/pages/comment.js": 10,
+      "static/jO3xR-u7qv51ePEc5zH7A/pages/friends.js": 11,
+      "static/jO3xR-u7qv51ePEc5zH7A/pages/index.js": 12,
+      "static/jO3xR-u7qv51ePEc5zH7A/pages/post/[url].js": 13,
+      "static/jO3xR-u7qv51ePEc5zH7A/pages/tag/[tag].js": 14,
+      "static/jO3xR-u7qv51ePEc5zH7A/pages/tags.js": 15
+    },
+    "bySource": {},
+    "usedIds": [
+      0,
+      1,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9
+    ]
+  }
+}

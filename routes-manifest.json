@@ -1,0 +1,1 @@
+{"version":1,"basePath":"","redirects":[],"rewrites":[],"headers":[],"dynamicRoutes":[{"page":"/post/[url]","regex":"^\\/post\\/([^\\/]+?)(?:\\/)?$"},{"page":"/tag/[tag]","regex":"^\\/tag\\/([^\\/]+?)(?:\\/)?$"}]}
