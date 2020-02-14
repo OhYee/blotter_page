@@ -1,14 +1,18 @@
 import React from 'react';
-import App, { AppProps } from 'next/app';
+import App, { AppProps, AppContext } from 'next/app';
 
 import BasicLayout from '@/components/layout';
 const Layout = BasicLayout as any;
 
 import { Context, defaultContext, GlobalProps } from '@/utils/global';
 import { getCookie } from '@/utils/cookies';
+import { NextPageContext, NextComponentType } from 'next';
+import ErrorPage from './_error';
 
 interface MyAppProps extends AppProps {
   globalProps: GlobalProps;
+  status: number;
+  message: string;
 }
 interface MyAppState extends GlobalProps {}
 
@@ -26,11 +30,14 @@ export default class MyApp extends App<MyAppProps, {}, MyAppState> {
     };
   }
 
-  static async getInitialProps({ Component, router, ctx }) {
+  static async getInitialProps({ Component, router, ctx }: AppContext) {
     const isServer = !!ctx.req;
 
     var globalProps = defaultContext;
     var pageProps = {};
+
+    var status = 0;
+    var message = '';
 
     try {
       if (isServer && Layout.getInitialProps) {
@@ -41,9 +48,13 @@ export default class MyApp extends App<MyAppProps, {}, MyAppState> {
       }
     } catch (e) {
       console.log(e);
+      if (e.response && e.response.status && ctx.res) {
+        ctx.res.statusCode = status = e.response.status;
+        message = e.response.body;
+      }
     }
 
-    return { pageProps, globalProps };
+    return { pageProps, globalProps, status, message };
   }
 
   render() {
@@ -52,7 +63,11 @@ export default class MyApp extends App<MyAppProps, {}, MyAppState> {
     return (
       <Context.Provider value={this.state}>
         <Layout>
-          <Component {...pageProps} />
+          {this.props.status != 0 ? (
+            <ErrorPage status={this.props.status} />
+          ) : (
+            <Component {...pageProps} />
+          )}
         </Layout>
       </Context.Provider>
     );
