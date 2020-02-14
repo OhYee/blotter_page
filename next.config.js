@@ -9,6 +9,8 @@ const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const withTM = require('next-transpile-modules');
 const cssLoaderGetLocalIdent = require('css-loader/lib/getLocalIdent.js');
 
+const prod = process.env.NODE_ENV === 'production';
+
 // with ant design
 // https://juejin.im/post/5cc74b925188252e741cce09
 withAntd = (nextConfig = {}) => {
