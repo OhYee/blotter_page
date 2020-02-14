@@ -235,8 +235,7 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
                   <a href="http://beian.miit.gov.cn/">{context.beian}</a>
                 </p>
                 <p>
-                  Powered by
-                  <a href="https://github.com/OhYee/blotter">Blotter</a>
+                  Powered by <a href="https://github.com/OhYee/blotter">Blotter</a>
                   (Go + React)
                 </p>
               </div>
