@@ -2,7 +2,7 @@ import { notification } from 'antd';
 import axios from 'axios';
 // import { isBroswer } from '@/utils/prerender';
 
-const domain = '';
+const domain = typeof document === 'undefined' ? 'http://127.0.0.1:50000' : '';
 
 function parseURL(url: string): string {
   return domain + url;
