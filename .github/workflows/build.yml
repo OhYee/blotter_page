@@ -1,19 +1,23 @@
 name: Build and Deploy
 on: [push]
 jobs:
-  build-and-deploy:
-    runs-on: ubuntu-latest
+  deploy:
+    name: Deploy to GitHub Pages
+    runs-on: ubuntu-latest    
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          persist-credentials: false
-      - name: Build
-        run: npm install && npm build
-      - name: Deploy
-        uses: JamesIves/github-pages-deploy-action@releases/v3
-        with:
-          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-          BRANCH: gh-pages
-          FOLDER: .next
-          TARGET_FOLDER: .next
+    - uses: actions/checkout@master
+    - name: Use Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: 10.x
+    - name: npm install and build
+      run: |
+        npm install
+        npm run build
+    - name: Deploy
+      uses: s0/git-publish-subdir-action@master
+      env:
+        REPO: self
+        BRANCH: gh-pages
+        FOLDER: .next
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
