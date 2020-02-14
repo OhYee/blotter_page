@@ -1,11 +1,11 @@
 import React, { ComponentProps } from 'react';
 
 import Head from 'next/head';
+import Link from 'next/link';
 import { withRouter } from 'next/router';
 import { WithRouterProps } from 'next/dist/client/with-router';
 
-import { Card, PageHeader, Skeleton, Icon, Anchor } from 'antd';
-const { Link } = Anchor;
+import { Button, Card, PageHeader, Skeleton, Icon, Anchor } from 'antd';
 
 import TagPart from '@/components/tag';
 import Visiable from '@/components/visiable';
@@ -24,7 +24,7 @@ interface AnchorType {
   children: AnchorType[];
 }
 
-interface PostPageProps extends  ComponentProps<'base'>, WithRouterProps {
+interface PostPageProps extends ComponentProps<'base'>, WithRouterProps {
   post: Blotter.Post;
   anchors: AnchorType[];
 }
@@ -88,51 +88,60 @@ class PostPage extends React.Component<PostPageProps, PostPageState> {
   }
 
   render_post = () => {
-    if (this.props.post === undefined) {
-      return <Skeleton active={true} />;
-    } else {
-      return (
-        <article className={styles.post}>
-          <PageHeader className="shadow" title={this.props.post.title}>
-            <div>
-              <div className="right20">
-                <Icon type="eye" className="right5" />
-                {this.props.post.view}
-              </div>
-              <div className="right20">
-                <Icon type="calendar" className="right5" />
-                {this.props.post.publish_time}
-              </div>
-              {this.props.post.publish_time == this.props.post.edit_time ? null : (
-                <div className="right20">
-                  <Icon type="edit" className="right5" />
-                  {this.props.post.edit_time}
-                </div>
-              )}
-              <blockquote>{this.props.post.abstract}</blockquote>
-              <div>
-                <Icon type="tag" className="right20" />
-                {this.props.post.tags.map((tag: Blotter.Tag) => (
-                  <TagPart key={tag.short} tag={tag} />
-                ))}
-              </div>
+    return this.props.post === undefined ? (
+      <Skeleton active={true} />
+    ) : (
+      <article className={styles.post}>
+        <PageHeader className="shadow" title={this.props.post.title}>
+          <div>
+            <div className="right20">
+              <Icon type="eye" className="right5" />
+              {this.props.post.view}
             </div>
-          </PageHeader>
+            <div className="right20">
+              <Icon type="calendar" className="right5" />
+              {this.props.post.publish_time}
+            </div>
+            {this.props.post.publish_time == this.props.post.edit_time ? null : (
+              <div className="right20">
+                <Icon type="edit" className="right5" />
+                {this.props.post.edit_time}
+              </div>
+            )}
+            <Context.Consumer>
+              {context =>
+                context.token !== '' ? (
+                  <Link href={`/admin/post?url=${this.props.router.query.url}`}>
+                    <Button type="primary" size="small">
+                      编辑
+                    </Button>
+                  </Link>
+                ) : null
+              }
+            </Context.Consumer>
+            <blockquote>{this.props.post.abstract}</blockquote>
+            <div>
+              <Icon type="tag" className="right20" />
+              {this.props.post.tags.map((tag: Blotter.Tag) => (
+                <TagPart key={tag.short} tag={tag} />
+              ))}
+            </div>
+          </div>
+        </PageHeader>
 
-          <section
-            className="post-content"
-            dangerouslySetInnerHTML={{ __html: this.props.post.content }}
-          />
-        </article>
-      );
-    }
+        <section
+          className="post-content"
+          dangerouslySetInnerHTML={{ __html: this.props.post.content }}
+        />
+      </article>
+    );
   };
 
   render_anchor = (anchor: AnchorType) => {
     return (
-      <Link key={`${anchor.id}|${anchor.name}`} href={anchor.id} title={anchor.name}>
+      <Anchor.Link key={`${anchor.id}|${anchor.name}`} href={anchor.id} title={anchor.name}>
         {anchor.children.map(this.render_anchor)}
-      </Link>
+      </Anchor.Link>
     );
   };
 
