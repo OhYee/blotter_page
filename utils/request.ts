@@ -1,11 +1,8 @@
 import { notification } from 'antd';
 import axios from 'axios';
-// import { isBroswer } from '@/utils/prerender';
-
-const domain = typeof document === 'undefined' ? 'http://127.0.0.1:50000' : '';
 
 function parseURL(url: string): string {
-  return domain + url;
+  return (typeof document === 'undefined' ? 'http://127.0.0.1:50000' : '') + url;
   //   return url == '/api/friends' || url == '/api/menu' || url == '/api/post' || url == '/api/posts' || url == '/api/comments'
   //     ? domain + url
   //     : url;
