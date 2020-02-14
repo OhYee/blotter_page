@@ -11,14 +11,6 @@ export const defaultContext: GlobalProps = {
 
 export const Context = React.createContext(defaultContext);
 
-export declare interface InitialPropsParam {
-  pathname: string;
-  query: { [param: string]: string };
-  asPath: string;
-  req?: Request;
-  res?: Response;
-}
-
 export declare interface GlobalProps {
   callback: (props: GlobalProps) => void;
   menus: Blotter.Menu[];

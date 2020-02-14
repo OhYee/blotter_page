@@ -1,6 +1,7 @@
 import React, { ComponentProps } from 'react';
 
 import Head from 'next/head';
+import { NextPageContext } from 'next';
 
 import { Card, Badge, Row } from 'antd';
 
@@ -8,7 +9,7 @@ import TagPart from '@/components/tag';
 import Container from '@/components/container';
 
 import { tags } from '@/utils/api';
-import { InitialPropsParam, Context } from '@/utils/global';
+import {  Context } from '@/utils/global';
 import { sortTagsByPinYin, TagGroup } from '@/utils/sort';
 
 import styles from './tags.less';
@@ -31,7 +32,7 @@ class Tags extends React.Component<TagsProps, TagsState> {
     this.state = {};
   }
 
-  static async getInitialProps(args: InitialPropsParam) {
+  static async getInitialProps(args: NextPageContext) {
     var r = await tags();
 
     return {

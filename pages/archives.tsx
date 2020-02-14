@@ -1,6 +1,7 @@
 import React, { ComponentProps } from 'react';
 
 import Head from 'next/head';
+import { NextPageContext } from 'next';
 
 import Router, { withRouter } from 'next/router';
 import { WithRouterProps } from 'next/dist/client/with-router';
@@ -9,7 +10,7 @@ import PostList from '@/components/post_list';
 
 import { archives } from '@/utils/api';
 import { parseNumberParams } from '@/utils/parse';
-import { InitialPropsParam, Context } from '@/utils/global';
+import {  Context } from '@/utils/global';
 
 interface ArchivesProps extends  ComponentProps<'base'>, WithRouterProps {
   page: number;
@@ -30,7 +31,7 @@ export class Archives extends React.Component<ArchivesProps, ArchivesState> {
     posts: Array(10).fill(undefined),
   };
 
-  static async getInitialProps(args: InitialPropsParam) {
+  static async getInitialProps(args: NextPageContext) {
     console.log('Archives getInitialProps', args);
     var page = parseNumberParams('page', args.asPath, 1);
     var size = parseNumberParams('size', args.asPath, 10);

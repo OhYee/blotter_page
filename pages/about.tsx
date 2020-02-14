@@ -1,12 +1,13 @@
 import React, { ComponentProps } from 'react';
 
 import Head from 'next/head';
+import { NextPageContext } from 'next';
 
 import { Card } from 'antd';
 
 import Container from '@/components/container';
 
-import { InitialPropsParam, Context } from '@/utils/global';
+import {  Context } from '@/utils/global';
 
 interface AboutPageProps extends  ComponentProps<'base'> {}
 interface AboutPageState {}

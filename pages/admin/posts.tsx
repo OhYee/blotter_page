@@ -15,7 +15,7 @@ import Container from '@/components/container';
 import TagPart from '@/components/tag';
 
 import { adminPosts, postDelete } from '@/utils/api';
-import { InitialPropsParam, Context } from '@/utils/global';
+import {  Context } from '@/utils/global';
 import ShowNotification from '@/utils/notification';
 
 interface T extends Blotter.PostCard {

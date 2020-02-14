@@ -4,12 +4,12 @@ import Head from 'next/head';
 import { withRouter } from 'next/router';
 import { WithRouterProps } from 'next/dist/client/with-router';
 
-import { Card, Anchor } from 'antd';
+import { Card } from 'antd';
 
 import Container from '@/components/container';
 import CommentPart from '@/components/comment';
 
-import {  Context } from '@/utils/global';
+import { Context } from '@/utils/global';
 
 interface CommentPageProps extends ComponentProps<'base'>, WithRouterProps {}
 interface CommentPageState {}

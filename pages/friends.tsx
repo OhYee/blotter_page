@@ -1,12 +1,13 @@
 import React, { ComponentProps } from 'react';
 
 import Head from 'next/head';
+import { NextPageContext } from 'next';
 
 import { Row, Col, Card, Avatar, List, Divider, Tooltip, Typography } from 'antd';
 
 import Container from '@/components/container';
 
-import { InitialPropsParam, Context } from '@/utils/global';
+import {  Context } from '@/utils/global';
 import { friends } from '@/utils/api';
 
 import styles from './friends.less';
@@ -22,7 +23,7 @@ class Friends extends React.Component<FriendsProps, FriendsState> {
     friends: [],
   };
 
-  static async getInitialProps(args: InitialPropsParam) {
+  static async getInitialProps(args: NextPageContext) {
     var data = await friends();
     return { friends: data, rendered: true };
   }

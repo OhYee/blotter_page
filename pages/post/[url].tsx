@@ -1,5 +1,6 @@
 import React, { ComponentProps } from 'react';
 
+import { NextPageContext } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
 import { withRouter } from 'next/router';
@@ -13,9 +14,10 @@ import CommentPart from '@/components/comment';
 import Container from '@/components/container';
 
 import { post } from '@/utils/api';
-import { InitialPropsParam, Context } from '@/utils/global';
+import { Context } from '@/utils/global';
 
 import styles from './post.less';
+import { parseStringParams } from '@/utils/parse';
 
 interface AnchorType {
   name: string;
@@ -36,8 +38,12 @@ class PostPage extends React.Component<PostPageProps, PostPageState> {
     anchors: [],
   };
 
-  static async getInitialProps(args: InitialPropsParam) {
-    var r = await post(args.query.url);
+  static async getInitialProps(args: NextPageContext) {
+    var url = args.query.url;
+    if (Array.isArray(url)) {
+      url = url[0];
+    }
+    var r = await post(url);
     var anchors = PostPage.findAnchor(r.content);
     return { post: r, anchors: anchors } as PostPageProps;
   }

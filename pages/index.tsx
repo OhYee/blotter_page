@@ -1,5 +1,6 @@
 import React, { ComponentProps } from 'react';
 
+import { NextPageContext } from 'next';
 import Head from 'next/head';
 
 import { Input, Card } from 'antd';
@@ -7,7 +8,7 @@ import { Input, Card } from 'antd';
 import Container from '@/components/container';
 import PostList from '@/components/post_list';
 
-import { InitialPropsParam, Context } from '@/utils/global';
+import { Context } from '@/utils/global';
 
 import { indexPosts } from '@/utils/api';
 
@@ -20,7 +21,7 @@ interface IndexState {}
 class Index extends React.Component<IndexProps, IndexState> {
   static defaultProps = { posts: [] };
 
-  static async getInitialProps(args: InitialPropsParam) {
+  static async getInitialProps(args: NextPageContext) {
     var data = await indexPosts();
     return {
       posts: data.posts,

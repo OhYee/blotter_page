@@ -3,14 +3,15 @@ import React, { ComponentProps } from 'react';
 import Head from 'next/head';
 import Router, { withRouter } from 'next/router';
 import { WithRouterProps } from 'next/dist/client/with-router';
+import { NextPageContext } from 'next';
 
 import PostList from '@/components/post_list';
 
-import { parseNumberParams } from '@/utils/parse';
+import { parseNumberParams, parseStringParams } from '@/utils/parse';
 import { tagPosts } from '@/utils/api';
-import { InitialPropsParam, Context } from '@/utils/global';
+import { Context } from '@/utils/global';
 
-interface TagDetailProps extends  ComponentProps<'base'>, WithRouterProps {
+interface TagDetailProps extends ComponentProps<'base'>, WithRouterProps {
   page: number;
   total: number;
   size: number;
@@ -34,10 +35,10 @@ class TagDetail extends React.Component<TagDetailProps, TagDetailState> {
     };
   }
 
-  static async getInitialProps(args: InitialPropsParam) {
+  static async getInitialProps(args: NextPageContext) {
     var page = parseNumberParams('page', args.asPath, 1);
     var size = parseNumberParams('size', args.asPath, 10);
-    var tag = args.query['tag'];
+    var tag = parseStringParams('tag', args.asPath);
     var data = await tagPosts(tag, page, size);
     console.log({
       page: page,
