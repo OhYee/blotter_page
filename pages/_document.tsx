@@ -10,7 +10,6 @@ export default class MyDocument extends Document {
     return (
       <Html>
         <Head>
-          <title>Blotter</title>
           <meta name="viewport" content="width=device-width, initial-scale=1.0" />
           <meta name="theme-color" content="#1565c0" />
           <meta name="msapplication-TileColor" content="#1565c0" />

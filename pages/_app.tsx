@@ -1,13 +1,14 @@
 import React from 'react';
-import App, { AppProps, AppContext } from 'next/app';
 
+import App, { AppProps, AppContext } from 'next/app';
+import Head from 'next/head';
+
+import { getCookie } from '@/utils/cookies';
+import { Context, defaultContext, GlobalProps } from '@/utils/global';
 import BasicLayout from '@/components/layout';
 const Layout = BasicLayout as any;
 
-import { Context, defaultContext, GlobalProps } from '@/utils/global';
-import { getCookie } from '@/utils/cookies';
-import { NextPageContext, NextComponentType } from 'next';
-import ErrorPage from './_error';
+import ErrorPage from '@/pages/_error';
 
 interface MyAppProps extends AppProps {
   globalProps: GlobalProps;
@@ -62,6 +63,9 @@ export default class MyApp extends App<MyAppProps, {}, MyAppState> {
 
     return (
       <Context.Provider value={this.state}>
+        <Head>
+          <title>{this.state.blog_name}</title>
+        </Head>
         <Layout>
           {this.props.status != 0 ? (
             <ErrorPage status={this.props.status} />

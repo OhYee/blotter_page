@@ -1,9 +1,13 @@
-import Error from 'next/error';
-import { InitialPropsParam } from '@/utils/global';
 import { Component, ComponentProps } from 'react';
+
+import Head from 'next/head';
 import { NextPageContext } from 'next';
-import Container from '@/components/container';
+
 import { Card, PageHeader, Typography, Result } from 'antd';
+
+import Container from '@/components/container';
+
+import { Context } from '@/utils/global';
 
 interface ErrorPageProps extends ComponentProps<'base'> {
   status: number;
@@ -19,6 +23,13 @@ export default class ErrorPage extends Component<ErrorPageProps, ErrorPageState>
   render() {
     return (
       <Container>
+        <Context.Consumer>
+          {context => (
+            <Head>
+              <title>{`发生一个${this.props.status}错误！|${this.context.blog_name}`}</title>
+            </Head>
+          )}
+        </Context.Consumer>
         <Card>
           <PageHeader
             title={`发生一个${this.props.status}错误！`}
