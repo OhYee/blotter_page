@@ -1,3 +1,4 @@
+import { notification } from 'antd';
 import axios from 'axios';
 // import { isBroswer } from '@/utils/prerender';
 
@@ -41,11 +42,21 @@ export const request = async <T>(
   data: any,
   callback?: (data: T) => void,
 ): Promise<T> => {
-  var r = await axios({
-    method: method,
-    url: parseURL(url),
-    params: data,
-  });
+  try {
+    var r = await axios({
+      method: method,
+      url: parseURL(url),
+      params: method === 'get' ? data : undefined,
+      data: method === 'post' ? data : undefined,
+    });
+  } catch (e) {
+    console.log(e);
+    if (typeof document !== 'undefined') {
+      notification.error({ message: '请求发生错误', description: `${e}` });
+    }
+    throw e;
+  }
+
   if (callback) {
     callback(r.data);
   }
