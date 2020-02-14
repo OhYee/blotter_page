@@ -6,7 +6,10 @@
         "start": "next start -p 50002"
     },
     "dependencies": {
-        "@material-ui/core": "^4.9.2",
+        "next": "^9.2.1",
+        "rc-animate": "^2.10.2"
+    },
+    "devDependencies": {
         "@types/antd": "^1.0.0",
         "@types/node": "^13.7.0",
         "@types/react": "^16.9.19",
@@ -20,7 +23,6 @@
         "css": "^2.2.4",
         "fork-ts-checker-webpack-plugin": "^4.0.3",
         "less": "^3.10.3",
-        "next": "^9.2.1",
         "next-compose-plugins": "^2.2.0",
         "next-transpile-modules": "^3.0.2",
         "null-loader": "^3.0.0",
