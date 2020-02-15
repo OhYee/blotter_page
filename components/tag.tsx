@@ -2,7 +2,7 @@ import React from 'react';
 import { Avatar, Tag } from 'antd';
 import Link from 'next/link';
 
-// import styles from './tag.less';
+import styles from './tag.less';
 
 interface TagProps {
   tag?: Blotter.Tag;
@@ -22,7 +22,7 @@ class TagPart extends React.Component<TagProps, {}> {
   render() {
     return typeof this.props.tag === 'undefined' ? null : (
       <Tag
-        // className={styles.tag}
+        className={styles.tag}
         color={this.props.tag.color}
         closable={this.props.closable}
         onClose={() => {
