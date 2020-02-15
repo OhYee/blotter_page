@@ -1,7 +1,7 @@
 import React, { ComponentProps } from 'react';
 
 import Head from 'next/head';
-import { withRouter } from 'next/router';
+import Router, { withRouter } from 'next/router';
 import { WithRouterProps } from 'next/dist/client/with-router';
 
 import {
@@ -65,11 +65,14 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
   }
 
   componentDidMount() {
-    this.getData();
+    var url = this.props.router.query.url as string;
+    console.log(url);
+    if (url != '' && typeof url != 'undefined') {
+      this.getData(url);
+    }
   }
 
-  getData = async () => {
-    var url = this.props.router.query.url as string;
+  getData = async (url: string) => {
     var r = await adminPost(url);
     this.props.form.setFieldsValue({
       id: r.id,
@@ -79,7 +82,7 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
       head_image: r.head_image,
       view: r.view,
       publish_time: moment(new Date(r.publish_time)),
-    //   edit_time: moment(new Date(r.edit_time)),
+      //   edit_time: moment(new Date(r.edit_time)),
       published: r.published,
       raw: r.raw,
     });
@@ -171,6 +174,8 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
     var r = await postEdit(obj as Blotter.PostAll);
     ShowNotification(r);
     this.setState({ submitDisabled: false });
+    Router.push(`/admin/post?url=${obj.url}`);
+    this.getData(obj.url);
   };
 
   renderEditor = () => {

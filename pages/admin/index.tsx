@@ -2,7 +2,7 @@ import React, { ComponentProps } from 'react';
 
 import Head from 'next/head';
 
-import { Card } from 'antd';
+import { Card, List, Typography } from 'antd';
 
 import Container from '@/components/container';
 
@@ -34,9 +34,21 @@ class AdminIndex extends React.Component<AdminIndexProps, AdminIndexState> {
           )}
         </Context.Consumer>
         <Card>
-          <Link href="/admin/posts">
-            <a>文章管理</a>
-          </Link>
+          <List
+            dataSource={[
+              { title: '标签管理', url: '/admin/tags' },
+              { title: '文章管理', url: '/admin/posts' },
+            ]}
+            renderItem={item => (
+              <List.Item key={item.title}>
+                <Typography.Text>
+                  <Link href={item.url}>
+                    <a>{item.title}</a>
+                  </Link>
+                </Typography.Text>
+              </List.Item>
+            )}
+          />
         </Card>
       </Container>
     );
