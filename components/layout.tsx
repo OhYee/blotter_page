@@ -205,7 +205,7 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
               src="/static/img/logo.svg"
               width={'100%'}
               height={'100%'}
-              style={{ background: 'white', borderRadius: '100px' }}
+              style={{ background: 'white', borderRadius: '100px', maxWidth: '120px' }}
             />
           </Row>
 
