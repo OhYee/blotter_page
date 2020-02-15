@@ -159,3 +159,42 @@ export const postEdit = async (
 export const postDelete = async (id: string, callback?: RequestCallback<Blotter.APIResponse>) => {
   return await request('get', '/api/admin/post/delete', { id }, callback);
 };
+
+export const adminTags = async (
+  keyword: string,
+  page: number,
+  number: number,
+  sort_field: string,
+  sort_inc: boolean,
+  callback?: RequestCallback<{ total: number; tags: Blotter.TagWithCount[] }>,
+) => {
+  return await request(
+    'get',
+    '/api/tags',
+    { keyword, number: number, offset: (page - 1) * number, sort_field, sort_inc },
+    callback,
+  );
+};
+
+export const tagEdit = async (
+  id: string,
+  name: string,
+  short: string,
+  color: string,
+  icon: string,
+  callback?: RequestCallback<Blotter.APIResponse>,
+) => {
+  return await request('get', '/api/admin/tag/edit', { id, name, short, color, icon }, callback);
+};
+
+export const tagDelete = async (id: string, callback?: RequestCallback<Blotter.APIResponse>) => {
+  return await request('get', '/api/admin/tag/delete', { id }, callback);
+};
+
+export const tagExisted = async (
+  id: string,
+  short: string,
+  callback?: RequestCallback<{ existed: boolean }>,
+) => {
+  return await request('get', '/api/tag/existed', { id, short }, callback);
+};
