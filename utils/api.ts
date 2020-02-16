@@ -119,7 +119,7 @@ export const addComment = async (
 };
 
 export const markdown = async (source: string, callback?: RequestCallback<{ html: string }>) => {
-  return await request('get', '/api/markdown', { source }, callback);
+  return await request('post', '/api/markdown', { source }, callback);
 };
 
 export const tagsSearch = async (
