@@ -20,7 +20,7 @@ export const posts = async (
 };
 
 export const indexPosts = async (callback?: RequestCallback<PostCardWithTotal>) => {
-  return await posts({ offset: 0, number: 10 }, callback);
+  return await posts({ offset: 0, number: 5 }, callback);
 };
 
 export const archives = async (
@@ -35,9 +35,9 @@ export const tagPosts = async (
   tag: string,
   page: number,
   size: number,
-  callback?: RequestCallback<PostCardWithTotal>,
+  callback?: RequestCallback<PostCardWithTotal & { tag: Blotter.Tag }>,
 ) => {
-  return await posts({ offset: (page - 1) * size, number: size, tag }, callback);
+  return request('get', '/api/tag', { tag, offset: (page - 1) * size, number: size }, callback);
 };
 
 export const adminPosts = async (

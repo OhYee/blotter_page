@@ -5,9 +5,12 @@ import Router, { withRouter } from 'next/router';
 import { WithRouterProps } from 'next/dist/client/with-router';
 import { NextPageContext } from 'next';
 
-import PostList from '@/components/post_list';
+import { Card, Descriptions } from 'antd';
 
-import { parseNumberParams, parseStringParams } from '@/utils/parse';
+import PostList from '@/components/post_list';
+import Container from '@/components/container';
+
+import { parseNumberParams } from '@/utils/parse';
 import { tagPosts } from '@/utils/api';
 import { Context } from '@/utils/global';
 
@@ -16,6 +19,7 @@ interface TagDetailProps extends ComponentProps<'base'>, WithRouterProps {
   total: number;
   size: number;
   posts: Blotter.PostCard[];
+  tag: Blotter.Tag;
 }
 
 interface TagDetailState {}
@@ -26,6 +30,7 @@ class TagDetail extends React.Component<TagDetailProps, TagDetailState> {
     total: 1,
     size: 10,
     posts: [],
+    tag: undefined,
   };
 
   constructor(props: any) {
@@ -38,17 +43,15 @@ class TagDetail extends React.Component<TagDetailProps, TagDetailState> {
   static async getInitialProps(args: NextPageContext) {
     var page = parseNumberParams('page', args.asPath, 1);
     var size = parseNumberParams('size', args.asPath, 10);
-    var tag = parseStringParams('tag', args.asPath);
+    var tag = args.query.tag;
+    if (Array.isArray(tag)) {
+      tag = tag[0];
+    }
     var data = await tagPosts(tag, page, size);
-    console.log({
-      page: page,
-      size: size,
-      posts: data.posts,
-      total: data.total,
-    } as TagDetailProps);
     return {
       page: page,
       size: size,
+      tag: data.tag,
       posts: data.posts,
       total: data.total,
     } as TagDetailProps;
@@ -59,28 +62,43 @@ class TagDetail extends React.Component<TagDetailProps, TagDetailState> {
     if (typeof size === 'undefined') {
       size = this.props.size;
     }
-    Router.push(`/tag/${this.props.router.query.tag}?size=${size}&page=${page}`);
+    Router.push(`/tag/[tag]`, `/tag/${this.props.router.query.tag}?size=${size}&page=${page}`);
   };
 
   render() {
     console.log('render', this.props, this.state);
     return (
-      <div>
+      <Container>
         <Context.Consumer>
           {context => (
             <Head>
-              <title>{`标签页|${context.blog_name}`}</title>
+              <title>{`${this.props.tag.name}|标签页|${context.blog_name}`}</title>
             </Head>
           )}
         </Context.Consumer>
+
+        <Card>
+          <Descriptions title="标签信息" bordered layout="vertical">
+            <Descriptions.Item label="标签名称">{this.props.tag.name}</Descriptions.Item>
+            <Descriptions.Item label="标签链接">{this.props.tag.short}</Descriptions.Item>
+            <Descriptions.Item label="标签图片">
+              <img
+                style={{ maxWidth: '50px' }}
+                src={this.props.tag.icon === '' ? '/static/img/noimg.png' : this.props.tag.icon}
+              />
+            </Descriptions.Item>
+          </Descriptions>
+        </Card>
+
         <PostList
+          header={`共有${this.props.total}篇文章`}
           posts={this.props.posts}
           page={this.props.page}
           size={this.props.size}
           total={this.props.total}
           callback={this.onChange}
         />
-      </div>
+      </Container>
     );
   }
 }
