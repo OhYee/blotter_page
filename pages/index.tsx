@@ -35,16 +35,14 @@ class Index extends React.Component<IndexProps, IndexState> {
 
   render_search = () => {
     return (
-      <Container>
-        <Card className="shadow">
-          <Input placeholder="搜索文章(还没做，反正也不急着用)" disabled />
-        </Card>
-      </Container>
+      <Card className="shadow" style={{ marginBottom: '20px' }}>
+        <Input placeholder="搜索文章(还没做，反正也不急着用)" disabled />
+      </Card>
     );
   };
   render() {
     return (
-      <div>
+      <Container>
         <Context.Consumer>
           {context => (
             <Head>
@@ -54,7 +52,7 @@ class Index extends React.Component<IndexProps, IndexState> {
         </Context.Consumer>
         {this.render_search()}
         <PostList posts={this.props.posts} />
-      </div>
+      </Container>
     );
   }
 }

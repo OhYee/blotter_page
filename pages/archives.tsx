@@ -7,12 +7,13 @@ import Router, { withRouter } from 'next/router';
 import { WithRouterProps } from 'next/dist/client/with-router';
 
 import PostList from '@/components/post_list';
+import Container from '@/components/container';
 
 import { archives } from '@/utils/api';
 import { parseNumberParams } from '@/utils/parse';
-import {  Context } from '@/utils/global';
+import { Context } from '@/utils/global';
 
-interface ArchivesProps extends  ComponentProps<'base'>, WithRouterProps {
+interface ArchivesProps extends ComponentProps<'base'>, WithRouterProps {
   page: number;
   total: number;
   size: number;
@@ -60,7 +61,7 @@ export class Archives extends React.Component<ArchivesProps, ArchivesState> {
 
   render() {
     return (
-      <div>
+      <Container>
         <Context.Consumer>
           {context => (
             <Head>
@@ -69,6 +70,7 @@ export class Archives extends React.Component<ArchivesProps, ArchivesState> {
           )}
         </Context.Consumer>
         <PostList
+          header={`共${this.props.total}篇文章`}
           posts={this.props.posts}
           page={this.props.page}
           size={this.props.size}
@@ -76,7 +78,7 @@ export class Archives extends React.Component<ArchivesProps, ArchivesState> {
           loading={this.state.loading}
           callback={this.onChange}
         />
-      </div>
+      </Container>
     );
   }
 }
