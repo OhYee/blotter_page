@@ -13,14 +13,20 @@ export const posts = async (
     tag?: string;
     sort_field?: string;
     sort_type?: -1 | 1;
+    search?: string;
   },
   callback?: RequestCallback<PostCardWithTotal>,
 ) => {
   return await request('get', '/api/posts', params, callback);
 };
 
-export const indexPosts = async (callback?: RequestCallback<PostCardWithTotal>) => {
-  return await posts({ offset: 0, number: 5 }, callback);
+export const indexPosts = async (
+  search: string,
+  page: number,
+  size: number,
+  callback?: RequestCallback<PostCardWithTotal>,
+) => {
+  return await posts({ search, offset: (page - 1) * size, number: size }, callback);
 };
 
 export const archives = async (
