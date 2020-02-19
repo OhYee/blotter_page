@@ -2,6 +2,7 @@ import React, { ComponentProps } from 'react';
 
 import Head from 'next/head';
 import { NextPageContext } from 'next';
+import Link from 'next/link';
 
 import Router, { withRouter } from 'next/router';
 import { WithRouterProps } from 'next/dist/client/with-router';
@@ -53,10 +54,9 @@ export class Archives extends React.Component<ArchivesProps, ArchivesState> {
   }
 
   onChange = (page: number, size?: number): void => {
-    if (typeof size === 'undefined') {
-      size = this.props.size;
+    if (typeof size !== 'undefined' && size != this.props.size) {
+      Router.push(`/archives?page=${page}&size=${size}`);
     }
-    Router.push(`/archives?size=${size}&page=${page}`);
   };
 
   render() {
@@ -77,6 +77,13 @@ export class Archives extends React.Component<ArchivesProps, ArchivesState> {
           total={this.props.total}
           loading={this.state.loading}
           callback={this.onChange}
+          pageRender={(page, type, origin) =>
+            type == 'page' ? (
+              <Link href={`/archives?page=${page}&size=${this.props.size}`}>{origin}</Link>
+            ) : (
+              origin
+            )
+          }
         />
       </Container>
     );

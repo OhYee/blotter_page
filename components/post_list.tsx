@@ -1,6 +1,6 @@
 import React, { ComponentProps } from 'react';
 
-import { Pagination, List } from 'antd';
+import { List } from 'antd';
 
 import PostCard from '@/components/post_card';
 import Container from '@/components/container';
@@ -13,6 +13,11 @@ type PostListProps = {
   total?: number;
   callback?: (page: number, size?: number) => void;
   header?: string;
+  pageRender?: (
+    page: number,
+    type: 'page' | 'prev' | 'next' | 'jump-prev' | 'jump-next',
+    originalElement: React.ReactElement<HTMLElement>,
+  ) => React.ReactNode;
 };
 
 type PostListState = {};
@@ -34,8 +39,6 @@ class PostList extends React.Component<PostListProps & ComponentProps<'base'>, P
 
   render() {
     var pagination =
-      typeof this.props.page === 'undefined' ||
-      typeof this.props.size === 'undefined' ||
       typeof this.props.callback === 'undefined'
         ? false
         : {
@@ -46,20 +49,21 @@ class PostList extends React.Component<PostListProps & ComponentProps<'base'>, P
             total: this.props.total,
             onChange: this.props.callback,
             onShowSizeChange: this.props.callback,
+            itemRender: this.props.pageRender,
           };
     return (
-        <List
-          header={this.props.header}
-          dataSource={this.props.posts}
-          renderItem={post => (
-            <List.Item key={post.url}>
-              <PostCard post={post} loading={this.props.loading} />
-            </List.Item>
-          )}
-          grid={{ gutter: 10 }}
-          split={false}
-          pagination={pagination}
-        />
+      <List
+        header={this.props.header}
+        dataSource={this.props.posts}
+        renderItem={post => (
+          <List.Item key={post.url}>
+            <PostCard post={post} loading={this.props.loading} />
+          </List.Item>
+        )}
+        grid={{ gutter: 10 }}
+        split={false}
+        pagination={pagination}
+      />
     );
   }
 }

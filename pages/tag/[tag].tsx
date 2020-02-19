@@ -4,6 +4,7 @@ import Head from 'next/head';
 import Router, { withRouter } from 'next/router';
 import { WithRouterProps } from 'next/dist/client/with-router';
 import { NextPageContext } from 'next';
+import Link from 'next/link';
 
 import { Card, Descriptions } from 'antd';
 
@@ -58,11 +59,9 @@ class TagDetail extends React.Component<TagDetailProps, TagDetailState> {
   }
 
   onChange = (page: number, size?: number): void => {
-    console.log('onChange', page, size);
-    if (typeof size === 'undefined') {
-      size = this.props.size;
+    if (typeof size !== 'undefined' && this.props.size != size) {
+      Router.push(`/tag/[tag]`, `/tag/${this.props.router.query.tag}?page=${page}&size=${size}`);
     }
-    Router.push(`/tag/[tag]`, `/tag/${this.props.router.query.tag}?size=${size}&page=${page}`);
   };
 
   render() {
@@ -97,6 +96,18 @@ class TagDetail extends React.Component<TagDetailProps, TagDetailState> {
           size={this.props.size}
           total={this.props.total}
           callback={this.onChange}
+          pageRender={(page, type, origin) =>
+            type == 'page' ? (
+              <Link
+                href="/tag/[tag]"
+                as={`/tag/${this.props.router.query.tag}?page=${page}&size=${this.props.size}`}
+              >
+                {origin}
+              </Link>
+            ) : (
+              origin
+            )
+          }
         />
       </Container>
     );
