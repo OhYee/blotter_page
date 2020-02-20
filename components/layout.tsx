@@ -220,6 +220,23 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
     );
   };
 
+  renderRSSIcon = () => (
+    <svg
+      className="icon"
+      viewBox="0 0 1024 1024"
+      version="1.1"
+      xmlns="http://www.w3.org/2000/svg"
+      p-id="1115"
+      data-spm-anchor-id="a313x.7781069.0.i1"
+    >
+      <path
+        d="M42.666667 853.333333a128 128 0 1 1 256 0 128 128 0 0 1-256 0z m938.666666 128h-178.773333c0-418.986667-340.906667-759.893333-759.893333-759.893333V42.666667c517.546667 0 938.666667 421.12 938.666666 938.666666z m-298.666666 0h-182.826667c0-252.074667-205.098667-457.130667-457.173333-457.130666V341.333333c352.896 0 640 287.104 640 640z"
+        fill="#EE802F"
+        p-id="1116"
+      ></path>
+    </svg>
+  );
+
   renderFooter = () => {
     return (
       <Container>
@@ -227,16 +244,30 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
           {context => {
             return (
               <div className={styles.footer}>
-                <p>© 2017 – {new Date().getFullYear()}</p>
+                <p>
+                  <a href="/rss.xml">
+                    <Icon style={{ width: '1em' }} component={this.renderRSSIcon} />
+                    RSS订阅
+                  </a>
+                </p>
                 <p>
                   <Icon type="eye" style={{ fontSize: '0.75em' }} /> 全站访问量 {context.view}
                 </p>
                 <p>
+                  <span className="right5">2017 – {new Date().getFullYear()}</span>
                   <a href="http://beian.miit.gov.cn/">{context.beian}</a>
                 </p>
                 <p>
                   Powered by <a href="https://github.com/OhYee/blotter">Blotter</a>
                   (Go + React)
+                </p>
+                <p>
+                  <span className="right5">
+                    <a href="/sitemap.txt">站点地图(TXT)</a>
+                  </span>
+                  <span>
+                    <a href="/sitemap.xml">站点地图(XML)</a>
+                  </span>
                 </p>
               </div>
             );
