@@ -38,6 +38,7 @@ class AdminIndex extends React.Component<AdminIndexProps, AdminIndexState> {
             dataSource={[
               { title: '标签管理', url: '/admin/tags' },
               { title: '文章管理', url: '/admin/posts' },
+              { title: '友链管理', url: '/admin/friends' },
             ]}
             renderItem={item => (
               <List.Item key={item.title}>
