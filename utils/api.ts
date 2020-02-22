@@ -204,3 +204,10 @@ export const tagExisted = async (
 ) => {
   return await request('get', '/api/tag/existed', { id, short }, callback);
 };
+
+export const friendsSet = async (
+  friends: Blotter.Friend[],
+  callback?: RequestCallback<Blotter.APIResponse>,
+) => {
+  return await request('post', '/api/admin/friends/set', { friends }, callback);
+};
