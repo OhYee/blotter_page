@@ -63,7 +63,9 @@ class Friends extends React.Component<FriendsProps, FriendsState> {
       <Col key={friend.link} lg={8}>
         <Card hoverable={true}>
           <Card.Meta
-            avatar={<Avatar src={friend.image} />}
+            avatar={
+              <Avatar icon={<img src={friend.image} {...{ referrerPolicy: 'no-referrer' }} />} />
+            }
             title={
               <a href={friend.link} target="_blank" style={{ color: 'black' }}>
                 {friend.name}

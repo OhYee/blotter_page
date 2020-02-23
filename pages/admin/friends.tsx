@@ -108,7 +108,9 @@ class AdminTagList extends React.Component<AdminTagListProps, AdminTagListState>
       title: '图片预览',
       key: 'image_preview',
       width: '10%',
-      render: (_, record, idx) => <img width={'50px'} src={record.image} />,
+      render: (_, record, idx) => (
+        <img width={'50px'} src={record.image} {...{ referrerPolicy: 'no-referrer' }} />
+      ),
     },
     {
       title: '操作',
