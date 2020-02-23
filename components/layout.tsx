@@ -273,7 +273,7 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
                   <p className={styles.friends}>
                     <strong>友情链接：</strong>
                     {context.friends.map(friend => (
-                      <span>
+                      <span key={friend.name}>
                         <a href={friend.link}>{friend.name}</a>
                       </span>
                     ))}
