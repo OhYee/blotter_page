@@ -13,7 +13,8 @@ export default class MyDocument extends Document {
           <meta name="viewport" content="width=device-width, initial-scale=1.0" />
           <meta name="theme-color" content="#1565c0" />
           <meta name="msapplication-TileColor" content="#1565c0" />
-          <meta name="msapplication-TileImage" content="icon.png" />
+          <meta name="msapplication-TileImage" content="/static/img/logo_196x196.png" />
+          <link rel="shortcut icon" href="/static/img/favicon.ico"></link>
           <link
             rel="stylesheet"
             href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"
