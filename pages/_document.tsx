@@ -21,6 +21,22 @@ export default class MyDocument extends Document {
             integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq"
             crossOrigin="anonymous"
           ></link>
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `(function(){
+            var bp = document.createElement('script');
+            var curProtocol = window.location.protocol.split(':')[0];
+            if (curProtocol === 'https') {
+                bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+            }
+            else {
+                bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+            }
+            var s = document.getElementsByTagName("script")[0];
+            s.parentNode.insertBefore(bp, s);
+        })();`,
+            }}
+          ></script>
         </Head>
         <body>
           <Main />
