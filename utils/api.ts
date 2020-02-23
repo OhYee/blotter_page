@@ -79,6 +79,7 @@ export const layout = async (
     view: number;
     beian: string;
     blog_name: string;
+    friends: Blotter.FriendSimple[];
   }>,
 ) => {
   return await request('get', '/api/layout', {}, callback);
