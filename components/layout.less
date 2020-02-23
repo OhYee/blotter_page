@@ -106,6 +106,12 @@ code {
 .footer {
   text-align: center;
   line-height: 1em;
-  //   border-top: #aaa 1px solid;
   padding-top: 15px;
+
+  p.friends {
+    span:not(:last-child)::after {
+      content: ' ';
+      padding: 0px 0.5em;
+    }
+  }
 }

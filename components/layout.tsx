@@ -269,6 +269,16 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
                     <a href="/sitemap.xml">站点地图(XML)</a>
                   </span>
                 </p>
+                {context.friends.length > 0 ? (
+                  <p className={styles.friends}>
+                    <strong>友情链接：</strong>
+                    {context.friends.map(friend => (
+                      <span>
+                        <a href={friend.link}>{friend.name}</a>
+                      </span>
+                    ))}
+                  </p>
+                ) : null}
               </div>
             );
           }}
