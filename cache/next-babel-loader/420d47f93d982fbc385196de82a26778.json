@@ -1,1 +1,0 @@
-{"ast":null,"code":"import React from 'react';\nexport var defaultContext = {\n  callback: function callback() {},\n  menus: [],\n  beian: '',\n  view: 0,\n  blog_name: 'blotter',\n  token: ''\n};\nexport var Context = React.createContext(defaultContext);","map":null,"metadata":{},"sourceType":"module"}
