@@ -53,11 +53,6 @@ declare namespace Blotter {
     show: boolean;
     recv: boolean;
   }
-  interface Site {
-    view: number;
-    beian: string;
-    friends: FriendSimple[];
-  }
   interface FriendSimple {
     link: string;
     name: string;
