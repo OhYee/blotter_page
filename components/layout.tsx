@@ -255,7 +255,7 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
                 </p>
                 <p>
                   <span className="right5">2017 – {new Date().getFullYear()}</span>
-                  <a href="http://beian.miit.gov.cn/">{context.beian}</a>
+                  <a href="//beian.miit.gov.cn/">{context.beian}</a>
                 </p>
                 <p>
                   Powered by <a href="https://github.com/OhYee/blotter">Blotter</a>
