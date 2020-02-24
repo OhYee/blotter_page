@@ -60,7 +60,7 @@ class PostCard extends React.Component<PostCardProps, {}> {
         </div>
 
         <Divider style={{ margin: '10px 0' }} />
-        <div>
+        <div style={{ lineHeight: '2em' }}>
           <Icon type="tag" className="right20" />
           {post.tags.map((tag: Blotter.Tag) => (
             <TagPart key={tag.short} tag={tag} />
