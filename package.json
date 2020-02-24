@@ -7,7 +7,9 @@
     },
     "dependencies": {
         "next": "^9.2.1",
-        "rc-animate": "^2.10.2"
+        "rc-animate": "^2.10.2",
+        "react-dnd": "^10.0.2",
+        "react-dnd-html5-backend": "^10.0.2"
     },
     "devDependencies": {
         "@types/antd": "^1.0.0",
@@ -28,8 +30,6 @@
         "next-transpile-modules": "^3.0.2",
         "null-loader": "^3.0.0",
         "react": "^16.12.0",
-        "react-dnd": "^10.0.2",
-        "react-dnd-html5-backend": "^10.0.2",
         "react-dom": "^16.12.0",
         "react-responsive": "^8.0.3",
         "react-router": "^5.1.2",
