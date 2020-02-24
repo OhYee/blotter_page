@@ -158,6 +158,14 @@ class PostPage extends React.Component<PostPageProps, PostPageState> {
           {context => (
             <Head>
               <title>{`${this.props.post.title}|${context.blog_name}`}</title>
+              <meta
+                name="keywords"
+                key="keywords"
+                content={
+                  Array.isArray(this.props.post.keywords) ? this.props.post.keywords.join(',') : ''
+                }
+              />
+              <meta key="description" name="description" content={this.props.post.abstract} />
             </Head>
           )}
         </Context.Consumer>
