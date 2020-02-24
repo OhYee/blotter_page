@@ -2,8 +2,9 @@ import React, { ComponentProps } from 'react';
 
 import { NextPageContext } from 'next';
 import Head from 'next/head';
+import Link from 'next/link';
 
-import { Input, Card, Icon } from 'antd';
+import { Input, Card, Icon, Button } from 'antd';
 
 import Container from '@/components/container';
 import PostList from '@/components/post_list';
@@ -130,6 +131,18 @@ class Index extends React.Component<IndexProps, IndexState> {
             total={this.state.total}
             callback={this.state.callback}
           />
+          <div style={{ textAlign: 'center' }}>
+            <Link href="/archives">
+              <Button
+                type="dashed"
+                style={{
+                  background: 'transparent',
+                }}
+              >
+                查看更多
+              </Button>
+            </Link>
+          </div>
         </Container>
       </div>
     );
