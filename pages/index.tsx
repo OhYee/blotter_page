@@ -4,7 +4,8 @@ import { NextPageContext } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
 
-import { Input, Card, Icon, Button } from 'antd';
+import { Input, Card, Button } from 'antd';
+import { Icon } from '@ant-design/compatible';
 
 import Container from '@/components/container';
 import PostList from '@/components/post_list';

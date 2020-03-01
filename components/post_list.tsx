@@ -53,6 +53,8 @@ class PostList extends React.Component<PostListProps & ComponentProps<'base'>, P
           };
     return (
       <List
+        itemLayout="horizontal"
+        grid={{ column: 1, gutter: 10 }}
         header={this.props.header}
         dataSource={this.props.posts}
         renderItem={post => (
@@ -60,7 +62,6 @@ class PostList extends React.Component<PostListProps & ComponentProps<'base'>, P
             <PostCard post={post} loading={this.props.loading} />
           </List.Item>
         )}
-        grid={{ gutter: 10 }}
         split={false}
         pagination={pagination}
       />

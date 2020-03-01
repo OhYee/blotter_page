@@ -3,7 +3,8 @@ import React, { ComponentProps, Ref } from 'react';
 import PostList from '@/components/post_list';
 
 import { tagsSearch } from '@/utils/api';
-import { Select, Tag, Icon } from 'antd';
+import { Select, Tag } from 'antd';
+import { Icon } from '@ant-design/compatible';
 import { waitUntil } from '@/utils/debounce';
 import TagPart from '@/components/tag';
 

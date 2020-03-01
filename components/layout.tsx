@@ -5,9 +5,11 @@ import Head from 'next/head';
 import { withRouter } from 'next/router';
 import { WithRouterProps } from 'next/dist/client/with-router';
 
-import { Affix, Button, Layout, BackTop, Row, Divider, Form, Menu, Icon, Modal, Input } from 'antd';
+import { Affix, Button, Layout, BackTop, Row, Divider, Form, Menu, Modal, Input } from 'antd';
+import { Icon } from '@ant-design/compatible';
 const { Footer, Sider, Content } = Layout;
-import { FormComponentProps } from 'antd/lib/form';
+import { FormInstance } from 'antd/lib/form';
+// import { FormComponentProps } from 'antd/lib/form';
 
 import Container from '@/components/container';
 
@@ -18,7 +20,7 @@ import { setCookie } from '@/utils/cookies';
 
 import styles from './layout.less';
 
-interface BasicLayoutProps extends ComponentProps<'base'>, FormComponentProps, WithRouterProps {
+interface BasicLayoutProps extends ComponentProps<'base'>, WithRouterProps {
   //   menus: Blotter.Menu[];
   //   beian: string;
   //   view: number;
@@ -37,6 +39,7 @@ interface BasicLayoutState {
 
 class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
   static contextType = Context;
+  formRef = React.createRef<FormInstance>();
 
   static async getInitialProps(args: any) {
     var r = await layout();
@@ -81,7 +84,7 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
         type="primary"
         shape="circle"
         size="large"
-        icon={this.state.collapsed ? 'bars' : 'left'}
+        icon={this.state.collapsed ? <Icon type="bars" /> : <Icon type="left" />}
         className="shadow"
         onClick={this.onCollapseButtonClick}
       />
@@ -102,7 +105,8 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
 
   loginOK = async () => {
     this.setState({ okDisabled: true });
-    var { username, password } = this.props.form.getFieldsValue(['username', 'password']);
+
+    var { username, password } = this.formRef.current.getFieldsValue(['username', 'password']);
     var r = await login(username, password);
     if (ShowNotification(r)) {
       this.context.callback({ token: r.token });
@@ -163,23 +167,19 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
           onCancel={this.loginCancel}
           okButtonProps={{ disabled: this.state.okDisabled }}
         >
-          <Form>
-            <Form.Item>
-              {this.props.form.getFieldDecorator('username')(
-                <Input
-                  prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                  placeholder="用户名"
-                />,
-              )}
+          <Form ref={this.formRef}>
+            <Form.Item name="username">
+              <Input
+                prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                placeholder="用户名"
+              />
             </Form.Item>
-            <Form.Item>
-              {this.props.form.getFieldDecorator(`password`)(
-                <Input.Password
-                  prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                  placeholder="密码"
-                  onPressEnter={this.loginOK}
-                />,
-              )}
+            <Form.Item name="password">
+              <Input.Password
+                prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                placeholder="密码"
+                onPressEnter={this.loginOK}
+              />
             </Form.Item>
           </Form>
         </Modal>
@@ -200,7 +200,7 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
         onBreakpoint={this.onBreakpoint}
       >
         <div className={styles.sider}>
-          <Row type="flex" justify="center" className={styles.avatar}>
+          <Row justify="center" className={styles.avatar}>
             <img
               src="/static/img/logo.svg"
               width={'100%'}
@@ -320,4 +320,4 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
   }
 }
 
-export default Form.create<BasicLayoutProps>({ name: 'BasicLayout' })(withRouter(BasicLayout));
+export default withRouter(BasicLayout);

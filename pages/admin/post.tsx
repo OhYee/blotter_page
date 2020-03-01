@@ -10,14 +10,14 @@ import {
   DatePicker,
   Divider,
   Form,
-  Icon,
   Input,
   InputNumber,
   Switch,
   Row,
   Col,
 } from 'antd';
-import { FormComponentProps } from 'antd/lib/form';
+import { Icon } from '@ant-design/compatible';
+import { FormInstance } from 'antd/lib/form';
 
 import moment from 'moment';
 import MediaQuery from 'react-responsive';
@@ -34,7 +34,7 @@ import styles from '@/pages/post/post.less';
 import { Context } from '@/utils/global';
 import ShowNotification from '@/utils/notification';
 
-interface PostEditProps extends ComponentProps<'base'>, FormComponentProps, WithRouterProps {}
+interface PostEditProps extends ComponentProps<'base'>, WithRouterProps {}
 
 interface PostEditState {
   raw: string;
@@ -49,6 +49,7 @@ interface PostEditState {
 
 class PostEdit extends React.Component<PostEditProps, PostEditState> {
   static defaultProps = {};
+  formRef = React.createRef<FormInstance>();
   now = moment(new Date());
   constructor(props: any) {
     super(props);
@@ -66,7 +67,6 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
 
   componentDidMount() {
     var url = this.props.router.query.url as string;
-    console.log(url);
     if (url != '' && typeof url != 'undefined') {
       this.getData(url);
     }
@@ -74,7 +74,7 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
 
   getData = async (url: string) => {
     var r = await adminPost(url);
-    this.props.form.setFieldsValue({
+    this.formRef.current.setFieldsValue({
       id: r.id,
       title: r.title,
       url: r.url,
@@ -90,7 +90,6 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
   };
 
   onBigScreen = (match: boolean) => {
-    console.log(match);
     this.setState({ bigScreen: match });
   };
 
@@ -131,7 +130,7 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
 
   previewClick = () => {
     if (!this.state.preview) {
-      this.renderMarkdown(this.props.form.getFieldValue('raw'));
+      this.renderMarkdown(this.formRef.current.getFieldValue('raw'));
     }
     this.setState(state => ({
       preview: !state.preview,
@@ -155,7 +154,7 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
 
   submit = async () => {
     this.setState({ submitDisabled: true });
-    var obj = this.props.form.getFieldsValue([
+    var obj = this.formRef.current.getFieldsValue([
       'id',
       'title',
       'url',
@@ -170,7 +169,6 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
     obj.tags = this.state.tags.map(tag => tag.id);
     obj.publish_time = obj.publish_time.unix();
     obj.edit_time = obj.edit_time.unix();
-    console.log(obj);
     var r = await postEdit(obj as Blotter.PostAll);
     ShowNotification(r);
     this.setState({ submitDisabled: false });
@@ -180,10 +178,8 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
 
   renderEditor = () => {
     return (
-      <Form.Item>
-        {this.props.form.getFieldDecorator(`raw`, { initialValue: '', normalize: this.onChange })(
-          <Input.TextArea autoSize={{ minRows: 15 }} spellCheck="false"></Input.TextArea>,
-        )}
+      <Form.Item name="raw">
+        <Input.TextArea autoSize={{ minRows: 15 }} spellCheck="false"></Input.TextArea>
       </Form.Item>
     );
   };
@@ -206,64 +202,51 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
     return (
       <Row gutter={15}>
         <Col lg={24}>
-          <Form.Item>
-            {this.props.form.getFieldDecorator(`id`, { initialValue: '' })(
-              <Input disabled placeholder="文章ID" addonBefore="ID"></Input>,
-            )}
+          <Form.Item name="id">
+            <Input disabled placeholder="文章ID" addonBefore="ID"></Input>
           </Form.Item>
         </Col>
         <Col lg={md ? 12 : 6} md={12}>
-          <Form.Item>
-            {this.props.form.getFieldDecorator(`url`, {
-              initialValue: '',
-              rules: [{ required: true, message: '文章必须有链接', whitespace: true }],
-            })(<Input placeholder="文章链接" addonBefore="/post/"></Input>)}
-          </Form.Item>
-        </Col>
-
-        <Col lg={md ? 12 : 6} md={12}>
-          <Form.Item>
-            {this.props.form.getFieldDecorator(`view`, {
-              initialValue: 0,
-            })(<InputNumber placeholder="阅读量" min={0} />)}
+          <Form.Item
+            name="url"
+            rules={[{ required: true, message: '文章必须有链接', whitespace: true }]}
+          >
+            <Input placeholder="文章链接" addonBefore="/post/"></Input>
           </Form.Item>
         </Col>
 
         <Col lg={md ? 12 : 6} md={12}>
-          <Form.Item>
-            {this.props.form.getFieldDecorator(`publish_time`, {
-              initialValue: this.now,
-            })(<DatePicker showTime placeholder="发布时间" />)}
+          <Form.Item name="view">
+            <InputNumber placeholder="阅读量" min={0} />
           </Form.Item>
         </Col>
 
         <Col lg={md ? 12 : 6} md={12}>
-          <Form.Item>
-            {this.props.form.getFieldDecorator(`edit_time`, {
-              initialValue: this.now,
-            })(<DatePicker showTime placeholder="编辑时间" />)}
+          <Form.Item name="publish_time">
+            <DatePicker showTime placeholder="发布时间" />
+          </Form.Item>
+        </Col>
+
+        <Col lg={md ? 12 : 6} md={12}>
+          <Form.Item name="edit_time">
+            <DatePicker showTime placeholder="编辑时间" />
           </Form.Item>
         </Col>
 
         <Col lg={md ? 12 : 10} md={12}>
-          <Form.Item>
-            {this.props.form.getFieldDecorator(`title`, { initialValue: '' })(
-              <Input placeholder="文章标题"></Input>,
-            )}
+          <Form.Item name="title">
+            <Input placeholder="文章标题"></Input>
           </Form.Item>
         </Col>
 
         <Col lg={md ? 12 : 8} md={12}>
-          <Form.Item>
-            {this.props.form.getFieldDecorator(`head_image`, { initialValue: '' })(
-              <Input
-                placeholder="头图"
-                onChange={e => {
-                  console.log(e.currentTarget.value);
-                  this.setState({ headImage: e.currentTarget.value });
-                }}
-              ></Input>,
-            )}
+          <Form.Item name="head_image">
+            <Input
+              placeholder="头图"
+              onChange={e => {
+                this.setState({ headImage: e.currentTarget.value });
+              }}
+            ></Input>
           </Form.Item>
         </Col>
 
@@ -276,11 +259,8 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
         </Col>
 
         <Col lg={md ? 12 : 2} md={12}>
-          <Form.Item>
-            {this.props.form.getFieldDecorator(`published`, {
-              initialValue: false,
-              valuePropName: 'checked',
-            })(<Switch checkedChildren="发布" unCheckedChildren="草稿" />)}
+          <Form.Item name="published" valuePropName="checked">
+            <Switch checkedChildren="发布" unCheckedChildren="草稿" />
           </Form.Item>
         </Col>
 
@@ -299,14 +279,12 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
         </Col>
 
         <Col lg={24}>
-          <Form.Item>
-            {this.props.form.getFieldDecorator(`abstract`, { initialValue: '' })(
-              <Input.TextArea
-                autoSize={{ minRows: 5 }}
-                spellCheck="false"
-                placeholder="文章摘要"
-              ></Input.TextArea>,
-            )}
+          <Form.Item name="abstract">
+            <Input.TextArea
+              autoSize={{ minRows: 5 }}
+              spellCheck="false"
+              placeholder="文章摘要"
+            ></Input.TextArea>
           </Form.Item>
         </Col>
       </Row>
@@ -328,7 +306,21 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
         <Row gutter={5}>
           <Col span={this.state.bigScreen && this.state.preview ? 12 : 24}>
             <Card>
-              <Form>
+              <Form
+                ref={this.formRef}
+                initialValues={{
+                  id: '',
+                  title: '',
+                  url: '',
+                  abstract: '',
+                  head_image: '',
+                  view: 0,
+                  publish_time: this.now,
+                  edit_time: this.now,
+                  published: false,
+                  raw: '',
+                }}
+              >
                 {this.renderToolbar()}
                 {this.state.preview && !this.state.bigScreen
                   ? this.renderPreview()
@@ -348,4 +340,4 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
   }
 }
 
-export default Form.create<PostEditProps>({ name: 'PostEdit' })(withRouter(PostEdit));
+export default withRouter(PostEdit);

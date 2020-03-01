@@ -31,11 +31,7 @@ class Container extends React.Component<ContainerProps, ContainerState> {
   }
   render() {
     return (
-      <Row
-        type="flex"
-        justify="center"
-        gutter={[this.props.gutter_h, this.props.gutter_v] as [Gutter, Gutter]}
-      >
+      <Row justify="center" gutter={[this.props.gutter_h, this.props.gutter_v] as [Gutter, Gutter]}>
         <Col
           xs={this.props.xs}
           sm={this.props.sm}

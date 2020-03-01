@@ -1,18 +1,9 @@
 import React, { ComponentProps } from 'react';
 
-import {
-  Comment as Cm,
-  Avatar,
-  List,
-  Tooltip,
-  Input,
-  Icon,
-  Form,
-  Button,
-  Popover,
-  Checkbox,
-} from 'antd';
-import { FormComponentProps } from 'antd/es/form';
+import { Comment as Cm, Avatar, List, Tooltip, Input, Form, Button, Popover, Checkbox } from 'antd';
+import { Icon } from '@ant-design/compatible';
+import { FormInstance } from 'antd/lib/form';
+
 import moment from 'moment';
 
 import { comments, avatar, addComment } from '@/utils/api';
@@ -22,24 +13,22 @@ const adWarning = <b>广告评论，已被屏蔽</b>;
 const delWarning = <b>该评论已被删除</b>;
 const defaultAvatar = 'https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png';
 
-interface CommentPartProps extends FormComponentProps {
+interface CommentPartProps extends ComponentProps<'base'> {
   url: string;
 }
 
-type CommentPartState = {
+interface CommentPartState {
   total: number;
   comments: Blotter.Comment[];
   avatar: { [id: string]: string };
   reply: { [id: string]: boolean };
   editor_loading: { [id: string]: boolean };
   loading: boolean;
-};
+}
 
-class CommentPart extends React.Component<
-  CommentPartProps & ComponentProps<'base'> & FormComponentProps,
-  CommentPartState
-> {
-  constructor(props: CommentPartProps & ComponentProps<'base'> & FormComponentProps) {
+class CommentPart extends React.Component<CommentPartProps, CommentPartState> {
+  formRef = React.createRef<FormInstance>();
+  constructor(props: CommentPartProps) {
     super(props);
     this.state = {
       avatar: {},
@@ -74,8 +63,7 @@ class CommentPart extends React.Component<
   };
 
   onEmailBlur = (id: string) => {
-    console.log(this.props.form.getFieldValue(`email${id}`), id);
-    avatar(this.props.form.getFieldValue(`email${id}`), data =>
+    avatar(this.formRef.current.getFieldValue(`email${id}`), data =>
       this.setState(state => {
         state.avatar[id] = data.avatar;
         return state;
@@ -83,38 +71,35 @@ class CommentPart extends React.Component<
     );
   };
 
-  onSubmitClick = (id: string) => {
-    this.props.form.validateFieldsAndScroll(
-      [`email${id}`, `content${id}`, `recv${id}`],
-      {},
-      (errors, value) => {
-        console.log(value);
-        if (errors === null) {
-          this.setState(state => {
-            state.editor_loading[id] = true;
-            return state;
-          });
-          addComment(
-            {
-              url: this.props.url,
-              reply: id,
-              email: value[`email${id}`],
-              recv: value[`recv${id}`],
-              raw: value[`content${id}`],
-            },
-            data => {
-              if (ShowNotification(data)) {
-                this.props.form.resetFields([`email${id}`, `recv${id}`, `content${id}`]);
-                this.initialComment();
-              }
-              this.setState(state => {
-                state.editor_loading[id] = false;
-                state.reply[id] = !data.success;
-                return state;
-              });
-            },
-          );
+  onSubmitClick = async (id: string) => {
+    var value = await this.formRef.current.validateFields([
+      `email${id}`,
+      `content${id}`,
+      `recv${id}`,
+    ]);
+
+    this.setState(state => {
+      state.editor_loading[id] = true;
+      return state;
+    });
+    addComment(
+      {
+        url: this.props.url,
+        reply: id,
+        email: value[`email${id}`],
+        recv: value[`recv${id}`],
+        raw: value[`content${id}`],
+      },
+      data => {
+        if (ShowNotification(data)) {
+          this.formRef.current.resetFields([`email${id}`, `recv${id}`, `content${id}`]);
+          this.initialComment();
         }
+        this.setState(state => {
+          state.editor_loading[id] = false;
+          state.reply[id] = !data.success;
+          return state;
+        });
       },
     );
   };
@@ -130,51 +115,49 @@ class CommentPart extends React.Component<
     var onEmailBlur = () => {
       this.onEmailBlur(id);
     };
+    const initialValues = {};
+    initialValues[`recv${id}`] = true;
+
     return (
       <Cm
         avatar={this.render_avatar(this.state.avatar[id])}
         content={
-          <Form>
-            <Form.Item>
-              {this.props.form.getFieldDecorator(`email${id}`, {
-                rules: [
-                  {
-                    type: 'email',
-                    message: '邮箱地址不合法',
-                  },
-                  {
-                    required: true,
-                    message: '你需要输入邮箱来表明你的身份',
-                  },
-                ],
-              })(
-                <Input
-                  onBlur={onEmailBlur}
-                  placeholder="输入您的邮箱(仅用于收取有人回复您的通知，不会在前端泄露)"
-                />,
-              )}
+          <Form initialValues={initialValues}>
+            <Form.Item
+              name={`email${id}`}
+              rules={[
+                {
+                  type: 'email',
+                  message: '邮箱地址不合法',
+                },
+                {
+                  required: true,
+                  message: '你需要输入邮箱来表明你的身份',
+                },
+              ]}
+            >
+              <Input
+                onBlur={onEmailBlur}
+                placeholder="输入您的邮箱(仅用于收取有人回复您的通知，不会在前端泄露)"
+              />
             </Form.Item>
-
-            <Form.Item>
-              {this.props.form.getFieldDecorator(`content${id}`, {
-                rules: [
-                  {
-                    required: true,
-                    message: '多说两句?',
-                  },
-                  {
-                    min: 5,
-                    message: '多说两句?',
-                  },
-                ],
-              })(<Input.TextArea autoSize={{ minRows: 3 }} placeholder="礼貌交流，至少5个字符" />)}
+            <Form.Item
+              name={`content${id}`}
+              rules={[
+                {
+                  required: true,
+                  message: '多说两句?',
+                },
+                {
+                  min: 5,
+                  message: '多说两句?',
+                },
+              ]}
+            >
+              <Input.TextArea autoSize={{ minRows: 3 }} placeholder="礼貌交流，至少5个字符" />
             </Form.Item>
-
-            <Form.Item>
-              {this.props.form.getFieldDecorator(`recv${id}`, {
-                initialValue: true,
-                valuePropName: 'checked',
-              })(<Checkbox>收到回复时使用邮件通知</Checkbox>)}
+            <Form.Item name={`recv${id}`} valuePropName="checked">
+              <Checkbox>收到回复时使用邮件通知</Checkbox>
               <Popover
                 title="帮助"
                 content={
@@ -196,7 +179,6 @@ class CommentPart extends React.Component<
                 <Icon type="question-circle" />
               </Popover>
             </Form.Item>
-
             <Form.Item style={{ float: 'right' }}>
               <Button
                 type="primary"
@@ -297,4 +279,4 @@ class CommentPart extends React.Component<
   }
 }
 
-export default Form.create<CommentPartProps>({ name: 'CommentPart' })(CommentPart);
+export default CommentPart;

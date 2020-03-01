@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { Card, Typography, Divider, Icon, Row, Col, Skeleton } from 'antd';
+import { Card, Typography, Divider, Row, Col, Skeleton } from 'antd';
+import { Icon } from '@ant-design/compatible';
 const { Meta } = Card;
 import Link from 'next/link';
 

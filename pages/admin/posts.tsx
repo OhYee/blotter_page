@@ -3,19 +3,17 @@ import React, { ComponentProps } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 
-import { Card, Table, Button, Row, Col, Icon } from 'antd';
-import {
-  TableCurrentDataSource,
-  SorterResult,
-  PaginationConfig,
-  ColumnProps,
-} from 'antd/lib/table';
+import { Card, Table, Button, Row, Col } from 'antd';
+import { ColumnProps } from 'antd/lib/table';
+import { Icon } from '@ant-design/compatible';
+import { PaginationConfig } from 'antd/lib/pagination';
+import { SorterResult, TableCurrentDataSource } from 'antd/lib/table/interface';
 
 import Container from '@/components/container';
 import TagPart from '@/components/tag';
 
 import { adminPosts, postDelete } from '@/utils/api';
-import {  Context } from '@/utils/global';
+import { Context } from '@/utils/global';
 import ShowNotification from '@/utils/notification';
 
 interface T extends Blotter.PostCard {
@@ -160,7 +158,7 @@ class AdminPostList extends React.Component<AdminPostListProps, AdminPostListSta
 
   onTableChange = (
     pagination: PaginationConfig,
-    filters: Partial<Record<keyof T, string[]>>,
+    filters: Record<string, React.ReactText[] | null>,
     sorter: SorterResult<T>,
     extra: TableCurrentDataSource<T>,
   ) => {
@@ -175,7 +173,7 @@ class AdminPostList extends React.Component<AdminPostListProps, AdminPostListSta
     this.getData(
       current!,
       pageSize!,
-      defaultSort ? 'publish_time' : field,
+      defaultSort ? 'publish_time' : `${field}`,
       defaultSort ? false : order === 'ascend',
     );
   };
@@ -201,6 +199,7 @@ class AdminPostList extends React.Component<AdminPostListProps, AdminPostListSta
           </div>
 
           <Table<T>
+            rowKey={record => record.id}
             columns={this.columns}
             dataSource={this.state.data}
             loading={this.state.loading}

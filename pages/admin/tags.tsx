@@ -1,27 +1,12 @@
 import React, { ComponentProps } from 'react';
 
 import Head from 'next/head';
-import Link from 'next/link';
 
-import {
-  Card,
-  Table,
-  Button,
-  Row,
-  Col,
-  Icon,
-  Typography,
-  Form,
-  Input,
-  Popconfirm,
-  notification,
-} from 'antd';
-import {
-  TableCurrentDataSource,
-  SorterResult,
-  PaginationConfig,
-  ColumnProps,
-} from 'antd/lib/table';
+import { Card, Table, Button, Row, Col, Typography, Form, Input, Popconfirm } from 'antd';
+import { ColumnProps } from 'antd/lib/table';
+import { Icon } from '@ant-design/compatible';
+import { PaginationConfig } from 'antd/lib/pagination';
+import { SorterResult, TableCurrentDataSource } from 'antd/lib/table/interface';
 
 import Container from '@/components/container';
 import TagPart from '@/components/tag';
@@ -30,7 +15,6 @@ import { adminTags, tagDelete, tagEdit } from '@/utils/api';
 import { Context } from '@/utils/global';
 import ShowNotification from '@/utils/notification';
 import { waitUntil } from '@/utils/debounce';
-import { createObjectBindingPattern } from 'typescript';
 
 interface T extends Blotter.TagWithCount {}
 
@@ -78,23 +62,35 @@ class AdminTagList extends React.Component<AdminTagListProps, AdminTagListState>
     this.setState({ data: r.tags, total: r.total, loading: false });
   };
 
-  renderEditableCell = (key: string, tags: T, idx: number) => {
-    return (
-      <Typography.Text
-        editable={{
-          onChange: value => {
-            this.setState(state => {
-              state.data[idx][key] = value;
-              return { data: state.data };
-            });
-            tags[key] = value;
-          },
-        }}
-      >
-        {tags[key]}
-      </Typography.Text>
+  // TODO: Waiting for updating
+  _setState = (callback: (state) => any) => {
+    var s;
+    this.setState(
+      state => {
+        s = state;
+        return { data: [] };
+      },
+      () => {
+        this.setState(callback(s));
+      },
     );
   };
+
+  renderEditableCell = (idx: number, key: string) => (
+    <Typography.Text
+      editable={{
+        onChange: value => {
+          this._setState(state => {
+            var { data } = state;
+            data[idx][key] = value;
+            return { data };
+          });
+        },
+      }}
+    >
+      {this.state.data[idx][key]}
+    </Typography.Text>
+  );
 
   columns: ColumnProps<T>[] = [
     {
@@ -103,7 +99,7 @@ class AdminTagList extends React.Component<AdminTagListProps, AdminTagListState>
       dataIndex: 'name',
       sorter: true,
       width: '15%',
-      render: (_, record, idx) => this.renderEditableCell('name', record, idx),
+      render: (_, __, idx) => this.renderEditableCell(idx, 'name'),
     },
     {
       title: '链接',
@@ -111,7 +107,7 @@ class AdminTagList extends React.Component<AdminTagListProps, AdminTagListState>
       dataIndex: 'short',
       sorter: true,
       width: '15%',
-      render: (_, record, idx) => this.renderEditableCell('short', record, idx),
+      render: (_, __, idx) => this.renderEditableCell(idx, 'short'),
     },
     {
       title: '图标',
@@ -119,7 +115,7 @@ class AdminTagList extends React.Component<AdminTagListProps, AdminTagListState>
       dataIndex: 'icon',
       sorter: true,
       width: '15%',
-      render: (_, record, idx) => this.renderEditableCell('icon', record, idx),
+      render: (_, __, idx) => this.renderEditableCell(idx, 'icon'),
     },
     {
       title: '颜色',
@@ -127,14 +123,14 @@ class AdminTagList extends React.Component<AdminTagListProps, AdminTagListState>
       dataIndex: 'color',
       sorter: true,
       width: '15%',
-      render: (_, record, idx) => this.renderEditableCell('color', record, idx),
+      render: (_, __, idx) => this.renderEditableCell(idx, 'color'),
     },
     {
       title: '预览',
       key: 'view',
       dataIndex: 'view',
       width: '10%',
-      render: (tag, record, id) => <TagPart tag={record} />,
+      render: (_, record, __) => <TagPart tag={record} />,
     },
     {
       title: '文章个数',
@@ -147,10 +143,10 @@ class AdminTagList extends React.Component<AdminTagListProps, AdminTagListState>
       title: '操作',
       key: 'op',
       width: '15%',
-      render: (text, record, index) => (
+      render: (_, record, idx) => (
         <Row gutter={5}>
           <Col span={12}>
-            <Button size="small" onClick={() => this.onEdit(index)}>
+            <Button size="small" onClick={() => this.onEdit(idx)}>
               <Icon type="edit" />
               修改
             </Button>
@@ -176,7 +172,7 @@ class AdminTagList extends React.Component<AdminTagListProps, AdminTagListState>
   ];
 
   onInsert = () => {
-    this.setState(state => {
+    this._setState(state => {
       var data = state.data;
       data.unshift({ id: '', name: '', short: '', color: '', icon: '', count: 0 });
       return { data };
@@ -192,7 +188,7 @@ class AdminTagList extends React.Component<AdminTagListProps, AdminTagListState>
   onDelete = async (id: string) => {
     var r = await tagDelete(id);
     ShowNotification(r);
-    this.setState(state => ({ data: state.data.filter(tag => tag.id != id) }));
+    this._setState(state => ({ data: state.data.filter(tag => tag.id != id) }));
   };
 
   searchOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -200,7 +196,7 @@ class AdminTagList extends React.Component<AdminTagListProps, AdminTagListState>
     waitUntil(
       'admin_tags_search',
       () => {
-        this.setState(state => {
+        this._setState(state => {
           return {
             page: 1,
             keyword: value,
@@ -214,7 +210,7 @@ class AdminTagList extends React.Component<AdminTagListProps, AdminTagListState>
 
   onTableChange = (
     pagination: PaginationConfig,
-    filters: Partial<Record<keyof T, string[]>>,
+    filters: Record<string, React.ReactText[] | null>,
     sorter: SorterResult<T>,
     extra: TableCurrentDataSource<T>,
   ) => {
@@ -225,7 +221,7 @@ class AdminTagList extends React.Component<AdminTagListProps, AdminTagListState>
       this.state.keyword,
       pageSize!,
       current!,
-      defaultSort ? defaultSortField : field,
+      defaultSort ? defaultSortField : `${field}`,
       defaultSort ? defaultSortInc : order === 'ascend',
     );
   };
@@ -254,6 +250,7 @@ class AdminTagList extends React.Component<AdminTagListProps, AdminTagListState>
           </Form>
 
           <Table<T>
+            rowKey={record => record.id}
             columns={this.columns}
             dataSource={this.state.data}
             loading={this.state.loading}

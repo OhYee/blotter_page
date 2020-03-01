@@ -77,6 +77,11 @@ export default class DraggableTable extends React.Component<DraggableTableProps>
           }}
           onRow={(record, index) => ({
             index,
+            onClick: event => {},
+            onDoubleClick: event => {},
+            onContextMenu: event => {},
+            onMouseEnter: event => {},
+            onMouseLeave: event => {},
             moveRow: this.props.moveRow,
           })}
         />

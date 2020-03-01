@@ -6,7 +6,8 @@ import Link from 'next/link';
 import { withRouter } from 'next/router';
 import { WithRouterProps } from 'next/dist/client/with-router';
 
-import { Button, Card, PageHeader, Skeleton, Icon, Anchor } from 'antd';
+import { Button, Card, PageHeader, Skeleton,  Anchor } from 'antd';
+import { Icon } from '@ant-design/compatible';
 
 import TagPart from '@/components/tag';
 import Visiable from '@/components/visiable';

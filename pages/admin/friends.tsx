@@ -3,13 +3,11 @@ import React, { ComponentProps } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 
-import { Card, Table, Button, Row, Col, Icon, Typography, Form, Input, Popconfirm } from 'antd';
-import {
-  TableCurrentDataSource,
-  SorterResult,
-  PaginationConfig,
-  ColumnProps,
-} from 'antd/lib/table';
+import { Card, Table, Button, Row, Col, Typography, Form, Input, Popconfirm } from 'antd';
+import { ColumnProps } from 'antd/lib/table';
+import { Icon } from '@ant-design/compatible';
+import { PaginationConfig } from 'antd/lib/pagination';
+import { SorterResult, TableCurrentDataSource } from 'antd/lib/table/interface';
 
 import Container from '@/components/container';
 import TagPart from '@/components/tag';
@@ -20,6 +18,7 @@ import ShowNotification from '@/utils/notification';
 import { waitUntil } from '@/utils/debounce';
 import { createObjectBindingPattern } from 'typescript';
 import DraggableTable from '@/components/draggable_table';
+import Friends from '../friends';
 
 interface T extends Blotter.Friend {}
 interface T2 {
@@ -27,9 +26,9 @@ interface T2 {
   link: string;
 }
 
-interface AdminTagListProps extends ComponentProps<'base'> {}
+interface AdminFriendListProps extends ComponentProps<'base'> {}
 
-interface AdminTagListState {
+interface AdminFriendListState {
   loading: boolean;
   data: T[];
   submitLoading: boolean;
@@ -38,7 +37,7 @@ interface AdminTagListState {
 const defaultSortField = 'count';
 const defaultSortInc = false;
 
-class AdminTagList extends React.Component<AdminTagListProps, AdminTagListState> {
+class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendListState> {
   static defaultProps = {};
 
   constructor(props: any) {
@@ -57,20 +56,52 @@ class AdminTagList extends React.Component<AdminTagListProps, AdminTagListState>
     this.setState({ data: r, loading: false });
   };
 
-  renderEditableCell = (key: string, data: { [key: string]: any }, idx: number) => {
+  // TODO: Waiting for updating
+  _setState = (callback: (state: AdminFriendListState) => any) => {
+    var s = {} as AdminFriendListState;
+    this.setState(
+      state => {
+        s = state;
+        return { data: [] };
+      },
+      () => {
+        this.setState(callback(s));
+      },
+    );
+  };
+
+  renderEditableCell = (idx: number, key: string) => {
     return (
       <Typography.Text
         editable={{
           onChange: value => {
-            this.setState(state => {
-              state.data[idx][key] = value;
-              return { data: state.data };
+            this._setState(state => {
+              var { data } = state;
+              data[idx][key] = value;
+              return { data };
             });
-            data[key] = value;
           },
         }}
       >
-        {data[key]}
+        {this.state.data[idx][key]}
+      </Typography.Text>
+    );
+  };
+
+  renderSubEditableCell = (index: number, idx: number, key: string) => {
+    return (
+      <Typography.Text
+        editable={{
+          onChange: value => {
+            this._setState(state => {
+              var { data } = state;
+              data[index].posts[idx][key] = value;
+              return { data };
+            });
+          },
+        }}
+      >
+        {this.state.data[index].posts[idx][key]}
       </Typography.Text>
     );
   };
@@ -81,28 +112,28 @@ class AdminTagList extends React.Component<AdminTagListProps, AdminTagListState>
       key: 'name',
       dataIndex: 'name',
       width: '15%',
-      render: (_, record, idx) => this.renderEditableCell('name', record, idx),
+      render: (_, __, idx) => this.renderEditableCell(idx, 'name'),
     },
     {
       title: '简介',
       key: 'description',
       dataIndex: 'description',
-      width: '30%',
-      render: (_, record, idx) => this.renderEditableCell('description', record, idx),
+      width: '25%',
+      render: (_, __, idx) => this.renderEditableCell(idx, 'description'),
     },
     {
       title: '链接',
       key: 'link',
       dataIndex: 'link',
       width: '15%',
-      render: (_, record, idx) => this.renderEditableCell('link', record, idx),
+      render: (_, __, idx) => this.renderEditableCell(idx, 'link'),
     },
     {
       title: '图片',
       key: 'image',
       dataIndex: 'image',
       width: '15%',
-      render: (_, record, idx) => this.renderEditableCell('image', record, idx),
+      render: (_, __, idx) => this.renderEditableCell(idx, 'image'),
     },
     {
       title: '图片预览',
@@ -120,7 +151,7 @@ class AdminTagList extends React.Component<AdminTagListProps, AdminTagListState>
         <Popconfirm
           title="真的要删除么？"
           onConfirm={() => {
-            this.setState(state => {
+            this._setState(state => {
               var data = state.data.filter(item => item.name !== record.name);
               return { data };
             });
@@ -142,9 +173,10 @@ class AdminTagList extends React.Component<AdminTagListProps, AdminTagListState>
       <Button
         type="primary"
         onClick={() => {
-          this.setState(state => {
-            state.data[index].posts.unshift({ title: '', link: '' });
-            return state;
+          this._setState(state => {
+            var { data } = state;
+            data[index].posts.unshift({ title: '', link: '' });
+            return { data };
           });
         }}
       >
@@ -158,7 +190,7 @@ class AdminTagList extends React.Component<AdminTagListProps, AdminTagListState>
     <div style={{ textAlign: 'right' }}>
       <Button
         onClick={() => {
-          this.setState(state => {
+          this._setState(state => {
             state.data.unshift({
               name: '',
               link: '',
@@ -195,13 +227,13 @@ class AdminTagList extends React.Component<AdminTagListProps, AdminTagListState>
         title: '标题',
         dataIndex: 'title',
         width: '30%',
-        render: (_, record, idx) => this.renderEditableCell('title', record, idx),
+        render: (_, __, idx) => this.renderSubEditableCell(index, idx, 'title'),
       },
       {
         title: '链接',
         dataIndex: 'link',
         width: '50%',
-        render: (_, record, idx) => this.renderEditableCell('link', record, idx),
+        render: (_, __, idx) => this.renderSubEditableCell(index, idx, 'link'),
       },
       {
         title: '操作',
@@ -211,7 +243,7 @@ class AdminTagList extends React.Component<AdminTagListProps, AdminTagListState>
           <Popconfirm
             title="真的要删除么？"
             onConfirm={() => {
-              this.setState(state => {
+              this._setState(state => {
                 var data = state.data;
                 data[index].posts = data[index].posts.filter(item => item.title !== record.title);
                 return { data };
@@ -230,6 +262,7 @@ class AdminTagList extends React.Component<AdminTagListProps, AdminTagListState>
     ];
     return (
       <DraggableTable
+        rowKey={record => record.name}
         columns={columns}
         dataSource={record.posts}
         pagination={false}
@@ -237,7 +270,7 @@ class AdminTagList extends React.Component<AdminTagListProps, AdminTagListState>
         title={() => this.renderSubTableHead(index)}
         size="small"
         moveRow={(i, j) => {
-          this.setState(state => {
+          this._setState(state => {
             var data = state.data;
 
             var temp = data[index].posts[i];
@@ -246,6 +279,7 @@ class AdminTagList extends React.Component<AdminTagListProps, AdminTagListState>
             return { data };
           });
         }}
+        style={{ background: 'transparent' }}
       />
     );
   };
@@ -256,7 +290,7 @@ class AdminTagList extends React.Component<AdminTagListProps, AdminTagListState>
         <Context.Consumer>
           {context => (
             <Head>
-              <title>{`标签列表|后台|${context.blog_name}`}</title>
+              <title>{`友链列表|后台|${context.blog_name}`}</title>
             </Head>
           )}
         </Context.Consumer>
@@ -270,7 +304,7 @@ class AdminTagList extends React.Component<AdminTagListProps, AdminTagListState>
             title={() => this.renderTableHead()}
             rowKey={col => col.name}
             moveRow={(i, j) => {
-              this.setState(state => {
+              this._setState(state => {
                 var data = state.data;
                 var temp = data[i];
                 data[i] = data[j];
@@ -286,4 +320,4 @@ class AdminTagList extends React.Component<AdminTagListProps, AdminTagListState>
   }
 }
 
-export default AdminTagList;
+export default AdminFriendList;
