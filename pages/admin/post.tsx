@@ -105,11 +105,10 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
     );
   };
 
-  onChange = (current: string, pre: string) => {
+  onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     if (this.state.preview) {
-      this.renderMarkdown(current);
+      this.renderMarkdown(e.target.value);
     }
-    return current;
   };
 
   //   urlValidator = async (rule, value, callback, s, o) => {
@@ -179,7 +178,12 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
   renderEditor = () => {
     return (
       <Form.Item name="raw">
-        <Input.TextArea autoSize={{ minRows: 15 }} spellCheck="false"></Input.TextArea>
+        <Input.TextArea
+          autoSize={{ minRows: 15 }}
+          spellCheck="false"
+          onChange={this.onChange}
+          style={{ lineHeight: '2em', fontSize: '1.2em' }}
+        ></Input.TextArea>
       </Form.Item>
     );
   };
@@ -331,7 +335,7 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
 
           {this.state.bigScreen && this.state.preview ? (
             <Col span={12}>
-              <Card>{this.renderPreview()}</Card>
+              <Card className={styles.preview + ' shadow'}>{this.renderPreview()}</Card>
             </Col>
           ) : null}
         </Row>
