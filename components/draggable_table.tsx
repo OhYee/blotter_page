@@ -19,10 +19,10 @@ interface RowProps extends React.ComponentProps<'tr'> {
 
 class Row extends React.Component<RowProps> {
   render() {
-    var { connectDragSource, connectDropTarget } = this.props;
+    var { connectDragSource, connectDropTarget, moveRow, ...rest } = this.props;
     var style = { ...this.props.style, cursor: 'move' };
 
-    return connectDragSource(connectDropTarget(<tr {...this.props} style={style} />));
+    return connectDragSource(connectDropTarget(<tr {...rest} style={style} />));
   }
 }
 
@@ -59,7 +59,6 @@ const DraggablRow = DropTarget(
   },
   (connect, monitor) => ({
     connectDropTarget: connect.dropTarget(),
-    isOver: monitor.isOver(),
   }),
 )(dragSource);
 
