@@ -97,7 +97,7 @@ class TagDetail extends React.Component<TagDetailProps, TagDetailState> {
           total={this.props.total}
           callback={this.onChange}
           pageRender={(page, type, origin) =>
-            type == 'page' ? (
+            type == 'page' || type == 'prev' || type == 'next' ? (
               <Link
                 href="/tag/[tag]"
                 as={`/tag/${this.props.router.query.tag}?page=${page}&size=${this.props.size}`}

@@ -34,7 +34,6 @@ export class Archives extends React.Component<ArchivesProps, ArchivesState> {
   };
 
   static async getInitialProps(args: NextPageContext) {
-    console.log('Archives getInitialProps', args);
     var page = parseNumberParams('page', args.asPath, 1);
     var size = parseNumberParams('size', args.asPath, 10);
     var data = await archives(page, size);
@@ -78,7 +77,7 @@ export class Archives extends React.Component<ArchivesProps, ArchivesState> {
           loading={this.state.loading}
           callback={this.onChange}
           pageRender={(page, type, origin) =>
-            type == 'page' ? (
+            type == 'page' || type == 'prev' || type == 'next' ? (
               <Link href={`/archives?page=${page}&size=${this.props.size}`}>{origin}</Link>
             ) : (
               origin
