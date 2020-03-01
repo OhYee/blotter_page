@@ -1,4 +1,4 @@
-import React, { ComponentProps } from 'react';
+import React, { ComponentProps, DOMAttributes } from 'react';
 
 import Head from 'next/head';
 import Router, { withRouter } from 'next/router';
@@ -50,7 +50,9 @@ interface PostEditState {
 class PostEdit extends React.Component<PostEditProps, PostEditState> {
   static defaultProps = {};
   formRef = React.createRef<FormInstance>();
+  previewRef = React.createRef<Card & HTMLDivElement>();
   now = moment(new Date());
+
   constructor(props: any) {
     super(props);
     this.state = {
@@ -151,6 +153,17 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
     });
   };
 
+  isSidePreview = () => {
+    return this.state.bigScreen && this.state.preview;
+  };
+
+  syncScroll = (e: React.UIEvent<HTMLTextAreaElement>) => {
+    if (this.isSidePreview()) {
+      this.previewRef.current.scrollTop =
+        (e.currentTarget.scrollTop / e.currentTarget.scrollHeight) *
+        this.previewRef.current.scrollHeight;
+    }
+  };
   submit = async () => {
     this.setState({ submitDisabled: true });
     var obj = this.formRef.current.getFieldsValue([
@@ -179,10 +192,10 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
     return (
       <Form.Item name="raw">
         <Input.TextArea
-          autoSize={{ minRows: 15 }}
           spellCheck="false"
           onChange={this.onChange}
-          style={{ lineHeight: '2em', fontSize: '1.2em' }}
+          style={{ lineHeight: '2em', fontSize: '1.2em', height: 'calc(100vh - 20px)' }}
+          onScroll={this.syncScroll}
         ></Input.TextArea>
       </Form.Item>
     );
@@ -202,7 +215,7 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
   };
 
   renderToolbar = () => {
-    var md = this.state.bigScreen && this.state.preview;
+    var md = this.isSidePreview();
     return (
       <Row gutter={15}>
         <Col lg={24}>
@@ -308,7 +321,7 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
           {null}
         </MediaQuery>
         <Row gutter={5}>
-          <Col span={this.state.bigScreen && this.state.preview ? 12 : 24}>
+          <Col span={this.isSidePreview() ? 12 : 24}>
             <Card>
               <Form
                 ref={this.formRef}
@@ -333,9 +346,11 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
             </Card>
           </Col>
 
-          {this.state.bigScreen && this.state.preview ? (
+          {this.isSidePreview() ? (
             <Col span={12}>
-              <Card className={styles.preview + ' shadow'}>{this.renderPreview()}</Card>
+              <div className={styles.preview + ' shadow'} ref={this.previewRef}>
+                <Card>{this.renderPreview()}</Card>
+              </div>
             </Col>
           ) : null}
         </Row>
