@@ -3,7 +3,7 @@ import React, { ComponentProps } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 
-import { Card, Table, Button, Row, Col } from 'antd';
+import { Card, Table, Button, Row, Col, Typography } from 'antd';
 import { ColumnProps } from 'antd/lib/table';
 import { Icon } from '@ant-design/compatible';
 import { PaginationConfig } from 'antd/lib/pagination';
@@ -45,6 +45,9 @@ class AdminPostList extends React.Component<AdminPostListProps, AdminPostListSta
       size: 10,
       page: 0,
     };
+  }
+
+  componentDidMount() {
     this.getData(1, 10, 'publish_time', false);
   }
 
@@ -64,13 +67,18 @@ class AdminPostList extends React.Component<AdminPostListProps, AdminPostListSta
           <a>{record.title}</a>
         </Link>
       ),
-      width: '15%',
+      width: '10%',
     },
     {
       title: '链接',
       key: 'url',
       dataIndex: 'url',
       width: '10%',
+      render: text => (
+        <Typography.Text ellipsis={true} style={{ maxWidth: '100%' }}>
+          {text}
+        </Typography.Text>
+      ),
     },
     {
       title: '发布时间',
@@ -122,7 +130,7 @@ class AdminPostList extends React.Component<AdminPostListProps, AdminPostListSta
     {
       title: '操作',
       key: 'op',
-      width: '15%',
+      width: '20%',
       render: (text, record, index) => (
         <Row gutter={5}>
           <Col span={12}>

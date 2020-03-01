@@ -47,6 +47,9 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
       data: [],
       submitLoading: false,
     };
+  }
+
+  componentDidMount() {
     this.getData();
   }
 
@@ -262,7 +265,7 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
     ];
     return (
       <DraggableTable
-        rowKey={record => record.name}
+        rowKey={(record, idx) => `${record.name}_${record.value}_${idx}`}
         columns={columns}
         dataSource={record.posts}
         pagination={false}
@@ -302,7 +305,7 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
             pagination={false}
             expandedRowRender={this.renderExpand}
             title={() => this.renderTableHead()}
-            rowKey={col => col.name}
+            rowKey={(col, idx) => `${col.name}_${idx}`}
             moveRow={(i, j) => {
               this._setState(state => {
                 var data = state.data;

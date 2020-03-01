@@ -47,6 +47,9 @@ class AdminTagList extends React.Component<AdminTagListProps, AdminTagListState>
       size: 10,
       keyword: '',
     };
+  }
+
+  componentDidMount() {
     this.getData('', 10);
   }
 
