@@ -2,13 +2,14 @@
     "private": true,
     "scripts": {
         "dev": "next -p 50002",
-        "build": "next build",
+        "build": "set NODE_ENV=development & next build",
         "start": "next start -p 50002"
     },
     "dependencies": {
         "@ant-design/compatible": "^0.0.1-rc.1",
         "antd": "^4.0.0",
         "next": "^9.2.2",
+        "react": "^16.13.0",
         "react-dnd": "^10.0.2",
         "react-dnd-html5-backend": "^10.0.2"
     },
@@ -29,7 +30,6 @@
         "next-compose-plugins": "^2.2.0",
         "next-transpile-modules": "^3.0.2",
         "null-loader": "^3.0.0",
-        "react": "^16.13.0",
         "react-dom": "^16.12.0",
         "react-responsive": "^8.0.3",
         "react-router": "^5.1.2",
