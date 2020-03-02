@@ -65,7 +65,6 @@ class TagDetail extends React.Component<TagDetailProps, TagDetailState> {
   };
 
   render() {
-    console.log('render', this.props, this.state);
     return (
       <Container>
         <Context.Consumer>
@@ -78,9 +77,13 @@ class TagDetail extends React.Component<TagDetailProps, TagDetailState> {
 
         <Card>
           <Descriptions title="标签信息" bordered layout="vertical">
-            <Descriptions.Item label="标签名称">{this.props.tag.name}</Descriptions.Item>
-            <Descriptions.Item label="标签链接">{this.props.tag.short}</Descriptions.Item>
-            <Descriptions.Item label="标签图片">
+            <Descriptions.Item key="name" label="标签名称">
+              {this.props.tag.name}
+            </Descriptions.Item>
+            <Descriptions.Item key="short" label="标签链接">
+              {this.props.tag.short}
+            </Descriptions.Item>
+            <Descriptions.Item key="img" label="标签图片">
               <img
                 style={{ maxWidth: '50px' }}
                 src={this.props.tag.icon === '' ? '/static/img/noimg.png' : this.props.tag.icon}
