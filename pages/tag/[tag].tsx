@@ -98,12 +98,15 @@ class TagDetail extends React.Component<TagDetailProps, TagDetailState> {
           callback={this.onChange}
           pageRender={(page, type, origin) =>
             type == 'page' || type == 'prev' || type == 'next' ? (
-              <Link
-                href="/tag/[tag]"
-                as={`/tag/${this.props.router.query.tag}?page=${page}&size=${this.props.size}`}
-              >
-                {origin}
-              </Link>
+              // On the first page, prev button will get disabled props, and link can not recvive disabled props.
+              <div>
+                <Link
+                  href="/tag/[tag]"
+                  as={`/tag/${this.props.router.query.tag}?page=${page}&size=${this.props.size}`}
+                >
+                  {origin}
+                </Link>
+              </div>
             ) : (
               origin
             )

@@ -78,7 +78,10 @@ class Archives extends React.Component<ArchivesProps, ArchivesState> {
           callback={this.onChange}
           pageRender={(page, type, origin) =>
             type == 'page' || type == 'prev' || type == 'next' ? (
-              <Link href={`/archives?page=${page}&size=${this.props.size}`}>{origin}</Link>
+              // On the first page, prev button will get disabled props, and link can not recvive disabled props.
+              <div>
+                <Link href={`/archives?page=${page}&size=${this.props.size}`}>{origin}</Link>
+              </div>
             ) : (
               origin
             )
