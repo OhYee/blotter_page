@@ -62,7 +62,7 @@ const DraggablRow = DropTarget(
   }),
 )(dragSource);
 
-export default class DraggableTable extends React.Component<DraggableTableProps> {
+class DraggableTable extends React.Component<DraggableTableProps> {
   render() {
     return (
       <DndProvider backend={HTML5Backend}>
@@ -88,3 +88,5 @@ export default class DraggableTable extends React.Component<DraggableTableProps>
     );
   }
 }
+
+export default DraggableTable;

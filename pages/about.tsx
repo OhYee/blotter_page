@@ -7,12 +7,12 @@ import { Card } from 'antd';
 
 import Container from '@/components/container';
 
-import {  Context } from '@/utils/global';
+import { Context } from '@/utils/global';
 
-interface AboutPageProps extends  ComponentProps<'base'> {}
+interface AboutPageProps extends ComponentProps<'base'> {}
 interface AboutPageState {}
 
-export class AboutPage extends React.Component<AboutPageProps, AboutPageState> {
+class AboutPage extends React.Component<AboutPageProps, AboutPageState> {
   static defaultProps = {};
 
   constructor(props: any) {

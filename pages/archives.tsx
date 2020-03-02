@@ -25,7 +25,7 @@ interface ArchivesState {
   loading: boolean;
 }
 
-export class Archives extends React.Component<ArchivesProps, ArchivesState> {
+class Archives extends React.Component<ArchivesProps, ArchivesState> {
   static defaultProps = {
     page: 1,
     total: 1,
