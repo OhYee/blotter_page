@@ -349,7 +349,7 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
           {this.isSidePreview() ? (
             <Col span={12}>
               <div className={styles.preview + ' shadow'} ref={this.previewRef}>
-                <Card>{this.renderPreview()}</Card>
+                <Card style={{ height: '100%' }}>{this.renderPreview()}</Card>
               </div>
             </Col>
           ) : null}
