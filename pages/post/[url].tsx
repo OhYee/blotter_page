@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { withRouter } from 'next/router';
 import { WithRouterProps } from 'next/dist/client/with-router';
 
-import { Button, Card, PageHeader, Skeleton,  Anchor } from 'antd';
+import { Button, Card, PageHeader, Skeleton, Anchor } from 'antd';
 import { Icon } from '@ant-design/compatible';
 
 import TagPart from '@/components/tag';
@@ -184,6 +184,7 @@ class PostPage extends React.Component<PostPageProps, PostPageState> {
               position: 'fixed',
               top: '50px',
               right: '30px',
+              maxWidth: '15%',
             }}
           >
             {this.props.anchors.map(this.render_anchor)}
