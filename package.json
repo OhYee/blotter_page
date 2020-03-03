@@ -2,7 +2,7 @@
     "private": true,
     "scripts": {
         "dev": "next -p 50002",
-        "build": "set NODE_ENV=development & next build",
+        "build": "next build",
         "start": "next start -p 50002"
     },
     "dependencies": {
