@@ -3,7 +3,7 @@ import React, { ComponentProps } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 
-import { Card, Table, Button, Row, Col, Typography } from 'antd';
+import { Card, Table, Button, Row, Col, Typography, Popconfirm } from 'antd';
 import { ColumnProps } from 'antd/lib/table';
 import { Icon } from '@ant-design/compatible';
 import { PaginationConfig } from 'antd/lib/pagination';
@@ -135,23 +135,28 @@ class AdminPostList extends React.Component<AdminPostListProps, AdminPostListSta
         <Row gutter={5}>
           <Col span={12}>
             <Link href={`/admin/post?url=${record.url}`}>
-              <Button size="small">
-                <Icon type="edit" />
-                编辑
-              </Button>
+              <a>
+                <Button size="small">
+                  <Icon type="edit" />
+                  编辑
+                </Button>
+              </a>
             </Link>
           </Col>
           <Col span={12}>
-            <Button
-              size="small"
-              type="danger"
-              onClick={() => {
+            <Popconfirm
+              title="真的要删除么？"
+              onConfirm={() => {
                 this.onDelete(record.id);
               }}
+              okText="删除！"
+              cancelText="算了"
             >
-              <Icon type="delete" />
-              删除
-            </Button>
+              <Button size="small" type="danger">
+                <Icon type="delete" />
+                删除
+              </Button>
+            </Popconfirm>
           </Col>
         </Row>
       ),
@@ -199,10 +204,12 @@ class AdminPostList extends React.Component<AdminPostListProps, AdminPostListSta
         <Card>
           <div style={{ textAlign: 'right' }}>
             <Link href="/admin/post">
-              <Button type="primary">
-                <Icon type="plus" />
-                新建文章
-              </Button>
+              <a>
+                <Button type="primary">
+                  <Icon type="plus" />
+                  新建文章
+                </Button>
+              </a>
             </Link>
           </div>
 
