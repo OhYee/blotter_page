@@ -27,7 +27,6 @@ interface CommentPartState {
 }
 
 class CommentPart extends React.Component<CommentPartProps, CommentPartState> {
-  formRef = React.createRef<FormInstance>();
   constructor(props: CommentPartProps) {
     super(props);
     this.state = {
@@ -62,8 +61,8 @@ class CommentPart extends React.Component<CommentPartProps, CommentPartState> {
     });
   };
 
-  onEmailBlur = (id: string) => {
-    avatar(this.formRef.current.getFieldValue(`email${id}`), data =>
+  onEmailBlur = (id: string, formRef: React.RefObject<FormInstance>) => {
+    avatar(formRef.current.getFieldValue(`email`), data =>
       this.setState(state => {
         state.avatar[id] = data.avatar;
         return state;
@@ -71,37 +70,30 @@ class CommentPart extends React.Component<CommentPartProps, CommentPartState> {
     );
   };
 
-  onSubmitClick = async (id: string) => {
-    var value = await this.formRef.current.validateFields([
-      `email${id}`,
-      `content${id}`,
-      `recv${id}`,
-    ]);
+  onSubmitClick = async (id: string, formRef: React.RefObject<FormInstance>) => {
+    var value = await formRef.current.validateFields(['email', 'content', 'recv']);
 
     this.setState(state => {
       state.editor_loading[id] = true;
       return state;
     });
-    addComment(
-      {
-        url: this.props.url,
-        reply: id,
-        email: value[`email${id}`],
-        recv: value[`recv${id}`],
-        raw: value[`content${id}`],
-      },
-      data => {
-        if (ShowNotification(data)) {
-          this.formRef.current.resetFields([`email${id}`, `recv${id}`, `content${id}`]);
-          this.initialComment();
-        }
-        this.setState(state => {
-          state.editor_loading[id] = false;
-          state.reply[id] = !data.success;
-          return state;
-        });
-      },
-    );
+    var r = await addComment({
+      url: this.props.url,
+      reply: id,
+      email: value['email'],
+      recv: value['recv'],
+      raw: value['content'],
+    });
+
+    if (ShowNotification(r)) {
+      //   formRef.current.resetFields(['email', 'recv', 'content']);
+      this.initialComment();
+    }
+    this.setState(state => {
+      state.editor_loading[id] = false;
+      state.reply[id] = !r.success;
+      return state;
+    });
   };
 
   render_avatar = (avatar: string) => {
@@ -109,22 +101,22 @@ class CommentPart extends React.Component<CommentPartProps, CommentPartState> {
   };
 
   render_editor = (id: string) => {
+    const formRef = React.createRef<FormInstance>();
+
     var onSubmitClick = () => {
-      this.onSubmitClick(id);
+      this.onSubmitClick(id, formRef);
     };
     var onEmailBlur = () => {
-      this.onEmailBlur(id);
+      this.onEmailBlur(id, formRef);
     };
-    const initialValues = {};
-    initialValues[`recv${id}`] = true;
 
     return (
       <Cm
         avatar={this.render_avatar(this.state.avatar[id])}
         content={
-          <Form initialValues={initialValues}>
+          <Form ref={formRef} initialValues={{ recv: true, email: '', content: '' }}>
             <Form.Item
-              name={`email${id}`}
+              name="email"
               rules={[
                 {
                   type: 'email',
@@ -141,53 +133,58 @@ class CommentPart extends React.Component<CommentPartProps, CommentPartState> {
                 placeholder="输入您的邮箱(仅用于收取有人回复您的通知，不会在前端泄露)"
               />
             </Form.Item>
-            <Form.Item
-              name={`content${id}`}
-              rules={[
-                {
-                  required: true,
-                  message: '多说两句?',
-                },
-                {
-                  min: 5,
-                  message: '多说两句?',
-                },
-              ]}
-            >
-              <Input.TextArea autoSize={{ minRows: 3 }} placeholder="礼貌交流，至少5个字符" />
-            </Form.Item>
-            <Form.Item name={`recv${id}`} valuePropName="checked">
-              <Checkbox>收到回复时使用邮件通知</Checkbox>
-              <Popover
-                title="帮助"
-                content={
-                  <div>
-                    <p>
-                      评论支持Markdown，如果有人回复你的评论，会有邮件提醒发送到你的邮箱，如果不想查看，可以取消
-                    </p>
-                    <p>
-                      头像将优先使用邮箱对应Github账户头像,如果获取失败将使用
-                      <a href="https://cn.gravatar.com/">Gravatar</a>头像
-                    </p>
-                    <p>
-                      邮箱地址不会在前端渲染，可以避免被扫描工具记录，但仍可能通过头像地址逆推出邮箱
-                    </p>
-                    <p>评论内容请遵守相应法律法规，并且请不要发布广告</p>
-                  </div>
-                }
+            <Form.Item>
+              <Form.Item
+                name="content"
+                rules={[
+                  {
+                    required: true,
+                    message: '多说两句?',
+                  },
+                  {
+                    min: 5,
+                    message: '多说两句?',
+                  },
+                ]}
               >
-                <Icon type="question-circle" />
-              </Popover>
-            </Form.Item>
-            <Form.Item style={{ float: 'right' }}>
-              <Button
-                type="primary"
-                htmlType="submit"
-                onClick={onSubmitClick}
-                loading={this.state.editor_loading[id] === true}
-              >
-                评论
-              </Button>
+                <Input.TextArea autoSize={{ minRows: 3 }} placeholder="礼貌交流，至少5个字符" />
+              </Form.Item>
+              <Form.Item name="recv" valuePropName="checked" noStyle>
+                <Checkbox>收到回复时使用邮件通知</Checkbox>
+              </Form.Item>
+              <Form.Item noStyle>
+                <Popover
+                  title="帮助"
+                  content={
+                    <div>
+                      <p>
+                        评论支持Markdown，如果有人回复你的评论，会有邮件提醒发送到你的邮箱，如果不想查看，可以取消
+                      </p>
+                      <p>
+                        头像将优先使用邮箱对应Github账户头像,如果获取失败将使用
+                        <a href="https://cn.gravatar.com/">Gravatar</a>头像
+                      </p>
+                      <p>
+                        邮箱地址不会在前端渲染，可以避免被扫描工具记录，但仍可能通过头像地址逆推出邮箱
+                      </p>
+                      <p>评论内容请遵守相应法律法规，并且请不要发布广告</p>
+                    </div>
+                  }
+                >
+                  <Icon type="question-circle" />
+                </Popover>
+              </Form.Item>
+              <Form.Item noStyle>
+                <Button
+                  type="primary"
+                  htmlType="submit"
+                  onClick={onSubmitClick}
+                  loading={this.state.editor_loading[id] === true}
+                  style={{ float: 'right' }}
+                >
+                  评论
+                </Button>
+              </Form.Item>
             </Form.Item>
           </Form>
         }
