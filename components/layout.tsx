@@ -5,7 +5,7 @@ import Head from 'next/head';
 import { withRouter } from 'next/router';
 import { WithRouterProps } from 'next/dist/client/with-router';
 
-import { Affix, Button, Layout, BackTop, Row, Divider, Form, Menu, Modal, Input } from 'antd';
+import { Affix, Button, Layout, BackTop, Row, Divider, Form, Menu, Modal, Input, Col } from 'antd';
 import { Icon } from '@ant-design/compatible';
 const { Footer, Sider, Content } = Layout;
 import { FormInstance } from 'antd/lib/form';
@@ -20,21 +20,14 @@ import { setCookie } from '@/utils/cookies';
 
 import styles from './layout.less';
 
-interface BasicLayoutProps extends ComponentProps<'base'>, WithRouterProps {
-  //   menus: Blotter.Menu[];
-  //   beian: string;
-  //   view: number;
-  //   blog_name: string;
-}
+interface BasicLayoutProps extends ComponentProps<'base'>, WithRouterProps {}
 interface BasicLayoutState {
   collapsed: boolean;
   broken: boolean;
   loginModel: boolean;
   password: string;
   okDisabled: boolean;
-
-  //   blog_name: string;
-  //   token: string;
+  feedback: boolean;
 }
 
 class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
@@ -54,6 +47,7 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
       loginModel: false,
       password: '',
       okDisabled: false,
+      feedback: false,
     };
   }
 
@@ -89,6 +83,64 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
         onClick={this.onCollapseButtonClick}
       />
     </Affix>
+  );
+
+  renderBackToTop = () => (
+    <BackTop style={{ position: 'fixed', right: '20px', bottom: '60px' }}>
+      <Button
+        shape="circle"
+        className="shadow"
+        size="large"
+        icon={<Icon type="rocket" theme="twoTone" />}
+      />
+    </BackTop>
+  );
+
+  renderFeedback = () => (
+    <Context.Consumer>
+      {context => (
+        <Button
+          shape="circle"
+          size="large"
+          icon={<Icon type="message" theme="twoTone" />}
+          className="shadow"
+          onClick={() => {
+            Modal.info({
+              title: '反馈Bug！',
+              content: (
+                <div>
+                  <p>
+                    有一个<a href="https://github.com/OhYee/blotter_page/issues">前端的Bug</a>
+                    ，包括但不限于页面渲染不正常
+                  </p>
+                  <p>
+                    有一个<a href="https://github.com/OhYee/blotter/issues">后端的Bug</a>
+                    ，包括但不限于各种功能性故障
+                  </p>
+                  <p>
+                    直接使用
+                    <a href={`mailto:${context.email}`}>
+                      <Icon type="mail" />
+                      邮件
+                    </a>
+                    反馈bug
+                  </p>
+                  <p>
+                    直接使用
+                    <a href={`//wpa.qq.com/msgrd?v=3&uin=${context.qq}&site=qq&menu=yes`}>
+                      <Icon type="qq" />
+                      QQ
+                    </a>
+                    反馈bug
+                  </p>
+                </div>
+              ),
+            });
+          }}
+          style={{ position: 'fixed', right: '20px', bottom: '120px' }}
+        />
+      )}
+    </Context.Consumer>
   );
 
   onLoginClick = () => {
@@ -300,7 +352,6 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
             </Head>
           )}
         </Context.Consumer>
-
         <Layout
           className={'shadow'}
           style={{ position: 'fixed', zIndex: 100, height: '100vh', overflow: 'auto' }}
@@ -308,10 +359,12 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
           {this.renderSider()}
           <Content>{this.renderCollapseButton()}</Content>
         </Layout>
-        <Layout style={this.state.collapsed ? {} : {}}>
+        <Layout>
           <Content>
             <div className={styles.main_content}>{this.props.children}</div>
-            <BackTop />
+            {/* <BackTop /> */}
+            {this.renderBackToTop()}
+            {this.renderFeedback()}
           </Content>
           <Footer>{this.renderFooter()}</Footer>
         </Layout>
