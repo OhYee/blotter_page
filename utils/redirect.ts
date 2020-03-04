@@ -16,7 +16,7 @@ export const guessPath = (pathname: string) => {
     var url = pathname
       .slice(6)
       .toLocaleLowerCase()
-      .replace('/', '_');
+      .replace(/\//g, '_');
     url = hasSuffix(url, '.html') ? url.slice(0, url.length - 5) : url;
     url = hasSuffix(url, '_') ? url.slice(0, url.length - 1) : url;
     path = `/post/${url}`;
@@ -25,7 +25,7 @@ export const guessPath = (pathname: string) => {
     var url = pathname
       .slice(5)
       .toLocaleLowerCase()
-      .replace('/', '_');
+      .replace(/\//g, '_');
     url = hasSuffix(url, '.html') ? url.slice(0, url.length - 5) : url;
     url = hasSuffix(url, '_') ? url.slice(0, url.length - 1) : url;
     path = `/tag/${url}`;
