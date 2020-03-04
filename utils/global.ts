@@ -6,6 +6,9 @@ export const defaultContext: GlobalProps = {
   beian: '',
   view: 0,
   blog_name: 'blotter',
+  email: '',
+  qq: '',
+  github: '',
   token: '',
   friends: [],
 };
@@ -18,6 +21,9 @@ export declare interface GlobalProps {
   beian: string;
   view: number;
   blog_name: string;
+  email: string;
+  qq: string;
+  github: string;
   token: string;
   friends: Blotter.FriendSimple[];
 }

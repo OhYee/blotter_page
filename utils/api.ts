@@ -79,6 +79,9 @@ export const layout = async (
     view: number;
     beian: string;
     blog_name: string;
+    qq: string;
+    email: string;
+    github: string;
     friends: Blotter.FriendSimple[];
   }>,
 ) => {
