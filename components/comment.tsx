@@ -254,7 +254,7 @@ class CommentPart extends React.Component<CommentPartProps, CommentPartState> {
       return (
         <List
           className="comment-list"
-          header={root ? `共${this.state.total} 条评论` : null}
+          header={root ? `共 ${this.state.total} 条评论` : null}
           itemLayout="horizontal"
           dataSource={comments}
           renderItem={this.render_comment}
