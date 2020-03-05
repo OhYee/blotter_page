@@ -14,7 +14,7 @@ import Visiable from '@/components/visiable';
 import CommentPart from '@/components/comment';
 import Container from '@/components/container';
 
-import { post } from '@/utils/api';
+import { post, view } from '@/utils/api';
 import { Context } from '@/utils/global';
 
 import styles from './post.less';
@@ -52,6 +52,14 @@ class PostPage extends React.Component<PostPageProps, PostPageState> {
   constructor(props: PostPageProps) {
     super(props);
     this.state = {};
+  }
+
+  componentDidMount() {
+    var url = this.props.router.query.url;
+    if (Array.isArray(url)) {
+      url = url[0];
+    }
+    view(url);
   }
 
   static findAnchor(text: string): AnchorType[] {
