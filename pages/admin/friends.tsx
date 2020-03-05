@@ -59,26 +59,12 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
     this.setState({ data: r, loading: false });
   };
 
-  // TODO: Waiting for updating
-  _setState = (callback: (state: AdminFriendListState) => any) => {
-    var s = {} as AdminFriendListState;
-    this.setState(
-      state => {
-        s = state;
-        return { data: [] };
-      },
-      () => {
-        this.setState(callback(s));
-      },
-    );
-  };
-
   renderEditableCell = (idx: number, key: string) => {
     return (
       <Typography.Text
         editable={{
           onChange: value => {
-            this._setState(state => {
+            this.setState(state => {
               var { data } = state;
               data[idx][key] = value;
               return { data };
@@ -96,7 +82,7 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
       <Typography.Text
         editable={{
           onChange: value => {
-            this._setState(state => {
+            this.setState(state => {
               var { data } = state;
               data[index].posts[idx][key] = value;
               return { data };
@@ -154,7 +140,7 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
         <Popconfirm
           title="真的要删除么？"
           onConfirm={() => {
-            this._setState(state => {
+            this.setState(state => {
               var data = state.data.filter(item => item.name !== record.name);
               return { data };
             });
@@ -176,7 +162,7 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
       <Button
         type="primary"
         onClick={() => {
-          this._setState(state => {
+          this.setState(state => {
             var { data } = state;
             data[index].posts.unshift({ title: '', link: '' });
             return { data };
@@ -193,7 +179,7 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
     <div style={{ textAlign: 'right' }}>
       <Button
         onClick={() => {
-          this._setState(state => {
+          this.setState(state => {
             state.data.unshift({
               name: '',
               link: '',
@@ -246,7 +232,7 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
           <Popconfirm
             title="真的要删除么？"
             onConfirm={() => {
-              this._setState(state => {
+              this.setState(state => {
                 var data = state.data;
                 data[index].posts = data[index].posts.filter(item => item.title !== record.title);
                 return { data };
@@ -273,7 +259,7 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
         title={() => this.renderSubTableHead(index)}
         size="small"
         moveRow={(i, j) => {
-          this._setState(state => {
+          this.setState(state => {
             var data = state.data;
 
             var temp = data[index].posts[i];
@@ -307,7 +293,7 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
             title={() => this.renderTableHead()}
             rowKey={(col, idx) => `${col.name}_${idx}`}
             moveRow={(i, j) => {
-              this._setState(state => {
+              this.setState(state => {
                 var data = state.data;
                 var temp = data[i];
                 data[i] = data[j];

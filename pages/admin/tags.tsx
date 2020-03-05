@@ -65,25 +65,11 @@ class AdminTagList extends React.Component<AdminTagListProps, AdminTagListState>
     this.setState({ data: r.tags, total: r.total, loading: false });
   };
 
-  // TODO: Waiting for updating
-  _setState = (callback: (state) => any) => {
-    var s;
-    this.setState(
-      state => {
-        s = state;
-        return { data: [] };
-      },
-      () => {
-        this.setState(callback(s));
-      },
-    );
-  };
-
   renderEditableCell = (idx: number, key: string) => (
     <Typography.Text
       editable={{
         onChange: value => {
-          this._setState(state => {
+          this.setState(state => {
             var { data } = state;
             data[idx][key] = value;
             return { data };
@@ -175,7 +161,7 @@ class AdminTagList extends React.Component<AdminTagListProps, AdminTagListState>
   ];
 
   onInsert = () => {
-    this._setState(state => {
+    this.setState(state => {
       var data = state.data;
       data.unshift({ id: '', name: '', short: '', color: '', icon: '', count: 0 });
       return { data };
@@ -191,7 +177,7 @@ class AdminTagList extends React.Component<AdminTagListProps, AdminTagListState>
   onDelete = async (id: string) => {
     var r = await tagDelete(id);
     ShowNotification(r);
-    this._setState(state => ({ data: state.data.filter(tag => tag.id != id) }));
+    this.setState(state => ({ data: state.data.filter(tag => tag.id != id) }));
   };
 
   searchOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -199,7 +185,7 @@ class AdminTagList extends React.Component<AdminTagListProps, AdminTagListState>
     waitUntil(
       'admin_tags_search',
       () => {
-        this._setState(state => {
+        this.setState(state => {
           return {
             page: 1,
             keyword: value,
