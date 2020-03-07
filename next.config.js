@@ -1,15 +1,21 @@
-const withTypescript = require('@zeit/next-typescript');
-const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
 const withLess = require('@zeit/next-less');
 const withSass = require('@zeit/next-sass');
 const withCss = require('@zeit/next-css');
 const withPlugins = require('next-compose-plugins');
 const path = require('path');
-const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const withTM = require('next-transpile-modules');
 const cssLoaderGetLocalIdent = require('css-loader/lib/getLocalIdent.js');
+const generateTheme = require('next-dynamic-antd-theme/plugin');
 
 const prod = process.env.NODE_ENV === 'production';
+
+const withAntdTheme = generateTheme({
+  antDir: path.join(__dirname, './node_modules/antd'),
+  stylesDir: path.join(__dirname, './theme'),
+  varFile: path.join(__dirname, './theme/vars.less'),
+  mainLessFile: path.join(__dirname, './theme/main.less'),
+  outputFilePath: path.join(__dirname, './.next/static/color.less'),
+});
 
 // with ant design
 // https://juejin.im/post/5cc74b925188252e741cce09
@@ -53,7 +59,7 @@ withAntd = (nextConfig = {}) => {
   });
 };
 
-module.exports = withPlugins([withAntd, withTM, withLess, withCss, withSass], {
+module.exports = withPlugins([withAntd, withTM, withLess, withCss, withSass, withAntdTheme], {
   serverRuntimeConfig: {
     //这里的配置项只能在服务端获取到，在浏览器端是获取不到的
   },

@@ -5,13 +5,28 @@ import Head from 'next/head';
 import { withRouter } from 'next/router';
 import { WithRouterProps } from 'next/dist/client/with-router';
 
-import { Affix, Button, Layout, BackTop, Row, Divider, Form, Menu, Modal, Input, Col } from 'antd';
+import {
+  Affix,
+  Button,
+  Layout,
+  BackTop,
+  Row,
+  Divider,
+  Form,
+  Menu,
+  Modal,
+  Input,
+  Col,
+  Tooltip,
+} from 'antd';
 import { Icon } from '@ant-design/compatible';
 const { Footer, Sider, Content } = Layout;
 import { FormInstance } from 'antd/lib/form';
 // import { FormComponentProps } from 'antd/lib/form';
 
 import Container from '@/components/container';
+
+import changeTheme from 'next-dynamic-antd-theme';
 
 import { layout, login, logout } from '@/utils/api';
 import ShowNotification from '@/utils/notification';
@@ -28,6 +43,7 @@ interface BasicLayoutState {
   password: string;
   okDisabled: boolean;
   feedback: boolean;
+  theme: 'default' | 'dark';
 }
 
 class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
@@ -48,6 +64,7 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
       password: '',
       okDisabled: false,
       feedback: false,
+      theme: 'default',
     };
   }
 
@@ -65,6 +82,45 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
   };
 
   onCollapseButtonClick = () => this.setState(state => ({ collapsed: !state.collapsed }));
+
+  renderLight = props => (
+    <div
+      className="primary-color"
+      dangerouslySetInnerHTML={{
+        __html: `
+   <svg width="1em" height="1em" viewBox="0 0 21 21">
+      <g fill="none" fill-rule="evenodd">
+        <path
+          fill="currentColor"
+          fill-rule="nonzero"
+          d="M21 10.5l-3 3V18h-4.5l-3 3-3-3H3v-4.5l-3-3 3-3V3h4.5l3-3 3 3H18v4.5z"
+        ></path>
+        <circle stroke="#FFF" stroke-width="1.5" cx="10.5" cy="10.5" r="4"></circle>
+      </g>
+    </svg>
+        `,
+      }}
+    />
+  );
+  renderDark = props => (
+    <div
+      className="primary-color"
+      dangerouslySetInnerHTML={{
+        __html: `
+   <svg width="1em" height="1em" viewBox="0 0 21 21">
+      <g fill="none" fill-rule="evenodd">
+        <circle fill="currentColor" cx="10.5" cy="10.5" r="10.5"></circle>
+        <path
+          d="M13.396 11c0-3.019-1.832-5.584-4.394-6.566A6.427 6.427 0 0111.304 4C15.002 4 18 7.135 18 11c0 3.866-2.998 7-6.698 7A6.42 6.42 0 019 17.566c2.564-.98 4.396-3.545 4.396-6.566z"
+          fill="#FFF"
+          fill-rule="nonzero"
+        ></path>
+      </g>
+    </svg>
+        `,
+      }}
+    />
+  );
 
   renderCollapseButton = () => (
     <Affix
@@ -141,6 +197,27 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
         />
       )}
     </Context.Consumer>
+  );
+
+  renderChangeTheme = () => (
+    <Tooltip placement="left" title="Beta" defaultVisible={true}>
+      <Button
+        shape="circle"
+        size="large"
+        icon={
+          <Icon component={this.state.theme == 'default' ? this.renderDark : this.renderLight} />
+        }
+        className="shadow"
+        onClick={() => {
+          const newTheme = this.state.theme == 'default' ? 'dark' : 'default';
+          console.log(newTheme);
+          this.setState({ theme: newTheme }, () => {
+            changeTheme(this.state.theme);
+          });
+        }}
+        style={{ position: 'fixed', right: '20px', bottom: '180px' }}
+      />
+    </Tooltip>
   );
 
   onLoginClick = () => {
@@ -365,6 +442,7 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
             {/* <BackTop /> */}
             {this.renderBackToTop()}
             {this.renderFeedback()}
+            {this.renderChangeTheme()}
           </Content>
           <Footer>{this.renderFooter()}</Footer>
         </Layout>
