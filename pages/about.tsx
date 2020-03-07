@@ -30,10 +30,10 @@ class AboutPage extends React.Component<AboutPageProps, AboutPageState> {
             </Head>
           )}
         </Context.Consumer>
-        <Card></Card>
+        <Card>新版本博客各种优先级更高的问题还未解决，这个页面等后面再做吧</Card>
       </Container>
     );
   }
-}
+} 
 
 export default AboutPage;
