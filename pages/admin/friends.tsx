@@ -17,7 +17,7 @@ import { Context } from '@/utils/global';
 import ShowNotification from '@/utils/notification';
 import { waitUntil } from '@/utils/debounce';
 import { createObjectBindingPattern } from 'typescript';
-import DraggableTable from '@/components/draggable_table';
+import DragableTable from '@/components/dragable_table';
 import Friends from '../friends';
 
 interface T extends Blotter.Friend {}
@@ -67,6 +67,10 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
             this.setState(state => {
               var { data } = state;
               data[idx][key] = value;
+              data.map(d => {
+                d.posts = d.posts.map(dd => dd);
+                return d;
+              });
               return { data };
             });
           },
@@ -85,6 +89,10 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
             this.setState(state => {
               var { data } = state;
               data[index].posts[idx][key] = value;
+              data.map(d => {
+                d.posts = d.posts.map(dd => dd);
+                return d;
+              });
               return { data };
             });
           },
@@ -142,6 +150,10 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
           onConfirm={() => {
             this.setState(state => {
               var data = state.data.filter(item => item.name !== record.name);
+              data.map(d => {
+                d.posts = d.posts.map(dd => dd);
+                return d;
+              });
               return { data };
             });
           }}
@@ -165,6 +177,10 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
           this.setState(state => {
             var { data } = state;
             data[index].posts.unshift({ title: '', link: '' });
+            data.map(d => {
+              d.posts = d.posts.map(dd => dd);
+              return d;
+            });
             return { data };
           });
         }}
@@ -180,14 +196,19 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
       <Button
         onClick={() => {
           this.setState(state => {
-            state.data.unshift({
+            var { data } = state;
+            data.unshift({
               name: '',
               link: '',
               image: '',
               description: '',
               posts: [],
             });
-            return state;
+            data.map(d => {
+              d.posts = d.posts.map(dd => dd);
+              return d;
+            });
+            return { data };
           });
         }}
       >
@@ -235,6 +256,10 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
               this.setState(state => {
                 var data = state.data;
                 data[index].posts = data[index].posts.filter(item => item.title !== record.title);
+                data.map(d => {
+                  d.posts = d.posts.map(dd => dd);
+                  return d;
+                });
                 return { data };
               });
             }}
@@ -250,14 +275,15 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
       },
     ];
     return (
-      <DraggableTable
-        rowKey={(record, idx) => `${record.name}_${record.value}_${idx}`}
+      <DragableTable<T2>
+        rowKey={(record, idx) => `${record.title}_${record.link}_${idx}`}
         columns={columns}
         dataSource={record.posts}
         pagination={false}
         showHeader={false}
         title={() => this.renderSubTableHead(index)}
         size="small"
+        dragKey={`${index}`}
         moveRow={(i, j) => {
           this.setState(state => {
             var data = state.data;
@@ -265,6 +291,11 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
             var temp = data[index].posts[i];
             data[index].posts[i] = data[index].posts[j];
             data[index].posts[j] = temp;
+
+            data.map(d => {
+              d.posts = d.posts.map(dd => dd);
+              return d;
+            });
             return { data };
           });
         }}
@@ -284,7 +315,7 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
           )}
         </Context.Consumer>
         <Card>
-          <DraggableTable
+          <DragableTable<T>
             columns={this.columns}
             dataSource={this.state.data}
             loading={this.state.loading}
@@ -292,12 +323,17 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
             expandedRowRender={this.renderExpand}
             title={() => this.renderTableHead()}
             rowKey={(col, idx) => `${col.name}_${idx}`}
+            dragKey="root"
             moveRow={(i, j) => {
               this.setState(state => {
-                var data = state.data;
+                var { data } = state;
                 var temp = data[i];
                 data[i] = data[j];
                 data[j] = temp;
+                data.map(d => {
+                  d.posts = d.posts.map(dd => dd);
+                  return d;
+                });
                 return { data };
               });
             }}

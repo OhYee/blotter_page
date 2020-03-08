@@ -164,6 +164,7 @@ class AdminTagList extends React.Component<AdminTagListProps, AdminTagListState>
     this.setState(state => {
       var data = state.data;
       data.unshift({ id: '', name: '', short: '', color: '', icon: '', count: 0 });
+      data = data.map(d => d);
       return { data };
     });
   };
