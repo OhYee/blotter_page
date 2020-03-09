@@ -25,8 +25,8 @@ export default class MyApp extends App<MyAppProps, {}, MyAppState> {
       ...defaultContext,
       ...this.props.globalProps,
       token: getCookie('token'),
-      callback: props => {
-        this.setState(props);
+      callback: (props, callback) => {
+        this.setState(props, callback);
       },
     };
   }

@@ -11,12 +11,14 @@ export const defaultContext: GlobalProps = {
   github: '',
   token: '',
   friends: [],
+  big_screen: false,
+  theme: 'default',
 };
 
 export const Context = React.createContext(defaultContext);
 
 export declare interface GlobalProps {
-  callback: (props: GlobalProps) => void;
+  callback: (props: GlobalProps, callback?: () => void) => void;
   menus: Blotter.Menu[];
   beian: string;
   view: number;
@@ -26,4 +28,6 @@ export declare interface GlobalProps {
   github: string;
   token: string;
   friends: Blotter.FriendSimple[];
+  big_screen: boolean;
+  theme: 'default' | 'dark';
 }

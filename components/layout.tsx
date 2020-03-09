@@ -38,12 +38,10 @@ import styles from './layout.less';
 interface BasicLayoutProps extends ComponentProps<'base'>, WithRouterProps {}
 interface BasicLayoutState {
   collapsed: boolean;
-  broken: boolean;
   loginModel: boolean;
   password: string;
   okDisabled: boolean;
   feedback: boolean;
-  theme: 'default' | 'dark';
 }
 
 class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
@@ -59,12 +57,10 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
     super(props);
     this.state = {
       collapsed: true,
-      broken: false,
       loginModel: false,
       password: '',
       okDisabled: false,
       feedback: false,
-      theme: 'default',
     };
   }
 
@@ -77,7 +73,7 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
   };
 
   onBreakpoint = (broken: boolean) => {
-    this.setState(() => ({ broken: broken }));
+    this.context.callback({ big_screen: !broken });
     this.setState(() => ({ collapsed: true }));
   };
 
@@ -124,10 +120,12 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
 
   renderCollapseButton = () => (
     <Affix
-      offsetTop={this.state.broken ? window.innerHeight - 60 : 20}
+      offsetTop={
+        !this.context.big_screen && typeof window !== 'undefined' ? window.innerHeight - 60 : 20
+      }
       style={Object.assign(
         { position: 'fixed', marginLeft: 20, zIndex: 100 },
-        this.state.broken ? { bottom: 20 } : { top: 20 },
+        !this.context.big_screen ? { bottom: 20 } : { top: 20 },
       )}
     >
       <Button
@@ -205,14 +203,14 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
         shape="circle"
         size="large"
         icon={
-          <Icon component={this.state.theme == 'default' ? this.renderDark : this.renderLight} />
+          <Icon component={this.context.theme == 'default' ? this.renderDark : this.renderLight} />
         }
         className="shadow"
         onClick={() => {
-          const newTheme = this.state.theme == 'default' ? 'dark' : 'default';
+          const newTheme = this.context.theme == 'default' ? 'dark' : 'default';
           console.log(newTheme);
-          this.setState({ theme: newTheme }, () => {
-            changeTheme(this.state.theme);
+          this.context.callback({ theme: newTheme }, () => {
+            changeTheme(this.context.theme);
           });
         }}
         style={{ position: 'fixed', right: '20px', bottom: '180px' }}
@@ -251,7 +249,7 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
   renderMenus = (menus: Blotter.Menu[], token: string) => {
     return (
       <Menu
-        theme={this.state.theme == 'default' ? 'light' : 'dark'}
+        theme={this.context.theme == 'default' ? 'light' : 'dark'}
         selectedKeys={[this.props.router.pathname]}
         mode="inline"
         inlineIndent={10}
@@ -265,12 +263,12 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
                   <span> {item.name}</span>
                 </a>
               ) : (
-              <Link href={item.link}>
+                <Link href={item.link}>
                   <a>
                     {item.icon ? <Icon type={item.icon} /> : null}
-                  <span> {item.name}</span>
-                </a>
-              </Link>
+                    <span> {item.name}</span>
+                  </a>
+                </Link>
               )}
             </Menu.Item>
           );
@@ -332,7 +330,7 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
         collapsible={true}
         collapsed={this.state.collapsed}
         onCollapse={this.onCollapse}
-        collapsedWidth={this.state.broken ? 0 : 80}
+        collapsedWidth={!this.context.big_screen ? 0 : 80}
         onBreakpoint={this.onBreakpoint}
       >
         <div className={styles.sider}>
