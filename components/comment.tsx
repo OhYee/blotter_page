@@ -1,4 +1,4 @@
-import React, { ComponentProps } from 'react';
+import React, { ComponentProps, Fragment } from 'react';
 
 import { Comment as Cm, Avatar, List, Tooltip, Input, Form, Button, Popover, Checkbox } from 'antd';
 import { Icon } from '@ant-design/compatible';
@@ -7,6 +7,7 @@ import { FormInstance } from 'antd/lib/form';
 import moment from 'moment';
 
 import { comments, avatar, addComment } from '@/utils/api';
+import { Context } from '@/utils/global';
 import ShowNotification from '@/utils/notification';
 
 const adWarning = <b>广告评论，已被屏蔽</b>;
@@ -27,6 +28,8 @@ interface CommentPartState {
 }
 
 class CommentPart extends React.Component<CommentPartProps, CommentPartState> {
+  static contextType = Context;
+
   constructor(props: CommentPartProps) {
     super(props);
     this.state = {
@@ -192,13 +195,21 @@ class CommentPart extends React.Component<CommentPartProps, CommentPartState> {
     );
   };
 
-  render_comment = (comment: Blotter.Comment) => {
-    var onReplyClick = () => {
+  render_comment = (comment: Blotter.Comment, depth: number) => {
+    const onReplyClick = () => {
       this.onReplyClick(comment.id, true);
     };
-    var onCloseClick = () => {
+    const onCloseClick = () => {
       this.onReplyClick(comment.id, false);
     };
+    const childrenAndEditor = () => (
+      <Fragment>
+        {this.state.reply[comment.id] ? this.render_editor(comment.id) : null}
+        {this.render_comment_list(comment.children, depth + 1)}
+      </Fragment>
+    );
+    var maxDepth = this.context.big_screen ? 5 : 2;
+
     return (
       <li>
         <Cm
@@ -231,7 +242,14 @@ class CommentPart extends React.Component<CommentPartProps, CommentPartState> {
             comment.ad ? (
               adWarning
             ) : comment.show ? (
-              <div dangerouslySetInnerHTML={{ __html: comment.content }}></div>
+              <div>
+                {depth != 1 && depth >= maxDepth ? (
+                  <blockquote
+                    dangerouslySetInnerHTML={{ __html: comment.reply_content }}
+                  ></blockquote>
+                ) : null}
+                <div dangerouslySetInnerHTML={{ __html: comment.content }}></div>
+              </div>
             ) : (
               delWarning
             )
@@ -242,22 +260,22 @@ class CommentPart extends React.Component<CommentPartProps, CommentPartState> {
             </Tooltip>
           }
         >
-          {this.state.reply[comment.id] ? this.render_editor(comment.id) : null}
-          {this.render_comment_list(comment.children, false)}
+          {depth < maxDepth ? childrenAndEditor() : null}
         </Cm>
+        {depth >= maxDepth ? childrenAndEditor() : null}
       </li>
     );
   };
 
-  render_comment_list = (comments: Blotter.Comment[], root: boolean) => {
-    if (comments.length || root) {
+  render_comment_list = (comments: Blotter.Comment[], depth: number) => {
+    if (comments.length || depth == 1) {
       return (
         <List
           className="comment-list"
-          header={root ? `共 ${this.state.total} 条评论` : null}
+          header={depth == 1 ? `共 ${this.state.total} 条评论` : null}
           itemLayout="horizontal"
           dataSource={comments}
-          renderItem={this.render_comment}
+          renderItem={(comment, idx) => this.render_comment(comment, depth)}
           loading={this.state.loading}
         />
       );
@@ -270,7 +288,7 @@ class CommentPart extends React.Component<CommentPartProps, CommentPartState> {
     return (
       <div id="blotter-comment">
         {this.render_editor('000000000000')}
-        {this.render_comment_list(this.state.comments, true)}
+        {this.render_comment_list(this.state.comments, 1)}
       </div>
     );
   }
