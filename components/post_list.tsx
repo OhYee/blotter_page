@@ -42,7 +42,6 @@ class PostList extends React.Component<PostListProps & ComponentProps<'base'>, P
       typeof this.props.callback === 'undefined'
         ? false
         : {
-            showQuickJumper: true,
             showSizeChanger: true,
             current: this.props.page,
             pageSize: this.props.size,
