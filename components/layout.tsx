@@ -251,7 +251,7 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
   renderMenus = (menus: Blotter.Menu[], token: string) => {
     return (
       <Menu
-        theme="light"
+        theme={this.state.theme == 'default' ? 'light' : 'dark'}
         selectedKeys={[this.props.router.pathname]}
         mode="inline"
         inlineIndent={10}
