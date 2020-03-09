@@ -259,12 +259,19 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
         {menus.map((item: Blotter.Menu) => {
           return (
             <Menu.Item key={item.link}>
+              {item.link.length > 0 && item.link[0] !== '/' ? (
+                <a target="_blank">
+                  {item.icon ? <Icon type={item.icon} /> : null}
+                  <span> {item.name}</span>
+                </a>
+              ) : (
               <Link href={item.link}>
-                <a target={item.link.length > 0 && item.link[0] == '/' ? null : '_blank'}>
-                  {item.link ? <Icon type={item.icon} /> : null}
+                  <a>
+                    {item.icon ? <Icon type={item.icon} /> : null}
                   <span> {item.name}</span>
                 </a>
               </Link>
+              )}
             </Menu.Item>
           );
         })}
