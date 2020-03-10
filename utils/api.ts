@@ -216,8 +216,8 @@ export const friendsSet = async (
   return await request('post', '/api/admin/friends/set', { friends }, callback);
 };
 
-export const view = async (url: string, callback?: RequestCallback<void>) => {
-  return await request('get', '/api/post/view', { url }, callback);
+export const view = async (url?: string, callback?: RequestCallback<void>) => {
+  return await request('get', '/api/view', { url }, callback);
 };
 
 export const menus = async (callback?: RequestCallback<Blotter.Menu[]>) => {

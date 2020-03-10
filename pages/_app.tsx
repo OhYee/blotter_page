@@ -10,6 +10,8 @@ const Layout = BasicLayout as any;
 
 import ErrorPage from '@/pages/_error';
 
+import { view } from '@/utils/api';
+
 interface MyAppProps extends AppProps {
   globalProps: GlobalProps;
   status: number;
@@ -56,6 +58,10 @@ export default class MyApp extends App<MyAppProps, {}, MyAppState> {
     }
 
     return { pageProps, globalProps, status, message };
+  }
+
+  componentDidMount() {
+    view();
   }
 
   render() {
