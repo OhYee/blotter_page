@@ -105,6 +105,8 @@ class Friends extends React.Component<FriendsProps, FriendsState> {
                 <a href={`mailto:${context.email}`}>邮件</a>申请友链
                 <br />
                 如果可以，最好提供logo以及站点RSS，RSS将用于更新最新文章（没有也没事，就当我练习爬虫技术了）
+                <br />
+                唯一的要求就是起码一年能更新几篇文章吧，别的只要内容合法合规，来者不拒
               </Card>
               <Row gutter={[10, 10]}>
                 {this.props.friends.map((friend: Blotter.Friend) => this.renderCard(friend))}
