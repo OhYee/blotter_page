@@ -169,7 +169,7 @@ class AdminMenus extends React.Component<AdminMenusProps, AdminMenusState> {
         <Context.Consumer>
           {context => (
             <Head>
-              <title>{`友链列表|后台|${context.blog_name}`}</title>
+              <title>{`菜单列表|后台|${context.blog_name}`}</title>
             </Head>
           )}
         </Context.Consumer>
