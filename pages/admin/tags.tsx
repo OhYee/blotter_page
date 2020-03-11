@@ -11,10 +11,11 @@ import { SorterResult, TableCurrentDataSource } from 'antd/lib/table/interface';
 import Container from '@/components/container';
 import TagPart from '@/components/tag';
 
-import { adminTags, tagDelete, tagEdit } from '@/utils/api';
 import { Context } from '@/utils/global';
+import { adminTags, tagDelete, tagEdit } from '@/utils/api';
 import ShowNotification from '@/utils/notification';
 import { waitUntil } from '@/utils/debounce';
+import randomString from '@/utils/random';
 
 interface T extends Blotter.TagWithCount {}
 
@@ -163,7 +164,7 @@ class AdminTagList extends React.Component<AdminTagListProps, AdminTagListState>
   onInsert = () => {
     this.setState(state => {
       var data = state.data;
-      data.unshift({ id: '', name: '', short: '', color: '', icon: '', count: 0 });
+      data.unshift({ id: randomString(), name: '', short: '', color: '', icon: '', count: 0 });
       data = data.map(d => d);
       return { data };
     });

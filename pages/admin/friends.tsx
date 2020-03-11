@@ -1,24 +1,18 @@
 import React, { ComponentProps } from 'react';
 
 import Head from 'next/head';
-import Link from 'next/link';
 
-import { Card, Table, Button, Row, Col, Typography, Form, Input, Popconfirm } from 'antd';
+import { Card, Table, Button, Typography, Popconfirm } from 'antd';
 import { ColumnProps } from 'antd/lib/table';
 import { Icon } from '@ant-design/compatible';
-import { PaginationConfig } from 'antd/lib/pagination';
-import { SorterResult, TableCurrentDataSource } from 'antd/lib/table/interface';
 
 import Container from '@/components/container';
-import TagPart from '@/components/tag';
-
-import { adminTags, tagDelete, tagEdit, friends, friendsSet } from '@/utils/api';
-import { Context } from '@/utils/global';
-import ShowNotification from '@/utils/notification';
-import { waitUntil } from '@/utils/debounce';
-import { createObjectBindingPattern } from 'typescript';
 import DragableTable from '@/components/dragable_table';
-import Friends from '../friends';
+
+import { Context } from '@/utils/global';
+import { friends, friendsSet } from '@/utils/api';
+import ShowNotification from '@/utils/notification';
+import randomString from '@/utils/random';
 
 interface T extends Blotter.Friend {}
 interface T2 {
@@ -137,7 +131,11 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
       key: 'image_preview',
       width: '10%',
       render: (_, __, idx) => (
-        <img width={'50px'} src={this.state.data[idx].image} {...{ referrerPolicy: 'no-referrer' }} />
+        <img
+          width={'50px'}
+          src={this.state.data[idx].image}
+          {...{ referrerPolicy: 'no-referrer' }}
+        />
       ),
     },
     {
@@ -176,7 +174,7 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
         onClick={() => {
           this.setState(state => {
             var { data } = state;
-            data[index].posts.unshift({ title: '', link: '' });
+            data[index].posts.unshift({ title: randomString(), link: '' });
             data.map(d => {
               d.posts = d.posts.map(dd => dd);
               return d;
@@ -197,14 +195,14 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
         onClick={() => {
           this.setState(state => {
             var { data } = state;
-            data.unshift({
-              name: '',
+            data.push({
+              name: randomString(),
               link: '',
               image: '',
               description: '',
               posts: [],
             });
-            data.map(d => {
+            data = data.map(d => {
               d.posts = d.posts.map(dd => dd);
               return d;
             });

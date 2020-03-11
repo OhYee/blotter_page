@@ -1,23 +1,18 @@
 import React, { ComponentProps } from 'react';
 
 import Head from 'next/head';
-import Link from 'next/link';
 
-import { Card, Table, Button, Row, Col, Typography, Form, Input, Popconfirm } from 'antd';
-import { ColumnProps } from 'antd/lib/table';
+import { Card, Button, Typography, Popconfirm } from 'antd';
 import { Icon } from '@ant-design/compatible';
-import { PaginationConfig } from 'antd/lib/pagination';
-import { SorterResult, TableCurrentDataSource, ColumnsType } from 'antd/lib/table/interface';
+import { ColumnsType } from 'antd/lib/table/interface';
 
 import Container from '@/components/container';
-
-import { menus, menusSet } from '@/utils/api';
-import { Context } from '@/utils/global';
-import ShowNotification from '@/utils/notification';
-import { waitUntil } from '@/utils/debounce';
-import { createObjectBindingPattern } from 'typescript';
 import DragableTable from '@/components/dragable_table';
-import Friends from '../friends';
+
+import { Context } from '@/utils/global';
+import { menus, menusSet } from '@/utils/api';
+import ShowNotification from '@/utils/notification';
+import randomString from '@/utils/random';
 
 interface T extends Blotter.Menu {}
 
@@ -135,7 +130,7 @@ class AdminMenus extends React.Component<AdminMenusProps, AdminMenusState> {
           this.setState(state => {
             var { data } = state;
             data.push({
-              name: '',
+              name: randomString(),
               link: '',
               icon: '',
             });
