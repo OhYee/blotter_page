@@ -2,10 +2,9 @@ import { notification } from 'antd';
 import axios from 'axios';
 
 function parseURL(url: string): string {
-  return (typeof document === 'undefined' ? 'http://127.0.0.1:50000' : '') + url;
-  //   return url == '/api/friends' || url == '/api/menu' || url == '/api/post' || url == '/api/posts' || url == '/api/comments'
-  //     ? domain + url
-  //     : url;
+  return (url.length > 0 && url[0] !== '/') || typeof document !== 'undefined'
+    ? url
+    : 'http://127.0.0.1:50000' + url;
 }
 
 export const requestAsync = async (method: 'post' | 'get', url: string, data: any) => {

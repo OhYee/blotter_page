@@ -1,4 +1,5 @@
 import { request } from '@/utils/request';
+import { GithubUser, GithubRepo } from '@/types/github';
 
 type RequestCallback<T> = (data: T) => void;
 type PostCardWithTotal = {
@@ -229,4 +230,36 @@ export const menusSet = async (
   callback?: RequestCallback<Blotter.APIResponse>,
 ) => {
   return await request('post', '/api/admin/menus/set', { menus }, callback);
+};
+
+export const githubUser = async (username: string, callback?: RequestCallback<GithubUser>) => {
+  return await request('get', `https://api.github.com/users/${username}`, {}, callback);
+};
+
+export const githubRepos = async (username: string, callback?: RequestCallback<GithubRepo[]>) => {
+  return await request('get', `https://api.github.com/users/${username}/repos`, {}, callback);
+};
+
+export const githubRepo = async (
+  username: string,
+  repo: string,
+  callback?: RequestCallback<GithubRepo>,
+) => {
+  return await request('get', `https://api.github.com/repos/${username}/${repo}`, {}, callback);
+};
+
+export const about = async (
+  callback?: RequestCallback<{
+    qq: string;
+    github: string;
+    email: string;
+    zhihu: string;
+    author: string;
+    quote: string;
+    description: string;
+    edu: { school: string; major: string; time: string }[];
+    awards: { name: string; level: string; count: number }[];
+  }>,
+) => {
+  return await request('get', `/api/about`, {}, callback);
 };
