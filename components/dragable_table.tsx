@@ -47,17 +47,18 @@ const DragableRow = props => {
   return <tr ref={ref} style={style} {...restProps} />;
 };
 
-class DragableTable<T> extends React.Component<DragableTableProps<T>> {
+class DragableTable<T extends object = any> extends React.Component<DragableTableProps<T>> {
   render() {
-    const dragKey = !!this.props.dragKey
-      ? this.props.dragKey
+    var { dragKey, moveRow, ...restProps } = this.props;
+    dragKey = !!dragKey
+      ? dragKey
       : Math.random()
           .toString(36)
           .slice(-8);
     return (
       <DndProvider backend={HTML5Backend}>
-        <Table
-          {...this.props}
+        <Table<T>
+          {...restProps}
           // 替换Row
           components={{
             body: {
@@ -71,7 +72,7 @@ class DragableTable<T> extends React.Component<DragableTableProps<T>> {
             onMouseEnter: event => {},
             onMouseLeave: event => {},
             index,
-            moveRow: this.props.moveRow,
+            moveRow: moveRow,
             dragKey,
           })}
         />
