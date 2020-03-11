@@ -208,7 +208,6 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
         className="shadow"
         onClick={() => {
           const newTheme = this.context.theme == 'default' ? 'dark' : 'default';
-          console.log(newTheme);
           this.context.callback({ theme: newTheme }, () => {
             changeTheme(this.context.theme);
           });
@@ -303,14 +302,11 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
         >
           <Form ref={this.formRef}>
             <Form.Item name="username">
-              <Input
-                prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                placeholder="用户名"
-              />
+              <Input prefix={<Icon type="user" />} placeholder="用户名" />
             </Form.Item>
             <Form.Item name="password">
               <Input.Password
-                prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                prefix={<Icon type="lock" />}
                 placeholder="密码"
                 onPressEnter={this.loginOK}
               />
@@ -425,7 +421,7 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
     return (
       <Layout
         style={{ minHeight: '100%' }}
-        className={this.state.collapsed ? undefined : styles.dimmed}
+        className={`${this.context.theme} ${this.state.collapsed ? '' : styles.dimmed}`}
       >
         <Context.Consumer>
           {context => (

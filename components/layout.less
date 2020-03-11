@@ -92,16 +92,6 @@ blockquote {
   }
 }
 
-code {
-  padding: 0.2em 0.4em;
-  margin: 0 0.5em;
-  font-size: 85%;
-  background-color: rgba(27, 31, 35, 0.05);
-  border-radius: 3px;
-  font-family: Cascadia Code, Source Code Variable, SFMono-Regular, Consolas, Liberation Mono, Menlo,
-    monospace;
-}
-
 :global(.ant-comment-content) {
   :global(.ant-form-item-label) > label {
     color: rgba(0, 0, 0, 0.65);
@@ -118,5 +108,32 @@ code {
       content: ' ';
       padding: 0px 0.5em;
     }
+  }
+}
+
+pre {
+  background-color: #f6f8fa !important;
+  padding: 10px;
+  border-radius: 10px;
+  max-height: 50vh;
+}
+
+code {
+  background: #fff5f5;
+  color: #ff502c;
+  font-size: 0.87em;
+  border: 1px #ffaaaa dotted;
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+  padding: 0.2em 0.4em;
+  margin: 0 0.5em;
+  border-radius: 3px;
+}
+
+:global(.dark) {
+  code {
+    background: #6a0f13;
+  }
+  pre {
+    background-color: #0a0806 !important;
   }
 }

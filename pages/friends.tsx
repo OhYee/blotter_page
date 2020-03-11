@@ -67,7 +67,7 @@ class Friends extends React.Component<FriendsProps, FriendsState> {
               <Avatar icon={<img src={friend.image} {...{ referrerPolicy: 'no-referrer' }} />} />
             }
             title={
-              <a href={friend.link} target="_blank" style={{ color: 'black' }}>
+              <a href={friend.link} target="_blank" className='text-color'>
                 {friend.name}
               </a>
             }
