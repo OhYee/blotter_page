@@ -63,6 +63,7 @@ interface AboutPageProps extends ComponentProps<'base'> {
 }
 interface AboutPageState {
   repos: GithubRepo[];
+  loading: boolean;
 }
 
 function ToColumnCount(num: number): ColumnCount {
@@ -78,7 +79,7 @@ class AboutPage extends React.Component<AboutPageProps, AboutPageState> {
 
   constructor(props: any) {
     super(props);
-    this.state = { repos: [] };
+    this.state = { repos: [], loading: false };
   }
 
   static async getInitialProps() {
@@ -88,8 +89,9 @@ class AboutPage extends React.Component<AboutPageProps, AboutPageState> {
 
   componentDidMount() {
     if (!!this.props.github) {
+      this.setState({ loading: true });
       githubRepos(this.props.github, data => {
-        this.setState({ repos: data });
+        this.setState({ repos: data, loading: false });
       });
     }
   }
@@ -270,6 +272,7 @@ class AboutPage extends React.Component<AboutPageProps, AboutPageState> {
         rowKey={record => record.name}
         dataSource={this.state.repos}
         columns={columns}
+        loading={this.state.loading}
         expandable={{
           expandedRowRender: record => (
             <Descriptions bordered size="small">
