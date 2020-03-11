@@ -136,8 +136,8 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
       title: '图片预览',
       key: 'image_preview',
       width: '10%',
-      render: (_, record, idx) => (
-        <img width={'50px'} src={record.image} {...{ referrerPolicy: 'no-referrer' }} />
+      render: (_, __, idx) => (
+        <img width={'50px'} src={this.state.data[idx].image} {...{ referrerPolicy: 'no-referrer' }} />
       ),
     },
     {
