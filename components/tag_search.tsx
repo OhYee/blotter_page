@@ -33,7 +33,6 @@ class TagSearch extends React.Component<TagSearchProps & ComponentProps<'base'>,
   };
   onChange = (value: string) => {
     var tag = this.state.options.find(tag => tag.short == value);
-    console.log(value, tag, this.state.options);
     if (typeof tag != 'undefined') {
       this.add(tag);
     }
