@@ -149,7 +149,7 @@
 @table-expanded-row-bg: #fbfbfb;
 @table-footer-bg: hsv(0, 0, 98%);
 @table-footer-color: fade(#000, 85%);
-@table-header-bg-sm: #fff;
+@table-header-bg-sm: hsv(0, 0, 98%);
 @table-filter-dropdown-bg: #fff;
 @table-expand-icon-bg: #fff;
 @tag-default-bg: hsv(0, 0, 98%);
@@ -1902,6 +1902,7 @@ this.tinycolor = tinycolor;
 @outline-blur-size: 0;
 @outline-width: 2px;
 
+@outline-fade: 20%;
 
  // background of header and selected item
  // Default grey background color
@@ -2590,6 +2591,28 @@ this.tinycolor = tinycolor;
 
 .primary-color {
   color: @timeline-dot-color;
+}
+.text-color {
+  color: @alert-text-color;
+}
+.ant-tag-has-color a {
+  color: white;
+}
+.ant-tag-has-color a a {
+  color: white;
+}
+.ant-tag-has-color a a:hover {
+  color: white;
+}
+.ant-btn-primary,
+.ant-btn-danger,
+.ant-switch-inner {
+  color: white;
+}
+.ant-btn-primary:hover,
+.ant-btn-danger:hover,
+.ant-switch-inner:hover {
+  color: white;
 }
 html {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
@@ -6200,6 +6223,10 @@ tr > .ant-picker-cell-in-view.ant-picker-cell-range-hover-start:last-child::afte
   border: 1px solid @select-border-color;
   border-left: 0;
 }
+.ant-input-search-enter-button input:hover,
+.ant-input-search-enter-button input:focus {
+  border-color: color(~`colorPalette("@{timeline-dot-color}", 5)`);
+}
 .ant-input-search-enter-button.ant-input-affix-wrapper {
   border-right: 0;
 }
@@ -7855,7 +7882,7 @@ tr > .ant-picker-cell-in-view.ant-picker-cell-range-hover-start:last-child::afte
   background-color: @timeline-dot-color;
 }
 .ant-table.ant-table-small thead > tr > th {
-  background-color: @notification-bg;
+  background-color: @collapse-header-bg;
 }
 .ant-table.ant-table-bordered .ant-table-title {
   border: 1px solid @process-tail-color;
@@ -8960,6 +8987,28 @@ h4.ant-typography,
 }
 .primary-color {
   color: @timeline-dot-color;
+}
+.text-color {
+  color: @alert-text-color;
+}
+.ant-tag-has-color a {
+  color: white;
+}
+.ant-tag-has-color a a {
+  color: white;
+}
+.ant-tag-has-color a a:hover {
+  color: white;
+}
+.ant-btn-primary,
+.ant-btn-danger,
+.ant-switch-inner {
+  color: white;
+}
+.ant-btn-primary:hover,
+.ant-btn-danger:hover,
+.ant-switch-inner:hover {
+  color: white;
 }
 
 
