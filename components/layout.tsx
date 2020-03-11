@@ -257,7 +257,7 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
           return (
             <Menu.Item key={item.link}>
               {item.link.length > 0 && item.link[0] !== '/' ? (
-                <a target="_blank">
+                <a target="_blank" href={item.link}>
                   {item.icon ? <Icon type={item.icon} /> : null}
                   <span> {item.name}</span>
                 </a>
