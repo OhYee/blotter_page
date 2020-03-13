@@ -13,6 +13,8 @@ import { friends } from '@/utils/api';
 
 import styles from './friends.less';
 
+const maxPostNumber = 5;
+
 interface FriendsProps extends ComponentProps<'base'> {
   friends: Blotter.Friend[];
 }
@@ -37,7 +39,7 @@ class Friends extends React.Component<FriendsProps, FriendsState> {
   }
   getSourceData = (posts: Blotter.FriendPost[]) => {
     var list: JSX.Element[] = [];
-    for (var i = 0; i < 3; i++) {
+    for (var i = 0; i < maxPostNumber; i++) {
       if (i < posts.length) {
         var post = posts[i];
         list.push(
@@ -50,7 +52,11 @@ class Friends extends React.Component<FriendsProps, FriendsState> {
           </a>,
         );
       } else {
-        list.push(<p>没有数据</p>);
+        list.push(
+          <Typography.Text ellipsis={true} style={{ width: '100%' }}>
+            没有数据
+          </Typography.Text>,
+        );
       }
     }
     return list;
@@ -60,41 +66,39 @@ class Friends extends React.Component<FriendsProps, FriendsState> {
 
   renderCard = (friend: Blotter.Friend) => {
     return (
-      <Col key={friend.link} lg={8}>
-        <Card hoverable={true}>
-          <Card.Meta
-            avatar={
-              <Avatar
-                className={styles.avatar}
-                icon={<img src={friend.image} {...{ referrerPolicy: 'no-referrer' }} />}
-              />
-            }
-            title={
-              <Popover title={friend.name} content={friend.description}>
-                <a href={friend.link} target="_blank" className="text-color">
-                  {friend.name}
-                </a>
-              </Popover>
-            }
-            description={
-              <Popover title={friend.name} content={friend.description}>
-                <Typography.Text ellipsis={true} style={{ lineHeight: '2em', width: '100%' }}>
-                  {!!friend.description ? friend.description : '没有描述'}
-                </Typography.Text>
-              </Popover>
-            }
-          />
-          <Divider style={{ margin: '20px 0 0 0' }} />
-          <List
-            className={styles.list}
-            itemLayout="horizontal"
-            size="small"
-            style={{ height: '130px' }}
-            dataSource={this.getSourceData(friend.posts)}
-            renderItem={this.renderListItem}
-          />
-        </Card>
-      </Col>
+      <Card hoverable={true}>
+        <Card.Meta
+          avatar={
+            <Avatar
+              className={styles.avatar}
+              icon={<img src={friend.image} {...{ referrerPolicy: 'no-referrer' }} />}
+            />
+          }
+          title={
+            <Popover title={friend.name} content={friend.description}>
+              <a href={friend.link} target="_blank" className="text-color">
+                {friend.name}
+              </a>
+            </Popover>
+          }
+          description={
+            <Popover title={friend.name} content={friend.description}>
+              <Typography.Text ellipsis={true} style={{ lineHeight: '2em', width: '100%' }}>
+                {!!friend.description ? friend.description : '没有描述'}
+              </Typography.Text>
+            </Popover>
+          }
+        />
+        <Divider style={{ margin: '20px 0 0 0' }} />
+        <List
+          className={styles.list}
+          itemLayout="horizontal"
+          size="small"
+          // style={}
+          dataSource={this.getSourceData(friend.posts)}
+          renderItem={this.renderListItem}
+        />
+      </Card>
     );
   };
   render() {
@@ -109,7 +113,11 @@ class Friends extends React.Component<FriendsProps, FriendsState> {
 
               <Card style={{ marginBottom: '10px' }}>
                 <Typography.Paragraph>
-                  可以在<Link href="/comment">评论区</Link>或者使用
+                  可以在
+                  <Link href="/comment">
+                    <a>评论区</a>
+                  </Link>
+                  或者使用
                   <a href={`mailto:${context.email}`}>邮件</a>申请友链
                 </Typography.Paragraph>
 
@@ -118,7 +126,12 @@ class Friends extends React.Component<FriendsProps, FriendsState> {
                 </Typography.Paragraph>
 
                 <Typography.Paragraph>
-                  如果可以，最好提供logo以及站点RSS，RSS将用于更新最新文章（没有也没事，就当我练习爬虫技术了）。友链顺序会按照博客最新文章手动随缘排序（更新勤快的高质量大佬优先）
+                  如果可以，最好提供logo以及站点RSS，RSS将用于更新最新文章（没有也没事，就当我练习爬虫技术了）
+                  <br />
+                  友链顺序会按照博客最新文章手动随缘排序（更新勤快的高质量大佬优先）
+                  <br />
+                  每次会将最新 {maxPostNumber}{' '}
+                  篇文章更新到这里，这样我就可以在一个页面看到诸位大佬的最新成果了
                 </Typography.Paragraph>
 
                 <Typography.Paragraph>
@@ -130,9 +143,16 @@ class Friends extends React.Component<FriendsProps, FriendsState> {
                   ，如有必要，请加白名单。文章爬取任务会在每天凌晨 3 点执行
                 </Typography.Paragraph>
               </Card>
-              <Row gutter={[10, 10]}>
-                {this.props.friends.map((friend: Blotter.Friend) => this.renderCard(friend))}
-              </Row>
+
+              <List
+                grid={{ xl: 3, md: 2, sm: 1, gutter: 30 }}
+                dataSource={this.props.friends}
+                renderItem={(friend: Blotter.Friend) => (
+                  <List.Item key={friend.link} style={{ width: '100vw' }}>
+                    {this.renderCard(friend)}
+                  </List.Item>
+                )}
+              />
             </Fragment>
           )}
         </Context.Consumer>
