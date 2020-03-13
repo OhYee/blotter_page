@@ -65,6 +65,7 @@ declare namespace Blotter {
     link: string;
     name: string;
     description: string;
+    rss: string;
     posts: FriendPost[];
   }
   interface FriendPost {
