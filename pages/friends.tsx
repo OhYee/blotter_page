@@ -78,7 +78,7 @@ class Friends extends React.Component<FriendsProps, FriendsState> {
             }
             description={
               <Popover title={friend.name} content={friend.description}>
-                <Typography.Text ellipsis={true} style={{ lineHeight: '1em', width: '100%' }}>
+                <Typography.Text ellipsis={true} style={{ lineHeight: '2em', width: '100%' }}>
                   {friend.description}
                 </Typography.Text>
               </Popover>
