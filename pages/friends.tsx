@@ -4,7 +4,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { NextPageContext } from 'next';
 
-import { Row, Col, Card, Avatar, List, Divider, Tooltip, Typography } from 'antd';
+import { Row, Col, Card, Avatar, List, Divider, Tooltip, Typography, Popover } from 'antd';
 
 import Container from '@/components/container';
 
@@ -64,17 +64,24 @@ class Friends extends React.Component<FriendsProps, FriendsState> {
         <Card hoverable={true}>
           <Card.Meta
             avatar={
-              <Avatar icon={<img src={friend.image} {...{ referrerPolicy: 'no-referrer' }} />} />
+              <Avatar
+                className={styles.avatar}
+                icon={<img src={friend.image} {...{ referrerPolicy: 'no-referrer' }} />}
+              />
             }
             title={
-              <a href={friend.link} target="_blank" className='text-color'>
-                {friend.name}
-              </a>
+              <Popover title={friend.name} content={friend.description}>
+                <a href={friend.link} target="_blank" className="text-color">
+                  {friend.name}
+                </a>
+              </Popover>
             }
             description={
-              <Typography.Text ellipsis={true} style={{ lineHeight: '1em' }}>
-                {friend.description}
-              </Typography.Text>
+              <Popover title={friend.name} content={friend.description}>
+                <Typography.Text ellipsis={true} style={{ lineHeight: '1em', width: '100%' }}>
+                  {friend.description}
+                </Typography.Text>
+              </Popover>
             }
           />
           <Divider style={{ margin: '20px 0 0 0' }} />
