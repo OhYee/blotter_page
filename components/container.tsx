@@ -19,8 +19,8 @@ class Container extends React.Component<ContainerProps, ContainerState> {
   static defaultProps: ContainerProps = {
     xs: 24,
     sm: 20,
-    md: 16,
-    lg: 12,
+    md: 18,
+    lg: 16,
     xl: undefined,
     xxl: undefined,
     gutter_h: 20,

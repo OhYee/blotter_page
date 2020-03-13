@@ -108,7 +108,7 @@ class Index extends React.Component<IndexProps, IndexState> {
             </Head>
           )}
         </Context.Consumer>
-        <Container lg={14} md={18}>
+        <Container>
           <Card className="shadow">
             <Input
               placeholder="搜索文章"

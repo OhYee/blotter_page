@@ -1,4 +1,4 @@
-import React, { ComponentProps } from 'react';
+import React, { ComponentProps, Fragment } from 'react';
 
 import { NextPageContext } from 'next';
 import Head from 'next/head';
@@ -19,6 +19,7 @@ import { Context } from '@/utils/global';
 
 import styles from './post.less';
 import { parseStringParams } from '@/utils/parse';
+import If from '@/components/if';
 
 interface AnchorType {
   name: string;
@@ -165,39 +166,42 @@ class PostPage extends React.Component<PostPageProps, PostPageState> {
       <Container lg={16}>
         <Context.Consumer>
           {context => (
-            <Head>
-              <title>{`${this.props.post.title}|${context.blog_name}`}</title>
-              <meta
-                name="keywords"
-                key="keywords"
-                content={
-                  Array.isArray(this.props.post.keywords) ? this.props.post.keywords.join(',') : ''
-                }
-              />
-              <meta key="description" name="description" content={this.props.post.abstract} />
-            </Head>
+            <Fragment>
+              <Head>
+                <title>{`${this.props.post.title}|${context.blog_name}`}</title>
+                <meta
+                  name="keywords"
+                  key="keywords"
+                  content={
+                    Array.isArray(this.props.post.keywords)
+                      ? this.props.post.keywords.join(',')
+                      : ''
+                  }
+                />
+                <meta key="description" name="description" content={this.props.post.abstract} />
+              </Head>
+              <If condition={context.big_screen}>
+                <Anchor
+                  offsetTop={10}
+                  style={{
+                    maxHeight: 'calc(100% - 100px)',
+                    background: 'transparent',
+                    position: 'fixed',
+                    top: '50px',
+                    right: '30px',
+                    width: '15%',
+                  }}
+                >
+                  {this.props.anchors.map(this.render_anchor)}
+                </Anchor>
+              </If>
+            </Fragment>
           )}
         </Context.Consumer>
         <Card>{this.render_post()}</Card>
         <Card>
           <CommentPart url={`/post/${this.props.router.query.url as string}`} />
         </Card>
-
-        <Visiable visiable_bigger="xl">
-          <Anchor
-            offsetTop={10}
-            style={{
-              maxHeight: 'calc(100% - 100px)',
-              background: 'transparent',
-              position: 'fixed',
-              top: '50px',
-              right: '30px',
-              maxWidth: '15%',
-            }}
-          >
-            {this.props.anchors.map(this.render_anchor)}
-          </Anchor>
-        </Visiable>
       </Container>
     );
   }
