@@ -28,9 +28,6 @@ interface AdminFriendListState {
   submitLoading: boolean;
 }
 
-const defaultSortField = 'count';
-const defaultSortInc = false;
-
 class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendListState> {
   static defaultProps = {};
 
@@ -102,14 +99,14 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
       title: '名称',
       key: 'name',
       dataIndex: 'name',
-      width: '15%',
+      width: '10%',
       render: (_, __, idx) => this.renderEditableCell(idx, 'name'),
     },
     {
       title: '简介',
       key: 'description',
       dataIndex: 'description',
-      width: '25%',
+      width: '20%',
       render: (_, __, idx) => this.renderEditableCell(idx, 'description'),
     },
     {
@@ -118,6 +115,13 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
       dataIndex: 'link',
       width: '15%',
       render: (_, __, idx) => this.renderEditableCell(idx, 'link'),
+    },
+    {
+      title: 'RSS',
+      key: 'rss',
+      dataIndex: 'rss',
+      width: '10%',
+      render: (_, __, idx) => this.renderEditableCell(idx, 'rss'),
     },
     {
       title: '图片',
@@ -200,6 +204,7 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
               link: '',
               image: '',
               description: '',
+              rss: '',
               posts: [],
             });
             data = data.map(d => {
