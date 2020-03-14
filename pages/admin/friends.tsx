@@ -101,7 +101,7 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
       title: '名称',
       key: 'name',
       dataIndex: 'name',
-      width: '10%',
+      width: '15%',
       render: (_, __, idx) => this.renderEditableCell(idx, 'name'),
     },
     {
@@ -122,7 +122,7 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
       title: 'RSS',
       key: 'rss',
       dataIndex: 'rss',
-      width: '10%',
+      width: '15%',
       render: (_, __, idx) => this.renderEditableCell(idx, 'rss'),
     },
     {
@@ -147,7 +147,7 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
     {
       title: '操作',
       key: 'op',
-      width: '20%',
+      width: '10%',
       render: (text, record, index) => (
         <Popconfirm
           title="真的要删除么？"
