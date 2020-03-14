@@ -68,6 +68,8 @@ class AdminTagList extends React.Component<AdminTagListProps, AdminTagListState>
 
   renderEditableCell = (idx: number, key: string) => (
     <Typography.Text
+      style={{ wordWrap: 'break-word', wordBreak: 'break-word' }}
+      ellipsis={true}
       editable={{
         onChange: value => {
           this.setState(state => {

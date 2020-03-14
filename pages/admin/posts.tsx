@@ -68,12 +68,14 @@ class AdminPostList extends React.Component<AdminPostListProps, AdminPostListSta
         </Link>
       ),
       width: '10%',
+      ellipsis: true,
     },
     {
       title: '链接',
       key: 'url',
       dataIndex: 'url',
       width: '10%',
+      ellipsis: true,
       render: text => (
         <Typography.Text ellipsis={true} style={{ maxWidth: '100%' }}>
           {text}
@@ -86,6 +88,7 @@ class AdminPostList extends React.Component<AdminPostListProps, AdminPostListSta
       dataIndex: 'publish_time',
       sorter: true,
       width: '10%',
+    //   ellipsis: true,
     },
     {
       title: '编辑时间',
@@ -93,6 +96,7 @@ class AdminPostList extends React.Component<AdminPostListProps, AdminPostListSta
       dataIndex: 'edit_time',
       sorter: true,
       width: '10%',
+    //   ellipsis: true,
     },
     {
       title: '阅读量',
@@ -100,6 +104,7 @@ class AdminPostList extends React.Component<AdminPostListProps, AdminPostListSta
       dataIndex: 'view',
       sorter: true,
       width: '10%',
+      ellipsis: true,
     },
     {
       title: '已发布',
@@ -107,6 +112,7 @@ class AdminPostList extends React.Component<AdminPostListProps, AdminPostListSta
       dataIndex: 'published',
       sorter: true,
       width: '10%',
+      ellipsis: true,
       render: (text, record, index) =>
         text ? (
           <Icon type="eye" style={{ color: 'green' }}></Icon>
@@ -118,7 +124,6 @@ class AdminPostList extends React.Component<AdminPostListProps, AdminPostListSta
       title: '标签',
       key: 'tags',
       dataIndex: 'tags',
-      width: '20%',
       render: (text, record, index) => (
         <div>
           {record.tags.map(tag => (
@@ -130,7 +135,8 @@ class AdminPostList extends React.Component<AdminPostListProps, AdminPostListSta
     {
       title: '操作',
       key: 'op',
-      width: '20%',
+      width: '15%',
+      ellipsis: true,
       render: (text, record, index) => (
         <Row gutter={5}>
           <Col span={12}>

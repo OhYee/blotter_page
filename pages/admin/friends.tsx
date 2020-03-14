@@ -53,6 +53,8 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
   renderEditableCell = (idx: number, key: string) => {
     return (
       <Typography.Text
+        style={{ wordWrap: 'break-word', wordBreak: 'break-word' }}
+        ellipsis={true}
         editable={{
           onChange: value => {
             this.setState(state => {
