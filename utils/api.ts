@@ -263,3 +263,14 @@ export const about = async (
 ) => {
   return await request('get', `/api/about`, {}, callback);
 };
+
+export const variables = async (callback?: RequestCallback<Blotter.Variable[]>) => {
+  return await request('get', `/api/admin/variables`, {}, callback);
+};
+
+export const variablesSet = async (
+  data: Blotter.Variable[],
+  callback?: RequestCallback<Blotter.APIResponse>,
+) => {
+  return await request('post', `/api/admin/variables/set`, { data }, callback);
+};

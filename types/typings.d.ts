@@ -72,4 +72,8 @@ declare namespace Blotter {
     title: string;
     link: string;
   }
+  interface Variable {
+    key: string;
+    value: any;
+  }
 }
