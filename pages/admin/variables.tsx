@@ -72,7 +72,6 @@ class AdminVariables extends React.Component<AdminVariablesProps, AdminVariables
           onClick={async () => {
             const v = this.state.variables;
             const data = Object.keys(v).map(key => ({ key, value: v[key] }));
-            console.log(data);
             var r = await variablesSet(data);
             ShowNotification(r);
           }}
