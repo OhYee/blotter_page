@@ -164,27 +164,27 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
               content: (
                 <div>
                   <p>
-                    有一个<a href="https://github.com/OhYee/blotter_page/issues">前端的Bug</a>
+                    有一个 <a href="https://github.com/OhYee/blotter_page/issues">前端的Bug</a>
                     ，包括但不限于页面渲染不正常
                   </p>
                   <p>
-                    有一个<a href="https://github.com/OhYee/blotter/issues">后端的Bug</a>
+                    有一个 <a href="https://github.com/OhYee/blotter/issues">后端的Bug</a>
                     ，包括但不限于各种功能性故障
                   </p>
                   <p>
                     直接使用
                     <a href={`mailto:${context.email}`}>
-                      <Icon type="mail" />
-                      邮件
-                    </a>
+                      {' '}
+                      <Icon type="mail" /> 邮件
+                    </a>{' '}
                     反馈bug
                   </p>
                   <p>
                     直接使用
                     <a href={`//wpa.qq.com/msgrd?v=3&uin=${context.qq}&site=qq&menu=yes`}>
-                      <Icon type="qq" />
-                      QQ
-                    </a>
+                      {' '}
+                      <Icon type="qq" /> QQ
+                    </a>{' '}
                     反馈bug
                   </p>
                 </div>
@@ -385,7 +385,7 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
                 </p>
                 <p>
                   <span className="right5">2017 – {new Date().getFullYear()}</span>
-                  <a href="//beian.miit.gov.cn/">{context.beian}</a>
+                  <a href="http://beian.miit.gov.cn/">{context.beian}</a>
                 </p>
                 <p>
                   Powered by <a href="https://github.com/OhYee/blotter">Blotter</a>
