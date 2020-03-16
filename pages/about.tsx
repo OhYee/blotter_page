@@ -171,14 +171,14 @@ class AboutPage extends React.Component<AboutPageProps, AboutPageState> {
   render_education = () => {
     const columns: ColumnsType<Education> = [
       {
-        dataIndex: 'school',
-        title: '学校',
+        dataIndex: 'name',
+        title: '名称',
         width: '40%',
         align: 'center',
       },
       {
         dataIndex: 'major',
-        title: '专业',
+        title: '方向',
         width: '30%',
         align: 'center',
       },
@@ -329,10 +329,10 @@ class AboutPage extends React.Component<AboutPageProps, AboutPageState> {
             <Typography.Paragraph>{this.render_pay()}</Typography.Paragraph>
             <Typography.Paragraph>{this.render_social()}</Typography.Paragraph>
             <Collapse defaultActiveKey={[]}>
-              <Collapse.Panel header="教育经历" key="education">
+              <Collapse.Panel header="教育、工作经历" key="education">
                 {this.render_education()}
               </Collapse.Panel>
-              <Collapse.Panel header="划水奖项" key="awards">
+              <Collapse.Panel header="抱大腿奖项" key="awards">
                 {this.render_awards()}
               </Collapse.Panel>
               <Collapse.Panel header="开源项目" key="projects">
