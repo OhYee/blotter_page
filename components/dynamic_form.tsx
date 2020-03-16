@@ -98,6 +98,7 @@ const ArrayField = (
   return (
     <List
       grid={{ column: 1, gutter: 5 }}
+      bordered={true}
       size="small"
       dataSource={props.value}
       renderItem={(item, idx) => (
@@ -139,6 +140,7 @@ const ArrayField = (
           </DragItem>
         </List.Item>
       )}
+      header="列表"
       footer={
         <p style={{ textAlign: 'right' }}>
           <Dropdown
@@ -169,6 +171,7 @@ const ObjectField = (
       grid={{ column: 1, gutter: 5 }}
       size="small"
       dataSource={slice}
+      bordered={true}
       renderItem={item => (
         <List.Item key={item.key}>
           <Row>
@@ -212,6 +215,7 @@ const ObjectField = (
           </Row>
         </List.Item>
       )}
+      header="对象"
       footer={
         <p style={{ textAlign: 'right' }}>
           <Dropdown
