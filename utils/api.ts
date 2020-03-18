@@ -236,8 +236,17 @@ export const githubUser = async (username: string, callback?: RequestCallback<Gi
   return await request('get', `https://api.github.com/users/${username}`, {}, callback);
 };
 
-export const githubRepos = async (username: string, callback?: RequestCallback<GithubRepo[]>) => {
-  return await request('get', `https://api.github.com/users/${username}/repos`, {}, callback);
+export const githubRepos = async (
+  username: string,
+  page: number,
+  callback?: RequestCallback<GithubRepo[]>,
+) => {
+  return await request(
+    'get',
+    `https://api.github.com/users/${username}/repos?page=${page}`,
+    {},
+    callback,
+  );
 };
 
 export const githubRepo = async (
@@ -257,7 +266,7 @@ export const about = async (
     author: string;
     quote: string;
     description: string;
-    edu: { school: string; major: string; time: string }[];
+    edu: { name: string; major: string; time: string }[];
     awards: { name: string; level: string; count: number }[];
   }>,
 ) => {
