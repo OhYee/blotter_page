@@ -3,7 +3,7 @@ import React, { ComponentProps } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 
-import { Card, Table, Button, Row, Col, Typography, Popconfirm } from 'antd';
+import { Card, Table, Button,Typography, Popconfirm } from 'antd';
 import { ColumnProps } from 'antd/lib/table';
 import { Icon } from '@ant-design/compatible';
 import { PaginationConfig } from 'antd/lib/pagination';
@@ -62,24 +62,30 @@ class AdminPostList extends React.Component<AdminPostListProps, AdminPostListSta
       title: '标题',
       key: 'title',
       dataIndex: 'title',
-      render: (text, record, index) => (
-        <Link href={'/post/[url]'} as={`/post/${record.url}`}>
-          <a>{record.title}</a>
-        </Link>
-      ),
-      width: '10%',
+      width: 150,
       ellipsis: true,
+      render: (text, record, index) => (
+        <div style={{ width: 150 - 16 * 2 }} title={text}>
+          <Typography.Text style={{ width: '100%' }} ellipsis={true}>
+            <Link href={'/post/[url]'} as={`/post/${record.url}`}>
+              <a>{record.title}</a>
+            </Link>
+          </Typography.Text>
+        </div>
+      ),
     },
     {
       title: '链接',
       key: 'url',
       dataIndex: 'url',
-      width: '10%',
+      width: 150,
       ellipsis: true,
       render: text => (
-        <Typography.Text ellipsis={true} style={{ maxWidth: '100%' }}>
-          {text}
-        </Typography.Text>
+        <div style={{ width: 150 - 16 * 2 }} title={text}>
+          <Typography.Text style={{ width: '100%' }} ellipsis={true}>
+            {text}
+          </Typography.Text>
+        </div>
       ),
     },
     {
@@ -87,23 +93,23 @@ class AdminPostList extends React.Component<AdminPostListProps, AdminPostListSta
       key: 'publish_time',
       dataIndex: 'publish_time',
       sorter: true,
-      width: '10%',
-    //   ellipsis: true,
+      width: 150,
+      ellipsis: true,
     },
     {
       title: '编辑时间',
       key: 'edit_time',
       dataIndex: 'edit_time',
       sorter: true,
-      width: '10%',
-    //   ellipsis: true,
+      width: 150,
+      ellipsis: true,
     },
     {
       title: '阅读量',
       key: 'view',
       dataIndex: 'view',
       sorter: true,
-      width: '10%',
+      width: 100,
       ellipsis: true,
     },
     {
@@ -111,7 +117,7 @@ class AdminPostList extends React.Component<AdminPostListProps, AdminPostListSta
       key: 'published',
       dataIndex: 'published',
       sorter: true,
-      width: '10%',
+      width: 100,
       ellipsis: true,
       render: (text, record, index) =>
         text ? (
@@ -124,8 +130,10 @@ class AdminPostList extends React.Component<AdminPostListProps, AdminPostListSta
       title: '标签',
       key: 'tags',
       dataIndex: 'tags',
+      width: 200,
+      ellipsis: true,
       render: (text, record, index) => (
-        <div>
+        <div style={{ width: 200 - 16 * 2, whiteSpace: 'normal' }}>
           {record.tags.map(tag => (
             <TagPart key={tag.short} tag={tag} />
           ))}
@@ -135,36 +143,30 @@ class AdminPostList extends React.Component<AdminPostListProps, AdminPostListSta
     {
       title: '操作',
       key: 'op',
-      width: '15%',
-      ellipsis: true,
       render: (text, record, index) => (
-        <Row gutter={5}>
-          <Col span={12}>
-            <Link href={`/admin/post?url=${record.url}`}>
-              <a>
-                <Button size="small">
-                  <Icon type="edit" />
-                  编辑
-                </Button>
-              </a>
-            </Link>
-          </Col>
-          <Col span={12}>
-            <Popconfirm
-              title="真的要删除么？"
-              onConfirm={() => {
-                this.onDelete(record.id);
-              }}
-              okText="删除！"
-              cancelText="算了"
-            >
-              <Button size="small" type="danger">
-                <Icon type="delete" />
-                删除
+        <div style={{ whiteSpace: 'nowrap' }}>
+          <Link href={`/admin/post?url=${record.url}`}>
+            <a>
+              <Button size="small">
+                <Icon type="edit" />
+                编辑
               </Button>
-            </Popconfirm>
-          </Col>
-        </Row>
+            </a>
+          </Link>{' '}
+          <Popconfirm
+            title="真的要删除么？"
+            onConfirm={() => {
+              this.onDelete(record.id);
+            }}
+            okText="删除！"
+            cancelText="算了"
+          >
+            <Button size="small" type="danger">
+              <Icon type="delete" />
+              删除
+            </Button>
+          </Popconfirm>
+        </div>
       ),
     },
   ];
@@ -183,10 +185,10 @@ class AdminPostList extends React.Component<AdminPostListProps, AdminPostListSta
   ) => {
     const { current, pageSize } = pagination;
     const { field, order } = sorter;
-    this.setState({
-      page: current!,
-      size: pageSize!,
-    });
+
+    var s = { page: this.state.page, size: this.state.size };
+    if (!!current) s.page = current;
+    if (!!pageSize) s.size = pageSize;
     var defaultSort = typeof order === 'undefined';
 
     this.getData(
@@ -222,6 +224,7 @@ class AdminPostList extends React.Component<AdminPostListProps, AdminPostListSta
           <Table<T>
             rowKey={record => record.id}
             columns={this.columns}
+            scroll={{ x: true }}
             dataSource={this.state.data}
             loading={this.state.loading}
             onChange={this.onTableChange}

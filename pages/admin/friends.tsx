@@ -51,48 +51,36 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
   };
 
   renderEditableCell = (idx: number, key: string) => {
+    const width = this.columns.find(item => item.key == key).width;
+    const padding = 16;
+    var style = { width: undefined };
+    if (typeof width === 'number') {
+      style.width = width - padding * 2;
+    } else {
+      style.width = `calc(width - ${padding * 2}px)`;
+    }
     return (
-      <Typography.Text
-        style={{ wordWrap: 'break-word', wordBreak: 'break-word' }}
-        ellipsis={true}
-        editable={{
-          onChange: value => {
-            this.setState(state => {
-              var { data } = state;
-              data[idx][key] = value;
-              data.map(d => {
-                d.posts = d.posts.map(dd => dd);
-                return d;
+      <div style={style}>
+        <Typography.Text
+          style={{ width: '100%' }}
+          ellipsis={true}
+          editable={{
+            onChange: value => {
+              this.setState(state => {
+                var { data } = state;
+                data[idx][key] = value;
+                data.map(d => {
+                  d.posts = d.posts.map(dd => dd);
+                  return d;
+                });
+                return { data };
               });
-              return { data };
-            });
-          },
-        }}
-      >
-        {this.state.data[idx][key]}
-      </Typography.Text>
-    );
-  };
-
-  renderSubEditableCell = (index: number, idx: number, key: string) => {
-    return (
-      <Typography.Text
-        editable={{
-          onChange: value => {
-            this.setState(state => {
-              var { data } = state;
-              data[index].posts[idx][key] = value;
-              data.map(d => {
-                d.posts = d.posts.map(dd => dd);
-                return d;
-              });
-              return { data };
-            });
-          },
-        }}
-      >
-        {this.state.data[index].posts[idx][key]}
-      </Typography.Text>
+            },
+          }}
+        >
+          {this.state.data[idx][key]}
+        </Typography.Text>
+      </div>
     );
   };
 
@@ -101,41 +89,47 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
       title: '名称',
       key: 'name',
       dataIndex: 'name',
-      width: '15%',
+      width: 150,
+      ellipsis: true,
       render: (_, __, idx) => this.renderEditableCell(idx, 'name'),
     },
     {
       title: '简介',
       key: 'description',
       dataIndex: 'description',
-      width: '20%',
+      width: 200,
+      ellipsis: true,
       render: (_, __, idx) => this.renderEditableCell(idx, 'description'),
     },
     {
       title: '链接',
       key: 'link',
       dataIndex: 'link',
-      width: '15%',
+      width: 200,
+      ellipsis: true,
       render: (_, __, idx) => this.renderEditableCell(idx, 'link'),
     },
     {
       title: 'RSS',
       key: 'rss',
       dataIndex: 'rss',
-      width: '15%',
+      width: 200,
+      ellipsis: true,
       render: (_, __, idx) => this.renderEditableCell(idx, 'rss'),
     },
     {
       title: '图片',
       key: 'image',
       dataIndex: 'image',
-      width: '15%',
+      width: 200,
+      ellipsis: true,
       render: (_, __, idx) => this.renderEditableCell(idx, 'image'),
     },
     {
       title: '图片预览',
       key: 'image_preview',
-      width: '10%',
+      width: 100,
+      ellipsis: true,
       render: (_, __, idx) => (
         <img
           width={'50px'}
@@ -147,7 +141,6 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
     {
       title: '操作',
       key: 'op',
-      width: '10%',
       render: (text, record, index) => (
         <Popconfirm
           title="真的要删除么？"
@@ -239,21 +232,22 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
   renderExpand = (record: T, index: number, indent: number, expanded: boolean) => {
     const columns: ColumnProps<T2>[] = [
       {
+        key: 'title',
         title: '标题',
         dataIndex: 'title',
-        width: '30%',
-        render: (_, __, idx) => this.renderSubEditableCell(index, idx, 'title'),
+        width: 400,
+        render: (_, __, idx) => renderSubEditableCell(index, idx, 'title'),
       },
       {
+        key: 'link',
         title: '链接',
         dataIndex: 'link',
-        width: '50%',
-        render: (_, __, idx) => this.renderSubEditableCell(index, idx, 'link'),
+        width: 400,
+        render: (_, __, idx) => renderSubEditableCell(index, idx, 'link'),
       },
       {
         title: '操作',
         dataIndex: 'op',
-        width: '20%',
         render: (_, record, idx) => (
           <Popconfirm
             title="真的要删除么？"
@@ -279,6 +273,39 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
         ),
       },
     ];
+    const renderSubEditableCell = (index: number, idx: number, key: string) => {
+      const width = columns.find(item => item.key == key).width;
+      const padding = 16;
+      var style = { width: undefined };
+      if (typeof width === 'number') {
+        style.width = width - padding * 2;
+      } else {
+        style.width = `calc(width - ${padding * 2}px)`;
+      }
+      return (
+        <div style={style}>
+          <Typography.Text
+            style={{ width: '100%' }}
+            ellipsis={true}
+            editable={{
+              onChange: value => {
+                this.setState(state => {
+                  var { data } = state;
+                  data[index].posts[idx][key] = value;
+                  data.map(d => {
+                    d.posts = d.posts.map(dd => dd);
+                    return d;
+                  });
+                  return { data };
+                });
+              },
+            }}
+          >
+            {this.state.data[index].posts[idx][key]}
+          </Typography.Text>
+        </div>
+      );
+    };
     return (
       <DragableTable<T2>
         rowKey={(record, idx) => `${record.title}_${record.link}_${idx}`}
@@ -286,6 +313,7 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
         dataSource={record.posts}
         pagination={false}
         showHeader={false}
+        scroll={{ x: true }}
         title={() => this.renderSubTableHead(index)}
         size="small"
         dragKey={`${index}`}
@@ -329,6 +357,7 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
             title={() => this.renderTableHead()}
             rowKey={(col, idx) => `${col.name}_${idx}`}
             dragKey="root"
+            scroll={{ x: true }}
             moveRow={(i, j) => {
               this.setState(state => {
                 var { data } = state;

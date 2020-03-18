@@ -47,20 +47,32 @@ class AdminMenus extends React.Component<AdminMenusProps, AdminMenusState> {
   };
 
   renderEditableCell = (idx: number, key: string) => {
+    const width = this.columns.find(item => item.key == key).width;
+    const padding = 16;
+    var style = { width: undefined };
+    if (typeof width === 'number') {
+      style.width = width - padding * 2;
+    } else {
+      style.width = `calc(width - ${padding * 2}px)`;
+    }
     return (
-      <Typography.Text
-        editable={{
-          onChange: value => {
-            this.setState(state => {
-              var { data } = state;
-              data[idx][key] = value;
-              return { data };
-            });
-          },
-        }}
-      >
-        {this.state.data[idx][key]}
-      </Typography.Text>
+      <div style={style}>
+        <Typography.Text
+          style={{ width: '100%' }}
+          ellipsis={true}
+          editable={{
+            onChange: value => {
+              this.setState(state => {
+                var { data } = state;
+                data[idx][key] = value;
+                return { data };
+              });
+            },
+          }}
+        >
+          {this.state.data[idx][key]}
+        </Typography.Text>
+      </div>
     );
   };
 
@@ -69,6 +81,8 @@ class AdminMenus extends React.Component<AdminMenusProps, AdminMenusState> {
       dataIndex: 'name',
       key: 'name',
       title: '名称',
+      width: 250,
+      ellipsis: true,
       render: (_, __, idx) => {
         return this.renderEditableCell(idx, 'name');
       },
@@ -77,6 +91,8 @@ class AdminMenus extends React.Component<AdminMenusProps, AdminMenusState> {
       dataIndex: 'link',
       key: 'link',
       title: '链接',
+      width: 400,
+      ellipsis: true,
       render: (_, __, idx) => {
         return this.renderEditableCell(idx, 'link');
       },
@@ -85,14 +101,17 @@ class AdminMenus extends React.Component<AdminMenusProps, AdminMenusState> {
       dataIndex: 'icon',
       key: 'icon',
       title: '图标',
+      width: 250,
+      ellipsis: true,
       render: (_, __, idx) => {
         return this.renderEditableCell(idx, 'icon');
       },
     },
     {
-      //   dataIndex: 'icon',
       key: 'preview',
       title: '预览',
+      width: 100,
+      ellipsis: true,
       render(value, record) {
         return <Icon type={record.icon} />;
       },
@@ -177,6 +196,7 @@ class AdminMenus extends React.Component<AdminMenusProps, AdminMenusState> {
             title={() => this.renderTableHead()}
             rowKey={(col, idx) => `${col.name}_${idx}`}
             dragKey="root"
+            scroll={{ x: true }}
             moveRow={(i, j) => {
               this.setState(state => {
                 var { data } = state;

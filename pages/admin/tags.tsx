@@ -2,7 +2,7 @@ import React, { ComponentProps } from 'react';
 
 import Head from 'next/head';
 
-import { Card, Table, Button, Row, Col, Typography, Form, Input, Popconfirm } from 'antd';
+import { Card, Table, Button, Typography, Form, Input, Popconfirm } from 'antd';
 import { ColumnProps } from 'antd/lib/table';
 import { Icon } from '@ant-design/compatible';
 import { PaginationConfig } from 'antd/lib/pagination';
@@ -66,23 +66,35 @@ class AdminTagList extends React.Component<AdminTagListProps, AdminTagListState>
     this.setState({ data: r.tags, total: r.total, loading: false });
   };
 
-  renderEditableCell = (idx: number, key: string) => (
-    <Typography.Text
-      style={{ wordWrap: 'break-word', wordBreak: 'break-word' }}
-      ellipsis={true}
-      editable={{
-        onChange: value => {
-          this.setState(state => {
-            var { data } = state;
-            data[idx][key] = value;
-            return { data };
-          });
-        },
-      }}
-    >
-      {this.state.data[idx][key]}
-    </Typography.Text>
-  );
+  renderEditableCell = (idx: number, key: string) => {
+    const width = this.columns.find(item => item.key == key).width;
+    const padding = 16;
+    var style = { width: undefined };
+    if (typeof width === 'number') {
+      style.width = width - padding * 2;
+    } else {
+      style.width = `calc(width - ${padding * 2}px)`;
+    }
+    return (
+      <div style={style}>
+        <Typography.Text
+          style={{ width: '100%' }}
+          ellipsis={true}
+          editable={{
+            onChange: value => {
+              this.setState(state => {
+                var { data } = state;
+                data[idx][key] = value;
+                return { data };
+              });
+            },
+          }}
+        >
+          {this.state.data[idx][key]}
+        </Typography.Text>
+      </div>
+    );
+  };
 
   columns: ColumnProps<T>[] = [
     {
@@ -90,7 +102,8 @@ class AdminTagList extends React.Component<AdminTagListProps, AdminTagListState>
       key: 'name',
       dataIndex: 'name',
       sorter: true,
-      width: '15%',
+      width: 200,
+      ellipsis: true,
       render: (_, __, idx) => this.renderEditableCell(idx, 'name'),
     },
     {
@@ -98,7 +111,8 @@ class AdminTagList extends React.Component<AdminTagListProps, AdminTagListState>
       key: 'short',
       dataIndex: 'short',
       sorter: true,
-      width: '15%',
+      width: 200,
+      ellipsis: true,
       render: (_, __, idx) => this.renderEditableCell(idx, 'short'),
     },
     {
@@ -106,7 +120,8 @@ class AdminTagList extends React.Component<AdminTagListProps, AdminTagListState>
       key: 'icon',
       dataIndex: 'icon',
       sorter: true,
-      width: '15%',
+      width: 200,
+      ellipsis: true,
       render: (_, __, idx) => this.renderEditableCell(idx, 'icon'),
     },
     {
@@ -114,51 +129,48 @@ class AdminTagList extends React.Component<AdminTagListProps, AdminTagListState>
       key: 'color',
       dataIndex: 'color',
       sorter: true,
-      width: '15%',
+      width: 150,
+      ellipsis: true,
       render: (_, __, idx) => this.renderEditableCell(idx, 'color'),
     },
     {
       title: '预览',
       key: 'view',
       dataIndex: 'view',
-      width: '10%',
+      width: 100,
+      ellipsis: true,
       render: (_, record, __) => <TagPart tag={record} />,
     },
     {
       title: '文章个数',
       key: 'count',
       dataIndex: 'count',
-      width: '15%',
-      sorter: true,
+      width: 120,
+      ellipsis: true,
     },
     {
       title: '操作',
       key: 'op',
-      width: '15%',
       render: (_, record, idx) => (
-        <Row gutter={5}>
-          <Col span={12}>
-            <Button size="small" onClick={() => this.onEdit(idx)}>
-              <Icon type="edit" />
-              修改
+        <div style={{ whiteSpace: 'nowrap' }}>
+          <Button size="small" onClick={() => this.onEdit(idx)}>
+            <Icon type="edit" />
+            修改
+          </Button>{' '}
+          <Popconfirm
+            title="真的要删除么？"
+            onConfirm={() => {
+              this.onDelete(record.id);
+            }}
+            okText="删除！"
+            cancelText="算了"
+          >
+            <Button size="small" type="danger">
+              <Icon type="delete" />
+              删除
             </Button>
-          </Col>
-          <Col span={12}>
-            <Popconfirm
-              title="真的要删除么？"
-              onConfirm={() => {
-                this.onDelete(record.id);
-              }}
-              okText="删除！"
-              cancelText="算了"
-            >
-              <Button size="small" type="danger">
-                <Icon type="delete" />
-                删除
-              </Button>
-            </Popconfirm>
-          </Col>
-        </Row>
+          </Popconfirm>
+        </div>
       ),
     },
   ];
@@ -252,6 +264,7 @@ class AdminTagList extends React.Component<AdminTagListProps, AdminTagListState>
           <Table<T>
             rowKey={record => record.id}
             columns={this.columns}
+            scroll={{ x: true }}
             dataSource={this.state.data}
             loading={this.state.loading}
             onChange={this.onTableChange}

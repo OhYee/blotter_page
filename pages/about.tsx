@@ -96,9 +96,9 @@ class AboutPage extends React.Component<AboutPageProps, AboutPageState> {
         var r = await githubRepos(this.props.github, i);
         if (r.length == 0) break;
         repos = repos.concat(r);
-    }
+      }
       this.setState({ repos, loading: false });
-  }
+    }
   }
   render_pay = () => {
     return (
@@ -178,28 +178,30 @@ class AboutPage extends React.Component<AboutPageProps, AboutPageState> {
       {
         dataIndex: 'name',
         title: '名称',
-        width: '40%',
         align: 'center',
       },
       {
         dataIndex: 'major',
         title: '方向',
-        width: '30%',
         align: 'center',
+        width: 250,
+        ellipsis: true,
       },
       {
         dataIndex: 'time',
         title: '时间',
-        width: '30%',
         align: 'center',
+        width: 250,
+        ellipsis: true,
       },
     ];
     return (
       <Table<Education>
-        rowKey={record => record.school}
+        rowKey={record => record.name}
         dataSource={this.props.edu}
         columns={columns}
         pagination={false}
+        scroll={{ x: true }}
       />
     );
   };
@@ -208,19 +210,20 @@ class AboutPage extends React.Component<AboutPageProps, AboutPageState> {
     const columns: ColumnsType<Award> = [
       {
         dataIndex: 'name',
-        width: '40%',
         align: 'center',
       },
       {
         dataIndex: 'level',
-        width: '30%',
         align: 'center',
+        width: 250,
+        ellipsis: true,
       },
       {
         dataIndex: 'count',
         render: value => `×${value}`,
-        width: '30%',
         align: 'center',
+        width: 250,
+        ellipsis: true,
       },
     ];
     return (
@@ -231,6 +234,7 @@ class AboutPage extends React.Component<AboutPageProps, AboutPageState> {
         size="small"
         showHeader={false}
         pagination={false}
+        scroll={{ x: true }}
       />
     );
   };
@@ -252,14 +256,17 @@ class AboutPage extends React.Component<AboutPageProps, AboutPageState> {
       {
         dataIndex: 'stargazers_count',
         title: 'star数',
-        defaultSortOrder: 'descend',
         align: 'center',
+        width: 100,
+        ellipsis: true,
         sorter: (a, b) => a.stargazers_count - b.stargazers_count,
       },
       {
         dataIndex: 'forks_count',
         title: 'fork数',
         align: 'center',
+        width: 100,
+        ellipsis: true,
         sorter: (a, b) => a.forks_count - b.forks_count,
       },
       {
@@ -282,6 +289,8 @@ class AboutPage extends React.Component<AboutPageProps, AboutPageState> {
         ).map(l => ({ text: l, value: l })),
         onFilter: (value, record) => record.language && record.language.includes(value),
         align: 'center',
+        width: 150,
+        ellipsis: true,
       },
     ];
     return (
@@ -290,6 +299,7 @@ class AboutPage extends React.Component<AboutPageProps, AboutPageState> {
         dataSource={this.state.repos}
         columns={columns}
         loading={this.state.loading}
+        scroll={{ x: true }}
         expandable={{
           expandedRowRender: record => (
             <Descriptions bordered size="small">
