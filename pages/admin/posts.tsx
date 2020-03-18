@@ -43,7 +43,7 @@ class AdminPostList extends React.Component<AdminPostListProps, AdminPostListSta
       data: [],
       total: 0,
       size: 10,
-      page: 0,
+      page: 1,
     };
   }
 
