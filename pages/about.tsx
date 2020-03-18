@@ -38,9 +38,10 @@ import { JsxElement } from 'typescript';
 import { githubUser, githubRepos, githubRepo, about } from '@/utils/api';
 import { GithubRepo } from '@/types/github';
 import Visiable from '@/components/visiable';
+import moment from 'moment';
 
 interface Education {
-  school: string;
+  name: string;
   major: string;
   time: string;
 }
@@ -87,13 +88,17 @@ class AboutPage extends React.Component<AboutPageProps, AboutPageState> {
     return r as AboutPageProps;
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     if (!!this.props.github) {
       this.setState({ loading: true });
-      githubRepos(this.props.github, data => {
-        this.setState({ repos: data, loading: false });
-      });
+      var repos = [];
+      for (var i = 1; i <= 1; i++) {
+        var r = await githubRepos(this.props.github, i);
+        if (r.length == 0) break;
+        repos = repos.concat(r);
     }
+      this.setState({ repos, loading: false });
+  }
   }
   render_pay = () => {
     return (
@@ -258,6 +263,18 @@ class AboutPage extends React.Component<AboutPageProps, AboutPageState> {
         sorter: (a, b) => a.forks_count - b.forks_count,
       },
       {
+        dataIndex: 'pushed_at',
+        title: '最新更新',
+        align: 'center',
+        defaultSortOrder: 'descend',
+        sorter: (a, b) => new Date(a.pushed_at).getTime() - new Date(b.pushed_at).getTime(),
+        render(text) {
+          return moment(text).format('YYYY-MM-DD hh:mm:ss');
+        },
+        width: 200,
+        ellipsis: true,
+      },
+      {
         dataIndex: 'language',
         title: '语言',
         filters: Array.from(
@@ -279,11 +296,11 @@ class AboutPage extends React.Component<AboutPageProps, AboutPageState> {
               <Descriptions.Item key="created_at" label="创建时间">
                 {record.created_at}
               </Descriptions.Item>
-              <Descriptions.Item key="updated_at" label="更新时间">
-                {record.updated_at}
-              </Descriptions.Item>
-              <Descriptions.Item key="pushed_at" label="推送时间">
+              <Descriptions.Item key="pushed_at" label="最近推送时间">
                 {record.pushed_at}
+              </Descriptions.Item>
+              <Descriptions.Item key="updated_at" label="数据更新时间">
+                {record.updated_at}
               </Descriptions.Item>
               <Descriptions.Item key="description" label="描述">
                 {record.description}
@@ -291,7 +308,7 @@ class AboutPage extends React.Component<AboutPageProps, AboutPageState> {
             </Descriptions>
           ),
         }}
-        pagination={{ pageSize: 5 }}
+        pagination={{ pageSize: 10 }}
       />
     );
   };
@@ -328,14 +345,17 @@ class AboutPage extends React.Component<AboutPageProps, AboutPageState> {
 
             <Typography.Paragraph>{this.render_pay()}</Typography.Paragraph>
             <Typography.Paragraph>{this.render_social()}</Typography.Paragraph>
-            <Collapse defaultActiveKey={[]}>
+            <Collapse defaultActiveKey={['education', 'awards', 'projects']}>
               <Collapse.Panel header="教育、工作经历" key="education">
                 {this.render_education()}
               </Collapse.Panel>
               <Collapse.Panel header="抱大腿奖项" key="awards">
                 {this.render_awards()}
               </Collapse.Panel>
-              <Collapse.Panel header="开源项目" key="projects">
+              <Collapse.Panel
+                header="开源项目（需要访问 Github API，部分网络可能会出错）"
+                key="projects"
+              >
                 {this.render_projects()}
               </Collapse.Panel>
             </Collapse>
