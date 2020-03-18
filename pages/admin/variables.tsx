@@ -53,15 +53,17 @@ class AdminVariables extends React.Component<AdminVariablesProps, AdminVariables
             </Head>
           )}
         </Context.Consumer>
-        <Card>
-          <DndProvider backend={HTML5Backend}>
-            <DynamicForm
-              value={this.state.variables}
-              callback={value => {
-                this.setState({ variables: value });
-              }}
-            />
-          </DndProvider>
+        <Card style={{ overflow: 'auto' }}>
+          <div style={{ minWidth: 1000 }}>
+            <DndProvider backend={HTML5Backend}>
+              <DynamicForm
+                value={this.state.variables}
+                callback={value => {
+                  this.setState({ variables: value });
+                }}
+              />
+            </DndProvider>
+          </div>
         </Card>
         <Button
           shape="circle"
