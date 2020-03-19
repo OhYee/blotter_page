@@ -17,6 +17,7 @@ import {
   Col,
 } from 'antd';
 import { Icon } from '@ant-design/compatible';
+import { FormOutlined } from '@ant-design/icons';
 import { FormInstance } from 'antd/lib/form';
 
 import moment from 'moment';
@@ -190,14 +191,16 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
 
   renderEditor = () => {
     return (
-      <Form.Item name="raw">
-        <Input.TextArea
-          spellCheck="false"
-          onChange={this.onChange}
-          style={{ lineHeight: '2em', fontSize: '1.2em', height: 'calc(100vh - 20px)' }}
-          onScroll={this.syncScroll}
-        ></Input.TextArea>
-      </Form.Item>
+      <div id="editor">
+        <Form.Item name="raw">
+          <Input.TextArea
+            spellCheck="false"
+            onChange={this.onChange}
+            style={{ lineHeight: '2em', fontSize: '1.2em', height: 'calc(100vh - 20px)' }}
+            onScroll={this.syncScroll}
+          ></Input.TextArea>
+        </Form.Item>
+      </div>
     );
   };
 
@@ -307,6 +310,23 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
       </Row>
     );
   };
+
+  renderJump = () => (
+    <Button
+      shape="circle"
+      size="large"
+      type="primary"
+      style={{ position: 'fixed', right: '20px', top: '60px' }}
+      onClick={() => {
+        const editor = document.getElementById('editor');
+        if (!!editor && editor.offsetTop > 0) {
+          scrollTo(0, editor.offsetTop + 10);
+        }
+      }}
+      icon={<FormOutlined />}
+    />
+  );
+
   render() {
     return (
       <Container xxl={20} xl={20} lg={20} md={24} sm={24} xs={24}>
@@ -320,6 +340,7 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
         <MediaQuery minDeviceWidth={dimensionMaxMap.lg} onChange={this.onBigScreen}>
           {null}
         </MediaQuery>
+        {this.renderJump()}
         <Row gutter={5}>
           <Col span={this.isSidePreview() ? 12 : 24}>
             <Card>
