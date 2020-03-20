@@ -125,7 +125,7 @@ class Index extends React.Component<IndexProps, IndexState> {
           ))}
           <PostList
             posts={this.state.posts}
-            header={this.state.total == 0 ? undefined : `共${this.state.total}条搜索结果`}
+            header={this.state.total == 0 ? undefined : `共 ${this.state.total} 条搜索结果`}
             loading={this.state.loading}
             page={this.state.page}
             size={this.state.size}

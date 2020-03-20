@@ -93,7 +93,7 @@ class TagDetail extends React.Component<TagDetailProps, TagDetailState> {
         </Card>
 
         <PostList
-          header={`共有${this.props.total}篇文章`}
+          header={`共有 ${this.props.total} 篇文章`}
           posts={this.props.posts}
           page={this.props.page}
           size={this.props.size}

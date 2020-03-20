@@ -69,7 +69,7 @@ class Archives extends React.Component<ArchivesProps, ArchivesState> {
           )}
         </Context.Consumer>
         <PostList
-          header={`共${this.props.total}篇文章`}
+          header={`共 ${this.props.total} 篇文章`}
           posts={this.props.posts}
           page={this.props.page}
           size={this.props.size}
