@@ -3,7 +3,7 @@ import React, { ComponentProps } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 
-import { Card, Table, Button,Typography, Popconfirm } from 'antd';
+import { Card, Table, Button, Typography, Popconfirm, Input } from 'antd';
 import { ColumnProps } from 'antd/lib/table';
 import { Icon } from '@ant-design/compatible';
 import { PaginationConfig } from 'antd/lib/pagination';
@@ -15,6 +15,7 @@ import TagPart from '@/components/tag';
 import { adminPosts, postDelete } from '@/utils/api';
 import { Context } from '@/utils/global';
 import ShowNotification from '@/utils/notification';
+import { waitUntil } from '@/utils/debounce';
 
 interface T extends Blotter.PostCard {
   id: string;
@@ -24,6 +25,7 @@ interface T extends Blotter.PostCard {
 interface AdminPostListProps extends ComponentProps<'base'> {}
 
 interface AdminPostListState {
+  search: string;
   loading: boolean;
   pagination: PaginationConfig;
   data: T[];
@@ -38,6 +40,7 @@ class AdminPostList extends React.Component<AdminPostListProps, AdminPostListSta
   constructor(props: any) {
     super(props);
     this.state = {
+      search: '',
       loading: false,
       pagination: {},
       data: [],
@@ -48,13 +51,24 @@ class AdminPostList extends React.Component<AdminPostListProps, AdminPostListSta
   }
 
   componentDidMount() {
-    this.getData(1, 10, 'publish_time', false);
+    this.getData('', 1, 10, 'publish_time', false);
   }
 
-  getData = async (page: number, size: number, field: string, up: boolean) => {
+  onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    var value = e.target.value;
+    waitUntil(
+      'index_search',
+      () => {
+        this.getData(value, 1, 10, 'publish_time', false);
+      },
+      1000,
+    );
+  };
+
+  getData = async (search: string, page: number, size: number, field: string, up: boolean) => {
     this.setState({ loading: true });
-    var r = await adminPosts(page, size, field, up);
-    this.setState({ data: r.posts, total: r.total, loading: false });
+    var r = await adminPosts(search, page, size, field, up);
+    this.setState({ search, data: r.posts, total: r.total, loading: false });
   };
 
   columns: ColumnProps<T>[] = [
@@ -192,6 +206,7 @@ class AdminPostList extends React.Component<AdminPostListProps, AdminPostListSta
     var defaultSort = typeof order === 'undefined';
 
     this.getData(
+      this.state.search,
       current!,
       pageSize!,
       defaultSort ? 'publish_time' : `${field}`,
@@ -210,17 +225,13 @@ class AdminPostList extends React.Component<AdminPostListProps, AdminPostListSta
           )}
         </Context.Consumer>
         <Card>
-          <div style={{ textAlign: 'right' }}>
-            <Link href="/admin/post">
-              <a>
-                <Button type="primary">
-                  <Icon type="plus" />
-                  新建文章
-                </Button>
-              </a>
-            </Link>
-          </div>
-
+          <Input
+            placeholder="搜索文章"
+            onChange={this.onChange}
+            allowClear
+            prefix={<Icon type="search" />}
+            size="large"
+          />
           <Table<T>
             rowKey={record => record.id}
             columns={this.columns}
@@ -228,6 +239,18 @@ class AdminPostList extends React.Component<AdminPostListProps, AdminPostListSta
             dataSource={this.state.data}
             loading={this.state.loading}
             onChange={this.onTableChange}
+            title={() => (
+              <div style={{ textAlign: 'right' }}>
+                <Link href="/admin/post">
+                  <a>
+                    <Button type="primary">
+                      <Icon type="plus" />
+                      新建文章
+                    </Button>
+                  </a>
+                </Link>
+              </div>
+            )}
             pagination={{
               current: this.state.page,
               total: this.state.total,
