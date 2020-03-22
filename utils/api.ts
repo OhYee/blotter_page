@@ -48,6 +48,7 @@ export const tagPosts = async (
 };
 
 export const adminPosts = async (
+  search: string,
   page: number,
   size: number,
   field: string,
@@ -65,6 +66,7 @@ export const adminPosts = async (
       number: size,
       sort_field: field,
       sort_type: up ? 1 : -1,
+      search: search,
     },
     callback,
   );
