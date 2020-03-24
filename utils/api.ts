@@ -53,6 +53,8 @@ export const adminPosts = async (
   size: number,
   field: string,
   up: boolean,
+  with_tags: Blotter.Tag[],
+  without_tags: Blotter.Tag[],
   callback?: RequestCallback<{
     total: number;
     posts: (Blotter.PostCard & { id: string; published: boolean })[];
@@ -67,6 +69,8 @@ export const adminPosts = async (
       sort_field: field,
       sort_type: up ? 1 : -1,
       search: search,
+      with_tags: with_tags.map(item => item.id).join(','),
+      without_tags: without_tags.map(item => item.id).join(','),
     },
     callback,
   );

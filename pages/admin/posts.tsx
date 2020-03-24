@@ -1,9 +1,9 @@
-import React, { ComponentProps } from 'react';
+import React, { ComponentProps, Fragment } from 'react';
 
 import Head from 'next/head';
 import Link from 'next/link';
 
-import { Card, Table, Button, Typography, Popconfirm, Input } from 'antd';
+import { Card, Table, Button, Typography, Popconfirm, Input, Row, Col } from 'antd';
 import { ColumnProps } from 'antd/lib/table';
 import { Icon } from '@ant-design/compatible';
 import { PaginationConfig } from 'antd/lib/pagination';
@@ -16,6 +16,10 @@ import { adminPosts, postDelete } from '@/utils/api';
 import { Context } from '@/utils/global';
 import ShowNotification from '@/utils/notification';
 import { waitUntil } from '@/utils/debounce';
+import TagSearch from '@/components/tag_search';
+
+const defaultSort = 'publish_time';
+const defaultUp = false;
 
 interface T extends Blotter.PostCard {
   id: string;
@@ -32,6 +36,10 @@ interface AdminPostListState {
   total: number;
   size: number;
   page: number;
+  with_tags: Blotter.Tag[];
+  without_tags: Blotter.Tag[];
+  field: string;
+  up: boolean;
 }
 
 class AdminPostList extends React.Component<AdminPostListProps, AdminPostListState> {
@@ -47,11 +55,15 @@ class AdminPostList extends React.Component<AdminPostListProps, AdminPostListSta
       total: 0,
       size: 10,
       page: 1,
+      with_tags: [],
+      without_tags: [],
+      field: defaultSort,
+      up: defaultUp,
     };
   }
 
   componentDidMount() {
-    this.getData('', 1, 10, 'publish_time', false);
+    this.getData();
   }
 
   onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -59,16 +71,24 @@ class AdminPostList extends React.Component<AdminPostListProps, AdminPostListSta
     waitUntil(
       'index_search',
       () => {
-        this.getData(value, 1, 10, 'publish_time', false);
+        this.setState({ search: value, page: 1, size: 10 }, this.getData);
       },
       1000,
     );
   };
 
-  getData = async (search: string, page: number, size: number, field: string, up: boolean) => {
+  getData = async () => {
     this.setState({ loading: true });
-    var r = await adminPosts(search, page, size, field, up);
-    this.setState({ search, data: r.posts, total: r.total, loading: false });
+    var r = await adminPosts(
+      this.state.search,
+      this.state.page,
+      this.state.size,
+      this.state.field,
+      this.state.up,
+      this.state.with_tags,
+      this.state.without_tags,
+    );
+    this.setState({ total: r.total, data: r.posts, loading: false });
   };
 
   columns: ColumnProps<T>[] = [
@@ -200,20 +220,68 @@ class AdminPostList extends React.Component<AdminPostListProps, AdminPostListSta
     const { current, pageSize } = pagination;
     const { field, order } = sorter;
 
-    var s = { page: this.state.page, size: this.state.size };
+    var s = {} as any;
     if (!!current) s.page = current;
     if (!!pageSize) s.size = pageSize;
-    var defaultSort = typeof order === 'undefined';
+    if (typeof order !== 'undefined') {
+      s.field = field;
+      s.up = order === 'ascend';
+    }
 
-    this.getData(
-      this.state.search,
-      current!,
-      pageSize!,
-      defaultSort ? 'publish_time' : `${field}`,
-      defaultSort ? false : order === 'ascend',
-    );
+    this.setState(s, this.getData);
   };
 
+  renderTagSearch = (name: 'with_tags' | 'without_tags') => {
+    return (
+      <TagSearch
+        tags={this.state[name]}
+        onAdd={tag => {
+          this.setState(state => {
+            var tags = state[name];
+            tags.filter(item => item.id !== tag.id);
+            tags.push(tag);
+
+            var ret = { page: 1 };
+            ret[name] = tags;
+            return ret;
+          }, this.getData);
+        }}
+        onDelete={tag => {
+          this.setState(state => {
+            var tags = state[name];
+            tags.filter(item => item.id !== tag.id);
+
+            var ret = { page: 1 };
+            ret[name] = tags;
+            return ret;
+          }, this.getData);
+        }}
+      />
+    );
+  };
+  renderSearch = () => {
+    return (
+      <Fragment>
+        <Row>
+          <Input
+            placeholder="搜索文章"
+            onChange={this.onChange}
+            allowClear
+            prefix={<Icon type="search" />}
+            size="large"
+          />
+        </Row>
+        <Row>
+          <Col>从这些标签里搜索：</Col>
+          <Col>{this.renderTagSearch('with_tags')}</Col>
+        </Row>
+        <Row>
+          <Col>从这些标签里排除：</Col>
+          <Col>{this.renderTagSearch('without_tags')}</Col>
+        </Row>
+      </Fragment>
+    );
+  };
   render() {
     return (
       <Container lg={20} md={20} sm={24} xs={24}>
@@ -225,13 +293,7 @@ class AdminPostList extends React.Component<AdminPostListProps, AdminPostListSta
           )}
         </Context.Consumer>
         <Card>
-          <Input
-            placeholder="搜索文章"
-            onChange={this.onChange}
-            allowClear
-            prefix={<Icon type="search" />}
-            size="large"
-          />
+          {this.renderSearch()}
           <Table<T>
             rowKey={record => record.id}
             columns={this.columns}
