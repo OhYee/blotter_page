@@ -71,6 +71,7 @@ class TagSearch extends React.Component<TagSearchProps & ComponentProps<'base'>,
         onChange={this.onChange}
         onBlur={this.onBlur}
         notFoundContent={null}
+        size="small"
       >
         {this.state.options.map(tag => (
           <Select.Option key={tag.short} value={tag.short}>
