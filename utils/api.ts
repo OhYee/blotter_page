@@ -15,6 +15,8 @@ export const posts = async (
     sort_field?: string;
     sort_type?: -1 | 1;
     search?: string;
+    with_tags?: string;
+    without_tags?: string;
   },
   callback?: RequestCallback<PostCardWithTotal>,
 ) => {
@@ -25,9 +27,20 @@ export const indexPosts = async (
   search: string,
   page: number,
   size: number,
+  with_tags: Blotter.Tag[],
+  without_tags: Blotter.Tag[],
   callback?: RequestCallback<PostCardWithTotal>,
 ) => {
-  return await posts({ search, offset: (page - 1) * size, number: size }, callback);
+  return await posts(
+    {
+      search,
+      offset: (page - 1) * size,
+      number: size,
+      with_tags: with_tags.map(item => item.id).join(','),
+      without_tags: without_tags.map(item => item.id).join(','),
+    },
+    callback,
+  );
 };
 
 export const archives = async (
