@@ -287,7 +287,7 @@ class AboutPage extends React.Component<AboutPageProps, AboutPageState> {
         filters: Array.from(
           new Set(this.state.repos.map(item => item.language).filter(l => l !== null)),
         ).map(l => ({ text: l, value: l })),
-        onFilter: (value, record) => record.language && record.language.includes(value),
+        onFilter: (value, record) => record.language && record.language.includes(record.language),
         align: 'center',
         width: 150,
         ellipsis: true,
