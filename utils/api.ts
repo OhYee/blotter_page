@@ -15,6 +15,7 @@ export const posts = async (
     sort_field?: string;
     sort_type?: -1 | 1;
     search?: string;
+    search_fields?: string;
     with_tags?: string;
     without_tags?: string;
   },
@@ -25,6 +26,7 @@ export const posts = async (
 
 export const indexPosts = async (
   search: string,
+  search_fields: string[],
   page: number,
   size: number,
   with_tags: Blotter.Tag[],
@@ -34,6 +36,7 @@ export const indexPosts = async (
   return await posts(
     {
       search,
+      search_fields: search_fields.join(','),
       offset: (page - 1) * size,
       number: size,
       with_tags: with_tags.map(item => item.id).join(','),

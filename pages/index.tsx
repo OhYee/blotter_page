@@ -4,7 +4,7 @@ import { NextPageContext } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
 
-import { Input, Card, Button, Row, Col } from 'antd';
+import { Input, Card, Button, Row, Col, Checkbox, List } from 'antd';
 import { Icon } from '@ant-design/compatible';
 
 import Container from '@/components/container';
@@ -26,6 +26,7 @@ interface IndexState {
   posts: Blotter.PostCard[];
   loading: boolean;
   search: string;
+  search_fields: ('title' | 'abstract' | 'raw')[];
   page: number;
   size: number;
   callback?: (page: number, size?: number) => void;
@@ -38,7 +39,7 @@ class Index extends React.Component<IndexProps, IndexState> {
   static defaultProps = { posts: [] };
 
   static async getInitialProps(args: NextPageContext) {
-    var data = await indexPosts('', 1, 5, [], []);
+    var data = await indexPosts('', [], 1, 5, [], []);
     return {
       posts: data.posts,
     } as IndexProps;
@@ -53,6 +54,7 @@ class Index extends React.Component<IndexProps, IndexState> {
       page: 1,
       size: 10,
       search: '',
+      search_fields: ['title'],
       tags: [],
       with_tags: [],
       without_tags: [],
@@ -93,6 +95,7 @@ class Index extends React.Component<IndexProps, IndexState> {
       this.setState({ loading: true });
       var data = await indexPosts(
         this.state.search,
+        this.state.search_fields,
         this.state.page,
         this.state.size,
         this.state.with_tags,
@@ -142,6 +145,11 @@ class Index extends React.Component<IndexProps, IndexState> {
   };
 
   renderSearch = () => {
+    const checkboxs: { key: 'title' | 'abstract' | 'raw'; name: string }[] = [
+      { key: 'title', name: '标题' },
+      { key: 'abstract', name: '摘要' },
+      { key: 'raw', name: '内容' },
+    ];
     return (
       <Fragment>
         <Row>
@@ -153,11 +161,35 @@ class Index extends React.Component<IndexProps, IndexState> {
             size="large"
           />
         </Row>
-        <Row>
+        <Row gutter={10}>
+          <Col>搜索范围：</Col>
+          {checkboxs.map(item => (
+            <Col key={item.key}>
+              <Checkbox
+                checked={this.state.search_fields.indexOf(item.key) !== -1}
+                onChange={e => {
+                  const checked = e.target.checked;
+                  console.log(item, checked, this.state.search_fields);
+                  this.setState(state => {
+                    var { search_fields } = state;
+                    search_fields = search_fields.filter(it => it != item.key);
+                    if (checked) {
+                      search_fields.push(item.key);
+                    }
+                    return { search_fields };
+                  }, this.getPosts);
+                }}
+              >
+                {item.name}
+              </Checkbox>
+            </Col>
+          ))}
+        </Row>
+        <Row gutter={10}>
           <Col>从这些标签里搜索：</Col>
           <Col>{this.renderTagSearch('with_tags')}</Col>
         </Row>
-        <Row>
+        <Row gutter={10}>
           <Col>从这些标签里排除：</Col>
           <Col>{this.renderTagSearch('without_tags')}</Col>
         </Row>
@@ -175,7 +207,9 @@ class Index extends React.Component<IndexProps, IndexState> {
           )}
         </Context.Consumer>
         <Container>
-          <Card className="shadow">{this.renderSearch()}</Card>
+          <Card className="shadow" style={{ lineHeight: '2em' }}>
+            {this.renderSearch()}
+          </Card>
         </Container>
         <Container>
           {this.state.tags.map(tag => (
