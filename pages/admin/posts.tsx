@@ -3,7 +3,7 @@ import React, { ComponentProps, Fragment } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 
-import { Card, Table, Button, Typography, Popconfirm, Input, Row, Col } from 'antd';
+import { Card, Table, Button, Typography, Popconfirm, Input, Row, Col, Checkbox } from 'antd';
 import { ColumnProps } from 'antd/lib/table';
 import { Icon } from '@ant-design/compatible';
 import { PaginationConfig } from 'antd/lib/pagination';
@@ -30,6 +30,7 @@ interface AdminPostListProps extends ComponentProps<'base'> {}
 
 interface AdminPostListState {
   search: string;
+  search_fields: ('title' | 'abstract' | 'raw')[];
   loading: boolean;
   pagination: PaginationConfig;
   data: T[];
@@ -49,6 +50,7 @@ class AdminPostList extends React.Component<AdminPostListProps, AdminPostListSta
     super(props);
     this.state = {
       search: '',
+      search_fields: ['title'],
       loading: false,
       pagination: {},
       data: [],
@@ -81,6 +83,7 @@ class AdminPostList extends React.Component<AdminPostListProps, AdminPostListSta
     this.setState({ loading: true });
     var r = await adminPosts(
       this.state.search,
+      this.state.search_fields,
       this.state.page,
       this.state.size,
       this.state.field,
@@ -260,6 +263,11 @@ class AdminPostList extends React.Component<AdminPostListProps, AdminPostListSta
     );
   };
   renderSearch = () => {
+    const checkboxs: { key: 'title' | 'abstract' | 'raw'; name: string }[] = [
+      { key: 'title', name: '标题' },
+      { key: 'abstract', name: '摘要' },
+      { key: 'raw', name: '内容' },
+    ];
     return (
       <Fragment>
         <Row>
@@ -271,11 +279,35 @@ class AdminPostList extends React.Component<AdminPostListProps, AdminPostListSta
             size="large"
           />
         </Row>
-        <Row>
+        <Row gutter={10}>
+          <Col>搜索范围：</Col>
+          {checkboxs.map(item => (
+            <Col key={item.key}>
+              <Checkbox
+                checked={this.state.search_fields.indexOf(item.key) !== -1}
+                onChange={e => {
+                  const checked = e.target.checked;
+                  console.log(item, checked, this.state.search_fields);
+                  this.setState(state => {
+                    var { search_fields } = state;
+                    search_fields = search_fields.filter(it => it != item.key);
+                    if (checked) {
+                      search_fields.push(item.key);
+                    }
+                    return { search_fields };
+                  }, this.getData);
+                }}
+              >
+                {item.name}
+              </Checkbox>
+            </Col>
+          ))}
+        </Row>
+        <Row gutter={10}>
           <Col>从这些标签里搜索：</Col>
           <Col>{this.renderTagSearch('with_tags')}</Col>
         </Row>
-        <Row>
+        <Row gutter={10}>
           <Col>从这些标签里排除：</Col>
           <Col>{this.renderTagSearch('without_tags')}</Col>
         </Row>

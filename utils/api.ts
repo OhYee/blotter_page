@@ -65,6 +65,7 @@ export const tagPosts = async (
 
 export const adminPosts = async (
   search: string,
+  search_fields: string[],
   page: number,
   size: number,
   field: string,
@@ -85,6 +86,7 @@ export const adminPosts = async (
       sort_field: field,
       sort_type: up ? 1 : -1,
       search: search,
+      search_fields: search_fields.join(','),
       with_tags: with_tags.map(item => item.id).join(','),
       without_tags: without_tags.map(item => item.id).join(','),
     },
