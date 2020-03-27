@@ -81,12 +81,10 @@ class PostCard extends React.Component<PostCardProps, {}> {
         hoverable={this.props.hoverable}
         cover={
           !loading && post.head_image ? (
-            <div style={{ maxHeight: '200px', overflow: 'hidden' }}>
-              <img
-                alt="example"
-                src={post.head_image}
-                style={{ marginTop: 'calc(100px - 25%)', width: '100%' }}
-              />
+            <div
+              style={{ maxHeight: '200px', overflow: 'hidden', display: 'flex', alignItems: 'center' }}
+            >
+              <img alt="example" src={post.head_image} style={{ width: '100%' }} />
             </div>
           ) : null
         }
