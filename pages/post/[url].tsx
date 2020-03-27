@@ -144,7 +144,16 @@ class PostPage extends React.Component<PostPageProps, PostPageState> {
             </div>
           </div>
         </PageHeader>
-
+        <If condition={this.props.post.head_image !== ''}>
+          <a
+            className="headimage"
+            target="_blank"
+            rel="noopener noreferrer"
+            href={this.props.post.head_image}
+          >
+            <img src={this.props.post.head_image} alt={this.props.post.title} />
+          </a>
+        </If>
         <section
           className="post-content"
           dangerouslySetInnerHTML={{ __html: this.props.post.content }}
