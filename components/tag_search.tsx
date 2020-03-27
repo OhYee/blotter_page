@@ -80,7 +80,7 @@ class TagSearch extends React.Component<TagSearchProps & ComponentProps<'base'>,
         ))}
       </Select>
     ) : (
-      <Tag onClick={this.onClick} style={{ background: '#fff', borderStyle: 'dashed' }}>
+      <Tag onClick={this.onClick} style={{ borderStyle: 'dashed' }}>
         <Icon type="plus" /> 新标签
       </Tag>
     );
