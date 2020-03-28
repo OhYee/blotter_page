@@ -198,7 +198,6 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
   );
 
   renderChangeTheme = () => (
-    <Tooltip placement="left" title="Beta" defaultVisible={true}>
       <Button
         shape="circle"
         size="large"
@@ -214,7 +213,6 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
         }}
         style={{ position: 'fixed', right: '20px', bottom: '180px' }}
       />
-    </Tooltip>
   );
 
   onLoginClick = () => {
