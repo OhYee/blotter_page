@@ -9,7 +9,7 @@
         "@ant-design/compatible": "^0.0.1-rc.1",
         "antd": "^4.0.4",
         "next": "^9.2.2",
-        "next-dynamic-antd-theme": "^0.0.3",
+        "next-dynamic-antd-theme": "^0.0.4",
         "react": "^16.13.0",
         "react-dnd": "^10.0.2",
         "react-dnd-html5-backend": "^10.0.2"
