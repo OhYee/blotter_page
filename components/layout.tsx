@@ -198,21 +198,21 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
   );
 
   renderChangeTheme = () => (
-      <Button
-        shape="circle"
-        size="large"
-        icon={
-          <Icon component={this.context.theme == 'default' ? this.renderDark : this.renderLight} />
-        }
-        className="shadow"
-        onClick={() => {
-          const newTheme = this.context.theme == 'default' ? 'dark' : 'default';
-          this.context.callback({ theme: newTheme }, () => {
-            changeTheme(this.context.theme);
-          });
-        }}
-        style={{ position: 'fixed', right: '20px', bottom: '180px' }}
-      />
+    <Button
+      shape="circle"
+      size="large"
+      icon={
+        <Icon component={this.context.theme == 'default' ? this.renderDark : this.renderLight} />
+      }
+      className="shadow"
+      onClick={() => {
+        const newTheme = this.context.theme == 'default' ? 'dark' : 'default';
+        this.context.callback({ theme: newTheme }, () => {
+          changeTheme(this.context.theme);
+        });
+      }}
+      style={{ position: 'fixed', right: '20px', bottom: '180px' }}
+    />
   );
 
   onLoginClick = () => {
