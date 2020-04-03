@@ -66,11 +66,19 @@ export default class MyApp extends App<MyAppProps, {}, MyAppState> {
 
   render() {
     const { Component, pageProps } = this.props;
-
     return (
       <Context.Provider value={this.state}>
         <Head>
           <title>{this.state.blog_name}</title>
+          {this.state.grey ? (
+            <style
+              id="grey-style"
+              type="text/css"
+              dangerouslySetInnerHTML={{
+                __html: 'html{filter:gray;-webkit-filter: grayscale(100%);}',
+              }}
+            ></style>
+          ) : null}
         </Head>
         <Layout>
           {this.props.status != 0 ? (

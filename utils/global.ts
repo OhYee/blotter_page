@@ -13,6 +13,7 @@ export const defaultContext: GlobalProps = {
   friends: [],
   big_screen: false,
   theme: 'default',
+  grey: false,
 };
 
 export const Context = React.createContext(defaultContext);
@@ -30,4 +31,5 @@ export declare interface GlobalProps {
   friends: Blotter.FriendSimple[];
   big_screen: boolean;
   theme: 'default' | 'dark';
+  grey: boolean;
 }
