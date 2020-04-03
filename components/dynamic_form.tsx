@@ -1,6 +1,6 @@
 import React, { ComponentProps } from 'react';
 
-import { Row, Col, List, Input, InputNumber, Button, Dropdown, Menu } from 'antd';
+import { Row, Col, List, Input, InputNumber, Button, Dropdown, Menu, Checkbox } from 'antd';
 import { PlusCircleOutlined, CloseCircleOutlined } from '@ant-design/icons';
 
 import { useDrag, useDrop } from 'react-dnd';
@@ -21,7 +21,7 @@ const DragItem = (
   const ref = React.useRef();
   const [{}, drop] = useDrop({
     accept: props.id,
-    drop: item => {
+    drop: (item) => {
       props.swap(item['index'], props.index);
       return item;
     },
@@ -37,6 +37,7 @@ const addMenus = (callback: (newValue: any) => void) => (
   <Menu>
     <Menu.Item onClick={() => callback(randomString())}>文本框</Menu.Item>
     <Menu.Item onClick={() => callback(randomString(stringLength))}>多行文本框</Menu.Item>
+    <Menu.Item onClick={() => callback(false)}>多选框</Menu.Item>
     <Menu.Item onClick={() => callback(0)}>数字框</Menu.Item>
     <Menu.Item onClick={() => callback([])}>列表</Menu.Item>
     <Menu.Item onClick={() => callback({})}>对象</Menu.Item>
@@ -50,8 +51,23 @@ const InputField = (
   return (
     <Input
       defaultValue={props.value}
-      onChange={e => {
+      onChange={(e) => {
         const value = e.target.value;
+        waitUntil(id, () => props.callback(value), 1000);
+      }}
+    />
+  );
+};
+
+const CheckField = (
+  props: ComponentProps<'base'> & { value: boolean; callback: (value: any) => void },
+) => {
+  const id = randomString();
+  return (
+    <Checkbox
+      checked={props.value}
+      onChange={(e) => {
+        const value = e.target.checked;
         waitUntil(id, () => props.callback(value), 1000);
       }}
     />
@@ -65,7 +81,7 @@ const AreaField = (
   return (
     <Input.TextArea
       defaultValue={props.value}
-      onChange={e => {
+      onChange={(e) => {
         const value = e.target.value;
         waitUntil(id, () => props.callback(value), 1000);
       }}
@@ -80,7 +96,7 @@ const NumberField = (
   return (
     <InputNumber
       defaultValue={props.value}
-      onChange={e => {
+      onChange={(e) => {
         const value = e;
         waitUntil(id, () => props.callback(value), 1000);
       }}
@@ -119,7 +135,7 @@ const ArrayField = (
                 <DynamicForm
                   key={hash(item)}
                   value={item}
-                  callback={value => {
+                  callback={(value) => {
                     var v = props.value;
                     v[idx] = value;
                     props.callback(v);
@@ -144,7 +160,7 @@ const ArrayField = (
       footer={
         <p style={{ textAlign: 'right' }}>
           <Dropdown
-            overlay={addMenus(newValue => {
+            overlay={addMenus((newValue) => {
               var v = props.value;
               v.push(newValue);
               props.callback(v);
@@ -165,20 +181,20 @@ const ObjectField = (
   },
 ) => {
   const id = randomString();
-  const slice = Object.keys(props.value).map(key => ({ key: key, value: props.value[key] }));
+  const slice = Object.keys(props.value).map((key) => ({ key: key, value: props.value[key] }));
   return (
     <List
       grid={{ column: 1, gutter: 5 }}
       size="small"
       dataSource={slice}
       bordered={true}
-      renderItem={item => (
+      renderItem={(item) => (
         <List.Item key={item.key}>
           <Row>
             <Col span={4} style={{ padding: '0 20px' }}>
               <DynamicForm
                 value={item.key}
-                callback={value => {
+                callback={(value) => {
                   var obj = {};
                   for (var key in props.value) {
                     if (key == item.key) {
@@ -194,7 +210,7 @@ const ObjectField = (
             <Col span={18}>
               <DynamicForm
                 value={item.value}
-                callback={value => {
+                callback={(value) => {
                   var v = props.value;
                   v[item.key] = value;
                   props.callback(v);
@@ -219,7 +235,7 @@ const ObjectField = (
       footer={
         <p style={{ textAlign: 'right' }}>
           <Dropdown
-            overlay={addMenus(newValue => {
+            overlay={addMenus((newValue) => {
               var v = props.value;
               v[randomString()] = newValue;
               props.callback(v);
@@ -254,6 +270,9 @@ const DynamicForm = (
       } else {
         child = <ObjectField value={props.value} callback={props.callback} />;
       }
+      break;
+    case 'boolean':
+      child = <CheckField value={props.value} callback={props.callback} />;
       break;
   }
   return child;
