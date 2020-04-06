@@ -8,5 +8,5 @@ jobs:
     name: Sync
     runs-on: ubuntu-latest
     steps:
-    - run: mkdir -p /root/.ssh && echo " ${{ secrets.GITEE_PRIVATE_KEY }}" > /root/.ssh/id_rsa && chmod 600 /root/.ssh/id_rsaecho
+    - run: sudo mkdir -p /root/.ssh && sudo echo " ${{ secrets.GITEE_PRIVATE_KEY }}" > /root/.ssh/id_rsa && sudo chmod 600 /root/.ssh/id_rsa
     - run: git push --mirror git@gitee.com:OhYee/blotter_page.git
