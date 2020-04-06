@@ -307,3 +307,33 @@ export const variablesSet = async (
 ) => {
   return await request('post', `/api/admin/variables/set`, { data }, callback);
 };
+
+export const commentsAdmin = async (
+  page: number,
+  size: number,
+  callback?: RequestCallback<{
+    total: number;
+    comments: (Blotter.Comment & {
+      reply_comment: Blotter.Comment;
+      title: string;
+      url: string;
+    })[];
+  }>,
+) => {
+  return await request(
+    'get',
+    `/api/admin/comments`,
+    { number: size, offset: (page - 1) * size },
+    callback,
+  );
+};
+
+export const commentSet = async (
+  id: string,
+  ad: boolean,
+  recv: boolean,
+  show: boolean,
+  callback?: RequestCallback<Blotter.APIResponse>,
+) => {
+  return await request('get', `/api/admin/comment/set`, { id, ad, recv, show }, callback);
+};
