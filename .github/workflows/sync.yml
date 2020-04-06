@@ -1,0 +1,12 @@
+name: Sync
+on:
+  push:
+    branchs:
+    - gh-pages
+jobs:
+  sync:
+    name: Sync
+    runs-on: ubuntu-latest
+    steps:
+    - run: mkdir -p /root/.ssh && echo " ${{ secrets.GITEE_PRIVATE_KEY }}" > /root/.ssh/id_rsa && chmod 600 /root/.ssh/id_rsaecho
+    - run: git push --mirror git@gitee.com:OhYee/blotter_page.git
