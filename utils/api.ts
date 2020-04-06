@@ -39,8 +39,8 @@ export const indexPosts = async (
       search_fields: search_fields.join(','),
       offset: (page - 1) * size,
       number: size,
-      with_tags: with_tags.map(item => item.id).join(','),
-      without_tags: without_tags.map(item => item.id).join(','),
+      with_tags: with_tags.map((item) => item.id).join(','),
+      without_tags: without_tags.map((item) => item.id).join(','),
     },
     callback,
   );
@@ -87,8 +87,8 @@ export const adminPosts = async (
       sort_type: up ? 1 : -1,
       search: search,
       search_fields: search_fields.join(','),
-      with_tags: with_tags.map(item => item.id).join(','),
-      without_tags: without_tags.map(item => item.id).join(','),
+      with_tags: with_tags.map((item) => item.id).join(','),
+      without_tags: without_tags.map((item) => item.id).join(','),
     },
     callback,
   );
