@@ -21,6 +21,7 @@ import {
   Table,
   Alert,
   Popconfirm,
+  notification,
 } from 'antd';
 import { Icon } from '@ant-design/compatible';
 
@@ -173,7 +174,7 @@ class Queue extends React.Component<QueueProps, QueueState> {
               description={
                 <span>
                   <Typography.Paragraph>
-                    输入自己的群ID或者游戏ID点击我要我要候机加入排队，数据会每20秒自动刷新（也可以自己手动 F5 刷新）
+                    输入自己的群ID或者游戏ID点击我要候机加入排队，数据会每20秒自动刷新（也可以自己手动刷新）
                   </Typography.Paragraph>
                   <Typography.Paragraph>
                     成功落地后请点击“我要降落”并在群里@下一名乘客（如果是要求单人上岛则在返程后@）
@@ -219,6 +220,10 @@ class Queue extends React.Component<QueueProps, QueueState> {
                 <Button
                   loading={this.state.loading}
                   onClick={async (e) => {
+                    if (this.state.value === '') {
+                      notification.warning({ message: '请填写乘客信息' });
+                      return;
+                    }
                     this.setState({ loading: true });
                     const r = (await request('get', '/api/extensions/queue/push', {
                       id: this.props.router.query['id'],
@@ -250,6 +255,11 @@ class Queue extends React.Component<QueueProps, QueueState> {
                     我要降落
                   </Button>
                 </Popconfirm>
+              </Col>
+              <Col>
+                <Button loading={this.state.loading} onClick={(e) => this.getData()}>
+                  刷新数据
+                </Button>
               </Col>
             </Row>
 
