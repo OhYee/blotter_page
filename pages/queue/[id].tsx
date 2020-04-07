@@ -52,12 +52,17 @@ class Queue extends React.Component<QueueProps, QueueState> {
   static defaultProps = { posts: [] };
   static contextType = Context;
 
-  constructor(props: any) {
+  constructor(props: QueueProps) {
     super(props);
+
+    var id = '';
+    if (Array.isArray(props.router.query['id'])) id = props.router.query['id'][0];
+    else id = props.router.query['id'];
+
     this.state = {
       queue: [],
       value: '',
-      room: '',
+      room: id,
       loading: false,
     };
   }
@@ -204,7 +209,8 @@ class Queue extends React.Component<QueueProps, QueueState> {
                     多趟买卖大头菜，请多次排队，以提升效率（买完直接减号键回家，单人上岛，效率更高）
                   </Typography.Paragraph>
                   <Typography.Paragraph>
-                    数据会每20秒自动刷新（也可以自己手动 "刷新数据"），默认只显示候机乘客，可以自行修改筛选条件
+                    数据会每20秒自动刷新（也可以自己手动
+                    "刷新数据"），默认只显示候机乘客，可以自行修改筛选条件
                   </Typography.Paragraph>
                   <Typography.Paragraph>
                     为了避免炸岛，联机游戏请尽可能使用流量开热点并开启
