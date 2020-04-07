@@ -29,7 +29,7 @@ import { request } from '@/utils/request';
 import moment from 'moment';
 import ShowNotification from '@/utils/notification';
 import { ColumnsType } from 'antd/lib/table';
-import Link from 'next/link';
+import CommentPart from '@/components/comment';
 
 interface QueueItem {
   _id: string;
@@ -48,6 +48,14 @@ interface QueueState {
   loading: boolean;
 }
 
+function getID(props: QueueProps): string {
+  const id = props.router.query['id'];
+  var roomID = '';
+  if (Array.isArray(id)) roomID = id[0];
+  else if (typeof id === 'string') roomID = id;
+  return roomID;
+}
+
 class Queue extends React.Component<QueueProps, QueueState> {
   static defaultProps = { posts: [] };
   static contextType = Context;
@@ -55,14 +63,10 @@ class Queue extends React.Component<QueueProps, QueueState> {
   constructor(props: QueueProps) {
     super(props);
 
-    var id = '';
-    if (Array.isArray(props.router.query['id'])) id = props.router.query['id'][0];
-    else id = props.router.query['id'];
-
     this.state = {
       queue: [],
       value: '',
-      room: id,
+      room: getID(props),
       loading: false,
     };
   }
@@ -75,7 +79,7 @@ class Queue extends React.Component<QueueProps, QueueState> {
   getData = async () => {
     this.setState({ loading: true });
     const r = (await request('get', '/api/extensions/queue', {
-      id: this.props.router.query['id'],
+      id: getID(this.props),
     })) as {
       queue: QueueItem[];
     };
@@ -164,13 +168,13 @@ class Queue extends React.Component<QueueProps, QueueState> {
         <Context.Consumer>
           {(context) => (
             <Head>
-              <title>{`${this.props.router.query['id']}|动森候机大厅|${context.blog_name}`}</title>
+              <title>{`${getID(this.props)}|动森候机大厅|${context.blog_name}`}</title>
             </Head>
           )}
         </Context.Consumer>
         <Container>
           <Card>
-            <PageHeader title="动森候机大厅" subTitle={this.props.router.query['id']} />
+            <PageHeader title="动森候机大厅" subTitle={getID(this.props)} />
             <Row justify="space-between" style={{ margin: 10 }}>
               <Col>
                 <Input
@@ -210,7 +214,13 @@ class Queue extends React.Component<QueueProps, QueueState> {
                   </Typography.Paragraph>
                   <Typography.Paragraph>
                     数据会每20秒自动刷新（也可以自己手动
-                    "刷新数据"），默认只显示候机乘客，可以自行修改筛选条件
+                    "刷新数据"），默认只显示候机乘客，可以自行修改筛选条件，
+                    <a
+                      target="_blank"
+                      href="https://www.oyohyee.com/post/writting_animal_crossing#waiting-area"
+                    >
+                      使用帮助
+                    </a>
                   </Typography.Paragraph>
                   <Typography.Paragraph>
                     为了避免炸岛，联机游戏请尽可能使用流量开热点并开启
@@ -272,7 +282,7 @@ class Queue extends React.Component<QueueProps, QueueState> {
                     }
                     this.setState({ loading: true });
                     const r = (await request('get', '/api/extensions/queue/push', {
-                      id: this.props.router.query['id'],
+                      id: getID(this.props),
                       name: this.state.value,
                     })) as Blotter.APIResponse;
                     ShowNotification(r);
@@ -291,7 +301,7 @@ class Queue extends React.Component<QueueProps, QueueState> {
                   onConfirm={async (e) => {
                     this.setState({ loading: true });
                     const r = (await request('get', '/api/extensions/queue/pop', {
-                      id: this.props.router.query['id'],
+                      id: getID(this.props),
                     })) as Blotter.APIResponse;
                     ShowNotification(r);
                     this.getData();
@@ -315,6 +325,9 @@ class Queue extends React.Component<QueueProps, QueueState> {
               dataSource={this.state.queue}
               columns={columns}
             />
+          </Card>
+          <Card>
+            <CommentPart url={`/queue/${getID(this.props)}`} />
           </Card>
         </Container>
       </div>
