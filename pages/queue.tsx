@@ -66,7 +66,7 @@ class Queue extends React.Component<QueueProps, QueueState> {
 
   componentDidMount() {
     this.getData();
-    setInterval(this.getData, 5000);
+    setInterval(this.getData, 20000);
   }
 
   getData = async () => {
@@ -173,10 +173,13 @@ class Queue extends React.Component<QueueProps, QueueState> {
               description={
                 <span>
                   <Typography.Paragraph>
-                    输入自己的群ID或者游戏ID点击我要我要候机加入排队
+                    输入自己的群ID或者游戏ID点击我要我要候机加入排队，数据会每20秒自动刷新（也可以自己手动 F5 刷新）
                   </Typography.Paragraph>
                   <Typography.Paragraph>
                     成功落地后请点击“我要降落”并在群里@下一名乘客（如果是要求单人上岛则在返程后@）
+                  </Typography.Paragraph>
+                  <Typography.Paragraph>
+                    多趟买卖大头菜，请多次排队，以提升效率（特别是买卖大头菜，买完直接减号键回家，单人上岛，效率更高）
                   </Typography.Paragraph>
                   <Typography.Paragraph>
                     为了避免炸岛，联机游戏请尽可能使用流量开热点并开启加速器（部分加速器加速后更慢，请不要用）
