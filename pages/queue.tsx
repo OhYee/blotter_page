@@ -66,6 +66,7 @@ class Queue extends React.Component<QueueProps, QueueState> {
 
   componentDidMount() {
     this.getData();
+    setInterval(this.getData, 5000);
   }
 
   getData = async () => {
