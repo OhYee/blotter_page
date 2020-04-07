@@ -26,3 +26,10 @@ jobs:
           BRANCH: gh-pages
           FOLDER: .next
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        - name: Sync to Gitee
+      - uses: wearerequired/git-mirror-action@master
+        env:
+            SSH_PRIVATE_KEY: ${{ secrets.GITEE_PRIVATE_KEY }}
+        with:
+            source-repo: "git@github.com:OhYee/blotter_page.git"
+            destination-repo: "git@gitee.com:OhYee/blotter_page.git"
