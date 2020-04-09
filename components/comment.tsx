@@ -299,7 +299,7 @@ class CommentPart extends React.Component<CommentPartProps, CommentPartState> {
           itemLayout="horizontal"
           dataSource={comments}
           renderItem={(comment, idx) => (
-            <List.Item key={comment.id}>
+            <List.Item key={comment.id} style={{ padding: 0 }}>
               {this.render_comment(comment, depth, false, parent)}
             </List.Item>
           )}
