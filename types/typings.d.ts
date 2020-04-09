@@ -50,7 +50,6 @@ declare namespace Blotter {
     time: string;
     content: string;
     reply: string;
-    reply_content: string;
     children: Comment[];
     ad: boolean;
     show: boolean;

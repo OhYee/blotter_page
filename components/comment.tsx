@@ -48,7 +48,7 @@ class CommentPart extends React.Component<CommentPartProps, CommentPartState> {
 
   initialComment = () => {
     this.setState({ loading: true });
-    comments(this.props.url, data => {
+    comments(this.props.url, (data) => {
       this.setState(() => ({
         total: data.total,
         comments: data.comments.reverse(),
@@ -65,8 +65,8 @@ class CommentPart extends React.Component<CommentPartProps, CommentPartState> {
   };
 
   onEmailBlur = (id: string, formRef: React.RefObject<FormInstance>) => {
-    avatar(formRef.current.getFieldValue(`email`), data =>
-      this.setState(state => {
+    avatar(formRef.current.getFieldValue(`email`), (data) =>
+      this.setState((state) => {
         state.avatar[id] = data.avatar;
         return state;
       }),
@@ -76,7 +76,7 @@ class CommentPart extends React.Component<CommentPartProps, CommentPartState> {
   onSubmitClick = async (id: string, formRef: React.RefObject<FormInstance>) => {
     var value = await formRef.current.validateFields(['email', 'content', 'recv']);
 
-    this.setState(state => {
+    this.setState((state) => {
       state.editor_loading[id] = true;
       return state;
     });
@@ -92,7 +92,7 @@ class CommentPart extends React.Component<CommentPartProps, CommentPartState> {
       //   formRef.current.resetFields(['email', 'recv', 'content']);
       this.initialComment();
     }
-    this.setState(state => {
+    this.setState((state) => {
       state.editor_loading[id] = false;
       state.reply[id] = !r.success;
       return state;
@@ -195,47 +195,72 @@ class CommentPart extends React.Component<CommentPartProps, CommentPartState> {
     );
   };
 
-  render_comment = (comment: Blotter.Comment, depth: number) => {
+  render_comment = (
+    comment: Blotter.Comment,
+    depth: number,
+    quote: boolean,
+    parent?: Blotter.Comment,
+  ) => {
     const onReplyClick = () => {
       this.onReplyClick(comment.id, true);
     };
     const onCloseClick = () => {
       this.onReplyClick(comment.id, false);
     };
+    const jumpParent = () => {
+      const target = document.getElementById(`blotter-comment-${comment.id}`);
+
+      function getOffsetTop(e) {
+        return e.offsetParent ? e.offsetTop + getOffsetTop(e.offsetParent) : e.offsetTop;
+      }
+      const top = getOffsetTop(target);
+      if (!!target && top > 0) {
+        scrollTo(0, top + 10);
+      }
+    };
     const childrenAndEditor = () => (
       <Fragment>
         {this.state.reply[comment.id] ? this.render_editor(comment.id) : null}
-        {this.render_comment_list(comment.children, depth + 1)}
+        {this.render_comment_list(comment.children, depth + 1, comment)}
       </Fragment>
     );
     var maxDepth = this.context.big_screen ? 5 : 2;
 
     return (
-      <li>
+      <div id={quote ? '' : `blotter-comment-${comment.id}`}>
         <Cm
-          actions={[
-            this.state.reply[comment.id] ? (
-              <span key="comment-nested-reply-to" onClick={onCloseClick}>
-                取消回复
-                <Icon type="close" />
-              </span>
-            ) : (
-              <span key="comment-nested-reply-to" onClick={onReplyClick}>
-                回复
-              </span>
-            ),
-            <span key="comment-nested-reply-to">
-              {comment.recv ? (
-                <Popover content="当你回复该评论，评论者会收到邮件提醒（但是他/她不一定会看邮件）">
-                  <Icon type="mail" />
-                </Popover>
-              ) : (
-                <Popover content="当你回复该评论，评论者不会收到邮件提醒（所以你可能无法得到反馈）">
-                  <Icon type="disconnect" />
-                </Popover>
-              )}
-            </span>,
-          ]}
+          style={quote ? { borderLeft: '#ccc 5px solid', paddingLeft: 10 } : {}}
+          actions={
+            quote
+              ? [
+                  <span key="comment-nested-reply-to" onClick={jumpParent}>
+                    跳转到该评论
+                  </span>,
+                ]
+              : [
+                  this.state.reply[comment.id] ? (
+                    <span key="comment-nested-reply-to" onClick={onCloseClick}>
+                      取消回复
+                      <Icon type="close" />
+                    </span>
+                  ) : (
+                    <span key="comment-nested-reply-to" onClick={onReplyClick}>
+                      回复
+                    </span>
+                  ),
+                  <span key="comment-nested-reply-to">
+                    {comment.recv ? (
+                      <Popover content="当你回复该评论，评论者会收到邮件提醒（但是他/她不一定会看邮件）">
+                        <Icon type="mail" />
+                      </Popover>
+                    ) : (
+                      <Popover content="当你回复该评论，评论者不会收到邮件提醒（所以你可能无法得到反馈）">
+                        <Icon type="disconnect" />
+                      </Popover>
+                    )}
+                  </span>,
+                ]
+          }
           author={comment.email}
           avatar={this.render_avatar(comment.avatar)}
           content={
@@ -243,11 +268,9 @@ class CommentPart extends React.Component<CommentPartProps, CommentPartState> {
               adWarning
             ) : comment.show ? (
               <div>
-                {depth != 1 && depth >= maxDepth ? (
-                  <blockquote
-                    dangerouslySetInnerHTML={{ __html: comment.reply_content }}
-                  ></blockquote>
-                ) : null}
+                {!quote && depth != 1 && depth >= maxDepth
+                  ? this.render_comment(parent, depth, true)
+                  : null}
                 <div dangerouslySetInnerHTML={{ __html: comment.content }}></div>
               </div>
             ) : (
@@ -260,14 +283,14 @@ class CommentPart extends React.Component<CommentPartProps, CommentPartState> {
             </Tooltip>
           }
         >
-          {depth < maxDepth ? childrenAndEditor() : null}
+          {!quote && depth < maxDepth ? childrenAndEditor() : null}
         </Cm>
-        {depth >= maxDepth ? childrenAndEditor() : null}
-      </li>
+        {!quote && depth >= maxDepth ? childrenAndEditor() : null}
+      </div>
     );
   };
 
-  render_comment_list = (comments: Blotter.Comment[], depth: number) => {
+  render_comment_list = (comments: Blotter.Comment[], depth: number, parent?: Blotter.Comment) => {
     if (comments.length || depth == 1) {
       return (
         <List
@@ -275,7 +298,11 @@ class CommentPart extends React.Component<CommentPartProps, CommentPartState> {
           header={depth == 1 ? `共 ${this.state.total} 条评论` : null}
           itemLayout="horizontal"
           dataSource={comments}
-          renderItem={(comment, idx) => this.render_comment(comment, depth)}
+          renderItem={(comment, idx) => (
+            <List.Item key={comment.id}>
+              {this.render_comment(comment, depth, false, parent)}
+            </List.Item>
+          )}
           loading={this.state.loading}
         />
       );
