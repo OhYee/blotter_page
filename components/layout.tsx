@@ -77,9 +77,9 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
     this.setState(() => ({ collapsed: true }));
   };
 
-  onCollapseButtonClick = () => this.setState(state => ({ collapsed: !state.collapsed }));
+  onCollapseButtonClick = () => this.setState((state) => ({ collapsed: !state.collapsed }));
 
-  renderLight = props => (
+  renderLight = (props) => (
     <div
       className="primary-color"
       dangerouslySetInnerHTML={{
@@ -98,7 +98,7 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
       }}
     />
   );
-  renderDark = props => (
+  renderDark = (props) => (
     <div
       className="primary-color"
       dangerouslySetInnerHTML={{
@@ -152,7 +152,7 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
 
   renderFeedback = () => (
     <Context.Consumer>
-      {context => (
+      {(context) => (
         <Button
           shape="circle"
           size="large"
@@ -310,6 +310,9 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
               />
             </Form.Item>
           </Form>
+          <a href="/api/user/jump_to_qq">
+            <img src="http://qzonestyle.gtimg.cn/qzone/vas/opensns/res/img/Connect_logo_7.png" />
+          </a>
         </Modal>
       </Menu>
     );
@@ -341,7 +344,7 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
             <b className={styles.divider}>OhYee</b>
           </Divider>
           <Context.Consumer>
-            {context => this.renderMenus(context.menus, context.token)}
+            {(context) => this.renderMenus(context.menus, context.token)}
           </Context.Consumer>
         </div>
       </Sider>
@@ -369,7 +372,7 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
     return (
       <Container>
         <Context.Consumer>
-          {context => {
+          {(context) => {
             return (
               <div className={styles.footer}>
                 <p>
@@ -400,7 +403,7 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
                 {context.friends.length > 0 ? (
                   <p className={styles.friends}>
                     <strong>友情链接：</strong>
-                    {context.friends.map(friend => (
+                    {context.friends.map((friend) => (
                       <span key={friend.name}>
                         <a href={friend.link}>{friend.name}</a>
                       </span>
@@ -422,7 +425,7 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
         className={`${this.context.theme} ${this.state.collapsed ? '' : styles.dimmed}`}
       >
         <Context.Consumer>
-          {context => (
+          {(context) => (
             <Head>
               <title>{context.blog_name}</title>
             </Head>
