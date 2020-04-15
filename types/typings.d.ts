@@ -3,7 +3,23 @@ declare module '*.png';
 declare module '*.svg';
 declare module '*.less';
 
+declare type TypeUInT<T, U> = {
+  [K in keyof T]: T[K] extends U ? K : never;
+}[keyof T];
+
 declare namespace Blotter {
+  interface User {
+    id: string;
+    username: string;
+    password: string;
+    avatar: string;
+    token: string;
+    email: string;
+    qq: string;
+    ns: string;
+    permission: number;
+  }
+
   interface APIResponse {
     success: boolean;
     title: string;
