@@ -8,7 +8,7 @@
     "dependencies": {
         "@ant-design/compatible": "^0.0.1-rc.1",
         "antd": "^4.1.3",
-        "next": "^9.2.2",
+        "next": "^9.3.2",
         "next-dynamic-antd-theme": "^0.0.4",
         "react": "^16.13.0",
         "react-dnd": "^10.0.2",
