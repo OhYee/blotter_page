@@ -10,7 +10,7 @@ const Layout = BasicLayout as any;
 
 import ErrorPage from '@/pages/_error';
 
-import { view } from '@/utils/api';
+import { view, info } from '@/utils/api';
 
 interface MyAppProps extends AppProps {
   globalProps: GlobalProps;
@@ -26,9 +26,15 @@ export default class MyApp extends App<MyAppProps, {}, MyAppState> {
     this.state = {
       ...defaultContext,
       ...this.props.globalProps,
-      token: getCookie('token'),
+      //   token: getCookie('token'),
       callback: (props, callback) => {
-        this.setState(props, callback);
+        this.setState(
+          (state) => ({
+            ...state,
+            ...props,
+          }),
+          callback,
+        );
       },
     };
   }
@@ -60,8 +66,10 @@ export default class MyApp extends App<MyAppProps, {}, MyAppState> {
     return { pageProps, globalProps, status, message };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     view();
+    const user = await info();
+    this.setState({ user });
   }
 
   render() {

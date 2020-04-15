@@ -167,7 +167,7 @@ export const tagsSearch = async (
 export const login = async (
   username: string,
   password: string,
-  callback?: RequestCallback<Blotter.APIResponse & { token: string }>,
+  callback?: RequestCallback<Blotter.APIResponse & { user: Blotter.User }>,
 ) => {
   return await request('get', '/api/login', { username, password }, callback);
 };
@@ -176,8 +176,8 @@ export const logout = async (callback?: RequestCallback<Blotter.APIResponse>) =>
   return await request('get', '/api/logout', {}, callback);
 };
 
-export const info = async (callback?: RequestCallback<{ token: string }>) => {
-  return await request('get', '/api/info', {}, callback);
+export const info = async (username?: string, callback?: RequestCallback<Blotter.User>) => {
+  return await request('get', '/api/info', { username }, callback);
 };
 
 export const postExist = async (url: string, callback?: RequestCallback<{ existed: boolean }>) => {
@@ -336,4 +336,21 @@ export const commentSet = async (
   callback?: RequestCallback<Blotter.APIResponse>,
 ) => {
   return await request('get', `/api/admin/comment/set`, { id, ad, recv, show }, callback);
+};
+
+export const userSet = async (
+  username: string,
+  email: string,
+  avatar: string,
+  ns: string,
+  qq: string,
+  password: string,
+  callback?: RequestCallback<Blotter.APIResponse>,
+) => {
+  return await request(
+    'get',
+    `/api/user/set`,
+    { username, email, avatar, ns, qq, password },
+    callback,
+  );
 };

@@ -18,22 +18,28 @@ import {
   Input,
   Col,
   Tooltip,
+  Avatar,
+  Popover,
+  List,
 } from 'antd';
 import { Icon } from '@ant-design/compatible';
 const { Footer, Sider, Content } = Layout;
 import { FormInstance } from 'antd/lib/form';
+import { UserOutlined } from '@ant-design/icons';
 // import { FormComponentProps } from 'antd/lib/form';
 
 import Container from '@/components/container';
 
 import changeTheme from 'next-dynamic-antd-theme';
 
-import { layout, login, logout } from '@/utils/api';
+import { layout, login, logout, info } from '@/utils/api';
 import ShowNotification from '@/utils/notification';
-import { GlobalProps, Context } from '@/utils/global';
+import { GlobalProps, Context, defaultContext } from '@/utils/global';
 import { setCookie } from '@/utils/cookies';
 
 import styles from './layout.less';
+import { AvatarProps } from 'antd/lib/avatar';
+import If from './if';
 
 interface BasicLayoutProps extends ComponentProps<'base'>, WithRouterProps {}
 interface BasicLayoutState {
@@ -46,6 +52,7 @@ interface BasicLayoutState {
 
 class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
   static contextType = Context;
+  context!: React.ContextType<typeof Context>;
   formRef = React.createRef<FormInstance>();
 
   static async getInitialProps(args: any) {
@@ -221,10 +228,9 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
 
   onLogoutClick = async () => {
     var r = await logout();
-    if (ShowNotification(r)) {
-      setCookie('token', '', 0);
-    }
-    this.context.callback({ token: '' });
+    ShowNotification(r);
+    setCookie('token', '', 0);
+    this.context.callback({ user: defaultContext.user });
   };
 
   loginOK = async () => {
@@ -233,7 +239,7 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
     var { username, password } = this.formRef.current.getFieldsValue(['username', 'password']);
     var r = await login(username, password);
     if (ShowNotification(r)) {
-      this.context.callback({ token: r.token });
+      this.context.callback({ user: r.user });
       this.setState({ loginModel: false, okDisabled: false });
     } else {
       this.setState({ okDisabled: false });
@@ -243,7 +249,7 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
     this.setState({ loginModel: false });
   };
 
-  renderMenus = (menus: Blotter.Menu[], token: string) => {
+  renderMenus = (menus: Blotter.Menu[], user: Blotter.User) => {
     return (
       <Menu
         theme={this.context.theme == 'default' ? 'light' : 'dark'}
@@ -270,50 +276,6 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
             </Menu.Item>
           );
         })}
-        {token == '' ? (
-          <Menu.Item key="login" onClick={this.onLoginClick}>
-            <Icon type="login" />
-            <span>登录</span>
-          </Menu.Item>
-        ) : (
-          [
-            <Menu.Item key="setting">
-              <Link href="/admin">
-                <a>
-                  <Icon type="setting" />
-                  <span>后台</span>
-                </a>
-              </Link>
-            </Menu.Item>,
-            <Menu.Item key="logout" onClick={this.onLogoutClick}>
-              <Icon type="logout" />
-              <span>登出</span>
-            </Menu.Item>,
-          ]
-        )}
-        <Modal
-          title="登录"
-          visible={this.state.loginModel}
-          onOk={this.loginOK}
-          onCancel={this.loginCancel}
-          okButtonProps={{ disabled: this.state.okDisabled }}
-        >
-          <Form ref={this.formRef}>
-            <Form.Item name="username">
-              <Input prefix={<Icon type="user" />} placeholder="用户名" />
-            </Form.Item>
-            <Form.Item name="password">
-              <Input.Password
-                prefix={<Icon type="lock" />}
-                placeholder="密码"
-                onPressEnter={this.loginOK}
-              />
-            </Form.Item>
-          </Form>
-          <a href="/api/user/jump_to_qq">
-            <img src="http://qzonestyle.gtimg.cn/qzone/vas/opensns/res/img/Connect_logo_7.png" />
-          </a>
-        </Modal>
       </Menu>
     );
   };
@@ -339,12 +301,66 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
               style={{ background: 'white', borderRadius: '100px', maxWidth: '120px' }}
             />
           </Row>
-
-          <Divider className={this.state.collapsed ? styles.divider : undefined}>
+          {/* <Divider className={this.state.collapsed ? styles.divider : undefined}>
             <b className={styles.divider}>OhYee</b>
-          </Divider>
+          </Divider> */}
+
           <Context.Consumer>
-            {(context) => this.renderMenus(context.menus, context.token)}
+            {(context) => (
+              <Fragment>
+                <Row justify="center" className={styles.avatar}>
+                  {context.user.token == '' ? (
+                    <a onClick={this.onLoginClick}>
+                      <Avatar icon={<UserOutlined />} />
+                    </a>
+                  ) : (
+                    <Popover
+                      placement="right"
+                      title={context.user.username}
+                      content={
+                        <div>
+                          <Row gutter={10}>
+                            <Col span={12}>
+                              <Link href="/user/[username]" as={`/user/${context.user.username}`}>
+                                <a>设置</a>
+                              </Link>
+                            </Col>
+
+                            <Col span={12}>
+                              <a onClick={this.onLogoutClick}>登出</a>
+                            </Col>
+                          </Row>
+
+                          <If condition={(context.user.permission & 1) != 0}>
+                            <Row gutter={10}>
+                              <Col span={12}>
+                                <Link href="/admin">
+                                  <a>管理</a>
+                                </Link>
+                              </Col>
+                            </Row>
+                          </If>
+                        </div>
+                      }
+                      trigger="hover"
+                    >
+                      <span>
+                        <Link href="/user/[username]" as={`/user/${context.user.username}`}>
+                          <a>
+                            {context.user.avatar ? (
+                              <Avatar src={context.user.avatar} />
+                            ) : (
+                              <Avatar icon={<UserOutlined />} />
+                            )}
+                          </a>
+                        </Link>
+                      </span>
+                    </Popover>
+                  )}
+                </Row>
+                {this.renderMenus(context.menus, context.user)}
+              </Fragment>
+            )}
           </Context.Consumer>
         </div>
       </Sider>
@@ -418,6 +434,37 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
     );
   };
 
+  renderLoginModel = () => {
+    return (
+      <Modal
+        title="登录"
+        visible={this.state.loginModel}
+        onOk={this.loginOK}
+        onCancel={this.loginCancel}
+        okButtonProps={{ disabled: this.state.okDisabled }}
+      >
+        <Form ref={this.formRef}>
+          <Form.Item name="username">
+            <Input prefix={<Icon type="user" />} placeholder="用户名" />
+          </Form.Item>
+          <Form.Item name="password">
+            <Input.Password
+              prefix={<Icon type="lock" />}
+              placeholder="密码"
+              onPressEnter={this.loginOK}
+            />
+          </Form.Item>
+        </Form>
+        <a href="/api/user/jump_to_qq">
+          <img src="http://qzonestyle.gtimg.cn/qzone/vas/opensns/res/img/Connect_logo_7.png" />
+        </a>
+        <Link href="/register">
+          <a target="_blank">注册</a>
+        </Link>
+      </Modal>
+    );
+  };
+
   render() {
     return (
       <Layout
@@ -445,6 +492,7 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
             {this.renderBackToTop()}
             {this.renderFeedback()}
             {this.renderChangeTheme()}
+            {this.renderLoginModel()}
           </Content>
           <Footer>{this.renderFooter()}</Footer>
         </Layout>

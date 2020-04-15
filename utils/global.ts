@@ -9,17 +9,28 @@ export const defaultContext: GlobalProps = {
   email: '',
   qq: '',
   github: '',
-  token: '',
+  //   token: '',
   friends: [],
   big_screen: false,
   theme: 'default',
   grey: false,
+  user: {
+    id: '000000000000000000000000',
+    username: '',
+    password: '',
+    avatar: '',
+    token: '',
+    email: '',
+    qq: '',
+    ns: '',
+    permission: 0,
+  },
 };
 
 export const Context = React.createContext(defaultContext);
 
 export declare interface GlobalProps {
-  callback: (props: GlobalProps, callback?: () => void) => void;
+  callback: (props: Partial<GlobalProps>, callback?: () => void) => void;
   menus: Blotter.Menu[];
   beian: string;
   view: number;
@@ -27,9 +38,10 @@ export declare interface GlobalProps {
   email: string;
   qq: string;
   github: string;
-  token: string;
+  //   token: string;
   friends: Blotter.FriendSimple[];
   big_screen: boolean;
   theme: 'default' | 'dark';
   grey: boolean;
+  user: Blotter.User;
 }
