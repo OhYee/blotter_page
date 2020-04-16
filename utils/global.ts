@@ -24,6 +24,7 @@ export const defaultContext: GlobalProps = {
     qq: '',
     ns: '',
     permission: 0,
+    qq_union_id: '',
   },
 };
 

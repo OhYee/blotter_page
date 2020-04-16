@@ -9,15 +9,17 @@ import { Card, Descriptions, Typography, Avatar, List, Row, Col, Button, Input, 
 import Container from '@/components/container';
 
 import { Context, defaultContext } from '@/utils/global';
-import { info, userSet } from '@/utils/api';
+import { info, userSet, avatar } from '@/utils/api';
 import ShowNotification from '@/utils/notification';
 import If from '@/components/if';
+import Link from 'next/link';
 
 interface UserProps extends ComponentProps<'base'>, WithRouterProps {}
 
 interface UserState {
   user: Blotter.User;
   loading: boolean;
+  loadingAvatar: boolean;
   password: string;
 }
 
@@ -31,6 +33,7 @@ class User extends React.Component<UserProps, UserState> {
     this.state = {
       user: defaultContext.user,
       loading: false,
+      loadingAvatar: false,
       password: '',
     };
   }
@@ -64,13 +67,15 @@ class User extends React.Component<UserProps, UserState> {
 
   render() {
     const self = this.context.user.id == this.state.user.id;
-    const fields: { key: TypeUInT<Blotter.User, string>; name: string; self: boolean }[] = [
+    const allFields: { key: TypeUInT<Blotter.User, string>; name: string; self: boolean }[] = [
       { key: 'avatar', name: '头像', self: true },
       { key: 'username', name: '用户名', self: false },
-      { key: 'ns', name: 'NS 账户', self: false },
       { key: 'email', name: '邮箱', self: false },
-      { key: 'qq', name: 'qq号', self: false },
+      { key: 'qq', name: 'QQ 号', self: false },
+      { key: 'ns', name: 'NS 账户', self: false },
     ];
+    const fields = self ? allFields : allFields.filter((item) => !item.self);
+
     return (
       <Container>
         <Context.Consumer>
@@ -84,7 +89,36 @@ class User extends React.Component<UserProps, UserState> {
           <p style={{ textAlign: 'center' }}>
             <Avatar size={128} src={this.state.user.avatar} />
           </p>
-
+          <If condition={self}>
+            <Row justify="center" gutter={20}>
+              <Col>
+                <Button
+                  loading={this.state.loadingAvatar}
+                  onClick={async () => {
+                    this.setState({ loadingAvatar: true });
+                    const r = await avatar(this.state.user.email);
+                    this.setState((state) => {
+                      var { user } = state;
+                      user.avatar = r.avatar;
+                      return { user, loadingAvatar: false };
+                    });
+                  }}
+                >
+                  根据邮箱更新 Github、Gavatar 头像
+                </Button>
+              </Col>
+              <Col>
+                <Link href="/api/user/qq_avatar">
+                  <a target="_blank">
+                    <Button disabled={this.state.user.qq_union_id === ''}>更新 QQ 头像</Button>
+                  </a>
+                </Link>
+              </Col>
+              <Col>
+                <Button onClick={() => this.getData()}>刷新数据</Button>
+              </Col>
+            </Row>
+          </If>
           <List
             dataSource={fields}
             renderItem={(item) => (
@@ -113,9 +147,24 @@ class User extends React.Component<UserProps, UserState> {
                 value={this.state.password}
                 onChange={(e) => this.setState({ password: e.target.value })}
               />
-              <Button loading={this.state.loading} onClick={() => this.update()}>
-                更新信息
-              </Button>
+              <Row justify="space-between">
+                <Col>
+                  {this.state.user.qq_union_id === '' ? (
+                    <Link href="/api/user/jump_to_qq?state=connect">
+                      <a target="_blank">
+                        <Button>绑定 QQ 登录</Button>
+                      </a>
+                    </Link>
+                  ) : (
+                    <Button disabled={true}>已绑定 QQ 登录</Button>
+                  )}
+                </Col>
+                <Col style={{ textAlign: 'right' }}>
+                  <Button loading={this.state.loading} type="primary" onClick={this.update}>
+                    更新信息
+                  </Button>
+                </Col>
+              </Row>
             </Space>
           </If>
         </Card>

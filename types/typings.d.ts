@@ -18,6 +18,7 @@ declare namespace Blotter {
     qq: string;
     ns: string;
     permission: number;
+    qq_union_id: string;
   }
 
   interface APIResponse {
