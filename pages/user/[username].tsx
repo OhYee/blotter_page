@@ -24,6 +24,7 @@ interface UserState {
 class User extends React.Component<UserProps, UserState> {
   static defaultProps = {};
   static contextType = Context;
+  context!: React.ContextType<typeof Context>;
 
   constructor(props: any) {
     super(props);

@@ -125,8 +125,8 @@ class PostPage extends React.Component<PostPageProps, PostPageState> {
               </div>
             )}
             <Context.Consumer>
-              {context =>
-                context.token !== '' ? (
+              {(context) =>
+                (context.user.permission & 1) == 1 ? (
                   <Link href={`/admin/post?url=${this.props.router.query.url}`}>
                     <Button type="primary" size="small">
                       编辑
@@ -174,7 +174,7 @@ class PostPage extends React.Component<PostPageProps, PostPageState> {
     return typeof this.props.post === 'undefined' ? null : (
       <Container lg={16}>
         <Context.Consumer>
-          {context => (
+          {(context) => (
             <Fragment>
               <Head>
                 <title>{`${this.props.post.title}|${context.blog_name}`}</title>

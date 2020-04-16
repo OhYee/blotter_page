@@ -59,7 +59,7 @@ function getID(props: QueueProps): string {
 class Queue extends React.Component<QueueProps, QueueState> {
   static defaultProps = { posts: [] };
   static contextType = Context;
-
+  context!: React.ContextType<typeof Context>;
   constructor(props: QueueProps) {
     super(props);
 
@@ -117,7 +117,7 @@ class Queue extends React.Component<QueueProps, QueueState> {
       },
     ];
 
-    if (this.context.token != '') {
+    if ((this.context.user.password & 1) == 1) {
       columns.push({
         title: '操作',
         key: 'op',

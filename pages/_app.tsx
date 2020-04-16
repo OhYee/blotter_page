@@ -21,6 +21,7 @@ interface MyAppState extends GlobalProps {}
 
 export default class MyApp extends App<MyAppProps, {}, MyAppState> {
   static contextType = Context;
+  context!: React.ContextType<typeof Context>;
   constructor(props: any) {
     super(props);
     this.state = {

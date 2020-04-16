@@ -29,7 +29,7 @@ interface CommentPartState {
 
 class CommentPart extends React.Component<CommentPartProps, CommentPartState> {
   static contextType = Context;
-
+  context!: React.ContextType<typeof Context>;
   constructor(props: CommentPartProps) {
     super(props);
     this.state = {

@@ -19,6 +19,7 @@ interface ErrorPageState {}
 
 class ErrorPage extends Component<ErrorPageProps, ErrorPageState> {
   static contextType = Context;
+  context!: React.ContextType<typeof Context>;
   static async getInitialProps(args: NextPageContext) {
     const { res } = args;
     return { status: res.statusCode };
@@ -55,7 +56,7 @@ class ErrorPage extends Component<ErrorPageProps, ErrorPageState> {
     return (
       <Container>
         <Context.Consumer>
-          {context => (
+          {(context) => (
             <Head>
               <title>{`发生一个${this.props.status}错误！|${this.context.blog_name}`}</title>
             </Head>
@@ -75,7 +76,7 @@ class ErrorPage extends Component<ErrorPageProps, ErrorPageState> {
           <Typography.Paragraph style={{ lineHeight: '2em' }}>
             一般而言，所有发生错误可能的情况如下：
             <ul>
-              {Object.keys(errorMessage).map(status => (
+              {Object.keys(errorMessage).map((status) => (
                 <li key={status}>
                   <strong>{status}错误</strong>,{errorMessage[status]}
                 </li>
