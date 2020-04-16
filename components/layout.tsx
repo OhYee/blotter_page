@@ -459,7 +459,9 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
           <img src="http://qzonestyle.gtimg.cn/qzone/vas/opensns/res/img/Connect_logo_7.png" />
         </a>
         <Link href="/register">
-          <a target="_blank">注册</a>
+          <a target="_blank" style={{ float: 'right' }}>
+            注册
+          </a>
         </Link>
       </Modal>
     );
