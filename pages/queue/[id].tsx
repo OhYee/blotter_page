@@ -117,7 +117,7 @@ class Queue extends React.Component<QueueProps, QueueState> {
       },
     ];
 
-    if ((this.context.user.password & 1) == 1) {
+    if ((this.context.user.permission & 1) == 1) {
       columns.push({
         title: '操作',
         key: 'op',
