@@ -1,10 +1,10 @@
 import React, { ComponentProps } from 'react';
 
 import Head from 'next/head';
-import Router, { withRouter } from 'next/router';
+import { withRouter } from 'next/router';
 import { WithRouterProps } from 'next/dist/client/with-router';
 
-import { Card, Descriptions, Typography, Avatar, List, Row, Col, Button, Input, Space } from 'antd';
+import { Card, Typography, Avatar, List, Row, Col, Button, Input, Space } from 'antd';
 
 import Container from '@/components/container';
 
@@ -12,7 +12,6 @@ import { Context, defaultContext } from '@/utils/global';
 import { info, userSet, avatar } from '@/utils/api';
 import ShowNotification from '@/utils/notification';
 import If from '@/components/if';
-import Link from 'next/link';
 
 interface UserProps extends ComponentProps<'base'>, WithRouterProps {}
 
@@ -148,11 +147,9 @@ class User extends React.Component<UserProps, UserState> {
               <Row justify="space-between">
                 <Col>
                   {this.state.user.qq_union_id === '' ? (
-                    <Link href="/api/user/jump_to_qq?state=connect">
-                      <a target="_blank">
-                        <Button>绑定 QQ 登录</Button>
-                      </a>
-                    </Link>
+                    <a href="/api/user/jump_to_qq?state=connect" target="_blank">
+                      <Button>绑定 QQ 登录</Button>
+                    </a>
                   ) : (
                     <Button disabled={true}>已绑定 QQ 登录</Button>
                   )}
