@@ -108,11 +108,9 @@ class User extends React.Component<UserProps, UserState> {
                 </Button>
               </Col>
               <Col>
-                <Link href="/api/user/qq_avatar">
-                  <a target="_blank">
-                    <Button disabled={this.state.user.qq_union_id === ''}>更新 QQ 头像</Button>
-                  </a>
-                </Link>
+                <a href="/api/user/qq_avatar" target="_blank">
+                  <Button disabled={this.state.user.qq_union_id === ''}>更新 QQ 头像</Button>
+                </a>
               </Col>
               <Col>
                 <Button onClick={() => this.getData()}>刷新数据</Button>
