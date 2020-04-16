@@ -354,3 +354,18 @@ export const userSet = async (
     callback,
   );
 };
+
+export const checkUsername = async (
+  username: string,
+  callback?: RequestCallback<{ existed: boolean }>,
+) => {
+  return await request('get', `/api/user/username`, { username }, callback);
+};
+
+export const register = async (
+  username: string,
+  password: string,
+  callback?: RequestCallback<Blotter.APIResponse>,
+) => {
+  return await request('get', `/api/user/register`, { username, password }, callback);
+};
