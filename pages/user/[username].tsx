@@ -69,7 +69,10 @@ class User extends React.Component<UserProps, UserState> {
       qq,
       this.state.password,
     );
-    ShowNotification(r);
+    if (ShowNotification(r)) {
+      this.props.router.push('/user/[username]', `/user/${username}`);
+      this.context.callback({ user: this.state.user });
+    }
 
     this.setState({ loading: false });
   };
