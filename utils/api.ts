@@ -342,7 +342,10 @@ export const userSet = async (
   username: string,
   email: string,
   avatar: string,
-  ns: string,
+  ns_id: string,
+  ns_name: string,
+  ac_name: string,
+  ac_island: string,
   qq: string,
   password: string,
   callback?: RequestCallback<Blotter.APIResponse>,
@@ -350,7 +353,7 @@ export const userSet = async (
   return await request(
     'get',
     `/api/user/set`,
-    { username, email, avatar, ns, qq, password },
+    { username, email, avatar, ns_id, ns_name, ac_name, ac_island, qq, password },
     callback,
   );
 };

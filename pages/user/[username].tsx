@@ -57,8 +57,18 @@ class User extends React.Component<UserProps, UserState> {
   update = async () => {
     this.setState({ loading: true });
 
-    const { username, email, ns, qq, avatar } = this.state.user;
-    const r = await userSet(username, email, avatar, ns, qq, this.state.password);
+    const { username, email, ns_id, ns_name, ac_name, ac_island, qq, avatar } = this.state.user;
+    const r = await userSet(
+      username,
+      email,
+      avatar,
+      ns_id,
+      ns_name,
+      ac_name,
+      ac_island,
+      qq,
+      this.state.password,
+    );
     ShowNotification(r);
 
     this.setState({ loading: false });
@@ -70,8 +80,11 @@ class User extends React.Component<UserProps, UserState> {
       { key: 'avatar', name: '头像', self: true },
       { key: 'username', name: '用户名', self: false },
       { key: 'email', name: '邮箱', self: false },
-      { key: 'qq', name: 'QQ 号', self: false },
-      { key: 'ns', name: 'NS 账户', self: false },
+      { key: 'qq', name: 'QQ 号', self: true },
+      { key: 'ns_id', name: 'NS ID', self: false },
+      { key: 'ns_name', name: 'NS 名称', self: false },
+      { key: 'ac_name', name: '动森名称', self: false },
+      { key: 'ac_island', name: '动森岛名', self: false },
     ];
     const fields = self ? allFields : allFields.filter((item) => !item.self);
 

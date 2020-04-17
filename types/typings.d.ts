@@ -15,8 +15,13 @@ declare namespace Blotter {
     avatar: string;
     token: string;
     email: string;
-    qq: string;
-    ns: string;
+      qq: string;
+      
+    ns_id: string;
+    ns_name: string;
+    ac_name: string;
+    ac_island: string;
+
     permission: number;
     qq_union_id: string;
   }
