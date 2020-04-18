@@ -27,7 +27,9 @@ export const defaultContext: GlobalProps = {
     ac_name: '',
     ac_island: '',
     permission: 0,
-    qq_union_id: '',
+    existed: false,
+    qq_connected: false,
+    self: false,
   },
 };
 

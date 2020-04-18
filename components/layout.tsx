@@ -309,7 +309,7 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
             {(context) => (
               <Fragment>
                 <Row justify="center" className={styles.avatar}>
-                  {context.user.token == '' ? (
+                  {!context.user.existed ? (
                     <a onClick={this.onLoginClick}>
                       <Avatar icon={<UserOutlined />} />
                     </a>

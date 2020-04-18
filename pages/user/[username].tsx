@@ -12,8 +12,11 @@ import { Context, defaultContext } from '@/utils/global';
 import { info, userSet, avatar } from '@/utils/api';
 import ShowNotification from '@/utils/notification';
 import If from '@/components/if';
+import { NextPageContext } from 'next';
 
-interface UserProps extends ComponentProps<'base'>, WithRouterProps {}
+interface UserProps extends ComponentProps<'base'>, WithRouterProps {
+  user: Blotter.User;
+}
 
 interface UserState {
   user: Blotter.User;
@@ -27,14 +30,19 @@ class User extends React.Component<UserProps, UserState> {
   static contextType = Context;
   context!: React.ContextType<typeof Context>;
 
-  constructor(props: any) {
+  constructor(props: UserProps) {
     super(props);
     this.state = {
-      user: defaultContext.user,
+      user: this.props.user,
       loading: false,
       loadingAvatar: false,
       password: '',
     };
+  }
+
+  static async getInitialProps(args: NextPageContext) {
+    const user = await info(args.query.username as string);
+    return { user };
   }
 
   componentDidMount() {
@@ -78,7 +86,6 @@ class User extends React.Component<UserProps, UserState> {
   };
 
   render() {
-    const self = this.context.user.id == this.state.user.id;
     const allFields: { key: TypeUInT<Blotter.User, string>; name: string; self: boolean }[] = [
       { key: 'avatar', name: '头像', self: true },
       { key: 'username', name: '用户名', self: false },
@@ -89,7 +96,7 @@ class User extends React.Component<UserProps, UserState> {
       { key: 'ac_name', name: '动森名称', self: false },
       { key: 'ac_island', name: '动森岛名', self: false },
     ];
-    const fields = self ? allFields : allFields.filter((item) => !item.self);
+    const fields = this.state.user.self ? allFields : allFields.filter((item) => !item.self);
 
     return (
       <Container>
@@ -104,7 +111,7 @@ class User extends React.Component<UserProps, UserState> {
           <p style={{ textAlign: 'center' }}>
             <Avatar size={128} src={this.state.user.avatar} />
           </p>
-          <If condition={self}>
+          <If condition={this.state.user.self}>
             <Row justify="center" gutter={20}>
               <Col>
                 <Button
@@ -124,7 +131,7 @@ class User extends React.Component<UserProps, UserState> {
               </Col>
               <Col>
                 <a href="/api/user/qq_avatar" target="_blank">
-                  <Button disabled={this.state.user.qq_union_id === ''}>更新 QQ 头像</Button>
+                  <Button disabled={this.state.user.qq_connected}>更新 QQ 头像</Button>
                 </a>
               </Col>
               <Col>
@@ -143,7 +150,11 @@ class User extends React.Component<UserProps, UserState> {
                   <Col span={20}>
                     <Typography.Text
                       copyable
-                      editable={self ? { onChange: (v) => this.onChange(item.key, v) } : false}
+                      editable={
+                        this.state.user.self
+                          ? { onChange: (v) => this.onChange(item.key, v) }
+                          : false
+                      }
                     >
                       {this.state.user[item.key]}
                     </Typography.Text>
@@ -152,7 +163,7 @@ class User extends React.Component<UserProps, UserState> {
               </List.Item>
             )}
           />
-          <If condition={self}>
+          <If condition={this.state.user.self}>
             <Space direction="vertical" style={{ width: '100%' }}>
               <Input
                 type="password"
@@ -162,7 +173,7 @@ class User extends React.Component<UserProps, UserState> {
               />
               <Row justify="space-between">
                 <Col>
-                  {this.state.user.qq_union_id === '' ? (
+                  {!this.state.user.qq_connected ? (
                     <a href="/api/user/jump_to_qq?state=connect" target="_blank">
                       <Button>绑定 QQ 登录</Button>
                     </a>
