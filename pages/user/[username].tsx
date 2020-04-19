@@ -131,7 +131,7 @@ class User extends React.Component<UserProps, UserState> {
               </Col>
               <Col>
                 <a href="/api/user/qq_avatar" target="_blank">
-                  <Button disabled={this.state.user.qq_connected}>更新 QQ 头像</Button>
+                  <Button disabled={!this.state.user.qq_connected}>更新 QQ 头像</Button>
                 </a>
               </Col>
               <Col>
