@@ -54,14 +54,6 @@ class User extends React.Component<UserProps, UserState> {
     this.setState({ user });
   };
 
-  onChange = (key: TypeUInT<Blotter.User, string>, value: string) => {
-    this.setState((state) => {
-      var { user } = state;
-      user[key] = value;
-      return { user };
-    });
-  };
-
   update = async () => {
     this.setState({ loading: true });
 
@@ -86,7 +78,12 @@ class User extends React.Component<UserProps, UserState> {
   };
 
   render() {
-    const allFields: { key: TypeUInT<Blotter.User, string>; name: string; self: boolean }[] = [
+    const allFields: {
+      key: TypeUInT<Blotter.User, string>;
+      name: string;
+      self: boolean;
+      suffix?: string;
+    }[] = [
       { key: 'avatar', name: '头像', self: true },
       { key: 'username', name: '用户名', self: false },
       { key: 'email', name: '邮箱', self: false },
@@ -94,7 +91,7 @@ class User extends React.Component<UserProps, UserState> {
       { key: 'ns_id', name: 'NS ID', self: false },
       { key: 'ns_name', name: 'NS 名称', self: false },
       { key: 'ac_name', name: '动森名称', self: false },
-      { key: 'ac_island', name: '动森岛名', self: false },
+      { key: 'ac_island', name: '动森岛名', self: false, suffix: '岛' },
     ];
     const fields = this.state.user.self ? allFields : allFields.filter((item) => !item.self);
 
@@ -148,16 +145,24 @@ class User extends React.Component<UserProps, UserState> {
                     <Typography.Text strong>{item.name}</Typography.Text>
                   </Col>
                   <Col span={20}>
-                    <Typography.Text
-                      copyable
-                      editable={
-                        this.state.user.self
-                          ? { onChange: (v) => this.onChange(item.key, v) }
-                          : false
-                      }
-                    >
-                      {this.state.user[item.key]}
-                    </Typography.Text>
+                    {this.state.user.self ? (
+                      <Input
+                        addonAfter={item.suffix}
+                        value={this.state.user[item.key]}
+                        onChange={(e) => {
+                          const value = e.target.value;
+                          this.setState((state) => {
+                            var { user } = state;
+                            user[item.key] = value;
+                            return { user };
+                          });
+                        }}
+                      />
+                    ) : (
+                      <Typography.Text copyable>
+                        {this.state.user[item.key]} {item.suffix}
+                      </Typography.Text>
+                    )}
                   </Col>
                 </Row>
               </List.Item>
