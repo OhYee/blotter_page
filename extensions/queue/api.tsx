@@ -1,6 +1,6 @@
 import { RequestCallback } from '@/utils/api';
 import { request } from '@/utils/request';
-import { Queue } from '@/pages/apps/queue/types';
+import { Queue } from '@/extensions/queue/types.d';
 
 export const getAll = async (
   all: boolean,

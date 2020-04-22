@@ -26,8 +26,8 @@ import styles from './apps.less';
 import Container from '@/components/container';
 import { Context } from '@/utils/global';
 
-import { Queue } from '@/pages/apps/queue/types';
-import { getAll, create } from '@/pages/apps/queue/api';
+import { Queue } from '@/extensions/queue/types';
+import { getAll, create } from '@/extensions/queue/api';
 
 import moment from 'moment';
 import { FormInstance } from 'antd/lib/form';
