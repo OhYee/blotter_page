@@ -1,7 +1,7 @@
 import { request } from '@/utils/request';
 import { GithubUser, GithubRepo } from '@/types/github';
 
-type RequestCallback<T> = (data: T) => void;
+export declare type RequestCallback<T> = (data: T) => void;
 type PostCardWithTotal = {
   total: number;
   posts: Blotter.PostCard[];
