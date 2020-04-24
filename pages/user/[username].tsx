@@ -82,13 +82,14 @@ class User extends React.Component<UserProps, UserState> {
       key: TypeUInT<Blotter.User, string>;
       name: string;
       self: boolean;
+      prefix?: string;
       suffix?: string;
     }[] = [
       { key: 'avatar', name: '头像', self: true },
       { key: 'username', name: '用户名', self: false },
       { key: 'email', name: '邮箱', self: false },
       { key: 'qq', name: 'QQ 号', self: true },
-      { key: 'ns_id', name: 'NS ID', self: false },
+      { key: 'ns_id', name: 'NS ID', self: false, prefix: 'SW' },
       { key: 'ns_name', name: 'NS 名称', self: false },
       { key: 'ac_name', name: '动森名称', self: false },
       { key: 'ac_island', name: '动森岛名', self: false, suffix: '岛' },
@@ -147,6 +148,7 @@ class User extends React.Component<UserProps, UserState> {
                   <Col span={20}>
                     {this.state.user.self ? (
                       <Input
+                        addonBefore={item.prefix}
                         addonAfter={item.suffix}
                         value={this.state.user[item.key]}
                         onChange={(e) => {
@@ -159,9 +161,9 @@ class User extends React.Component<UserProps, UserState> {
                         }}
                       />
                     ) : (
-                      <Typography.Text copyable>
-                        {this.state.user[item.key]} {item.suffix}
-                      </Typography.Text>
+                      <p>
+                        {item.prefix} {this.state.user[item.key]} {item.suffix}
+                      </p>
                     )}
                   </Col>
                 </Row>
