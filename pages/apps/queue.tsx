@@ -1,9 +1,8 @@
-import React, { ComponentProps } from 'react';
+import React, { ComponentProps, Fragment } from 'react';
 import Head from 'next/head';
 
 import {
   Card,
-  List,
   Button,
   PageHeader,
   Table,
@@ -20,9 +19,8 @@ import {
 } from 'antd';
 import Link from 'next/link';
 import { PaginationConfig } from 'antd/lib/pagination';
-import { SorterResult, TableCurrentDataSource, ColumnsType } from 'antd/lib/table/interface';
+import { ColumnsType } from 'antd/lib/table/interface';
 
-import styles from './apps.less';
 import Container from '@/components/container';
 import { Context } from '@/utils/global';
 
@@ -33,27 +31,6 @@ import moment from 'moment';
 import { FormInstance } from 'antd/lib/form';
 import TextArea from 'antd/lib/input/TextArea';
 import ShowNotification from '@/utils/notification';
-
-const forms = [
-  {
-    key: 'max',
-    name: '同时登岛人数',
-    children: <InputNumber max={7} min={1} placeholder="不包括自己" />,
-    initial: 1,
-  },
-  {
-    key: 'password',
-    name: '登岛密码',
-    children: <Input placeholder="登岛密码(无密码留空)" />,
-    initial: '',
-  },
-  {
-    key: 'description',
-    name: '描述',
-    children: <TextArea />,
-    initial: '本岛大头菜 xx 元（非时间旅行），请秩序上岛，不收手续费',
-  },
-];
 
 interface QueuesProps extends ComponentProps<'base'> {}
 
@@ -104,11 +81,53 @@ class Queues extends React.Component<QueuesProps, QueuesState> {
     this.setState({ loading: true });
     const { max, password, description } = this.formRef.current.getFieldsValue(true);
     const r = await create(max, password, description);
-    ShowNotification(r);
+    if (ShowNotification(r)) {
+      this.getData();
+    }
     this.setState({ loading: false });
   };
 
+  renderHeader = () => {
+    return (
+      <PageHeader title="动森候机大厅" subTitle="优秀的上岛排队工具">
+        <Typography.Paragraph strong>
+          建立候机队伍请严格遵守法律法规！所有违规内容将被提交至相关部门。同时如果您发现有违规内容被发布，也请通过邮箱、
+          QQ 等方式联系我
+        </Typography.Paragraph>
+        <Typography.Paragraph>
+          要创建建立自己的候机厅供他人登岛，请先注册账号，并完善您的 Nintendo Switch{' '}
+          以及动物森友会部分设置
+        </Typography.Paragraph>
+        <Typography.Paragraph>
+          如果想要获得 QQ 提醒、<Typography.Text delete>微信提醒</Typography.Text>、
+          <Typography.Text delete>邮箱提醒</Typography.Text>，请绑定相关账号。 其中 QQ
+          一键登录仅用于快速登录，仍然需要输入您的 QQ 号
+        </Typography.Paragraph>
+      </PageHeader>
+    );
+  };
+
   renderForm = () => {
+    const forms = [
+      {
+        key: 'max',
+        name: '同时登岛人数',
+        children: <InputNumber max={7} min={1} placeholder="不包括自己" />,
+        initial: 1,
+      },
+      {
+        key: 'password',
+        name: '登岛密码',
+        children: <Input placeholder="登岛密码(无密码留空)" />,
+        initial: '',
+      },
+      {
+        key: 'description',
+        name: '描述',
+        children: <TextArea />,
+        initial: '本岛大头菜 xx 元（非时间旅行），请秩序上岛，不收手续费',
+      },
+    ];
     const initialValues = Object.assign({}, ...forms.map((item) => ({ [item.key]: item.initial })));
 
     var help = '';
@@ -157,16 +176,17 @@ class Queues extends React.Component<QueuesProps, QueuesState> {
     );
   };
 
-  render() {
+  renderTable = () => {
     const columns: ColumnsType<Queue> = [
       {
         title: '岛主信息',
         key: 'username',
         width: 200,
+        ellipsis: true,
         render: (_, record) => (
-          <Link href="/user/[username]" as={`/user/${record.leader.username}`}>
+          <Link href="/apps/queue/[id]" as={`/apps/queue/${record.id}`}>
             <a target="_blank">
-              {record.leader.ac_island} 岛 - {record.leader.ac_name}
+              {record.leader.ac_island}岛 - {record.leader.ac_name}
             </a>
           </Link>
         ),
@@ -178,15 +198,17 @@ class Queues extends React.Component<QueuesProps, QueuesState> {
         ellipsis: true,
       },
       {
-        title: '最大上岛人数',
+        title: '同时人数',
         key: 'max',
         dataIndex: 'max',
         width: 150,
+        ellipsis: true,
       },
       {
         title: '排队人数',
         key: 'queue',
-        width: 100,
+        width: 150,
+        ellipsis: true,
         render: (_, record) => (
           <Statistic
             value={record.queue.filter((item) => item.out_time == 0).length}
@@ -197,7 +219,8 @@ class Queues extends React.Component<QueuesProps, QueuesState> {
       {
         title: '开始时间',
         key: 'create_time',
-        width: 100,
+        width: 150,
+        ellipsis: true,
         render: (_, record) => {
           const time = moment(record.create_time, 'X');
           return (
@@ -208,9 +231,10 @@ class Queues extends React.Component<QueuesProps, QueuesState> {
         },
       },
       {
-        title: '状态/结束时间',
+        title: '状态',
         key: 'finish_time',
         width: 150,
+        ellipsis: true,
         render: (_, record) => {
           const time = moment(record.create_time, 'X');
           return record.finish_time == 0 ? (
@@ -223,60 +247,50 @@ class Queues extends React.Component<QueuesProps, QueuesState> {
         },
       },
     ];
+
+    return (
+      <Fragment>
+        <Row justify="end" gutter={[20, 20]}>
+          <Col>
+            <Switch
+              checkedChildren="显示所有"
+              unCheckedChildren="显示进行中"
+              checked={this.state.all}
+              onChange={(all) => this.setState({ all }, this.getData)}
+            />
+          </Col>
+        </Row>
+        <Table<Queue>
+          rowKey={(record) => record.id}
+          dataSource={this.state.queues}
+          scroll={{ x: 'auto' }}
+          onChange={this.onPageChange}
+          pagination={{
+            current: this.state.page,
+            total: this.state.total,
+            pageSize: this.state.size,
+            showSizeChanger: true,
+          }}
+          columns={columns}
+        />
+      </Fragment>
+    );
+  };
+
+  render() {
     return (
       <Container>
-        <Space direction="vertical">
-          <Card>
-            <Context.Consumer>
-              {(context) => (
-                <Head>
-                  <title>{`动森候机大厅|${context.blog_name}`}</title>
-                </Head>
-              )}
-            </Context.Consumer>
-            <PageHeader title="动森候机大厅" subTitle="优秀的上岛排队工具">
-              <Typography.Paragraph strong>
-                建立候机队伍请严格遵守法律法规！所有违规内容将被提交至相关部门。同时如果您发现有违规内容被发布，也请通过邮箱、
-                QQ 等方式联系我
-              </Typography.Paragraph>
-              <Typography.Paragraph>
-                要创建建立自己的候机厅供他人登岛，请先注册账号，并完善您的Nintendo
-                Switch以及动物森友会部分设置
-              </Typography.Paragraph>
-              <Typography.Paragraph>
-                如果想要获得 QQ 提醒、<Typography.Text delete>微信提醒</Typography.Text>、
-                <Typography.Text delete>邮箱提醒</Typography.Text>，请绑定相关账号。 其中 QQ
-                一键登录仅用于快速登录，仍然需要输入您的 QQ 号
-              </Typography.Paragraph>
-            </PageHeader>
-          </Card>
-
+        <Context.Consumer>
+          {(context) => (
+            <Head>
+              <title>{`动森候机大厅|${context.blog_name}`}</title>
+            </Head>
+          )}
+        </Context.Consumer>
+        <Space direction="vertical" style={{ width: '100%' }}>
+          <Card>{this.renderHeader()}</Card>
           <Card>{this.renderForm()}</Card>
-          <Card>
-            <Row justify="end" gutter={[20, 20]}>
-              <Col>
-                <Switch
-                  checkedChildren="显示所有"
-                  unCheckedChildren="显示进行中"
-                  checked={this.state.all}
-                  onChange={(all) => this.setState({ all }, this.getData)}
-                />
-              </Col>
-            </Row>
-            <Table<Queue>
-              rowKey={(record) => record.id}
-              dataSource={this.state.queues}
-              scroll={{ x: 'auto' }}
-              onChange={this.onPageChange}
-              pagination={{
-                current: this.state.page,
-                total: this.state.total,
-                pageSize: this.state.size,
-                showSizeChanger: true,
-              }}
-              columns={columns}
-            />
-          </Card>
+          <Card>{this.renderTable()}</Card>
         </Space>
       </Container>
     );
