@@ -16,6 +16,10 @@ export const getAll = async (
   );
 };
 
+export const get = async (id: string, callback?: RequestCallback<{ queue: Queue }>) => {
+  return await request('get', `/api/extensions/queue/get`, { id }, callback);
+};
+
 export const create = async (
   max: number,
   password: string,
@@ -28,4 +32,27 @@ export const create = async (
     { max, password, description },
     callback,
   );
+};
+
+export const update = async (
+  id: string,
+  max: number,
+  password: string,
+  description: string,
+  callback?: RequestCallback<Blotter.APIResponse>,
+) => {
+  return await request(
+    'get',
+    `/api/extensions/queue/update`,
+    { id, max, password, description },
+    callback,
+  );
+};
+
+export const finish = async (id: string, callback?: RequestCallback<Blotter.APIResponse>) => {
+  return await request('get', `/api/extensions/queue/finish`, { id }, callback);
+};
+
+export const insert = async (id: string, callback?: RequestCallback<Blotter.APIResponse>) => {
+  return await request('get', `/api/extensions/queue/insert`, { id }, callback);
 };
