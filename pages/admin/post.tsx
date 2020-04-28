@@ -3,7 +3,6 @@ import React, { ComponentProps, DOMAttributes } from 'react';
 import Head from 'next/head';
 import Router, { withRouter } from 'next/router';
 import { WithRouterProps } from 'next/dist/client/with-router';
-
 import {
   Button,
   Card,
@@ -22,6 +21,7 @@ import { FormInstance } from 'antd/lib/form';
 
 import moment from 'moment';
 import MediaQuery from 'react-responsive';
+import { ControlledEditor } from '@monaco-editor/react/lib/';
 
 import Container from '@/components/container';
 import TagSearch from '@/components/tag_search';
@@ -34,6 +34,26 @@ import styles from '@/pages/post/post.less';
 
 import { Context } from '@/utils/global';
 import ShowNotification from '@/utils/notification';
+
+function Editor(props) {
+  const { onChange, getRef, ...restProps } = props;
+  const handleEditorChange = (ev, value) => {
+    return onChange(value);
+  };
+
+  return (
+    <div
+      style={{ display: 'flex', width: '100%', height: 'calc(100vh - 20px)', overflow: 'hidden' }}
+    >
+      <ControlledEditor
+        onChange={handleEditorChange}
+        {...restProps}
+        styles={{ flex: '1 1 auto' }}
+        editorDidMount={(_, editor) => getRef(editor)}
+      />
+    </div>
+  );
+}
 
 interface PostEditProps extends ComponentProps<'base'>, WithRouterProps {}
 
@@ -53,6 +73,7 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
   formRef = React.createRef<FormInstance>();
   previewRef = React.createRef<Card & HTMLDivElement>();
   now = moment(new Date());
+  editor: any;
 
   constructor(props: any) {
     super(props);
@@ -108,9 +129,9 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
     );
   };
 
-  onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  onChange = (value: string) => {
     if (this.state.preview) {
-      this.renderMarkdown(e.target.value);
+      this.renderMarkdown(value);
     }
   };
 
@@ -134,13 +155,18 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
     if (!this.state.preview) {
       this.renderMarkdown(this.formRef.current.getFieldValue('raw'));
     }
-    this.setState(state => ({
-      preview: !state.preview,
-    }));
+    this.setState(
+      (state) => ({
+        preview: !state.preview,
+      }),
+      () => {
+        if (!!this.editor) this.editor.layout();
+      },
+    );
   };
 
   tagOnAdd = (tag: Blotter.Tag) => {
-    this.setState(state => {
+    this.setState((state) => {
       var tags = state.tags;
       tags.push(tag);
       return { tags };
@@ -148,8 +174,8 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
   };
 
   tagOnDelete = (tag: Blotter.Tag) => {
-    this.setState(state => {
-      var tags = state.tags.filter(_tag => _tag.short != tag.short);
+    this.setState((state) => {
+      var tags = state.tags.filter((_tag) => _tag.short != tag.short);
       return { tags };
     });
   };
@@ -158,11 +184,9 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
     return this.state.bigScreen && this.state.preview;
   };
 
-  syncScroll = (e: React.UIEvent<HTMLTextAreaElement>) => {
+  syncScroll = (top: number, height: number) => {
     if (this.isSidePreview()) {
-      this.previewRef.current.scrollTop =
-        (e.currentTarget.scrollTop / e.currentTarget.scrollHeight) *
-        this.previewRef.current.scrollHeight;
+      this.previewRef.current.scrollTop = (top / height) * this.previewRef.current.scrollHeight;
     }
   };
   submit = async () => {
@@ -179,9 +203,10 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
       'published',
       'raw',
     ]);
-    obj.tags = this.state.tags.map(tag => tag.id);
+    obj.tags = this.state.tags.map((tag) => tag.id);
     obj.publish_time = obj.publish_time.unix();
     obj.edit_time = obj.edit_time.unix();
+    // obj.raw = this.editor.getValue();
     var r = await postEdit(obj as Blotter.PostAll);
     ShowNotification(r);
     this.setState({ submitDisabled: false });
@@ -192,14 +217,34 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
   renderEditor = () => {
     return (
       <div id="editor">
-        <Form.Item name="raw">
-          <Input.TextArea
+        <Context.Consumer>
+          {(context) => (
+            <Form.Item name="raw">
+              <Editor
+                language="markdown"
+                theme={context.theme == 'default' ? 'light' : 'dark'}
+                getRef={(ref) => {
+                  this.editor = ref;
+                  ref.onDidScrollChange((e) => {
+                    this.syncScroll(e.scrollTop, e.scrollHeight);
+                  });
+                }}
+                options={{
+                  //   automaticLayout: true,
+                  fontSize: 20,
+                  wordWrap: 'on',
+                }}
+                onChange={this.onChange}
+              />
+              {/* <Input.TextArea
             spellCheck="false"
             onChange={this.onChange}
             style={{ lineHeight: '2em', fontSize: '1.2em', height: 'calc(100vh - 20px)' }}
-            onScroll={this.syncScroll}
-          ></Input.TextArea>
-        </Form.Item>
+             ></Input.TextArea> 
+                onScroll={this.syncScroll}*/}
+            </Form.Item>
+          )}
+        </Context.Consumer>
       </div>
     );
   };
@@ -223,7 +268,7 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
       <Row gutter={15}>
         <Col lg={24}>
           <Form.Item name="id">
-            <Input disabled placeholder="文章ID" addonBefore="ID"></Input>
+            <Input disabled placeholder="文章ID" addonBefore="ID" />
           </Form.Item>
         </Col>
         <Col lg={md ? 12 : 6} md={12}>
@@ -231,7 +276,7 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
             name="url"
             rules={[{ required: true, message: '文章必须有链接', whitespace: true }]}
           >
-            <Input placeholder="文章链接" addonBefore="/post/"></Input>
+            <Input placeholder="文章链接" addonBefore="/post/" />
           </Form.Item>
         </Col>
 
@@ -263,7 +308,7 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
           <Form.Item name="head_image">
             <Input
               placeholder="头图"
-              onChange={e => {
+              onChange={(e) => {
                 this.setState({ headImage: e.currentTarget.value });
               }}
             ></Input>
@@ -292,13 +337,13 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
           </Form.Item>
         </Col>
 
-        <Col lg={24}>
+        <Col span={24}>
           <Form.Item>
             <TagSearch onAdd={this.tagOnAdd} onDelete={this.tagOnDelete} tags={this.state.tags} />
           </Form.Item>
         </Col>
 
-        <Col lg={24}>
+        <Col span={24}>
           <Form.Item name="abstract">
             <Input.TextArea
               autoSize={{ minRows: 5 }}
@@ -331,7 +376,7 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
     return (
       <Container xxl={20} xl={20} lg={20} md={24} sm={24} xs={24}>
         <Context.Consumer>
-          {context => (
+          {(context) => (
             <Head>
               <title>{`文章编辑|后台|${context.blog_name}`}</title>
             </Head>
