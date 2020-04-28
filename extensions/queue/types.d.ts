@@ -11,8 +11,9 @@ export declare interface Queue {
 
 export declare interface Member {
   id: string;
+  queue: string;
   user: Blotter.User;
   in_time: number;
+  land_time: number;
   out_time: number;
-  status: number;
 }
