@@ -22,6 +22,8 @@ import {
   Modal,
   Popconfirm,
   Alert,
+  Steps,
+  Popover,
 } from 'antd';
 import Link from 'next/link';
 import { PaginationConfig } from 'antd/lib/pagination';
@@ -31,12 +33,12 @@ import Container from '@/components/container';
 import { Context, defaultContext } from '@/utils/global';
 
 import { Queue, Member } from '@/extensions/queue/types';
-import { get, finish, update, insert } from '@/extensions/queue/api';
+import { get, finish, update, insert, land, out } from '@/extensions/queue/api';
 
 import moment from 'moment';
 import { FormInstance } from 'antd/lib/form';
 import TextArea from 'antd/lib/input/TextArea';
-import ShowNotification from '@/utils/notification';
+import ShowNotification, { H5Notification } from '@/utils/notification';
 import { NextPageContext } from 'next';
 import { withRouter } from 'next/router';
 import { WithRouterProps } from 'next/dist/client/with-router';
@@ -61,7 +63,7 @@ interface QueueDetailState {
 class QueueDetail extends React.Component<QueueDetailProps, QueueDetailState> {
   static contextType = Context;
   context!: React.ContextType<typeof Context>;
-
+  ws: WebSocket;
   formRef = React.createRef<FormInstance>();
 
   constructor(props: any) {
@@ -95,7 +97,20 @@ class QueueDetail extends React.Component<QueueDetailProps, QueueDetailState> {
 
   componentDidMount() {
     this.getData();
+    this.ws = new WebSocket('ws://127.0.0.1/api/notification/ws');
+    this.ws.onmessage = (msg) => {
+      const obj = JSON.parse(msg.data);
+      console.log(obj);
+      if (typeof obj.data === 'object' && typeof obj.data.message === 'string') {
+        H5Notification(obj.data.message);
+        ShowNotification({ success: true, title: '排队通知', content: obj.data.message });
+      }
+    };
   }
+  componentWillUnmount() {
+    this.ws.close();
+  }
+
   getData = () => {
     this.setState({ loading: true });
     get(this.props.router.query.id as string)
@@ -164,23 +179,27 @@ class QueueDetail extends React.Component<QueueDetailProps, QueueDetailState> {
       .then((r) => {
         ShowNotification(r);
         this.getData();
+        H5Notification('入队成功，请密切关注队伍更新状态');
       })
       .finally(() => this.setState({ opLoading: false }));
   };
-  land = () => {
+  land = (memberID: string) => {
     this.setState({ opLoading: true });
-
-    this.setState({ opLoading: false });
+    land(this.props.queue.id, memberID)
+      .then((r) => {
+        ShowNotification(r);
+        this.getData();
+      })
+      .finally(() => this.setState({ opLoading: false }));
   };
-  back = () => {
+  out = (memberID: string) => {
     this.setState({ opLoading: true });
-
-    this.setState({ opLoading: false });
-  };
-  cancel = () => {
-    this.setState({ opLoading: true });
-
-    this.setState({ opLoading: false });
+    out(this.props.queue.id, memberID)
+      .then((r) => {
+        ShowNotification(r);
+        this.getData();
+      })
+      .finally(() => this.setState({ opLoading: false }));
   };
 
   onPageChange = (pagination: PaginationConfig) => {
@@ -236,11 +255,34 @@ class QueueDetail extends React.Component<QueueDetailProps, QueueDetailState> {
             {this.state.queue.leader.ac_island}岛
           </Descriptions.Item>
           <Descriptions.Item label="岛民代表">
-            <Link href="/user/[username]" as={`/user/${this.state.queue.leader.username}`}>
-              <a target="_blank">{this.state.queue.leader.ac_name}</a>
-            </Link>
+            <Popover
+              title="个人信息"
+              content={
+                <Descriptions size="small" column={2} bordered>
+                  <Descriptions.Item label="岛屿名称">
+                    {this.state.queue.leader.ac_island}岛
+                  </Descriptions.Item>
+                  <Descriptions.Item label="岛民代表">
+                    {this.state.queue.leader.ac_name}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="Nintendo Switch ID">
+                    SW-{this.state.queue.leader.ns_id}
+                  </Descriptions.Item>
+                  <Descriptions.Item label="Nintendo Switch 用户名">
+                    {this.state.queue.leader.ns_name}
+                  </Descriptions.Item>
+                </Descriptions>
+              }
+            >
+              <span>
+                <Link href="/user/[username]" as={`/user/${this.state.queue.leader.username}`}>
+                  <a target="_blank">{this.state.queue.leader.ac_name}</a>
+                </Link>
+              </span>
+            </Popover>
           </Descriptions.Item>
           <Descriptions.Item label="最大同时上岛人数限制">{this.state.queue.max}</Descriptions.Item>
+
           <Descriptions.Item label="描述信息">{this.state.queue.description}</Descriptions.Item>
         </Descriptions>
         <If condition={this.context.user.id == this.props.queue.leader.id}>
@@ -268,11 +310,18 @@ class QueueDetail extends React.Component<QueueDetailProps, QueueDetailState> {
   };
 
   renderTable = () => {
-    const columns: ColumnsType<Member> = [
+    type Keys = 'in_time' | 'land_time' | 'out_time';
+    const keys: { key: Keys; name: string; color: string; time: string }[] = [
+      { key: 'in_time', name: '排队中', color: 'gold', time: '入队时间' },
+      { key: 'land_time', name: '已着陆', color: 'green', time: '着陆时间' },
+      { key: 'out_time', name: '已出队', color: 'red', time: '返回时间' },
+    ];
+    var columns: ColumnsType<Member> = [
       {
         title: '玩家信息',
         key: 'username',
         width: 200,
+        ellipsis: true,
         render: (_, record) => (
           <Link href="/user/[username]" as={`/user/${record.user.username}`}>
             <a target="_blank">
@@ -282,9 +331,12 @@ class QueueDetail extends React.Component<QueueDetailProps, QueueDetailState> {
         ),
       },
       {
-        title: '开始时间',
-        key: 'create_time',
-        width: 100,
+        title: '入队时间',
+        key: 'in_time',
+        sorter: (a, b) => a.in_time - b.in_time,
+        defaultSortOrder: 'ascend',
+        width: 200,
+        ellipsis: true,
         render: (_, record) => {
           const time = moment(record.in_time, 'X');
           return (
@@ -297,56 +349,101 @@ class QueueDetail extends React.Component<QueueDetailProps, QueueDetailState> {
       {
         title: '状态',
         key: 'status',
-        width: 100,
-        filters: [
-          { text: '排队中', value: 0 },
-          { text: '已上岛', value: 1 },
-          { text: '已返回', value: 2 },
-          { text: '已取消', value: 3 },
-        ],
-        defaultFilteredValue: ['0', '1'],
-        onFilter: (value, record) => value === record.status,
-        render: (_, record) => {
-          switch (record.status) {
-            case 0:
-              return <Tag color="gold">排队中</Tag>;
-            case 1:
-              return <Tag color="green">已上岛</Tag>;
-            case 2:
-              return <Tag color="red">已返回</Tag>;
-            case 3:
-              return <Tag>已取消</Tag>;
+        width: 200,
+        ellipsis: true,
+        filters: keys.map((item) => ({ text: item.name, value: item.key })),
+        defaultFilteredValue: ['in_time', 'land_time'],
+        onFilter: (value: Keys, record) => {
+          switch (value) {
+            case 'in_time':
+              return record.in_time != 0 && record.land_time == 0 && record.out_time == 0;
+            case 'land_time':
+              return record.in_time != 0 && record.land_time != 0 && record.out_time == 0;
+            case 'out_time':
+              return record.out_time != 0;
+            default:
+              return false;
           }
-          return <Tag>未知状态</Tag>;
+        },
+        render: (_, record) => {
+          var res = <Tag>未知状态</Tag>;
+          for (var i = 0; i < keys.length; i++) {
+            if (record[keys[i].key] !== 0) {
+              res = <Tag color={keys[i].color}>{keys[i].name}</Tag>;
+            }
+          }
+          return res;
         },
       },
     ];
-    const doingQueue = this.state.queue.queue.filter((item) => item.out_time == 0);
-    var status = 2;
+    if (
+      (this.context.user.permission & 1) === 1 ||
+      this.context.user.id === this.props.queue.leader.id
+    ) {
+      columns.push({
+        title: '操作',
+        key: 'op',
+        ellipsis: true,
+        render: (_, record) => {
+          return (
+            <Popconfirm title="确认强制出队？" onConfirm={() => this.out(record.id)}>
+              <Button type="danger">强制出队</Button>
+            </Popconfirm>
+          );
+        },
+      });
+    }
+    const doingQueue = this.state.queue.queue.filter((item) => item.out_time === 0);
+    const waitingQueue = this.state.queue.queue.filter(
+      (item) => item.out_time === 0 && item.land_time === 0,
+    );
+
+    var memberID = '';
+    var status = 0;
     for (var i = 0; i < doingQueue.length; i++) {
       if (doingQueue[i].user.id === this.context.user.id) {
-        status = doingQueue[i].status;
+        memberID = doingQueue[i].id;
+        for (var j = 0; j < keys.length; j++) {
+          if (doingQueue[i][keys[j].key] === 0) {
+            status = j;
+            break;
+          }
+        }
         break;
       }
     }
 
     return (
       <Space direction="vertical" style={{ width: '100%' }} size={20}>
-        {doingQueue.length > 0 ? (
+        {waitingQueue.length > 0 ? (
           <Alert
             showIcon
             message={
               <span>
                 请{' '}
                 <Typography.Text strong>
-                  {doingQueue[0].user.ac_island}岛的{doingQueue[0].user.ac_name}
+                  {waitingQueue[0].user.ac_island}岛的{waitingQueue[0].user.ac_name}
                 </Typography.Text>{' '}
                 准备发射！已服务{' '}
                 <Typography.Text strong>
-                  {this.state.queue.queue.length - doingQueue.length}
+                  {this.state.queue.queue.length - waitingQueue.length}
                 </Typography.Text>{' '}
-                名乘客，还有 <Typography.Text strong>{doingQueue.length}</Typography.Text>{' '}
+                名乘客，还有 <Typography.Text strong>{waitingQueue.length}</Typography.Text>{' '}
                 名乘客在等待
+              </span>
+            }
+            type="info"
+          />
+        ) : doingQueue.length > 0 ? (
+          <Alert
+            showIcon
+            message={
+              <span>
+                <Typography.Text strong>
+                  {doingQueue[0].user.ac_island}岛的{doingQueue[0].user.ac_name}
+                </Typography.Text>{' '}
+                正在操作！已服务{' '}
+                <Typography.Text strong>{this.state.queue.queue.length}</Typography.Text> 名乘客
               </span>
             }
             type="info"
@@ -359,6 +456,32 @@ class QueueDetail extends React.Component<QueueDetailProps, QueueDetailState> {
           />
         )}
 
+        <If
+          condition={
+            this.state.queue.password != '' &&
+            waitingQueue.length > 0 &&
+            waitingQueue[0].user.id == this.context.user.id
+          }
+        >
+          <Alert
+            showIcon
+            message={
+              <span>
+                上岛密码：<Typography.Text strong>{this.state.queue.password}</Typography.Text>
+                ，请尽快上岛！
+              </span>
+            }
+            type="success"
+          />
+        </If>
+
+        <Steps initial={0} current={status} size="small">
+          <Steps.Step title="未排队" />
+          {keys.map((item) => (
+            <Steps.Step key={item.key} title={item.name} />
+          ))}
+        </Steps>
+
         <Row justify="center">
           <Col>
             <Statistic.Countdown
@@ -370,24 +493,36 @@ class QueueDetail extends React.Component<QueueDetailProps, QueueDetailState> {
           </Col>
         </Row>
 
-        <Row justify="center" gutter={20}>
+        <Row justify="center" gutter={[20, 20]}>
           <Col>
-            <Button disabled={!(status >= 2)} loading={this.state.opLoading} onClick={this.insert}>
+            <Button disabled={!(status == 0)} loading={this.state.opLoading} onClick={this.insert}>
               我要排队
             </Button>
           </Col>
           <Col>
-            <Button disabled={!(status == 0)} loading={this.state.opLoading} onClick={this.land}>
+            <Button
+              disabled={!(status == 1)}
+              loading={this.state.opLoading}
+              onClick={() => this.land(memberID)}
+            >
               我已降落
             </Button>
           </Col>
           <Col>
-            <Button disabled={!(status == 1)} loading={this.state.opLoading} onClick={this.back}>
+            <Button
+              disabled={!(status == 2)}
+              loading={this.state.opLoading}
+              onClick={() => this.out(memberID)}
+            >
               我已返航
             </Button>
           </Col>
           <Col>
-            <Button disabled={!(status <= 1)} loading={this.state.opLoading} onClick={this.cancel}>
+            <Button
+              disabled={!(status == 1)}
+              loading={this.state.opLoading}
+              onClick={() => this.out(memberID)}
+            >
               取消排队
             </Button>
           </Col>
@@ -410,6 +545,27 @@ class QueueDetail extends React.Component<QueueDetailProps, QueueDetailState> {
             showSizeChanger: true,
           }}
           columns={columns}
+          expandable={{
+            expandedRowRender: (record: Member) => (
+              <Descriptions bordered>
+                {keys.map((item) => {
+                  const time = moment(record[item.key], 'X');
+
+                  return (
+                    <Descriptions.Item key={item.name} label={item.time}>
+                      {record[item.key] == 0 ? (
+                        '未到达该状态'
+                      ) : (
+                        <Tooltip title={time.fromNow()}>
+                          <span>{time.format('YYYY-MM-DD HH:mm:ss')}</span>
+                        </Tooltip>
+                      )}
+                    </Descriptions.Item>
+                  );
+                })}
+              </Descriptions>
+            ),
+          }}
         />
       </Space>
     );

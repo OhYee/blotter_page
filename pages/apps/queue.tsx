@@ -134,13 +134,13 @@ class Queues extends React.Component<QueuesProps, QueuesState> {
     if (!this.context.user.existed) {
       help = '请先登录';
     } else if (
-      this.context.user.qq == '' ||
+      this.context.user.qq_connected == false ||
       this.context.user.ns_id == '' ||
       this.context.user.ns_name == '' ||
       this.context.user.ac_name == '' ||
       this.context.user.ac_island == ''
     ) {
-      help = '请完善您的QQ号、NS账号、动森账号';
+      help = '请完善您的QQ号、NS账号、动森账号，并绑定 QQ 互联';
     }
 
     return (

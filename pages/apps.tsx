@@ -28,7 +28,7 @@ class Apps extends React.Component<AppsProps, AppsState> {
         {
           name: '动森候机大厅',
           link: '/apps/queue',
-          img: 'http://www.mumayi.com/images/entrance2.png',
+          img: 'https://static.oyohyee.com/apps/queue.png',
         },
         {
           name: '动森大头菜股价',
