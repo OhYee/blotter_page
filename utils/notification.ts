@@ -8,3 +8,10 @@ export default function ShowNotification(res: Blotter.APIResponse) {
   }
   return res.success;
 }
+
+export function H5Notification(msg: string) {
+  new Notification('通知', {
+    body: msg,
+    icon: '/static/img/logo_196x196.png',
+  });
+}
