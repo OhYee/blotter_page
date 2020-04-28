@@ -1,1 +1,0 @@
-{"ast":null,"code":"import Queue from '@/pages/queue/[id]';\nexport default Queue;","map":null,"metadata":{},"sourceType":"module"}
