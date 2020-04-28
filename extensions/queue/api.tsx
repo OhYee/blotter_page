@@ -56,3 +56,20 @@ export const finish = async (id: string, callback?: RequestCallback<Blotter.APIR
 export const insert = async (id: string, callback?: RequestCallback<Blotter.APIResponse>) => {
   return await request('get', `/api/extensions/queue/insert`, { id }, callback);
 };
+
+export const land = async (
+  queue_id: string,
+  member_id: string,
+  callback?: RequestCallback<Blotter.APIResponse>,
+) => {
+  return await request('get', `/api/extensions/queue/land`, { queue_id, member_id }, callback);
+};
+
+
+export const out = async (
+  queue_id: string,
+  member_id: string,
+  callback?: RequestCallback<Blotter.APIResponse>,
+) => {
+  return await request('get', `/api/extensions/queue/out`, { queue_id, member_id }, callback);
+};
