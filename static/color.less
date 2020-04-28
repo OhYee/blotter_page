@@ -6,15 +6,6 @@
 @highlight-color: color(~`colorPalette('@{red-6}', 5) `);
 @warning-color: #faad14;
 @normal-color: #d9d9d9;
-@primary-1: color(~`colorPalette('@{primary-color}', 1) `);
-@primary-2: color(~`colorPalette('@{primary-color}', 2) `);
-@primary-3: color(~`colorPalette('@{primary-color}', 3) `);
-@primary-4: color(~`colorPalette('@{primary-color}', 4) `);
-@primary-6: #1890ff;
-@primary-7: color(~`colorPalette('@{primary-color}', 7) `);
-@primary-8: color(~`colorPalette('@{primary-color}', 8) `);
-@primary-9: color(~`colorPalette('@{primary-color}', 9) `);
-@primary-10: color(~`colorPalette('@{primary-color}', 10) `);
 @body-background: #fff;
 @component-background: #fff;
 @popover-background: #fff;
@@ -145,7 +136,6 @@
 @table-row-hover-bg: hsv(0, 0, 98%);
 @table-selected-row-bg: color(~`colorPalette('@{primary-color}', 1) `);
 @table-body-selected-sort-bg: color(~`colorPalette('@{primary-color}', 1) `);
-@table-selected-row-hover-bg: color(~`colorPalette('@{primary-color}', 1) `);
 @table-expanded-row-bg: #fbfbfb;
 @table-footer-bg: hsv(0, 0, 98%);
 @table-footer-color: fade(#000, 85%);
@@ -1799,18 +1789,18 @@ this.tinycolor = tinycolor;
 
 // Color used by default to control hover and active backgrounds and for
 // alert info backgrounds.
- // replace tint(@primary-color, 90%)
- // replace tint(@primary-color, 80%)
- // unused
- // unused
+@primary-1: color(~`colorPalette('@{primary-color}', 1) `); // replace tint(@primary-color, 90%)
+@primary-2: color(~`colorPalette('@{primary-color}', 2) `); // replace tint(@primary-color, 80%)
+@primary-3: color(~`colorPalette('@{primary-color}', 3) `); // unused
+@primary-4: color(~`colorPalette('@{primary-color}', 4) `); // unused
 @primary-5: color(
   ~`colorPalette('@{primary-color}', 5) `
 ); // color used to control the text color in many active and hover states, replace tint(@primary-color, 20%)
- // color used to control the text color of active buttons, don't use, use @primary-color
- // replace shade(@primary-color, 5%)
- // unused
- // unused
- // unused
+@primary-6: @primary-color; // color used to control the text color of active buttons, don't use, use @primary-color
+@primary-7: color(~`colorPalette('@{primary-color}', 7) `); // replace shade(@primary-color, 5%)
+@primary-8: color(~`colorPalette('@{primary-color}', 8) `); // unused
+@primary-9: color(~`colorPalette('@{primary-color}', 9) `); // unused
+@primary-10: color(~`colorPalette('@{primary-color}', 10) `); // unused
 
 // Base Scaffolding Variables
 // ---
@@ -2322,7 +2312,7 @@ this.tinycolor = tinycolor;
 @table-selected-row-color: inherit;
 
 
-
+@table-selected-row-hover-bg: darken(@table-selected-row-bg, 2%);
 
 @table-padding-vertical: 16px;
 @table-padding-horizontal: 16px;
@@ -2895,7 +2885,6 @@ html {
   background-color: @alert-text-color;
 }
 .ant-back-top-icon {
-  background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAoCAYAAACWwljjAAAABGdBTUEAALGPC/xhBQAAAbtJREFUWAntmMtKw0AUhhMvS5cuxILgQlRUpIggIoKIIoigG1eC+AA+jo+i6FIXBfeuXIgoeKVeitVWJX5HWhhDksnUpp3FDPyZk3Nm5nycmZKkXhAEOXSA3lG7muTeRzmfy6HneUvIhnYkQK+Q9NhAA0Opg0vBEhjBKHiyb8iGMyQMOYuK41BcBSypAL+MYXSKjtFAW7EAGEO3qN4uMQbbAkXiSfRQJ1H6a+yhlkKRcAoVFYiweYNjtCVQJJpBz2GCiPt7fBOZQpFgDpUikse5HgnkM4Fi4QX0Fpc5wf9EbLqpUCy4jMoJSXWhFwbMNgWKhVbRhy5jirhs9fy/oFhgHVVTJEs7RLZ8sSEoJm6iz7SZDMbJ+/OKERQTttCXQRLToRUmrKWCYuA2+jbN0MB4OQobYShfdTCgn/sL1K36M7TLrN3n+758aPy2rrpR6+/od5E8tf/A1uLS9aId5T7J3CNYihkQ4D9PiMdMC7mp4rjB9kjFjZp8BlnVHJBuO1yFXIV0FdDF3RlyFdJVQBdv5AxVdIsq8apiZ2PyYO1EVykesGfZEESsCkweyR8MUW+V8uJ1gkYipmpdP1pm2aJVPEGzAAAAAElFTkSuQmCC) 100%/100% no-repeat;
 }
 .ant-badge {
   color: @alert-text-color;
@@ -3000,7 +2989,6 @@ html {
   color: @upload-actions-color;
 }
 .ant-btn {
-  background-image: none;
   border: 1px solid transparent;
   box-shadow: 0 2px 0 rgba(0, 0, 0, 0.015);
   border-radius: 2px;
@@ -5260,6 +5248,9 @@ tr > .ant-picker-cell-in-view.ant-picker-cell-range-hover-start:last-child::afte
   background: @transfer-item-hover-bg;
   border-color: @select-border-color;
 }
+.ant-picker.ant-picker-disabled .ant-picker-suffix {
+  color: @steps-nav-arrow-color;
+}
 .ant-picker.ant-picker-borderless {
   background-color: transparent !important;
   border-color: transparent !important;
@@ -5268,7 +5259,6 @@ tr > .ant-picker-cell-in-view.ant-picker-cell-range-hover-start:last-child::afte
 .ant-picker-input > input {
   color: @alert-text-color;
   background-color: @notification-bg;
-  background-image: none;
   border: 1px solid @select-border-color;
   border-radius: 2px;
   background: transparent;
@@ -5319,7 +5309,7 @@ tr > .ant-picker-cell-in-view.ant-picker-cell-range-hover-start:last-child::afte
   background: transparent;
 }
 .ant-picker-suffix {
-  color: @upload-actions-color;
+  color: @steps-nav-arrow-color;
 }
 .ant-picker-clear {
   color: @upload-actions-color;
@@ -5533,6 +5523,10 @@ tr > .ant-picker-cell-in-view.ant-picker-cell-range-hover-start:last-child::afte
 }
 .ant-dropdown-menu-item-group-title {
   color: @upload-actions-color;
+}
+.ant-dropdown-menu-submenu-popup {
+  background: transparent;
+  box-shadow: none;
 }
 .ant-dropdown-menu-item,
 .ant-dropdown-menu-submenu-title {
@@ -5845,7 +5839,6 @@ tr > .ant-picker-cell-in-view.ant-picker-cell-range-hover-start:last-child::afte
 .ant-input-number {
   color: @alert-text-color;
   background-color: @notification-bg;
-  background-image: none;
   border: 1px solid @select-border-color;
   border-radius: 2px;
 }
@@ -5955,7 +5948,6 @@ tr > .ant-picker-cell-in-view.ant-picker-cell-range-hover-start:last-child::afte
 .ant-input-affix-wrapper {
   color: @alert-text-color;
   background-color: @notification-bg;
-  background-image: none;
   border: 1px solid @select-border-color;
   border-radius: 2px;
 }
@@ -6030,7 +6022,6 @@ tr > .ant-picker-cell-in-view.ant-picker-cell-range-hover-start:last-child::afte
 .ant-input {
   color: @alert-text-color;
   background-color: @notification-bg;
-  background-image: none;
   border: 1px solid @select-border-color;
   border-radius: 2px;
 }
@@ -6387,7 +6378,6 @@ tr > .ant-picker-cell-in-view.ant-picker-cell-range-hover-start:last-child::afte
 .ant-mentions {
   color: @alert-text-color;
   background-color: @notification-bg;
-  background-image: none;
   border: 1px solid @select-border-color;
   border-radius: 2px;
 }
@@ -6586,7 +6576,6 @@ tr > .ant-picker-cell-in-view.ant-picker-cell-range-hover-start:last-child::afte
 .ant-menu-submenu-vertical-left > .ant-menu-submenu-title .ant-menu-submenu-arrow::after,
 .ant-menu-submenu-vertical-right > .ant-menu-submenu-title .ant-menu-submenu-arrow::after,
 .ant-menu-submenu-inline > .ant-menu-submenu-title .ant-menu-submenu-arrow::after {
-  background-image: linear-gradient(to right, rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65));
   border-radius: 2px;
 }
 .ant-menu-submenu-vertical > .ant-menu-submenu-title:hover .ant-menu-submenu-arrow::after,
@@ -6817,6 +6806,10 @@ tr > .ant-picker-cell-in-view.ant-picker-cell-range-hover-start:last-child::afte
   border-right: none;
   border-left: 1px solid @process-tail-color;
 }
+.ant-menu-rtl.ant-menu-dark .ant-menu-inline,
+.ant-menu-rtl.ant-menu-dark .ant-menu-vertical {
+  border-left: none;
+}
 .ant-message {
   color: @alert-text-color;
 }
@@ -7038,7 +7031,6 @@ tr > .ant-picker-cell-in-view.ant-picker-cell-range-hover-start:last-child::afte
 .ant-pagination-options-quick-jumper input {
   color: @alert-text-color;
   background-color: @notification-bg;
-  background-image: none;
   border: 1px solid @select-border-color;
   border-radius: 2px;
 }
@@ -7986,9 +7978,10 @@ tr > .ant-picker-cell-in-view.ant-picker-cell-range-hover-start:last-child::afte
 }
 .ant-table-tbody > tr.ant-table-row-selected > td {
   background: color(~`colorPalette("@{timeline-dot-color}", 1)`);
+  border-color: rgba(0, 0, 0, 0.03);
 }
 .ant-table-tbody > tr.ant-table-row-selected:hover > td {
-  background: color(~`colorPalette("@{timeline-dot-color}", 1)`);
+  background: #dcf4ff;
 }
 .ant-table-tbody > tr .ant-table-wrapper:only-child .ant-table td {
   background: transparent;
@@ -8668,6 +8661,9 @@ tr.ant-table-expanded-row:hover > td {
 .ant-select-tree .ant-select-tree-treenode-active .ant-select-tree-node-content-wrapper {
   background: @transfer-item-hover-bg;
 }
+.ant-select-tree .ant-select-tree-switcher-loading-icon {
+  color: @timeline-dot-color;
+}
 .ant-select-tree .ant-select-tree-node-content-wrapper {
   color: inherit;
   background: transparent;
@@ -8808,6 +8804,9 @@ tr.ant-table-expanded-row:hover > td {
 .ant-tree .ant-tree-treenode-active .ant-tree-node-content-wrapper {
   background: @transfer-item-hover-bg;
 }
+.ant-tree .ant-tree-switcher-loading-icon {
+  color: @timeline-dot-color;
+}
 .ant-tree .ant-tree-node-content-wrapper {
   color: inherit;
   background: transparent;
@@ -8932,6 +8931,9 @@ h4.ant-typography,
 .ant-upload.ant-upload-select-picture-card:hover {
   border-color: @timeline-dot-color;
 }
+.ant-upload-disabled.ant-upload.ant-upload-select-picture-card:hover {
+  border-color: @select-border-color;
+}
 .ant-upload.ant-upload-drag {
   background: @collapse-header-bg;
   border: 1px dashed @select-border-color;
@@ -9053,16 +9055,6 @@ h4.ant-typography,
 .ant-switch-inner:hover {
   color: white;
 }
-
-
-
-
-
-
-
-
-
-
 
 
 
