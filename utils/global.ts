@@ -14,6 +14,7 @@ export const defaultContext: GlobalProps = {
   big_screen: false,
   theme: 'default',
   grey: false,
+  root:"",
   user: {
     id: '000000000000000000000000',
     username: '',
@@ -49,5 +50,6 @@ export declare interface GlobalProps {
   big_screen: boolean;
   theme: 'default' | 'dark';
   grey: boolean;
+    root: string;
   user: Blotter.User;
 }

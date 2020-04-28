@@ -97,7 +97,10 @@ class QueueDetail extends React.Component<QueueDetailProps, QueueDetailState> {
 
   componentDidMount() {
     this.getData();
-    this.ws = new WebSocket('ws://127.0.0.1/api/notification/ws');
+    const domain = this.context.root.split('/').filter((item) => item != '');
+    this.ws = new WebSocket(
+      `${domain[0] == 'http' ? 'ws' : 'wss'}://${domain.slice(1).join('/')}/api/notification/ws`,
+    );
     this.ws.onmessage = (msg) => {
       const obj = JSON.parse(msg.data);
       console.log(obj);
