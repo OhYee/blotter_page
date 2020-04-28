@@ -10,8 +10,11 @@ export default function ShowNotification(res: Blotter.APIResponse) {
 }
 
 export function H5Notification(msg: string) {
-  new Notification('通知', {
-    body: msg,
-    icon: '/static/img/logo_196x196.png',
-  });
+  if (typeof document !== 'undefined') {
+    Notification.requestPermission();
+    new Notification('通知', {
+      body: msg,
+      icon: '/static/img/logo_196x196.png',
+    });
+  }
 }
