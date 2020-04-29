@@ -231,7 +231,13 @@ class Queues extends React.Component<QueuesProps, QueuesState> {
         title: '描述',
         key: 'description',
         dataIndex: 'description',
-        ellipsis: true,
+        // width: 300,
+        // ellipsis: true,
+        render: (value) => (
+          <Typography.Text ellipsis={true} style={{ width: 300 }}>
+            {value}
+          </Typography.Text>
+        ),
       },
       {
         title: '同时人数',
