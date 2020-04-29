@@ -20,9 +20,12 @@ import {
 import Link from 'next/link';
 import { PaginationConfig } from 'antd/lib/pagination';
 import { ColumnsType } from 'antd/lib/table/interface';
+import { UserOutlined, SolutionOutlined, CheckOutlined } from '@ant-design/icons';
 
 import Container from '@/components/container';
+import Steps from '@/components/steps';
 import { Context } from '@/utils/global';
+import { LoginModal } from '@/components/login';
 
 import { Queue } from '@/extensions/queue/types';
 import { getAll, create } from '@/extensions/queue/api';
@@ -41,6 +44,7 @@ interface QueuesState {
   all: boolean;
   page: number;
   size: number;
+  loginModal: boolean;
 }
 
 class Queues extends React.Component<QueuesProps, QueuesState> {
@@ -59,6 +63,7 @@ class Queues extends React.Component<QueuesProps, QueuesState> {
       all: false,
       page: 1,
       size: 10,
+      loginModal: false,
     };
   }
 
@@ -130,8 +135,10 @@ class Queues extends React.Component<QueuesProps, QueuesState> {
     ];
     const initialValues = Object.assign({}, ...forms.map((item) => ({ [item.key]: item.initial })));
 
-    var help = '';
+    var status = 2;
+    var help: string = '';
     if (!this.context.user.existed) {
+      status = 0;
       help = '请先登录';
     } else if (
       this.context.user.qq_connected == false ||
@@ -140,39 +147,68 @@ class Queues extends React.Component<QueuesProps, QueuesState> {
       this.context.user.ac_name == '' ||
       this.context.user.ac_island == ''
     ) {
+      status = 1;
       help = '请完善您的QQ号、NS账号、动森账号，并绑定 QQ 互联';
     }
-
     return (
-      <Form
-        ref={this.formRef}
-        initialValues={initialValues}
-        labelCol={{ span: 4 }}
-        wrapperCol={{ span: 20 }}
-      >
-        {forms.map((item) => (
-          <Form.Item key={item.key} name={item.key} label={item.name}>
-            {item.children}
-          </Form.Item>
-        ))}
-        <Form.Item
-          key="submit"
-          style={{ textAlign: 'right' }}
-          validateStatus={help == '' ? 'success' : 'error'}
-          help={help}
-          labelCol={{ span: 0 }}
-          wrapperCol={{ span: 24 }}
-        >
-          <Button
-            disabled={help != ''}
-            type="primary"
-            onClick={this.onSubmit}
-            loading={this.state.loading}
-          >
-            打开机场大门
-          </Button>
-        </Form.Item>
-      </Form>
+      <Space direction="vertical" size={50} style={{ width: '100%' }}>
+        <Steps current={status}>
+          <Steps.Step title="注册并登录" icon={<UserOutlined />}>
+            <Row justify="center">
+              <Col>
+                <Button type="primary" onClick={() => this.setState({ loginModal: true })}>
+                  注册/登录
+                </Button>
+              </Col>
+            </Row>
+          </Steps.Step>
+          <Steps.Step title="完善信息" icon={<SolutionOutlined />}>
+            <Row justify="center">
+              <Col>
+                <Space direction="vertical" size={10} style={{ textAlign: 'center' }}>
+                  <Link href="/user/[username]" as={`/user/${this.context.user.username}`}>
+                    <a target="_blank">
+                      <Button type="primary">完善个人信息</Button>
+                    </a>
+                  </Link>
+                  <p>填写完成后，你需要刷新当前页面</p>
+                </Space>
+              </Col>
+            </Row>
+          </Steps.Step>
+          <Steps.Step title="开始使用" icon={<CheckOutlined />}>
+            <Form
+              ref={this.formRef}
+              initialValues={initialValues}
+              labelCol={{ span: 4 }}
+              wrapperCol={{ span: 20 }}
+            >
+              {forms.map((item) => (
+                <Form.Item key={item.key} name={item.key} label={item.name}>
+                  {item.children}
+                </Form.Item>
+              ))}
+              <Form.Item
+                key="submit"
+                style={{ textAlign: 'right' }}
+                validateStatus={help == '' ? 'success' : 'error'}
+                help={help}
+                labelCol={{ span: 0 }}
+                wrapperCol={{ span: 24 }}
+              >
+                <Button
+                  disabled={help != ''}
+                  type="primary"
+                  onClick={this.onSubmit}
+                  loading={this.state.loading}
+                >
+                  打开机场大门
+                </Button>
+              </Form.Item>
+            </Form>
+          </Steps.Step>
+        </Steps>
+      </Space>
     );
   };
 
@@ -292,6 +328,13 @@ class Queues extends React.Component<QueuesProps, QueuesState> {
           <Card>{this.renderForm()}</Card>
           <Card>{this.renderTable()}</Card>
         </Space>
+        <LoginModal
+          show={this.state.loginModal}
+          onCancel={() => this.setState({ loginModal: false })}
+          callback={(success) => {
+            if (success) this.setState({ loginModal: false });
+          }}
+        />
       </Container>
     );
   }

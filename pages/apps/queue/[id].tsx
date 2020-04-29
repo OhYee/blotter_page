@@ -3,12 +3,10 @@ import Head from 'next/head';
 
 import {
   Card,
-  List,
   Button,
   PageHeader,
   Table,
   Tooltip,
-  Switch,
   Row,
   Col,
   Statistic,
@@ -22,15 +20,24 @@ import {
   Modal,
   Popconfirm,
   Alert,
-  Steps,
   Popover,
 } from 'antd';
 import Link from 'next/link';
 import { PaginationConfig } from 'antd/lib/pagination';
-import { SorterResult, TableCurrentDataSource, ColumnsType } from 'antd/lib/table/interface';
+import { ColumnsType } from 'antd/lib/table/interface';
+import {
+  UserOutlined,
+  SolutionOutlined,
+  CheckOutlined,
+  TeamOutlined,
+  GlobalOutlined,
+  CoffeeOutlined,
+} from '@ant-design/icons';
 
 import Container from '@/components/container';
 import { Context, defaultContext } from '@/utils/global';
+import Steps from '@/components/steps';
+import { LoginModal } from '@/components/login';
 
 import { Queue, Member } from '@/extensions/queue/types';
 import { get, finish, update, insert, land, out } from '@/extensions/queue/api';
@@ -58,6 +65,7 @@ interface QueueDetailState {
   page: number;
   size: number;
   refresh: number;
+  loginModal: boolean;
 }
 
 class QueueDetail extends React.Component<QueueDetailProps, QueueDetailState> {
@@ -87,6 +95,7 @@ class QueueDetail extends React.Component<QueueDetailProps, QueueDetailState> {
       size: 10,
       opLoading: false,
       refresh: 0,
+      loginModal: false,
     };
   }
 
@@ -139,7 +148,7 @@ class QueueDetail extends React.Component<QueueDetailProps, QueueDetailState> {
       {
         key: 'description',
         name: '描述',
-        children: <TextArea />,
+        children: <TextArea autoSize={{ minRows: 5 }} />,
         initial: this.state.queue.description,
       },
     ];
@@ -220,23 +229,18 @@ class QueueDetail extends React.Component<QueueDetailProps, QueueDetailState> {
         subTitle={`前往 ${this.props.queue.leader.ac_island}岛(${this.props.queue.leader.ac_name})`}
       >
         <Typography.Paragraph>
-          输入自己的 群ID 或者 游戏ID 点击 "我要候机" 加入排队
+          使用该系统需要注册账号，并填写 Nintendo 账号名、ID，动森名称、岛名，QQ 号以及绑定 QQ
+          一键登录
         </Typography.Paragraph>
         <Typography.Paragraph>
-          成功落地后请点击 "我要降落" 并在群里@下一名乘客（如果是要求单人上岛则在返程后@）
+          QQ 号将于用于 QQ 机器人提醒（需要和 QQ
+          机器人为好友关系，或在同一个群内，可加群：797585867）
         </Typography.Paragraph>
         <Typography.Paragraph>
           多趟买卖大头菜，请多次排队，以提升效率（买完直接减号键回家，单人上岛，效率更高）
         </Typography.Paragraph>
         <Typography.Paragraph>
-          数据会每20秒自动刷新（也可以自己手动
-          "刷新数据"），默认只显示候机乘客，可以自行修改筛选条件，
-          <a
-            target="_blank"
-            href="https://www.oyohyee.com/post/writting_animal_crossing#waiting-area"
-          >
-            使用帮助
-          </a>
+          当轮到你登机起飞时，请尽快起飞。落地、回家后请及时按下相关按钮。如果多次在状态更新后未按下按钮修改状态，将会被系统拉黑，无法使用该系统。
         </Typography.Paragraph>
         <Typography.Paragraph>
           为了避免炸岛，联机游戏请尽可能使用流量开热点并开启
@@ -246,7 +250,7 @@ class QueueDetail extends React.Component<QueueDetailProps, QueueDetailState> {
           （部分加速器加速后更慢，请不要用）
         </Typography.Paragraph>
         <Typography.Paragraph>
-          如果富裕，请给岛民代表留下礼物。不要乱动岛民代表的东西。
+          如果富裕，请给岛民代表留下礼物。不要乱动岛民代表的东西，请严格遵守岛民代表的要求
         </Typography.Paragraph>
       </PageHeader>
     );
@@ -286,8 +290,9 @@ class QueueDetail extends React.Component<QueueDetailProps, QueueDetailState> {
             </Popover>
           </Descriptions.Item>
           <Descriptions.Item label="最大同时上岛人数限制">{this.state.queue.max}</Descriptions.Item>
-
-          <Descriptions.Item label="描述信息">{this.state.queue.description}</Descriptions.Item>
+          <Descriptions.Item label="描述信息" style={{ whiteSpace: 'pre' }}>
+            {this.state.queue.description}
+          </Descriptions.Item>
         </Descriptions>
         <If condition={this.context.user.id == this.props.queue.leader.id}>
           <Row justify="center" gutter={[10, 10]}>
@@ -397,23 +402,37 @@ class QueueDetail extends React.Component<QueueDetailProps, QueueDetailState> {
         },
       });
     }
+
     const doingQueue = this.state.queue.queue.filter((item) => item.out_time === 0);
     const waitingQueue = this.state.queue.queue.filter(
       (item) => item.out_time === 0 && item.land_time === 0,
     );
 
     var memberID = '';
-    var status = 0;
-    for (var i = 0; i < doingQueue.length; i++) {
-      if (doingQueue[i].user.id === this.context.user.id) {
-        memberID = doingQueue[i].id;
-        for (var j = 0; j < keys.length; j++) {
-          if (doingQueue[i][keys[j].key] === 0) {
-            status = j;
-            break;
+    var status = 2;
+
+    if (!this.context.user.existed) {
+      status = 0;
+    } else if (
+      this.context.user.qq_connected == false ||
+      this.context.user.ns_id == '' ||
+      this.context.user.ns_name == '' ||
+      this.context.user.ac_name == '' ||
+      this.context.user.ac_island == ''
+    ) {
+      status = 1;
+    } else {
+      for (var i = 0; i < doingQueue.length; i++) {
+        if (doingQueue[i].user.id === this.context.user.id) {
+          memberID = doingQueue[i].id;
+          for (var j = 0; j < keys.length; j++) {
+            if (doingQueue[i][keys[j].key] === 0) {
+              status = 2 + j;
+              break;
+            }
           }
+          break;
         }
-        break;
       }
     }
 
@@ -471,7 +490,8 @@ class QueueDetail extends React.Component<QueueDetailProps, QueueDetailState> {
             showIcon
             message={
               <span>
-                上岛密码：<Typography.Text strong>{this.state.queue.password}</Typography.Text>
+                上岛密码：
+                <Typography.Text strong>{this.state.queue.password.toUpperCase()}</Typography.Text>
                 ，请尽快上岛！
               </span>
             }
@@ -479,63 +499,81 @@ class QueueDetail extends React.Component<QueueDetailProps, QueueDetailState> {
           />
         </If>
 
-        <Steps initial={0} current={status} size="small">
-          <Steps.Step title="未排队" />
-          {keys.map((item) => (
-            <Steps.Step key={item.key} title={item.name} />
-          ))}
-        </Steps>
-
         <Row justify="center">
           <Col>
-            <Statistic.Countdown
-              title="下次自动刷新倒计时"
-              value={this.state.refresh}
-              onFinish={this.getData}
-              format="HH:mm:ss:SSS"
-            />
+            <Space direction="vertical" size={10} style={{ textAlign: 'center' }}>
+              <Statistic.Countdown
+                title="下次自动刷新倒计时"
+                value={this.state.refresh}
+                onFinish={this.getData}
+                format="HH:mm:ss:SSS"
+              />
+              <Button loading={this.state.loading} onClick={this.getData}>
+                刷新数据
+              </Button>
+            </Space>
           </Col>
         </Row>
 
-        <Row justify="center" gutter={[20, 20]}>
-          <Col>
-            <Button disabled={!(status == 0)} loading={this.state.opLoading} onClick={this.insert}>
-              我要排队
-            </Button>
-          </Col>
-          <Col>
-            <Button
-              disabled={!(status == 1)}
-              loading={this.state.opLoading}
-              onClick={() => this.land(memberID)}
-            >
-              我已降落
-            </Button>
-          </Col>
-          <Col>
-            <Button
-              disabled={!(status == 2)}
-              loading={this.state.opLoading}
-              onClick={() => this.out(memberID)}
-            >
-              我已返航
-            </Button>
-          </Col>
-          <Col>
-            <Button
-              disabled={!(status == 1)}
-              loading={this.state.opLoading}
-              onClick={() => this.out(memberID)}
-            >
-              取消排队
-            </Button>
-          </Col>
-          <Col>
-            <Button loading={this.state.loading} onClick={this.getData}>
-              刷新数据
-            </Button>
-          </Col>
-        </Row>
+        <Steps current={status} size="small">
+          <Steps.Step title="注册并登录" icon={<UserOutlined />}>
+            <Row justify="center">
+              <Col>
+                <Button type="primary" onClick={() => this.setState({ loginModal: true })}>
+                  注册/登录
+                </Button>
+              </Col>
+            </Row>
+          </Steps.Step>
+          <Steps.Step title="完善信息" icon={<SolutionOutlined />}>
+            <Row justify="center">
+              <Col>
+                <Space direction="vertical" size={10} style={{ textAlign: 'center' }}>
+                  <Link href="/user/[username]" as={`/user/${this.context.user.username}`}>
+                    <a target="_blank">
+                      <Button type="primary">完善个人信息</Button>
+                    </a>
+                  </Link>
+                  <p>填写完成后，你需要刷新当前页面</p>
+                </Space>
+              </Col>
+            </Row>
+          </Steps.Step>
+          <Steps.Step title="未排队" icon={<CoffeeOutlined />}>
+            <Row justify="center" gutter={[20, 20]}>
+              <Col>
+                <Button loading={this.state.opLoading} onClick={this.insert}>
+                  我要排队
+                </Button>
+              </Col>
+            </Row>
+          </Steps.Step>
+          <Steps.Step title="正在排队" icon={<TeamOutlined />}>
+            <Row justify="center" gutter={[20, 20]}>
+              <Col>
+                <Button loading={this.state.opLoading} onClick={() => this.land(memberID)}>
+                  我已降落
+                </Button>
+              </Col>
+              <Col>
+                <Button loading={this.state.opLoading} onClick={() => this.out(memberID)}>
+                  取消排队
+                </Button>
+              </Col>
+            </Row>
+          </Steps.Step>
+          <Steps.Step title="已着陆" icon={<GlobalOutlined />}>
+            <Row justify="center" gutter={[20, 20]}>
+              <Col>
+                <Button loading={this.state.opLoading} onClick={() => this.out(memberID)}>
+                  我已返航
+                </Button>
+              </Col>
+            </Row>
+          </Steps.Step>
+          <Steps.Step title="已返航" icon={<CheckOutlined />}></Steps.Step>
+        </Steps>
+
         <Table<Member>
           rowKey={(record) => record.id}
           dataSource={this.state.queue.queue}
@@ -590,6 +628,13 @@ class QueueDetail extends React.Component<QueueDetailProps, QueueDetailState> {
           <Card>{this.renderInfo()}</Card>
           <Card>{this.renderTable()}</Card>
         </Space>
+        <LoginModal
+          show={this.state.loginModal}
+          onCancel={() => this.setState({ loginModal: false })}
+          callback={(success) => {
+            if (success) this.setState({ loginModal: false });
+          }}
+        />
       </Container>
     );
   }
