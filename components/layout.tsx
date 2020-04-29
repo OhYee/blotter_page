@@ -127,12 +127,14 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
 
   renderCollapseButton = () => (
     <Affix
-      offsetTop={
-        !this.context.big_screen && typeof window !== 'undefined' ? window.innerHeight - 60 : 20
-      }
+      //   offsetTop={
+      //     // !this.context.big_screen && typeof window !== 'undefined' ? window.innerHeight - 60 : 20
+      //     20
+      //   }
       style={Object.assign(
         { position: 'fixed', marginLeft: 20, zIndex: 100 },
-        !this.context.big_screen ? { bottom: 20 } : { top: 20 },
+        // !this.context.big_screen ? { bottom: 20 } : { top: 20 },
+        { top: 20 },
       )}
     >
       <Button
