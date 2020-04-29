@@ -24,7 +24,6 @@ import {
 } from 'antd';
 import { Icon } from '@ant-design/compatible';
 const { Footer, Sider, Content } = Layout;
-import { FormInstance } from 'antd/lib/form';
 import { UserOutlined } from '@ant-design/icons';
 // import { FormComponentProps } from 'antd/lib/form';
 
@@ -32,7 +31,7 @@ import Container from '@/components/container';
 
 import changeTheme from 'next-dynamic-antd-theme';
 
-import { layout, login, logout, info } from '@/utils/api';
+import { layout, logout, info } from '@/utils/api';
 import ShowNotification from '@/utils/notification';
 import { GlobalProps, Context, defaultContext } from '@/utils/global';
 import { setCookie } from '@/utils/cookies';
@@ -40,11 +39,12 @@ import { setCookie } from '@/utils/cookies';
 import styles from './layout.less';
 import { AvatarProps } from 'antd/lib/avatar';
 import If from './if';
+import { LoginModal } from '@/components/login';
 
 interface BasicLayoutProps extends ComponentProps<'base'>, WithRouterProps {}
 interface BasicLayoutState {
   collapsed: boolean;
-  loginModel: boolean;
+  loginModal: boolean;
   password: string;
   okDisabled: boolean;
   feedback: boolean;
@@ -53,7 +53,6 @@ interface BasicLayoutState {
 class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
   static contextType = Context;
   context!: React.ContextType<typeof Context>;
-  formRef = React.createRef<FormInstance>();
 
   static async getInitialProps(args: any) {
     var r = await layout();
@@ -64,7 +63,7 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
     super(props);
     this.state = {
       collapsed: true,
-      loginModel: false,
+      loginModal: false,
       password: '',
       okDisabled: false,
       feedback: false,
@@ -225,7 +224,7 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
   );
 
   onLoginClick = () => {
-    this.setState({ loginModel: true });
+    this.setState({ loginModal: true });
   };
 
   onLogoutClick = async () => {
@@ -233,22 +232,6 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
     ShowNotification(r);
     setCookie('token', '', 0);
     this.context.callback({ user: defaultContext.user });
-  };
-
-  loginOK = async () => {
-    this.setState({ okDisabled: true });
-
-    var { username, password } = this.formRef.current.getFieldsValue(['username', 'password']);
-    var r = await login(username, password);
-    if (ShowNotification(r)) {
-      this.context.callback({ user: r.user });
-      this.setState({ loginModel: false, okDisabled: false });
-    } else {
-      this.setState({ okDisabled: false });
-    }
-  };
-  loginCancel = () => {
-    this.setState({ loginModel: false });
   };
 
   renderMenus = (menus: Blotter.Menu[], user: Blotter.User) => {
@@ -436,39 +419,6 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
     );
   };
 
-  renderLoginModel = () => {
-    return (
-      <Modal
-        title="登录"
-        visible={this.state.loginModel}
-        onOk={this.loginOK}
-        onCancel={this.loginCancel}
-        okButtonProps={{ disabled: this.state.okDisabled }}
-      >
-        <Form ref={this.formRef}>
-          <Form.Item name="username">
-            <Input prefix={<Icon type="user" />} placeholder="用户名" />
-          </Form.Item>
-          <Form.Item name="password">
-            <Input.Password
-              prefix={<Icon type="lock" />}
-              placeholder="密码"
-              onPressEnter={this.loginOK}
-            />
-          </Form.Item>
-        </Form>
-        <a href="/api/user/jump_to_qq">
-          <img src="http://qzonestyle.gtimg.cn/qzone/vas/opensns/res/img/Connect_logo_7.png" />
-        </a>
-        <Link href="/register">
-          <a target="_blank" style={{ float: 'right' }}>
-            注册
-          </a>
-        </Link>
-      </Modal>
-    );
-  };
-
   render() {
     return (
       <Layout
@@ -496,7 +446,13 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
             {this.renderBackToTop()}
             {this.renderFeedback()}
             {this.renderChangeTheme()}
-            {this.renderLoginModel()}
+            <LoginModal
+              show={this.state.loginModal}
+              onCancel={() => this.setState({ loginModal: false })}
+              callback={(success) => {
+                if (success) this.setState({ loginModal: false });
+              }}
+            />
           </Content>
           <Footer>{this.renderFooter()}</Footer>
         </Layout>
