@@ -84,15 +84,38 @@ class User extends React.Component<UserProps, UserState> {
       self: boolean;
       prefix?: string;
       suffix?: string;
+      rewrite?: (string) => string;
     }[] = [
-      { key: 'avatar', name: '头像', self: true },
+      {
+        key: 'avatar',
+        name: '头像',
+        self: true,
+        rewrite: (url) => url.replace('http://', 'https://'),
+      },
       { key: 'username', name: '用户名', self: false },
       { key: 'email', name: '邮箱', self: false },
       { key: 'qq', name: 'QQ 号', self: true },
-      { key: 'ns_id', name: 'NS ID', self: false, prefix: 'SW' },
+      {
+        key: 'ns_id',
+        name: 'NS ID',
+        self: false,
+        prefix: 'SW',
+        rewrite: (value) => value.replace(/[^0-9\-]/g, ''),
+      },
       { key: 'ns_name', name: 'NS 名称', self: false },
       { key: 'ac_name', name: '动森名称', self: false },
-      { key: 'ac_island', name: '动森岛名', self: false, suffix: '岛' },
+      {
+        key: 'ac_island',
+        name: '动森岛名',
+        self: false,
+        suffix: '岛',
+        rewrite: (value) => {
+          if (value.length > 0 && value[value.length - 1] == '岛') {
+            value = value.slice(0, value.length - 1);
+          }
+          return value;
+        },
+      },
     ];
     const fields = this.state.user.self ? allFields : allFields.filter((item) => !item.self);
 
@@ -152,7 +175,8 @@ class User extends React.Component<UserProps, UserState> {
                         addonAfter={item.suffix}
                         value={this.state.user[item.key]}
                         onChange={(e) => {
-                          const value = e.target.value;
+                          var value = e.target.value;
+                          if (!!item.rewrite) value = item.rewrite(value);
                           this.setState((state) => {
                             var { user } = state;
                             user[item.key] = value;
