@@ -153,7 +153,7 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
 
   previewClick = () => {
     if (!this.state.preview) {
-      this.renderMarkdown(this.formRef.current.getFieldValue('raw'));
+      this.renderMarkdown(this.editor.getValue());
     }
     this.setState(
       (state) => ({
@@ -201,12 +201,12 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
       'publish_time',
       'edit_time',
       'published',
-      'raw',
+      //   'raw',
     ]);
     obj.tags = this.state.tags.map((tag) => tag.id);
     obj.publish_time = obj.publish_time.unix();
     obj.edit_time = obj.edit_time.unix();
-    // obj.raw = this.editor.getValue();
+    obj.raw = this.editor.getValue();
     var r = await postEdit(obj as Blotter.PostAll);
     ShowNotification(r);
     this.setState({ submitDisabled: false });
@@ -219,30 +219,22 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
       <div id="editor">
         <Context.Consumer>
           {(context) => (
-            <Form.Item name="raw">
-              <Editor
-                language="markdown"
-                theme={context.theme == 'default' ? 'light' : 'dark'}
-                getRef={(ref) => {
-                  this.editor = ref;
-                  ref.onDidScrollChange((e) => {
-                    this.syncScroll(e.scrollTop, e.scrollHeight);
-                  });
-                }}
-                options={{
-                  //   automaticLayout: true,
-                  fontSize: 20,
-                  wordWrap: 'on',
-                }}
-                onChange={this.onChange}
-              />
-              {/* <Input.TextArea
-            spellCheck="false"
-            onChange={this.onChange}
-            style={{ lineHeight: '2em', fontSize: '1.2em', height: 'calc(100vh - 20px)' }}
-             ></Input.TextArea> 
-                onScroll={this.syncScroll}*/}
-            </Form.Item>
+            <Editor
+              language="markdown"
+              theme={context.theme == 'default' ? 'light' : 'dark'}
+              getRef={(ref) => {
+                this.editor = ref;
+                ref.onDidScrollChange((e) => {
+                  this.syncScroll(e.scrollTop, e.scrollHeight);
+                });
+              }}
+              options={{
+                //   automaticLayout: true,
+                fontSize: 20,
+                wordWrap: 'on',
+              }}
+              onChange={this.onChange}
+            />
           )}
         </Context.Consumer>
       </div>
