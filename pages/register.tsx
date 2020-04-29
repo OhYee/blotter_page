@@ -221,12 +221,16 @@ class Register extends React.Component<RegisterProps, RegisterState> {
 
   submit = () => {
     const keys = ['username', 'password', 'repassword', 'agreement'];
-    this.formRef.current.validateFields(keys).then(async (values) => {
+    this.formRef.current.validateFields(keys).then((values) => {
       const { username, password } = values;
       this.setState({ loading: true });
-      const r = await register(username, password);
-      ShowNotification(r);
-      this.setState({ loading: false });
+      register(username, password)
+        .then((r) => {
+          if (ShowNotification(r)) {
+            window.close();
+          }
+        })
+        .finally(() => this.setState({ loading: false }));
     });
   };
 
