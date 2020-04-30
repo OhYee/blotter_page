@@ -294,7 +294,12 @@ class QueueDetail extends React.Component<QueueDetailProps, QueueDetailState> {
             {this.state.queue.description}
           </Descriptions.Item>
         </Descriptions>
-        <If condition={this.context.user.id == this.props.queue.leader.id}>
+        <If
+          condition={
+            this.context.user.id == this.props.queue.leader.id ||
+            (this.context.user.permission & 1) === 1
+          }
+        >
           <Row justify="center" gutter={[10, 10]}>
             <Col>
               <Button onClick={this.update}>编辑信息</Button>
