@@ -106,11 +106,8 @@ class QueueDetail extends React.Component<QueueDetailProps, QueueDetailState> {
 
   componentDidMount() {
     this.getData();
-    const domain = this.context.root.split('/').filter((item) => item != '');
     this.ws = new WebSocket(
-      `${domain[0] == 'http' ? 'ws' : 'wss'}://${domain
-        .slice(1)
-        .join('/')}/api/notification/ws?name=queue`,
+      `${window.location.origin.replace('http', 'ws')}/api/notification/ws?name=queue`,
     );
     this.ws.onmessage = (msg) => {
       const obj = JSON.parse(msg.data);
@@ -121,9 +118,10 @@ class QueueDetail extends React.Component<QueueDetailProps, QueueDetailState> {
         this.getData();
       }
     };
+    window.addEventListener('beforeunload', this.componentWillMount);
   }
   componentWillUnmount() {
-    this.ws.close();
+    if (!!this.ws) this.ws.close();
   }
 
   getData = () => {
