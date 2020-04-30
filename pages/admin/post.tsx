@@ -115,7 +115,8 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
       published: r.published,
       //   raw: r.raw,
     });
-    this.setState({ tags: r.tags, html: r.content }, () => {
+    this.setState({ tags: r.tags, html: r.content, raw: r.raw }, () => {
+      console.log('got data', r.raw.length);
       if (!!this.editor) this.editor.setValue(r.raw);
     });
   };
@@ -230,12 +231,13 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
             <Editor
               language="markdown"
               theme={context.theme == 'default' ? 'light' : 'dark'}
-              value={this.state.raw}
+              //   value={this.state.raw}
               getRef={(ref) => {
                 this.editor = ref;
                 ref.onDidScrollChange((e) => {
                   this.syncScroll(e.scrollTop, e.scrollHeight);
                 });
+                console.log('mounted', this.state.raw.length);
                 if (this.state.raw !== '') ref.setValue(this.state.raw);
               }}
               options={{
