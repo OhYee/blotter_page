@@ -34,6 +34,7 @@ import styles from '@/pages/post/post.less';
 
 import { Context } from '@/utils/global';
 import ShowNotification from '@/utils/notification';
+import { setLocalStorage, getLocalStorage } from '@/utils/storage';
 
 function Editor(props) {
   const { onChange, getRef, ...restProps } = props;
@@ -66,6 +67,7 @@ interface PostEditState {
   tags: Blotter.Tag[];
   headImage: string;
   submitDisabled: boolean;
+  draft: string;
 }
 
 class PostEdit extends React.Component<PostEditProps, PostEditState> {
@@ -86,11 +88,14 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
       tags: [],
       headImage: '',
       submitDisabled: false,
+      draft: '',
     };
   }
 
   componentDidMount() {
     var url = this.props.router.query.url as string;
+    const value = getLocalStorage(`post-${url}`);
+    this.setState({ draft: value });
     if (url != '' && typeof url != 'undefined') {
       this.getData(url);
     }
@@ -108,31 +113,33 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
       publish_time: moment(new Date(r.publish_time)),
       //   edit_time: moment(new Date(r.edit_time)),
       published: r.published,
-      raw: r.raw,
+      //   raw: r.raw,
     });
     this.setState({ tags: r.tags, html: r.content });
+    this.editor.setValue(r.raw);
   };
 
   onBigScreen = (match: boolean) => {
     this.setState({ bigScreen: match });
   };
 
-  renderMarkdown = (source: string) => {
-    waitUntil(
-      'post_edit_sync',
-      async () => {
-        this.setState({ loading: true });
-        var r = await markdown(source);
-        this.setState({ html: r.html, loading: false });
-      },
-      1000,
-    );
+  renderMarkdown = async (source: string) => {
+    this.setState({ loading: true });
+    var r = await markdown(source);
+    this.setState({ html: r.html, loading: false });
   };
 
   onChange = (value: string) => {
-    if (this.state.preview) {
-      this.renderMarkdown(value);
-    }
+    waitUntil(
+      'post_edit_sync',
+      () => {
+        setLocalStorage(`post-${this.props.router.query.url as string}`, value);
+        if (this.state.preview) {
+          this.renderMarkdown(value);
+        }
+      },
+      1000,
+    );
   };
 
   //   urlValidator = async (rule, value, callback, s, o) => {
@@ -222,11 +229,13 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
             <Editor
               language="markdown"
               theme={context.theme == 'default' ? 'light' : 'dark'}
+              value={this.state.raw}
               getRef={(ref) => {
                 this.editor = ref;
                 ref.onDidScrollChange((e) => {
                   this.syncScroll(e.scrollTop, e.scrollHeight);
                 });
+                ref.setValue(this.state.raw);
               }}
               options={{
                 //   automaticLayout: true,
@@ -325,6 +334,18 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
           <Form.Item>
             <Button loading={this.state.submitDisabled} onClick={this.submit} type="primary">
               提交
+            </Button>
+          </Form.Item>
+        </Col>
+
+        <Col lg={md ? 12 : 2} md={12}>
+          <Form.Item>
+            <Button
+              onClick={() => {
+                this.editor.setValue(this.state.draft);
+              }}
+            >
+              本地恢复
             </Button>
           </Form.Item>
         </Col>
