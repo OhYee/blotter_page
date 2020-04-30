@@ -115,8 +115,9 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
       published: r.published,
       //   raw: r.raw,
     });
-    this.setState({ tags: r.tags, html: r.content });
-    this.editor.setValue(r.raw);
+    this.setState({ tags: r.tags, html: r.content }, () => {
+      if (!!this.editor) this.editor.setValue(r.raw);
+    });
   };
 
   onBigScreen = (match: boolean) => {
@@ -235,7 +236,7 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
                 ref.onDidScrollChange((e) => {
                   this.syncScroll(e.scrollTop, e.scrollHeight);
                 });
-                ref.setValue(this.state.raw);
+                if (this.state.raw !== '') ref.setValue(this.state.raw);
               }}
               options={{
                 //   automaticLayout: true,
