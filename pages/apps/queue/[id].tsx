@@ -508,9 +508,9 @@ class QueueDetail extends React.Component<QueueDetailProps, QueueDetailState> {
           <Col>
             <Space direction="vertical" size={10} style={{ textAlign: 'center' }}>
               <Statistic.Countdown
-                title="下次自动刷新倒计时"
-                value={this.state.refresh}
-                onFinish={this.getData}
+                title={this.state.queue.finish_time === 0 ? '下次自动刷新倒计时' : '已关岛'}
+                value={this.state.queue.finish_time === 0 ? this.state.refresh : 0}
+                onFinish={this.state.queue.finish_time === 0 ? this.getData : () => {}}
                 format="HH:mm:ss:SSS"
               />
               <Button loading={this.state.loading} onClick={this.getData}>
