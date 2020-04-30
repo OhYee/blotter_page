@@ -34,7 +34,7 @@ import changeTheme from 'next-dynamic-antd-theme';
 import { layout, logout, info } from '@/utils/api';
 import ShowNotification from '@/utils/notification';
 import { GlobalProps, Context, defaultContext } from '@/utils/global';
-import { setCookie } from '@/utils/cookies';
+import { setCookie } from '@/utils/storage';
 
 import styles from './layout.less';
 import { AvatarProps } from 'antd/lib/avatar';

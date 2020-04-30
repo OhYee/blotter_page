@@ -3,7 +3,7 @@ import React from 'react';
 import App, { AppProps, AppContext } from 'next/app';
 import Head from 'next/head';
 
-import { getCookie } from '@/utils/cookies';
+import { getCookie } from '@/utils/storage';
 import { Context, defaultContext, GlobalProps } from '@/utils/global';
 import BasicLayout from '@/components/layout';
 const Layout = BasicLayout as any;
