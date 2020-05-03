@@ -291,7 +291,7 @@ class Queues extends React.Component<QueuesProps, QueuesState> {
     ];
 
     return (
-      <Space size={20} direction="vertical">
+      <Space size={20} direction="vertical" style={{ width: '100%' }}>
         <Row justify="end" gutter={[20, 20]}>
           <Col>
             <Button onClick={this.getData}>刷新数据</Button>
