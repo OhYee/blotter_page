@@ -16,7 +16,7 @@ import {
   Col,
 } from 'antd';
 import { Icon } from '@ant-design/compatible';
-import { FormOutlined } from '@ant-design/icons';
+import { FormOutlined, MinusOutlined, PlusOutlined } from '@ant-design/icons';
 import { FormInstance } from 'antd/lib/form';
 
 import moment from 'moment';
@@ -68,6 +68,7 @@ interface PostEditState {
   headImage: string;
   submitDisabled: boolean;
   draft: string;
+  offset: number;
   fontSize: number;
 }
 
@@ -90,6 +91,7 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
       headImage: '',
       submitDisabled: false,
       draft: '',
+      offset: 0,
       fontSize: 16,
     };
   }
@@ -197,7 +199,8 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
 
   syncScroll = (top: number, height: number) => {
     if (this.isSidePreview()) {
-      this.previewRef.current.scrollTop = (top / height) * this.previewRef.current.scrollHeight;
+      this.previewRef.current.scrollTop =
+        (top / height) * this.previewRef.current.scrollHeight + this.state.offset;
     }
   };
   submit = async () => {
@@ -402,6 +405,35 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
     />
   );
 
+  renderOffset = () => (
+    <Button.Group style={{ position: 'fixed', right: '20px', top: '160px' }}>
+      <Button
+        onClick={() => {
+          this.setState(
+            (state) => ({ offset: state.offset - 10 }),
+            () => {
+              if (!!this.editor)
+                this.syncScroll(this.editor.getScrollTop(), this.editor.getScrollHeight());
+            },
+          );
+        }}
+        icon={<MinusOutlined />}
+      />
+      <Button
+        onClick={() => {
+          this.setState(
+            (state) => ({ offset: state.offset + 10 }),
+            () => {
+              if (!!this.editor)
+                this.syncScroll(this.editor.getScrollTop(), this.editor.getScrollHeight());
+            },
+          );
+        }}
+        icon={<PlusOutlined />}
+      />
+    </Button.Group>
+  );
+
   render() {
     return (
       <Container xxl={20} xl={20} lg={20} md={24} sm={24} xs={24}>
@@ -416,6 +448,7 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
           {null}
         </MediaQuery>
         {this.renderJump()}
+        {this.renderOffset()}
         <Row gutter={5}>
           <Col span={this.isSidePreview() ? 12 : 24}>
             <Card>
