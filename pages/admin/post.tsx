@@ -68,6 +68,7 @@ interface PostEditState {
   headImage: string;
   submitDisabled: boolean;
   draft: string;
+  fontSize: number;
 }
 
 class PostEdit extends React.Component<PostEditProps, PostEditState> {
@@ -89,6 +90,7 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
       headImage: '',
       submitDisabled: false,
       draft: '',
+      fontSize: 16,
     };
   }
 
@@ -224,6 +226,14 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
   };
 
   renderEditor = () => {
+    const opts = {
+      fontSize: this.state.fontSize,
+      wordWrap: 'on',
+      quickSuggestions: false,
+      acceptSuggestionOnCommitCharacter: false,
+      acceptSuggestionOnEnter: 'off',
+      snippetSuggestions: 'none',
+    };
     return (
       <div id="editor">
         <Context.Consumer>
@@ -237,14 +247,9 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
                 ref.onDidScrollChange((e) => {
                   this.syncScroll(e.scrollTop, e.scrollHeight);
                 });
-                console.log('mounted', this.state.raw.length);
                 if (this.state.raw !== '') ref.setValue(this.state.raw);
               }}
-              options={{
-                //   automaticLayout: true,
-                fontSize: 20,
-                wordWrap: 'on',
-              }}
+              options={opts}
               onChange={this.onChange}
             />
           )}
@@ -350,6 +355,15 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
             >
               本地恢复
             </Button>
+          </Form.Item>
+        </Col>
+
+        <Col lg={md ? 12 : 2} md={12}>
+          <Form.Item>
+            <InputNumber
+              value={this.state.fontSize}
+              onChange={(v) => this.setState({ fontSize: v }, () => {})}
+            />
           </Form.Item>
         </Col>
 
