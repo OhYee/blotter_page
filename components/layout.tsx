@@ -304,7 +304,7 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
                       title={context.user.username}
                       content={
                         <div>
-                          <Row gutter={10}>
+                          <Row gutter={[10, 10]}>
                             <Col span={12}>
                               <Link href="/user/[username]" as={`/user/${context.user.username}`}>
                                 <a>设置</a>
