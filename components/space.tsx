@@ -28,4 +28,17 @@ class Space extends React.Component<SpaceProps, SpaceState> {
   }
 }
 
+class TextCenter extends React.Component {
+  render() {
+    return <div className="textCenter">{this.props.children}</div>;
+  }
+}
+
+class FlexCenter extends React.Component {
+  render() {
+    return <div className="flexCenter">{this.props.children}</div>;
+  }
+}
+
 export default Space;
+export { TextCenter, FlexCenter };
