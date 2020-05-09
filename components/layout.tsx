@@ -27,7 +27,7 @@ const { Footer, Sider, Content } = Layout;
 import { UserOutlined } from '@ant-design/icons';
 // import { FormComponentProps } from 'antd/lib/form';
 
-import Container from '@/components/container';
+import Container, { Space } from '@/components/container';
 
 import changeTheme from 'next-dynamic-antd-theme';
 
@@ -278,14 +278,14 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
         onBreakpoint={this.onBreakpoint}
       >
         <div className={styles.sider}>
-          <Row justify="center" className={styles.avatar}>
+          <div className={[styles.avatar, 'textCenter'].join(' ')}>
             <img
               src="/static/img/logo.svg"
               width={'100%'}
               height={'100%'}
               style={{ background: 'white', borderRadius: '100px', maxWidth: '120px' }}
             />
-          </Row>
+          </div>
           {/* <Divider className={this.state.collapsed ? styles.divider : undefined}>
             <b className={styles.divider}>OhYee</b>
           </Divider> */}
@@ -293,7 +293,7 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
           <Context.Consumer>
             {(context) => (
               <Fragment>
-                <Row justify="center" className={styles.avatar}>
+                <div className={[styles.avatar, 'textCenter'].join(' ')}>
                   {!context.user.existed ? (
                     <a onClick={this.onLoginClick}>
                       <Avatar icon={<UserOutlined />} />
@@ -342,7 +342,7 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
                       </span>
                     </Popover>
                   )}
-                </Row>
+                </div>
                 {this.renderMenus(context.menus, context.user)}
               </Fragment>
             )}

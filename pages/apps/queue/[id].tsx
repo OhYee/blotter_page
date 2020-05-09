@@ -10,7 +10,6 @@ import {
   Row,
   Col,
   Statistic,
-  Space,
   Form,
   Input,
   InputNumber,
@@ -34,7 +33,7 @@ import {
   CoffeeOutlined,
 } from '@ant-design/icons';
 
-import Container from '@/components/container';
+import Container, { Space, TextCenter } from '@/components/container';
 import { Context, defaultContext } from '@/utils/global';
 import Steps from '@/components/steps';
 import { LoginModal } from '@/components/login';
@@ -257,7 +256,7 @@ class QueueDetail extends React.Component<QueueDetailProps, QueueDetailState> {
   };
   renderInfo = () => {
     return (
-      <Space direction="vertical" style={{ width: '100%' }}>
+      <Space>
         <Descriptions title="候机厅信息" bordered>
           <Descriptions.Item label="岛屿名称">
             {this.state.queue.leader.ac_island}岛
@@ -300,24 +299,20 @@ class QueueDetail extends React.Component<QueueDetailProps, QueueDetailState> {
             (this.context.user.permission & 1) === 1
           }
         >
-          <Row justify="center" gutter={[10, 10]}>
-            <Col>
-              <Button onClick={this.update}>编辑信息</Button>
-            </Col>
-            <Col>
-              <Popconfirm
-                title="确定要关闭机场？关闭机场后该队伍不在会产生变动，且除联系管理员外，无法恢复。"
-                onConfirm={async () => {
-                  const r = await finish(this.props.router.query.id as string);
-                  ShowNotification(r);
-                }}
-                okText="关闭！"
-                cancelText="算了"
-              >
-                <Button type="danger">关闭机场</Button>
-              </Popconfirm>
-            </Col>
-          </Row>
+          <Space direction="horizontal" flexCenter>
+            <Button onClick={this.update}>编辑信息</Button>
+            <Popconfirm
+              title="确定要关闭机场？关闭机场后该队伍不在会产生变动，且除联系管理员外，无法恢复。"
+              onConfirm={async () => {
+                const r = await finish(this.props.router.query.id as string);
+                ShowNotification(r);
+              }}
+              okText="关闭！"
+              cancelText="算了"
+            >
+              <Button type="danger">关闭机场</Button>
+            </Popconfirm>
+          </Space>
         </If>
       </Space>
     );
@@ -442,7 +437,7 @@ class QueueDetail extends React.Component<QueueDetailProps, QueueDetailState> {
     }
 
     return (
-      <Space direction="vertical" style={{ width: '100%' }} size={20}>
+      <Space size="middle">
         {waitingQueue.length > 0 ? (
           <Alert
             showIcon
@@ -504,77 +499,59 @@ class QueueDetail extends React.Component<QueueDetailProps, QueueDetailState> {
           />
         </If>
 
-        <Row justify="center">
-          <Col>
-            <Space direction="vertical" size={10} style={{ textAlign: 'center' }}>
-              <Statistic.Countdown
-                title={this.state.queue.finish_time === 0 ? '下次自动刷新倒计时' : '已关岛'}
-                value={this.state.queue.finish_time === 0 ? this.state.refresh : 0}
-                onFinish={this.state.queue.finish_time === 0 ? this.getData : () => {}}
-                format="HH:mm:ss:SSS"
-              />
-              <Button loading={this.state.loading} onClick={this.getData}>
-                刷新数据
-              </Button>
-            </Space>
-          </Col>
-        </Row>
+        <TextCenter>
+          <Statistic.Countdown
+            title={this.state.queue.finish_time === 0 ? '下次自动刷新倒计时' : '已关岛'}
+            value={this.state.queue.finish_time === 0 ? this.state.refresh : 0}
+            onFinish={this.state.queue.finish_time === 0 ? this.getData : () => {}}
+            format="HH:mm:ss:SSS"
+          />
+          <Button loading={this.state.loading} onClick={this.getData}>
+            刷新数据
+          </Button>
+        </TextCenter>
 
         <Steps current={status} size="small">
           <Steps.Step title="注册并登录" icon={<UserOutlined />}>
-            <Row justify="center">
-              <Col>
-                <Button type="primary" onClick={() => this.setState({ loginModal: true })}>
-                  注册/登录
-                </Button>
-              </Col>
-            </Row>
+            <TextCenter>
+              <Button type="primary" onClick={() => this.setState({ loginModal: true })}>
+                注册/登录
+              </Button>
+            </TextCenter>
           </Steps.Step>
           <Steps.Step title="完善信息" icon={<SolutionOutlined />}>
-            <Row justify="center">
-              <Col>
-                <Space direction="vertical" size={10} style={{ textAlign: 'center' }}>
-                  <Link href="/user/[username]" as={`/user/${this.context.user.username}`}>
-                    <a target="_blank">
-                      <Button type="primary">完善个人信息</Button>
-                    </a>
-                  </Link>
-                  <p>填写完成后，你需要刷新当前页面</p>
-                </Space>
-              </Col>
-            </Row>
+            <Space textCenter>
+              <Link href="/user/[username]" as={`/user/${this.context.user.username}`}>
+                <a target="_blank">
+                  <Button type="primary">完善个人信息</Button>
+                </a>
+              </Link>
+              <p>填写完成后，你需要刷新当前页面</p>
+            </Space>
           </Steps.Step>
           <Steps.Step title="未排队" icon={<CoffeeOutlined />}>
-            <Row justify="center" gutter={[20, 20]}>
-              <Col>
-                <Button loading={this.state.opLoading} onClick={this.insert}>
-                  我要排队
-                </Button>
-              </Col>
-            </Row>
+            <TextCenter>
+              <Button loading={this.state.opLoading} onClick={this.insert}>
+                我要排队
+              </Button>
+            </TextCenter>
           </Steps.Step>
           <Steps.Step title="正在排队" icon={<TeamOutlined />}>
-            <Row justify="center" gutter={[20, 20]}>
-              <Col>
-                <Button loading={this.state.opLoading} onClick={() => this.land(memberID)}>
-                  我已降落
-                </Button>
-              </Col>
-              <Col>
-                <Button loading={this.state.opLoading} onClick={() => this.out(memberID)}>
-                  取消排队
-                </Button>
-              </Col>
-            </Row>
+            <Space direction="horizontal" flexCenter>
+              <Button loading={this.state.opLoading} onClick={() => this.land(memberID)}>
+                我已降落
+              </Button>
+              <Button loading={this.state.opLoading} onClick={() => this.out(memberID)}>
+                取消排队
+              </Button>
+            </Space>
           </Steps.Step>
           <Steps.Step title="已着陆" icon={<GlobalOutlined />}>
-            <Row justify="center" gutter={[20, 20]}>
-              <Col>
-                <Button loading={this.state.opLoading} onClick={() => this.out(memberID)}>
-                  我已返航
-                </Button>
-              </Col>
-            </Row>
+            <TextCenter>
+              <Button loading={this.state.opLoading} onClick={() => this.out(memberID)}>
+                我已返航
+              </Button>
+            </TextCenter>
           </Steps.Step>
           <Steps.Step title="已返航" icon={<CheckOutlined />}></Steps.Step>
         </Steps>
@@ -628,7 +605,7 @@ class QueueDetail extends React.Component<QueueDetailProps, QueueDetailState> {
             </Head>
           )}
         </Context.Consumer>
-        <Space direction="vertical" style={{ width: '100%' }}>
+        <Space>
           <Card>{this.renderHeader()}</Card>
           <Card>{this.renderInfo()}</Card>
           <Card>{this.renderTable()}</Card>

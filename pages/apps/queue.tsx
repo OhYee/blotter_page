@@ -11,7 +11,6 @@ import {
   Row,
   Col,
   Statistic,
-  Space,
   Form,
   Input,
   InputNumber,
@@ -22,7 +21,7 @@ import { PaginationConfig } from 'antd/lib/pagination';
 import { ColumnsType } from 'antd/lib/table/interface';
 import { UserOutlined, SolutionOutlined, CheckOutlined } from '@ant-design/icons';
 
-import Container from '@/components/container';
+import Container, { Space, TextCenter } from '@/components/container';
 import Steps from '@/components/steps';
 import { Context } from '@/utils/global';
 import { LoginModal } from '@/components/login';
@@ -151,30 +150,24 @@ class Queues extends React.Component<QueuesProps, QueuesState> {
       help = '请完善您的QQ号、NS账号、动森账号，并绑定 QQ 互联';
     }
     return (
-      <Space direction="vertical" size={50} style={{ width: '100%' }}>
+      <Space size={50}>
         <Steps current={status}>
           <Steps.Step title="注册并登录" icon={<UserOutlined />}>
-            <Row justify="center">
-              <Col>
-                <Button type="primary" onClick={() => this.setState({ loginModal: true })}>
-                  注册/登录
-                </Button>
-              </Col>
-            </Row>
+            <TextCenter>
+              <Button type="primary" onClick={() => this.setState({ loginModal: true })}>
+                注册/登录
+              </Button>
+            </TextCenter>
           </Steps.Step>
           <Steps.Step title="完善信息" icon={<SolutionOutlined />}>
-            <Row justify="center">
-              <Col>
-                <Space direction="vertical" size={10} style={{ textAlign: 'center' }}>
-                  <Link href="/user/[username]" as={`/user/${this.context.user.username}`}>
-                    <a target="_blank">
-                      <Button type="primary">完善个人信息</Button>
-                    </a>
-                  </Link>
-                  <p>填写完成后，你需要刷新当前页面</p>
-                </Space>
-              </Col>
-            </Row>
+            <Space textCenter >
+              <Link href="/user/[username]" as={`/user/${this.context.user.username}`}>
+                <a target="_blank">
+                  <Button type="primary">完善个人信息</Button>
+                </a>
+              </Link>
+              <p>填写完成后，你需要刷新当前页面</p>
+            </Space>
           </Steps.Step>
           <Steps.Step title="开始使用" icon={<CheckOutlined />}>
             <Form
@@ -291,7 +284,7 @@ class Queues extends React.Component<QueuesProps, QueuesState> {
     ];
 
     return (
-      <Space size={20} direction="vertical" style={{ width: '100%' }}>
+      <Space size={20}>
         <Row justify="end" gutter={[20, 20]}>
           <Col>
             <Button onClick={this.getData}>刷新数据</Button>
@@ -332,7 +325,7 @@ class Queues extends React.Component<QueuesProps, QueuesState> {
             </Head>
           )}
         </Context.Consumer>
-        <Space direction="vertical" style={{ width: '100%' }}>
+        <Space>
           <Card>{this.renderHeader()}</Card>
           <Card>{this.renderForm()}</Card>
           <Card>{this.renderTable()}</Card>

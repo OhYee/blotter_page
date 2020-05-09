@@ -1,6 +1,7 @@
 import React from 'react';
-import { Steps as AntdSteps, Space } from 'antd';
+import { Steps as AntdSteps } from 'antd';
 import { StepsProps, StepProps } from 'antd/lib/steps';
+import { Space, FlexCenter } from '@/components/container';
 
 export default class Steps extends React.Component<StepsProps, any> {
   static Step = AntdSteps.Step;
@@ -10,9 +11,11 @@ export default class Steps extends React.Component<StepsProps, any> {
   render() {
     const child = this.props.children[this.props.current];
     return (
-      <Space direction="vertical" size={20} style={{ width: '100%' }}>
+      <Space>
         <AntdSteps {...this.props} />
-        {!!child && !!child.props && !!child.props.children ? child.props.children : null}
+        <div style={{ marginTop: 20 }}>
+          {!!child && !!child.props && !!child.props.children ? child.props.children : null}
+        </div>
       </Space>
     );
   }

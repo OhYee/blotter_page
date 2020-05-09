@@ -1,8 +1,9 @@
 import React, { ComponentProps } from 'react';
-import { Row, Col } from 'antd';
+import { Row, Col, Space as S } from 'antd';
 import { Gutter } from 'antd/lib/grid/row';
+import '@/components/layout.less';
 
-type ContainerProps = {
+interface ContainerProps extends ComponentProps<'base'> {
   xs?: number;
   sm?: number;
   md?: number;
@@ -11,9 +12,9 @@ type ContainerProps = {
   xxl?: number;
   gutter_h?: number;
   gutter_v?: number;
-} & ComponentProps<'base'>;
+}
 
-type ContainerState = {};
+interface ContainerState {}
 
 class Container extends React.Component<ContainerProps, ContainerState> {
   static defaultProps: ContainerProps = {
@@ -47,4 +48,41 @@ class Container extends React.Component<ContainerProps, ContainerState> {
   }
 }
 
+export interface SpaceProps extends ComponentProps<'base'> {
+  direction?: 'horizontal' | 'vertical';
+  size?: number | 'small' | 'middle' | 'large';
+  textCenter?: boolean;
+  flexCenter?: boolean;
+}
+
+const Space: React.FC<SpaceProps> = (props) => {
+  const {
+    direction = 'vertical',
+    size,
+    textCenter = false,
+    flexCenter = false,
+    className,
+    children,
+    style,
+  } = props;
+
+  var classNames: string[] = [className, 'fullWidth'];
+  if (flexCenter) classNames.push('flexCenter');
+  if (textCenter) classNames.push('textCenter');
+  return (
+    <S className={classNames.join(' ')} direction={direction} size={size} style={style}>
+      {children}
+    </S>
+  );
+};
+
+const TextCenter: React.FC = (props) => {
+  return <div className="textCenter">{props.children}</div>;
+};
+
+const FlexCenter: React.FC = (props) => {
+  return <div className="flexCenter">{props.children}</div>;
+};
+
 export default Container;
+export { Space, TextCenter, FlexCenter };

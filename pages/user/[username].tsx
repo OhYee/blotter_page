@@ -4,10 +4,9 @@ import Head from 'next/head';
 import { withRouter } from 'next/router';
 import { WithRouterProps } from 'next/dist/client/with-router';
 
-import { Card, Typography, Avatar, List, Row, Col, Button, Input, Space } from 'antd';
+import { Card, Typography, Avatar, List, Row, Col, Button, Input } from 'antd';
 
-import Container from '@/components/container';
-
+import Container, { Space } from '@/components/container';
 import { Context, defaultContext } from '@/utils/global';
 import { info, userSet, avatar } from '@/utils/api';
 import ShowNotification from '@/utils/notification';
@@ -133,32 +132,28 @@ class User extends React.Component<UserProps, UserState> {
             <Avatar size={128} src={this.state.user.avatar} />
           </p>
           <If condition={this.state.user.self}>
-            <Row justify="center" gutter={20}>
-              <Col>
-                <Button
-                  loading={this.state.loadingAvatar}
-                  onClick={async () => {
-                    this.setState({ loadingAvatar: true });
-                    const r = await avatar(this.state.user.email);
-                    this.setState((state) => {
-                      var { user } = state;
-                      user.avatar = r.avatar;
-                      return { user, loadingAvatar: false };
-                    });
-                  }}
-                >
-                  根据邮箱更新 Github、Gavatar 头像
-                </Button>
-              </Col>
-              <Col>
-                <a href="/api/user/qq_avatar" target="_blank">
-                  <Button disabled={!this.state.user.qq_connected}>更新 QQ 头像</Button>
-                </a>
-              </Col>
-              <Col>
-                <Button onClick={() => this.getData()}>刷新数据</Button>
-              </Col>
-            </Row>
+            <Space direction="horizontal" flexCenter>
+              <Button
+                loading={this.state.loadingAvatar}
+                onClick={async () => {
+                  this.setState({ loadingAvatar: true });
+                  const r = await avatar(this.state.user.email);
+                  this.setState((state) => {
+                    var { user } = state;
+                    user.avatar = r.avatar;
+                    return { user, loadingAvatar: false };
+                  });
+                }}
+              >
+                根据邮箱更新 Github、Gavatar 头像
+              </Button>
+
+              <a href="/api/user/qq_avatar" target="_blank">
+                <Button disabled={!this.state.user.qq_connected}>更新 QQ 头像</Button>
+              </a>
+
+              <Button onClick={() => this.getData()}>刷新数据</Button>
+            </Space>
           </If>
           <List
             dataSource={fields}
@@ -195,7 +190,7 @@ class User extends React.Component<UserProps, UserState> {
             )}
           />
           <If condition={this.state.user.self}>
-            <Space direction="vertical" style={{ width: '100%' }}>
+            <Space>
               <Input
                 type="password"
                 placeholder="如果不需要修改密码请留空"
