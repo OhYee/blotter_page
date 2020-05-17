@@ -4,7 +4,10 @@ import Link from 'next/link';
 
 import { Form, Input, Button, Modal } from 'antd';
 import { FormInstance } from 'antd/lib/form';
-import { UserOutlined, LockOutlined } from '@ant-design/icons';
+import { UserOutlined, LockOutlined, QqCircleFilled, GithubFilled } from '@ant-design/icons';
+
+import { Space } from '@/components/container';
+import QuickLogin from '@/components/auth';
 
 import { login } from '@/utils/api';
 import { Context } from '@/utils/global';
@@ -40,17 +43,13 @@ export default function Login(props: { callback?: (boolean) => void }) {
         <Input.Password prefix={<LockOutlined />} placeholder="密码" onPressEnter={loginOK} />
       </Form.Item>
       <Form.Item>
-        <a href="/api/user/jump_to_qq">
-          <img src="http://qzonestyle.gtimg.cn/qzone/vas/opensns/res/img/Connect_logo_7.png" />
-        </a>
-        <Link href="/register">
-          <a target="_blank" style={{ float: 'right' }}>
-            注册
-          </a>
-        </Link>
+        <QuickLogin />
       </Form.Item>
-      <Form.Item style={{ textAlign: 'right' }}>
-        <Button type="primary" loading={loading} onClick={loginOK}>
+      <Form.Item>
+        <Link href="/register">
+          <Button loading={loading}>注册</Button>
+        </Link>
+        <Button type="primary" loading={loading} onClick={loginOK} style={{ float: 'right' }}>
           登录
         </Button>
       </Form.Item>

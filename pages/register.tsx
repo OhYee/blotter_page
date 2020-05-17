@@ -9,6 +9,7 @@ import { Icon } from '@ant-design/compatible';
 const { Paragraph, Text, Title } = Typography;
 
 import Container from '@/components/container';
+import QuickLogin from '@/components/auth';
 
 import { Context } from '@/utils/global';
 
@@ -311,9 +312,7 @@ class Register extends React.Component<RegisterProps, RegisterState> {
               </Form.Item>
 
               <Form.Item>
-                <a href="/api/user/jump_to_qq">
-                  <img src="http://qzonestyle.gtimg.cn/qzone/vas/opensns/res/img/Connect_logo_7.png" />
-                </a>
+                <QuickLogin />
                 <span style={{ float: 'right' }}>
                   <Button type="primary" loading={this.state.loading} onClick={() => this.submit()}>
                     注册

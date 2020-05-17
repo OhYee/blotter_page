@@ -207,6 +207,15 @@ class User extends React.Component<UserProps, UserState> {
                     <Button disabled={true}>已绑定 QQ 登录</Button>
                   )}
                 </Col>
+                <Col>
+                  {!this.state.user.github_connected ? (
+                    <a href="/api/user/jump_to_github?state=connect" target="_blank">
+                      <Button>绑定 Github 登录</Button>
+                    </a>
+                  ) : (
+                    <Button disabled={true}>已绑定 Github 登录</Button>
+                  )}
+                </Col>
                 <Col style={{ textAlign: 'right' }}>
                   <Button loading={this.state.loading} type="primary" onClick={this.update}>
                     更新信息
