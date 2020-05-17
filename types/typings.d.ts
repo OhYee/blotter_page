@@ -24,6 +24,7 @@ declare namespace Blotter {
 
     permission: number;
     qq_connected: boolean;
+    github_connected: boolean;
 
     self: boolean;
     existed: boolean;

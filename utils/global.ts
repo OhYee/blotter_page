@@ -30,6 +30,7 @@ export const defaultContext: GlobalProps = {
     permission: 0,
     existed: false,
     qq_connected: false,
+    github_connected: false,
     self: false,
   },
 };
