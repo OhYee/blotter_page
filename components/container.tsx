@@ -53,6 +53,19 @@ export interface SpaceProps extends ComponentProps<'base'> {
   size?: number | 'small' | 'middle' | 'large';
   textCenter?: boolean;
   flexCenter?: boolean;
+  flex?:
+    | 'baseline'
+    | 'flex-start'
+    | 'flex-end'
+    | 'start'
+    | 'center'
+    | 'end'
+    | 'left'
+    | 'right'
+    | 'space-around'
+    | 'space-between'
+    | 'space-evenly'
+    | 'stretch';
 }
 
 const Space: React.FC<SpaceProps> = (props) => {
@@ -64,13 +77,22 @@ const Space: React.FC<SpaceProps> = (props) => {
     className,
     children,
     style,
+    flex,
   } = props;
+
+  var flexStyle = {};
+  if (!!flex) flexStyle = { flex: 'auto', justifyContent: flex };
 
   var classNames: string[] = [className, 'fullWidth'];
   if (flexCenter) classNames.push('flexCenter');
   if (textCenter) classNames.push('textCenter');
   return (
-    <S className={classNames.join(' ')} direction={direction} size={size} style={style}>
+    <S
+      className={classNames.join(' ')}
+      direction={direction}
+      size={size}
+      style={{ ...flexStyle, ...style }}
+    >
       {children}
     </S>
   );
