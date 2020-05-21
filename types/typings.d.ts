@@ -7,6 +7,14 @@ declare type TypeUInT<T, U> = {
   [K in keyof T]: T[K] extends U ? K : never;
 }[keyof T];
 
+type TypeUHasKeyOfT<T, U> = {
+  [K in keyof T]?: T[K] extends U[K] ? T[K] : T[K] | U[K];
+};
+
+declare type TypeTReplaceByU<T, U extends TypeUHasKeyOfT<T, U>> = {
+  [K in keyof T]: { K: T[K] } extends U[K] ? T[K] : U[K];
+};
+
 declare namespace Blotter {
   interface User {
     id: string;
