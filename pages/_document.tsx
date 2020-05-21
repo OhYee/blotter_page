@@ -64,6 +64,7 @@ var _hmt = _hmt || [];
 })();`,
             }}
           ></script>
+          <script src="/static/js/wasm_exec.js"></script>
         </Head>
         <head></head>
         <body>
