@@ -1,0 +1,1 @@
+{"ast":null,"code":"import initialWASM from '@/utils/wasm';\n\nasync function initialCrypto(callback) {\n  return await initialWASM('/static/crypto.wasm', 'ohyee_crypto', callback);\n}\n\nexport default initialCrypto;","map":null,"metadata":{},"sourceType":"module"}
