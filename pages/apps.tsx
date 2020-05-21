@@ -1,15 +1,23 @@
-import React, { ComponentProps } from 'react';
+import React, { ComponentProps, CSSProperties } from 'react';
 import Head from 'next/head';
 
-import { Card, List } from 'antd';
+import { Avatar, Card, List } from 'antd';
+import { LockFilled } from '@ant-design/icons';
 import Link from 'next/link';
 
 import styles from './apps.less';
 import Container from '@/components/container';
 import { Context } from '@/utils/global';
 
+const imageSuffix = ['jpg', 'gif', 'jpeg', 'png', 'svg', 'bmp'];
+
+function isImageUrl(url: string): boolean {
+  const suffix = url.split('.').slice(-1)[0].toLowerCase();
+  return imageSuffix.indexOf(suffix) != -1;
+}
+
 interface AppsProps extends ComponentProps<'base'> {
-  apps: { name: string; link: string; img: string }[];
+  apps: { name: string; link: string; img: string | JSX.Element; style?: CSSProperties }[];
 }
 
 interface AppsState {}
@@ -31,9 +39,10 @@ class Apps extends React.Component<AppsProps, AppsState> {
           img: 'https://static.oyohyee.com/apps/queue.png',
         },
         {
-          name: '动森大头菜股价',
-          link: '/apps/turnip',
-          img: 'https://n.sinaimg.cn/spider202042/363/w700h463/20200402/8c4c-irtymmv3834811.jpg',
+          name: '在线密码学',
+          link: '/apps/crypto',
+          img: 'Crypto',
+          style: { color: ' #109025', backgroundColor: '#a6d2a8' },
         },
       ],
     } as AppsProps;
@@ -59,7 +68,17 @@ class Apps extends React.Component<AppsProps, AppsState> {
                 <Link href={item.link}>
                   <a>
                     <div className={styles.img_wrapper}>
-                      <img className={styles.img} src={item.img} />
+                      {typeof item.img === 'string' ? (
+                        isImageUrl(item.img) ? (
+                          <Avatar size={64} src={item.img} style={item.style} />
+                        ) : (
+                          <Avatar size={64} style={item.style}>
+                            {item.img}
+                          </Avatar>
+                        )
+                      ) : (
+                        <Avatar size={64} icon={item.img} style={item.style} />
+                      )}
                     </div>
                     {item.name}
                   </a>
