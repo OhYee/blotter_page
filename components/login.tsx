@@ -47,7 +47,9 @@ export default function Login(props: { callback?: (boolean) => void }) {
       </Form.Item>
       <Form.Item>
         <Link href="/register">
-          <Button loading={loading}>注册</Button>
+          <Button loading={loading} onClick={(e) => props.callback(true)}>
+            注册
+          </Button>
         </Link>
         <Button type="primary" loading={loading} onClick={loginOK} style={{ float: 'right' }}>
           登录
