@@ -372,3 +372,32 @@ export const register = async (
 ) => {
   return await request('get', `/api/user/register`, { username, password }, callback);
 };
+
+export const users = async (
+  page: number,
+  size: number,
+  search?: string,
+  sort_field?: string,
+  sort_type?: number,
+  callback?: RequestCallback<{ total: number; users: Blotter.User[] }>,
+) => {
+  return await request(
+    'get',
+    '/api/users',
+    {
+      offset: (page - 1) * size,
+      number: size,
+      search,
+      sort_type,
+      sort_field,
+    },
+    callback,
+  );
+};
+
+export const reset_password = async (
+  id: string,
+  callback?: RequestCallback<{ password: string }>,
+) => {
+  return await request('get', '/api/admin/user/reset_password', { id }, callback);
+};
