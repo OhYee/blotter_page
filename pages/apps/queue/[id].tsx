@@ -23,7 +23,7 @@ import {
 } from 'antd';
 import Link from 'next/link';
 import { PaginationConfig } from 'antd/lib/pagination';
-import { ColumnsType } from 'antd/lib/table/interface';
+import { ColumnsType, TablePaginationConfig } from 'antd/lib/table/interface';
 import {
   UserOutlined,
   SolutionOutlined,
@@ -214,7 +214,7 @@ class QueueDetail extends React.Component<QueueDetailProps, QueueDetailState> {
       .finally(() => this.setState({ opLoading: false }));
   };
 
-  onPageChange = (pagination: PaginationConfig) => {
+  onPageChange = (pagination: TablePaginationConfig) => {
     var { current, pageSize } = pagination;
     if (typeof current === 'undefined') current = this.state.page;
     if (typeof pageSize === 'undefined') pageSize = this.state.size;
@@ -310,7 +310,7 @@ class QueueDetail extends React.Component<QueueDetailProps, QueueDetailState> {
               okText="关闭！"
               cancelText="算了"
             >
-              <Button type="danger">关闭机场</Button>
+              <Button danger>关闭机场</Button>
             </Popconfirm>
           </Space>
         </If>
@@ -396,7 +396,7 @@ class QueueDetail extends React.Component<QueueDetailProps, QueueDetailState> {
         render: (_, record) => {
           return (
             <Popconfirm title="确认强制出队？" onConfirm={() => this.out(record.id)}>
-              <Button type="danger">强制出队</Button>
+              <Button danger>强制出队</Button>
             </Popconfirm>
           );
         },

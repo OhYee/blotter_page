@@ -566,9 +566,9 @@ function TotpTab(props: React.PropsWithChildren<{}>): JSX.Element {
       </TextCenter>
       <Space direction="horizontal">
         <strong>位数</strong>
-        <InputNumber value={digit} min={1} onChange={(v) => setDigit(v)} />
+        <InputNumber value={digit} min={1} onChange={(v) => setDigit(parseInt(v.toString()))} />
         <strong>时间周期</strong>
-        <InputNumber value={diff} min={1} onChange={(v) => setDiff(v)} />
+        <InputNumber value={diff} min={1} onChange={(v) => setDiff(parseInt(v.toString()))} />
         <Button onClick={(e) => calc()}>刷新</Button>
       </Space>
       <Space>

@@ -8,7 +8,7 @@ import {
   useDrop,
   DragObjectWithType,
 } from 'react-dnd';
-import HTML5Backend from 'react-dnd-html5-backend';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 import { TableProps } from 'antd/lib/table';
 import styles from '@/components/table.less';
 
@@ -21,7 +21,7 @@ interface DragDropObject extends DragObjectWithType {
   index: number;
 }
 
-const DragableRow = props => {
+const DragableRow = (props) => {
   const ref = React.useRef();
   const { dragKey, index, moveRow, ...restProps } = props;
   var { style } = props;
@@ -50,11 +50,7 @@ const DragableRow = props => {
 class DragableTable<T extends object = any> extends React.Component<DragableTableProps<T>> {
   render() {
     var { dragKey, moveRow, ...restProps } = this.props;
-    dragKey = !!dragKey
-      ? dragKey
-      : Math.random()
-          .toString(36)
-          .slice(-8);
+    dragKey = !!dragKey ? dragKey : Math.random().toString(36).slice(-8);
     return (
       <DndProvider backend={HTML5Backend}>
         <Table<T>
@@ -66,11 +62,11 @@ class DragableTable<T extends object = any> extends React.Component<DragableTabl
             },
           }}
           onRow={(record, index) => ({
-            onClick: event => {},
-            onDoubleClick: event => {},
-            onContextMenu: event => {},
-            onMouseEnter: event => {},
-            onMouseLeave: event => {},
+            onClick: (event) => {},
+            onDoubleClick: (event) => {},
+            onContextMenu: (event) => {},
+            onMouseEnter: (event) => {},
+            onMouseLeave: (event) => {},
             index,
             moveRow: moveRow,
             dragKey,

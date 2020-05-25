@@ -133,7 +133,7 @@ class AdminMenus extends React.Component<AdminMenusProps, AdminMenusState> {
           okText="删除！"
           cancelText="算了"
         >
-          <Button size="small" type="danger">
+          <Button size="small" danger>
             <Icon type="delete" />
             删除
           </Button>

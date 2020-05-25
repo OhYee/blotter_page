@@ -7,7 +7,11 @@ import { Card, Table, Button, Typography, Popconfirm, Input, Row, Col, Checkbox 
 import { ColumnProps } from 'antd/lib/table';
 import { Icon } from '@ant-design/compatible';
 import { PaginationConfig } from 'antd/lib/pagination';
-import { SorterResult, TableCurrentDataSource } from 'antd/lib/table/interface';
+import {
+  SorterResult,
+  TableCurrentDataSource,
+  TablePaginationConfig,
+} from 'antd/lib/table/interface';
 
 import Container from '@/components/container';
 import TagPart from '@/components/tag';
@@ -117,7 +121,7 @@ class AdminPostList extends React.Component<AdminPostListProps, AdminPostListSta
       dataIndex: 'url',
       width: 150,
       ellipsis: true,
-      render: text => (
+      render: (text) => (
         <div style={{ width: 150 - 16 * 2 }} title={text}>
           <Typography.Text style={{ width: '100%' }} ellipsis={true}>
             {text}
@@ -171,7 +175,7 @@ class AdminPostList extends React.Component<AdminPostListProps, AdminPostListSta
       ellipsis: true,
       render: (text, record, index) => (
         <div style={{ width: 200 - 16 * 2, whiteSpace: 'normal' }}>
-          {record.tags.map(tag => (
+          {record.tags.map((tag) => (
             <TagPart key={tag.short} tag={tag} />
           ))}
         </div>
@@ -198,7 +202,7 @@ class AdminPostList extends React.Component<AdminPostListProps, AdminPostListSta
             okText="删除！"
             cancelText="算了"
           >
-            <Button size="small" type="danger">
+            <Button size="small" danger>
               <Icon type="delete" />
               删除
             </Button>
@@ -211,11 +215,11 @@ class AdminPostList extends React.Component<AdminPostListProps, AdminPostListSta
   onDelete = async (id: string) => {
     var r = await postDelete(id);
     ShowNotification(r);
-    this.setState(state => ({ data: state.data.filter(post => post.id != id) }));
+    this.setState((state) => ({ data: state.data.filter((post) => post.id != id) }));
   };
 
   onTableChange = (
-    pagination: PaginationConfig,
+    pagination: TablePaginationConfig,
     filters: Record<string, React.ReactText[] | null>,
     sorter: SorterResult<T>,
     extra: TableCurrentDataSource<T>,
@@ -238,10 +242,10 @@ class AdminPostList extends React.Component<AdminPostListProps, AdminPostListSta
     return (
       <TagSearch
         tags={this.state[name]}
-        onAdd={tag => {
-          this.setState(state => {
+        onAdd={(tag) => {
+          this.setState((state) => {
             var tags = state[name];
-            tags.filter(item => item.id !== tag.id);
+            tags.filter((item) => item.id !== tag.id);
             tags.push(tag);
 
             var ret = { page: 1 };
@@ -249,10 +253,10 @@ class AdminPostList extends React.Component<AdminPostListProps, AdminPostListSta
             return ret;
           }, this.getData);
         }}
-        onDelete={tag => {
-          this.setState(state => {
+        onDelete={(tag) => {
+          this.setState((state) => {
             var tags = state[name];
-            tags.filter(item => item.id !== tag.id);
+            tags.filter((item) => item.id !== tag.id);
 
             var ret = { page: 1 };
             ret[name] = tags;
@@ -281,16 +285,16 @@ class AdminPostList extends React.Component<AdminPostListProps, AdminPostListSta
         </Row>
         <Row gutter={10}>
           <Col>搜索范围：</Col>
-          {checkboxs.map(item => (
+          {checkboxs.map((item) => (
             <Col key={item.key}>
               <Checkbox
                 checked={this.state.search_fields.indexOf(item.key) !== -1}
-                onChange={e => {
+                onChange={(e) => {
                   const checked = e.target.checked;
                   console.log(item, checked, this.state.search_fields);
-                  this.setState(state => {
+                  this.setState((state) => {
                     var { search_fields } = state;
-                    search_fields = search_fields.filter(it => it != item.key);
+                    search_fields = search_fields.filter((it) => it != item.key);
                     if (checked) {
                       search_fields.push(item.key);
                     }
@@ -318,7 +322,7 @@ class AdminPostList extends React.Component<AdminPostListProps, AdminPostListSta
     return (
       <Container lg={20} md={20} sm={24} xs={24}>
         <Context.Consumer>
-          {context => (
+          {(context) => (
             <Head>
               <title>{`文章列表|后台|${context.blog_name}`}</title>
             </Head>
@@ -327,12 +331,12 @@ class AdminPostList extends React.Component<AdminPostListProps, AdminPostListSta
         <Card>
           {this.renderSearch()}
           <Table<T>
-            rowKey={record => record.id}
+            rowKey={(record) => record.id}
             columns={this.columns}
             scroll={{ x: true }}
             dataSource={this.state.data}
             loading={this.state.loading}
-            onChange={this.onTableChange}
+            onChange={(a, b, c, d) => this.onTableChange(a, b, Array.isArray(c) ? c[0] : c, d)}
             title={() => (
               <div style={{ textAlign: 'right' }}>
                 <Link href="/admin/post">

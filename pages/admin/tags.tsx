@@ -6,7 +6,11 @@ import { Card, Table, Button, Typography, Form, Input, Popconfirm } from 'antd';
 import { ColumnProps } from 'antd/lib/table';
 import { Icon } from '@ant-design/compatible';
 import { PaginationConfig } from 'antd/lib/pagination';
-import { SorterResult, TableCurrentDataSource } from 'antd/lib/table/interface';
+import {
+  SorterResult,
+  TableCurrentDataSource,
+  TablePaginationConfig,
+} from 'antd/lib/table/interface';
 
 import Container from '@/components/container';
 import TagPart from '@/components/tag';
@@ -67,7 +71,7 @@ class AdminTagList extends React.Component<AdminTagListProps, AdminTagListState>
   };
 
   renderEditableCell = (idx: number, key: string) => {
-    const width = this.columns.find(item => item.key == key).width;
+    const width = this.columns.find((item) => item.key == key).width;
     const padding = 16;
     var style = { width: undefined };
     if (typeof width === 'number') {
@@ -81,8 +85,8 @@ class AdminTagList extends React.Component<AdminTagListProps, AdminTagListState>
           style={{ width: '100%' }}
           ellipsis={true}
           editable={{
-            onChange: value => {
-              this.setState(state => {
+            onChange: (value) => {
+              this.setState((state) => {
                 var { data } = state;
                 data[idx][key] = value;
                 return { data };
@@ -165,7 +169,7 @@ class AdminTagList extends React.Component<AdminTagListProps, AdminTagListState>
             okText="删除！"
             cancelText="算了"
           >
-            <Button size="small" type="danger">
+            <Button size="small" danger>
               <Icon type="delete" />
               删除
             </Button>
@@ -176,7 +180,7 @@ class AdminTagList extends React.Component<AdminTagListProps, AdminTagListState>
   ];
 
   onInsert = () => {
-    this.setState(state => {
+    this.setState((state) => {
       var data = state.data;
       data.unshift({
         id: '',
@@ -186,7 +190,7 @@ class AdminTagList extends React.Component<AdminTagListProps, AdminTagListState>
         icon: '',
         count: 0,
       });
-      data = data.map(d => d);
+      data = data.map((d) => d);
       return { data };
     });
   };
@@ -200,7 +204,7 @@ class AdminTagList extends React.Component<AdminTagListProps, AdminTagListState>
   onDelete = async (id: string) => {
     var r = await tagDelete(id);
     ShowNotification(r);
-    this.setState(state => ({ data: state.data.filter(tag => tag.id != id) }));
+    this.setState((state) => ({ data: state.data.filter((tag) => tag.id != id) }));
   };
 
   searchOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -208,7 +212,7 @@ class AdminTagList extends React.Component<AdminTagListProps, AdminTagListState>
     waitUntil(
       'admin_tags_search',
       () => {
-        this.setState(state => {
+        this.setState((state) => {
           return {
             page: 1,
             keyword: value,
@@ -221,7 +225,7 @@ class AdminTagList extends React.Component<AdminTagListProps, AdminTagListState>
   };
 
   onTableChange = (
-    pagination: PaginationConfig,
+    pagination: TablePaginationConfig,
     filters: Record<string, React.ReactText[] | null>,
     sorter: SorterResult<T>,
     extra: TableCurrentDataSource<T>,
@@ -242,7 +246,7 @@ class AdminTagList extends React.Component<AdminTagListProps, AdminTagListState>
     return (
       <Container lg={20} md={20} sm={24} xs={24}>
         <Context.Consumer>
-          {context => (
+          {(context) => (
             <Head>
               <title>{`标签列表|后台|${context.blog_name}`}</title>
             </Head>
@@ -262,12 +266,12 @@ class AdminTagList extends React.Component<AdminTagListProps, AdminTagListState>
           </Form>
 
           <Table<T>
-            rowKey={record => record.id}
+            rowKey={(record) => record.id}
             columns={this.columns}
             scroll={{ x: true }}
             dataSource={this.state.data}
             loading={this.state.loading}
-            onChange={this.onTableChange}
+            onChange={(a, b, c, d) => this.onTableChange(a, b, Array.isArray(c) ? c[0] : c, d)}
             pagination={{
               current: this.state.page,
               total: this.state.total,

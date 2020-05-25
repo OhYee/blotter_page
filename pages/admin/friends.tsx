@@ -51,7 +51,7 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
   };
 
   renderEditableCell = (idx: number, key: string) => {
-    const width = this.columns.find(item => item.key == key).width;
+    const width = this.columns.find((item) => item.key == key).width;
     const padding = 16;
     var style = { width: undefined };
     if (typeof width === 'number') {
@@ -65,12 +65,12 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
           style={{ width: '100%' }}
           ellipsis={true}
           editable={{
-            onChange: value => {
-              this.setState(state => {
+            onChange: (value) => {
+              this.setState((state) => {
                 var { data } = state;
                 data[idx][key] = value;
-                data.map(d => {
-                  d.posts = d.posts.map(dd => dd);
+                data.map((d) => {
+                  d.posts = d.posts.map((dd) => dd);
                   return d;
                 });
                 return { data };
@@ -145,10 +145,10 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
         <Popconfirm
           title="真的要删除么？"
           onConfirm={() => {
-            this.setState(state => {
-              var data = state.data.filter(item => item.name !== record.name);
-              data.map(d => {
-                d.posts = d.posts.map(dd => dd);
+            this.setState((state) => {
+              var data = state.data.filter((item) => item.name !== record.name);
+              data.map((d) => {
+                d.posts = d.posts.map((dd) => dd);
                 return d;
               });
               return { data };
@@ -157,7 +157,7 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
           okText="删除！"
           cancelText="算了"
         >
-          <Button size="small" type="danger">
+          <Button size="small" danger>
             <Icon type="delete" />
             删除
           </Button>
@@ -171,11 +171,11 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
       <Button
         type="primary"
         onClick={() => {
-          this.setState(state => {
+          this.setState((state) => {
             var { data } = state;
             data[index].posts.unshift({ title: randomString(), link: '' });
-            data.map(d => {
-              d.posts = d.posts.map(dd => dd);
+            data.map((d) => {
+              d.posts = d.posts.map((dd) => dd);
               return d;
             });
             return { data };
@@ -192,7 +192,7 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
     <div style={{ textAlign: 'right' }}>
       <Button
         onClick={() => {
-          this.setState(state => {
+          this.setState((state) => {
             var { data } = state;
             data.push({
               name: randomString(),
@@ -202,8 +202,8 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
               rss: '',
               posts: [],
             });
-            data = data.map(d => {
-              d.posts = d.posts.map(dd => dd);
+            data = data.map((d) => {
+              d.posts = d.posts.map((dd) => dd);
               return d;
             });
             return { data };
@@ -252,11 +252,11 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
           <Popconfirm
             title="真的要删除么？"
             onConfirm={() => {
-              this.setState(state => {
+              this.setState((state) => {
                 var data = state.data;
-                data[index].posts = data[index].posts.filter(item => item.title !== record.title);
-                data.map(d => {
-                  d.posts = d.posts.map(dd => dd);
+                data[index].posts = data[index].posts.filter((item) => item.title !== record.title);
+                data.map((d) => {
+                  d.posts = d.posts.map((dd) => dd);
                   return d;
                 });
                 return { data };
@@ -265,7 +265,7 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
             okText="删除！"
             cancelText="算了"
           >
-            <Button size="small" type="danger">
+            <Button size="small" danger>
               <Icon type="delete" />
               删除
             </Button>
@@ -274,7 +274,7 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
       },
     ];
     const renderSubEditableCell = (index: number, idx: number, key: string) => {
-      const width = columns.find(item => item.key == key).width;
+      const width = columns.find((item) => item.key == key).width;
       const padding = 16;
       var style = { width: undefined };
       if (typeof width === 'number') {
@@ -288,12 +288,12 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
             style={{ width: '100%' }}
             ellipsis={true}
             editable={{
-              onChange: value => {
-                this.setState(state => {
+              onChange: (value) => {
+                this.setState((state) => {
                   var { data } = state;
                   data[index].posts[idx][key] = value;
-                  data.map(d => {
-                    d.posts = d.posts.map(dd => dd);
+                  data.map((d) => {
+                    d.posts = d.posts.map((dd) => dd);
                     return d;
                   });
                   return { data };
@@ -318,15 +318,15 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
         size="small"
         dragKey={`${index}`}
         moveRow={(i, j) => {
-          this.setState(state => {
+          this.setState((state) => {
             var data = state.data;
 
             var temp = data[index].posts[i];
             data[index].posts[i] = data[index].posts[j];
             data[index].posts[j] = temp;
 
-            data.map(d => {
-              d.posts = d.posts.map(dd => dd);
+            data.map((d) => {
+              d.posts = d.posts.map((dd) => dd);
               return d;
             });
             return { data };
@@ -341,7 +341,7 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
     return (
       <Container lg={20} md={20} sm={24} xs={24}>
         <Context.Consumer>
-          {context => (
+          {(context) => (
             <Head>
               <title>{`友链列表|后台|${context.blog_name}`}</title>
             </Head>
@@ -359,13 +359,13 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
             dragKey="root"
             scroll={{ x: true }}
             moveRow={(i, j) => {
-              this.setState(state => {
+              this.setState((state) => {
                 var { data } = state;
                 var temp = data[i];
                 data[i] = data[j];
                 data[j] = temp;
-                data.map(d => {
-                  d.posts = d.posts.map(dd => dd);
+                data.map((d) => {
+                  d.posts = d.posts.map((dd) => dd);
                   return d;
                 });
                 return { data };

@@ -75,7 +75,7 @@ interface PostEditState {
 class PostEdit extends React.Component<PostEditProps, PostEditState> {
   static defaultProps = {};
   formRef = React.createRef<FormInstance>();
-  previewRef = React.createRef<Card & HTMLDivElement>();
+  previewRef = React.createRef<HTMLDivElement>();
   now = moment(new Date());
   editor: any;
 
@@ -365,7 +365,7 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
           <Form.Item>
             <InputNumber
               value={this.state.fontSize}
-              onChange={(v) => this.setState({ fontSize: v }, () => {})}
+              onChange={(v) => this.setState({ fontSize: parseInt(v.toString()) }, () => {})}
             />
           </Form.Item>
         </Col>

@@ -18,7 +18,7 @@ import {
 } from 'antd';
 import Link from 'next/link';
 import { PaginationConfig } from 'antd/lib/pagination';
-import { ColumnsType } from 'antd/lib/table/interface';
+import { ColumnsType, TablePaginationConfig } from 'antd/lib/table/interface';
 import { UserOutlined, SolutionOutlined, CheckOutlined } from '@ant-design/icons';
 
 import Container, { Space, TextCenter } from '@/components/container';
@@ -74,7 +74,7 @@ class Queues extends React.Component<QueuesProps, QueuesState> {
     this.setState({ total: r.total, queues: r.queues });
   };
 
-  onPageChange = (pagination: PaginationConfig) => {
+  onPageChange = (pagination: TablePaginationConfig) => {
     var { current, pageSize } = pagination;
     if (typeof current === 'undefined') current = this.state.page;
     if (typeof pageSize === 'undefined') pageSize = this.state.size;
