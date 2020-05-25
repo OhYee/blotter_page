@@ -421,10 +421,7 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
 
   render() {
     return (
-      <Layout
-        style={{ minHeight: '100%' }}
-        className={`${this.context.theme} ${this.state.collapsed ? '' : styles.dimmed}`}
-      >
+      <Layout style={{ minHeight: '100%' }} className={`${this.context.theme}`}>
         <Context.Consumer>
           {(context) => (
             <Head>
@@ -432,6 +429,9 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
             </Head>
           )}
         </Context.Consumer>
+        {this.state.collapsed ? null : (
+          <div className={styles.dimmed} onClick={(e) => this.setState({ collapsed: true })} />
+        )}
         <Layout
           className={'shadow'}
           style={{ position: 'fixed', zIndex: 100, height: '100vh', overflow: 'auto' }}
