@@ -31,12 +31,12 @@ export default function QuickLogin(
   return (
     <Space direction="horizontal">
       {prefix}
-      <Link href="/api/user/jump_to_qq">
+      <a href="/api/user/jump_to_qq" className="link">
         <QqCircleFilled style={{ color: '#00A2FD', ...style }} />
-      </Link>
-      <Link href="/api/user/jump_to_github">
+      </a>
+      <a href="/api/user/jump_to_github" className="link">
         <GithubFilled style={{ ...style }} />
-      </Link>
+      </a>
       {/* TODO: Waiting for wechat */}
       {/* <Link href="/api/user/jump_to_weixin">
             <WechatSVG style={{ color: '#07C160', ...style }} />
