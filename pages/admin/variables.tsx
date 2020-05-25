@@ -6,7 +6,7 @@ import { Card, Button } from 'antd';
 import { SaveOutlined } from '@ant-design/icons';
 
 import { DndProvider } from 'react-dnd';
-import HTML5Backend from 'react-dnd-html5-backend';
+import { HTML5Backend } from 'react-dnd-html5-backend';
 
 import Container from '@/components/container';
 
@@ -47,7 +47,7 @@ class AdminVariables extends React.Component<AdminVariablesProps, AdminVariables
     return (
       <Container lg={20} md={20} sm={24} xs={24}>
         <Context.Consumer>
-          {context => (
+          {(context) => (
             <Head>
               <title>{`变量列表|后台|${context.blog_name}`}</title>
             </Head>
@@ -58,7 +58,7 @@ class AdminVariables extends React.Component<AdminVariablesProps, AdminVariables
             <DndProvider backend={HTML5Backend}>
               <DynamicForm
                 value={this.state.variables}
-                callback={value => {
+                callback={(value) => {
                   this.setState({ variables: value });
                 }}
               />
@@ -73,7 +73,7 @@ class AdminVariables extends React.Component<AdminVariablesProps, AdminVariables
           className="shadow"
           onClick={async () => {
             const v = this.state.variables;
-            const data = Object.keys(v).map(key => ({ key, value: v[key] }));
+            const data = Object.keys(v).map((key) => ({ key, value: v[key] }));
             var r = await variablesSet(data);
             ShowNotification(r);
           }}
