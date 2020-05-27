@@ -7,7 +7,7 @@ import Link from 'next/link';
 import { Input, Card, Button, Row, Col, Checkbox, List } from 'antd';
 import { Icon } from '@ant-design/compatible';
 
-import Container from '@/components/container';
+import Container, { Space } from '@/components/container';
 import PostList from '@/components/post_list';
 
 import { Context } from '@/utils/global';
@@ -119,10 +119,10 @@ class Index extends React.Component<IndexProps, IndexState> {
     return (
       <TagSearch
         tags={this.state[name]}
-        onAdd={tag => {
-          this.setState(state => {
+        onAdd={(tag) => {
+          this.setState((state) => {
             var tags = state[name];
-            tags = tags.filter(item => item.id != tag.id);
+            tags = tags.filter((item) => item.id != tag.id);
             tags.push(tag);
 
             var ret = { page: 1 };
@@ -130,10 +130,10 @@ class Index extends React.Component<IndexProps, IndexState> {
             return ret;
           }, this.getPosts);
         }}
-        onDelete={tag => {
-          this.setState(state => {
+        onDelete={(tag) => {
+          this.setState((state) => {
             var tags = state[name];
-            tags = tags.filter(item => item.id != tag.id);
+            tags = tags.filter((item) => item.id != tag.id);
 
             var ret = { page: 1 };
             ret[name] = tags;
@@ -163,16 +163,16 @@ class Index extends React.Component<IndexProps, IndexState> {
         </Row>
         <Row gutter={10}>
           <Col>搜索范围：</Col>
-          {checkboxs.map(item => (
+          {checkboxs.map((item) => (
             <Col key={item.key}>
               <Checkbox
                 checked={this.state.search_fields.indexOf(item.key) !== -1}
-                onChange={e => {
+                onChange={(e) => {
                   const checked = e.target.checked;
                   console.log(item, checked, this.state.search_fields);
-                  this.setState(state => {
+                  this.setState((state) => {
                     var { search_fields } = state;
-                    search_fields = search_fields.filter(it => it != item.key);
+                    search_fields = search_fields.filter((it) => it != item.key);
                     if (checked) {
                       search_fields.push(item.key);
                     }
@@ -200,42 +200,37 @@ class Index extends React.Component<IndexProps, IndexState> {
     return (
       <div>
         <Context.Consumer>
-          {context => (
+          {(context) => (
             <Head>
               <title>{`首页|${context.blog_name}`}</title>
             </Head>
           )}
         </Context.Consumer>
         <Container>
-          <Card className="shadow" style={{ lineHeight: '2em' }}>
-            {this.renderSearch()}
-          </Card>
-        </Container>
-        <Container>
-          {this.state.tags.map(tag => (
-            <TagPart tag={tag} key={tag.short} />
-          ))}
-          <PostList
-            posts={this.state.posts}
-            header={this.state.total == 0 ? undefined : `共 ${this.state.total} 条搜索结果`}
-            loading={this.state.loading}
-            page={this.state.page}
-            size={this.state.size}
-            total={this.state.total}
-            callback={this.state.callback}
-          />
-          <div style={{ textAlign: 'center' }}>
-            <Link href="/archives">
-              <Button
-                type="dashed"
-                style={{
-                  background: 'transparent',
-                }}
-              >
-                查看更多
-              </Button>
-            </Link>
-          </div>
+          <Space size="large">
+            <Card className="shadow" style={{ lineHeight: '2em' }}>
+              {this.renderSearch()}
+            </Card>
+
+            {this.state.tags.map((tag) => (
+              <TagPart tag={tag} key={tag.short} />
+            ))}
+
+            <PostList
+              posts={this.state.posts}
+              header={this.state.total == 0 ? undefined : `共 ${this.state.total} 条搜索结果`}
+              loading={this.state.loading}
+              page={this.state.page}
+              size={this.state.size}
+              total={this.state.total}
+              callback={this.state.callback}
+            />
+            <div className="textCenter">
+              <Link href="/archives">
+                <Button type="dashed">查看更多</Button>
+              </Link>
+            </div>
+          </Space>
         </Container>
       </div>
     );
