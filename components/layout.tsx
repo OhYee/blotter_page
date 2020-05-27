@@ -11,16 +11,12 @@ import {
   Layout,
   BackTop,
   Row,
-  Divider,
-  Form,
   Menu,
   Modal,
-  Input,
   Col,
-  Tooltip,
   Avatar,
   Popover,
-  List,
+  Typography,
 } from 'antd';
 import { Icon } from '@ant-design/compatible';
 const { Footer, Sider, Content } = Layout;
@@ -40,6 +36,7 @@ import styles from './layout.less';
 import { AvatarProps } from 'antd/lib/avatar';
 import If from './if';
 import { LoginModal } from '@/components/login';
+import Paragraph from 'antd/lib/skeleton/Paragraph';
 
 interface BasicLayoutProps extends ComponentProps<'base'>, WithRouterProps {}
 interface BasicLayoutState {
@@ -373,47 +370,45 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
     return (
       <Container>
         <Context.Consumer>
-          {(context) => {
-            return (
-              <div className={styles.footer}>
-                <p>
-                  <a href="/rss.xml">
-                    <Icon style={{ width: '1em' }} component={this.renderRSSIcon} />
-                    RSS订阅
-                  </a>
-                </p>
-                <p>
-                  <Icon type="eye" style={{ fontSize: '0.75em' }} /> 全站访问量 {context.view}
-                </p>
-                <p>
-                  <span className="right5">2017 – {new Date().getFullYear()}</span>
-                  <a href="http://beian.miit.gov.cn/">{context.beian}</a>
-                </p>
-                <p>
-                  Powered by <a href="https://github.com/OhYee/blotter">Blotter</a>
-                  (Go + React)
-                </p>
-                <p>
-                  <span className="right5">
-                    <a href="/sitemap.txt">站点地图(TXT)</a>
-                  </span>
-                  <span>
-                    <a href="/sitemap.xml">站点地图(XML)</a>
-                  </span>
-                </p>
-                {context.friends.length > 0 ? (
-                  <p className={styles.friends}>
-                    <strong>友情链接：</strong>
-                    {context.friends.map((friend) => (
-                      <span key={friend.name}>
-                        <a href={friend.link}>{friend.name}</a>
-                      </span>
-                    ))}
-                  </p>
-                ) : null}
-              </div>
-            );
-          }}
+          {(context) => (
+            <Typography.Paragraph className={styles.footer}>
+              <Typography.Paragraph>
+                <a href="/rss.xml">
+                  <Icon style={{ width: '1em' }} component={this.renderRSSIcon} />
+                  RSS订阅
+                </a>
+              </Typography.Paragraph>
+              <Typography.Paragraph>
+                <Icon type="eye" style={{ fontSize: '0.75em' }} /> 全站访问量 {context.view}
+              </Typography.Paragraph>
+              <Typography.Paragraph>
+                <span className="right5">2017 – {new Date().getFullYear()}</span>
+                <a href="http://beian.miit.gov.cn/">{context.beian}</a>
+              </Typography.Paragraph>
+              <Typography.Paragraph>
+                Powered by <a href="https://github.com/OhYee/blotter">Blotter</a>
+                (Go + React)
+              </Typography.Paragraph>
+              <Typography.Paragraph>
+                <span className="right5">
+                  <a href="/sitemap.txt">站点地图(TXT)</a>
+                </span>
+                <span>
+                  <a href="/sitemap.xml">站点地图(XML)</a>
+                </span>
+              </Typography.Paragraph>
+              <If condition={context.friends.length > 0}>
+                <Typography.Paragraph className={styles.friends}>
+                  <strong>友情链接：</strong>
+                  {context.friends.map((friend) => (
+                    <span key={friend.name}>
+                      <a href={friend.link}>{friend.name}</a>
+                    </span>
+                  ))}
+                </Typography.Paragraph>
+              </If>
+            </Typography.Paragraph>
+          )}
         </Context.Consumer>
       </Container>
     );
