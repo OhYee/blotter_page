@@ -105,7 +105,7 @@ class Friends extends React.Component<FriendsProps, FriendsState> {
     return (
       <Container>
         <Context.Consumer>
-          {context => (
+          {(context) => (
             <Fragment>
               <Head>
                 <title>{`友情链接|${context.blog_name}`}</title>
@@ -145,7 +145,7 @@ class Friends extends React.Component<FriendsProps, FriendsState> {
               </Card>
 
               <List
-                grid={{ xl: 3, md: 2, sm: 1, gutter: 30 }}
+                grid={{ xxl: 3, xl: 3, md: 2, sm: 1, xs: 1, gutter: 30 }}
                 dataSource={this.props.friends}
                 renderItem={(friend: Blotter.Friend) => (
                   <List.Item key={friend.link} style={{ width: '100vw' }}>
