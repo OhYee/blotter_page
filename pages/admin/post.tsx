@@ -35,6 +35,7 @@ import styles from '@/pages/post/post.less';
 import { Context } from '@/utils/global';
 import ShowNotification from '@/utils/notification';
 import { setLocalStorage, getLocalStorage, removeLocalStorage } from '@/utils/storage';
+import { ButtonProps } from 'antd/lib/button';
 
 function Editor(props) {
   const { onChange, getRef, ...restProps } = props;
@@ -55,6 +56,32 @@ function Editor(props) {
     </div>
   );
 }
+
+const Press: React.FC<
+  ButtonProps & {
+    onPressing?: (arg: any) => any;
+    ms?: number;
+    initArg?: any;
+  }
+> = (props) => {
+  const { initArg, onPressing = () => {}, ms = 500, ...restProps } = props;
+  const [value, setValue] = React.useState(0);
+  //   const [arg, setArg] = React.useState(initArg);
+  return (
+    <Button
+      {...restProps}
+      onMouseDown={(e) => {
+        var arg = initArg;
+        clearInterval(value);
+        const interval = (setInterval(() => {
+          arg = onPressing(arg);
+        }, ms) as unknown) as number;
+        setValue(interval);
+      }}
+      onMouseUp={(e) => clearInterval(value)}
+    />
+  );
+};
 
 interface PostEditProps extends ComponentProps<'base'>, WithRouterProps {}
 
@@ -411,34 +438,43 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
     />
   );
 
-  renderOffset = () => (
-    <Button.Group style={{ position: 'fixed', right: '20px', top: '160px' }}>
-      <Button
-        onClick={() => {
-          this.setState(
-            (state) => ({ offset: state.offset - 10 }),
-            () => {
-              if (!!this.editor)
-                this.syncScroll(this.editor.getScrollTop(), this.editor.getScrollHeight());
-            },
-          );
-        }}
-        icon={<MinusOutlined />}
-      />
-      <Button
-        onClick={() => {
-          this.setState(
-            (state) => ({ offset: state.offset + 10 }),
-            () => {
-              if (!!this.editor)
-                this.syncScroll(this.editor.getScrollTop(), this.editor.getScrollHeight());
-            },
-          );
-        }}
-        icon={<PlusOutlined />}
-      />
-    </Button.Group>
-  );
+  renderOffset = () => {
+    const diff = 10;
+    const scroll = (diff: number) => {
+      this.setState(
+        (state) => ({ offset: state.offset + diff }),
+        () => {
+          if (!!this.editor)
+            this.syncScroll(this.editor.getScrollTop(), this.editor.getScrollHeight());
+        },
+      );
+    };
+
+    return (
+      <Button.Group style={{ position: 'fixed', right: '20px', top: '160px' }}>
+        <Press
+          initArg={-diff}
+          onClick={() => scroll(-diff)}
+          onPressing={(arg) => {
+            scroll(arg - diff);
+            return arg - diff;
+          }}
+          ms={10}
+          icon={<MinusOutlined />}
+        />
+        <Press
+          initArg={diff}
+          onClick={() => scroll(diff)}
+          onPressing={(arg) => {
+            scroll(arg + diff);
+            return arg + diff;
+          }}
+          ms={10}
+          icon={<PlusOutlined />}
+        />
+      </Button.Group>
+    );
+  };
 
   render() {
     return (
@@ -484,7 +520,10 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
           {this.isSidePreview() ? (
             <Col span={12}>
               <div className={styles.preview + ' shadow'} ref={this.previewRef}>
-                <Card style={{ minHeight: '100%' }}>{this.renderPreview()}</Card>
+                <Card>
+                  {this.renderPreview()}
+                  <div style={{ height: 'calc(100vh - 20px)' }}></div>
+                </Card>
               </div>
             </Col>
           ) : null}
