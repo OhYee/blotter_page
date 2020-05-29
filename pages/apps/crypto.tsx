@@ -512,7 +512,16 @@ function DESTab(props: React.PropsWithChildren<{}>): JSX.Element {
       encodeLabel="加密"
       decodeLabel="解密"
       encode={(ordinary: Uint8Array, key: Uint8Array) => {
-        const ret = crypto.exports.des(ordinary, key);
+        const ret = crypto.exports.des_encrypto(ordinary, key);
+        if (ret.success) {
+          return ret.return;
+        } else {
+          showError(ret.return);
+          return new Uint8Array();
+        }
+      }}
+      decode={(code: Uint8Array, key: Uint8Array) => {
+        const ret = crypto.exports.des_decrypto(code, key);
         if (ret.success) {
           return ret.return;
         } else {
