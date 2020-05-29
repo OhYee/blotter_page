@@ -34,7 +34,7 @@ import styles from '@/pages/post/post.less';
 
 import { Context } from '@/utils/global';
 import ShowNotification from '@/utils/notification';
-import { setLocalStorage, getLocalStorage } from '@/utils/storage';
+import { setLocalStorage, getLocalStorage, removeLocalStorage } from '@/utils/storage';
 
 function Editor(props) {
   const { onChange, getRef, ...restProps } = props;
@@ -221,11 +221,17 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
     obj.publish_time = obj.publish_time.unix();
     obj.edit_time = obj.edit_time.unix();
     obj.raw = this.editor.getValue();
-    var r = await postEdit(obj as Blotter.PostAll);
-    ShowNotification(r);
-    this.setState({ submitDisabled: false });
-    Router.push(`/admin/post?url=${obj.url}`);
-    this.getData(obj.url);
+    postEdit(obj as Blotter.PostAll)
+      .then((r) => {
+        if (ShowNotification(r)) {
+          Router.push(`/admin/post?url=${obj.url}`);
+          this.getData(obj.url);
+          removeLocalStorage(`post-${this.props.router.query.url as string}`);
+        }
+      })
+      .finally(() => {
+        this.setState({ submitDisabled: false });
+      });
   };
 
   renderEditor = () => {
