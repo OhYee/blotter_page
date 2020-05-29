@@ -19,7 +19,8 @@ export type Crypto = WASMPackage<{
     diff: number,
     digit: number,
   ) => WASMFuncReturn<{ code: number; left: number }>;
-  des: (input: Uint8Array, key: Uint8Array) => WASMFuncReturn<Uint8Array>;
+  des_encrypto: (input: Uint8Array, key: Uint8Array) => WASMFuncReturn<Uint8Array>;
+  des_decrypto: (input: Uint8Array, key: Uint8Array) => WASMFuncReturn<Uint8Array>;
 }>;
 
 async function initialCrypto(callback?: () => void): Promise<Crypto> {
