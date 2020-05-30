@@ -298,6 +298,7 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
                   ) : (
                     <Popover
                       placement="right"
+                      trigger={['click', 'hover']}
                       title={context.user.username}
                       content={
                         <div>
@@ -324,18 +325,13 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
                           </If>
                         </div>
                       }
-                      trigger="hover"
                     >
                       <span>
-                        <Link href="/user/[username]" as={`/user/${context.user.username}`}>
-                          <a>
-                            {context.user.avatar ? (
-                              <Avatar src={context.user.avatar} />
-                            ) : (
-                              <Avatar icon={<UserOutlined />} />
-                            )}
-                          </a>
-                        </Link>
+                        {context.user.avatar ? (
+                          <Avatar src={context.user.avatar} />
+                        ) : (
+                          <Avatar icon={<UserOutlined />} />
+                        )}
                       </span>
                     </Popover>
                   )}
