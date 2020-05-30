@@ -135,7 +135,9 @@ class PostPage extends React.Component<PostPageProps, PostPageState> {
                 ) : null
               }
             </Context.Consumer>
-            <blockquote>{this.props.post.abstract}</blockquote>
+            <If condition={!!this.props.post.abstract}>
+              <blockquote>{this.props.post.abstract}</blockquote>
+            </If>
             <div>
               <Icon type="tag" className="right20" />
               {this.props.post.tags.map((tag: Blotter.Tag) => (
