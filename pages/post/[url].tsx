@@ -140,9 +140,13 @@ class PostPage extends React.Component<PostPageProps, PostPageState> {
             </If>
             <div>
               <Icon type="tag" className="right20" />
-              {this.props.post.tags.map((tag: Blotter.Tag) => (
-                <TagPart key={tag.short} tag={tag} />
-              ))}
+              {this.props.post.tags.length > 0 ? (
+                this.props.post.tags.map((tag: Blotter.Tag) => (
+                  <TagPart key={tag.short} tag={tag} />
+                ))
+              ) : (
+                <span>无标签</span>
+              )}
             </div>
           </div>
         </PageHeader>
