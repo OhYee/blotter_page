@@ -277,7 +277,7 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
         <div className={styles.sider}>
           <div className={[styles.avatar, 'textCenter'].join(' ')}>
             <img
-              src="/static/img/logo.svg"
+              src={this.context.avatar}
               width={'100%'}
               height={'100%'}
               style={{ background: 'white', borderRadius: '100px', maxWidth: '120px' }}
