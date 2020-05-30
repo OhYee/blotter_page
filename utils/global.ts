@@ -15,6 +15,8 @@ export const defaultContext: GlobalProps = {
   theme: 'default',
   grey: false,
   root: '',
+  author: '',
+  avatar: '',
   user: {
     id: '000000000000000000000000',
     username: '',
@@ -53,4 +55,6 @@ export declare interface GlobalProps {
   grey: boolean;
   root: string;
   user: Blotter.User;
+  author: string;
+  avatar: string;
 }
