@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { withRouter } from 'next/router';
 import { WithRouterProps } from 'next/dist/client/with-router';
 
-import { Button, Card, PageHeader, Skeleton, Anchor } from 'antd';
+import { Button, Card, PageHeader, Skeleton, Anchor, Avatar } from 'antd';
 import { Icon } from '@ant-design/compatible';
 
 import TagPart from '@/components/tag';
@@ -164,6 +164,32 @@ class PostPage extends React.Component<PostPageProps, PostPageState> {
           className="post-content"
           dangerouslySetInnerHTML={{ __html: this.props.post.content }}
         />
+        <Context.Consumer>
+          {(context) => {
+            if (typeof document === 'undefined') return null;
+            const url = `${context.root.replace(/\/$/, '')}/${document.location.pathname.replace(
+              /^\//,
+              '',
+            )}`;
+            return (
+              <Card type="inner">
+                <Card.Meta
+                  avatar={<Avatar src={context.avatar} />}
+                  title={context.author}
+                  description={
+                    <div>
+                      本文章发布自<a href={context.root}>{context.blog_name}</a>，原文
+                      <a href={url}>《{this.props.post.title}》</a>
+                      <br />
+                      如无特别说明，可以直接转载，但请注明原文出处链接：
+                      <a href={url}>{url}</a>
+                    </div>
+                  }
+                />
+              </Card>
+            );
+          }}
+        </Context.Consumer>
       </article>
     );
   };
