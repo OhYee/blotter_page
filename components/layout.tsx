@@ -326,7 +326,7 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
                         </div>
                       }
                     >
-                      <span>
+                      <span style={{ cursor: 'pointer' }}>
                         {context.user.avatar ? (
                           <Avatar src={context.user.avatar} />
                         ) : (
