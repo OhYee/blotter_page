@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { withRouter } from 'next/router';
 import { WithRouterProps } from 'next/dist/client/with-router';
 
-import { Button, Card, PageHeader, Skeleton, Anchor, Avatar, message } from 'antd';
+import { Button, Card, PageHeader, Skeleton, Anchor, Avatar, Divider, message } from 'antd';
 import { Icon } from '@ant-design/compatible';
 import AntdIcon, { LinkOutlined, QqOutlined, WechatOutlined } from '@ant-design/icons';
 
@@ -183,6 +183,7 @@ class PostPage extends React.Component<PostPageProps, PostPageState> {
           className="post-content"
           dangerouslySetInnerHTML={{ __html: this.props.post.content }}
         />
+        <Divider />
         <Context.Consumer>
           {(context) => {
             if (typeof document === 'undefined') return null;
