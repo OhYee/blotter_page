@@ -459,7 +459,7 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
             scroll(arg - diff);
             return arg - diff;
           }}
-          ms={10}
+          ms={100}
           icon={<MinusOutlined />}
         />
         <Press
@@ -469,7 +469,7 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
             scroll(arg + diff);
             return arg + diff;
           }}
-          ms={10}
+          ms={100}
           icon={<PlusOutlined />}
         />
       </Button.Group>
