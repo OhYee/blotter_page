@@ -17,12 +17,16 @@ jobs:
       - uses: borales/actions-yarn@v2.0.0
         with:
           cmd: build
+      - run: mkdir deploy
+      - run: mv .next deploy/.next
+      - run: mv package.json deploy/
+      - run: mv yarn.lock deploy
       - name: Deploy
         uses: s0/git-publish-subdir-action@master
         env:
           REPO: self
           BRANCH: gh-pages
-          FOLDER: .next
+          FOLDER: deploy
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Sync to Gitee
         uses: wearerequired/git-mirror-action@master
