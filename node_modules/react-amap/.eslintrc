@@ -1,0 +1,23 @@
+{
+  "env": {
+    "es6": true
+  },
+  "plugins": ["react", "flowtype"],
+  "extends": ["elemefe", "plugin:flowtype/recommended"],
+  "parser": "babel-eslint",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    }
+  },
+  "rules": {
+    "react/jsx-uses-react": "error",
+    "react/jsx-uses-vars": "error",
+    "semi": "off"
+  },
+  "settings": {
+    "flowtype": {
+      "onlyFilesWithFlowAnnotation": false
+    }
+  }
+}

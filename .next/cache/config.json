@@ -1,0 +1,13 @@
+{
+	"telemetry": {
+<<<<<<< HEAD
+		"notifiedAt": "1612681187390",
+		"anonymousId": "71387f16fb2f1ff7ef0a662e426427fba481ee0f1898d16bbc3dc7d1618e6dce",
+		"salt": "ed8851aac5867f72109a7c8eec6cd95b"
+=======
+		"notifiedAt": "1591200139749",
+		"anonymousId": "931ea099fcf4afcd17d8b01b0b51ab3b0eb380a9d953a1d03175b950c01548f1",
+		"salt": "57d20e298d2820389dd2838497a0779a"
+>>>>>>> Update gh-pages to output generated at 56396d7
+	}
+}

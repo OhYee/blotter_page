@@ -1,0 +1,38 @@
+<<<<<<< HEAD
+{
+  "/404": "pages/404.js",
+  "/_app": "pages/_app.js",
+  "/_document": "pages/_document.js",
+  "/_error": "pages/_error.js",
+  "/about": "pages/about.js",
+  "/admin/comments": "pages/admin/comments.js",
+  "/admin/friends": "pages/admin/friends.js",
+  "/admin": "pages/admin.js",
+  "/admin/menus": "pages/admin/menus.js",
+  "/admin/post/buttons": "pages/admin/post/buttons.js",
+  "/admin/post/editor": "pages/admin/post/editor.js",
+  "/admin/post/images": "pages/admin/post/images.js",
+  "/admin/post": "pages/admin/post.js",
+  "/admin/posts": "pages/admin/posts.js",
+  "/admin/tags": "pages/admin/tags.js",
+  "/admin/travels": "pages/admin/travels.js",
+  "/admin/upload": "pages/admin/upload.js",
+  "/admin/users": "pages/admin/users.js",
+  "/admin/variables": "pages/admin/variables.js",
+  "/apps/crypto": "pages/apps/crypto.js",
+  "/apps": "pages/apps.js",
+  "/apps/travels": "pages/apps/travels.js",
+  "/archives": "pages/archives.js",
+  "/comment": "pages/comment.js",
+  "/friends": "pages/friends.js",
+  "/": "pages/index.js",
+  "/post/[url]": "pages/post/[url].js",
+  "/register": "pages/register.js",
+  "/tag/[tag]": "pages/tag/[tag].js",
+  "/tags": "pages/tags.js",
+  "/user/[username]": "pages/user/[username].js",
+  "/version": "pages/version.js"
+}
+=======
+{"/_app":"static/1maiMA1txNZjKPQ30WGgj/pages/_app.js","/_document":"static/1maiMA1txNZjKPQ30WGgj/pages/_document.js","/_error":"static/1maiMA1txNZjKPQ30WGgj/pages/_error.js","/about":"static/1maiMA1txNZjKPQ30WGgj/pages/about.js","/admin":"static/1maiMA1txNZjKPQ30WGgj/pages/admin.js","/admin/comments":"static/1maiMA1txNZjKPQ30WGgj/pages/admin/comments.js","/admin/friends":"static/1maiMA1txNZjKPQ30WGgj/pages/admin/friends.js","/admin/menus":"static/1maiMA1txNZjKPQ30WGgj/pages/admin/menus.js","/admin/post":"static/1maiMA1txNZjKPQ30WGgj/pages/admin/post.js","/admin/posts":"static/1maiMA1txNZjKPQ30WGgj/pages/admin/posts.js","/admin/tags":"static/1maiMA1txNZjKPQ30WGgj/pages/admin/tags.js","/admin/users":"static/1maiMA1txNZjKPQ30WGgj/pages/admin/users.js","/admin/variables":"static/1maiMA1txNZjKPQ30WGgj/pages/admin/variables.js","/apps":"static/1maiMA1txNZjKPQ30WGgj/pages/apps.js","/apps/crypto":"static/1maiMA1txNZjKPQ30WGgj/pages/apps/crypto.js","/apps/queue":"static/1maiMA1txNZjKPQ30WGgj/pages/apps/queue.js","/apps/queue/[id]":"static/1maiMA1txNZjKPQ30WGgj/pages/apps/queue/[id].js","/archives":"static/1maiMA1txNZjKPQ30WGgj/pages/archives.js","/comment":"static/1maiMA1txNZjKPQ30WGgj/pages/comment.js","/friends":"static/1maiMA1txNZjKPQ30WGgj/pages/friends.js","/index":"static/1maiMA1txNZjKPQ30WGgj/pages/index.js","/post/[url]":"static/1maiMA1txNZjKPQ30WGgj/pages/post/[url].js","/register":"static/1maiMA1txNZjKPQ30WGgj/pages/register.js","/tag/[tag]":"static/1maiMA1txNZjKPQ30WGgj/pages/tag/[tag].js","/tags":"static/1maiMA1txNZjKPQ30WGgj/pages/tags.js","/user/[username]":"static/1maiMA1txNZjKPQ30WGgj/pages/user/[username].js","/":"static/1maiMA1txNZjKPQ30WGgj/pages/index.js"}
+>>>>>>> Update gh-pages to output generated at 56396d7
