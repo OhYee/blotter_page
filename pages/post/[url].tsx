@@ -13,7 +13,7 @@ import AntdIcon, { LinkOutlined, QqOutlined, WechatOutlined } from '@ant-design/
 import TagPart from '@/components/tag';
 import Visiable from '@/components/visiable';
 import CommentPart from '@/components/comment';
-import Container from '@/components/container';
+import Container, { Space } from '@/components/container';
 
 import { post, view } from '@/utils/api';
 import { Context } from '@/utils/global';
@@ -122,6 +122,64 @@ class PostPage extends React.Component<PostPageProps, PostPageState> {
     return anchors;
   }
 
+  render_share = () => {
+    return (
+      <Context.Consumer>
+        {(context) => {
+          if (typeof document === 'undefined') return null;
+          const url = `${context.root.replace(/\/$/, '')}/${document.location.pathname.replace(
+            /^\//,
+            '',
+          )}`;
+          const shares = [
+            <a
+              target="_blank"
+              href={`http://connect.qq.com/widget/shareqq/index.html?url=${encodeURIComponent(
+                url,
+              )}&sharesource=qzone&title=${encodeURIComponent(this.props.post.title)}&pics=${
+                this.props.post.head_image
+              }&summary=${this.props.post.abstract}&desc=${this.props.post.abstract}`}
+            >
+              <QqOutlined />
+            </a>,
+            <a
+              target="_blank"
+              href={`https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=${encodeURIComponent(
+                url,
+              )}&sharesource=qzone&title=${encodeURIComponent(this.props.post.title)}&pics=${
+                this.props.post.head_image
+              }&summary=${this.props.post.abstract}`}
+            >
+              <AntdIcon component={QzoneSVG} />
+            </a>,
+            <LinkOutlined
+              onClick={() => {
+                message.info(`请复制：${url}`, 10);
+              }}
+            />,
+          ];
+          return (
+            <Card actions={shares}>
+              <Card.Meta
+                avatar={<Avatar src={context.avatar} />}
+                title={context.author}
+                description={
+                  <div>
+                    本文章发布自<a href={context.root}>{context.blog_name}</a>，原文『
+                    <a href={url}>{this.props.post.title}</a>』
+                    <br />
+                    如无特别说明，可以直接转载，但请注明原文出处链接：
+                    <a href={url}>{url}</a>
+                  </div>
+                }
+              />
+            </Card>
+          );
+        }}
+      </Context.Consumer>
+    );
+  };
+
   render_post = () => {
     return this.props.post === undefined ? (
       <Skeleton active={true} />
@@ -183,60 +241,6 @@ class PostPage extends React.Component<PostPageProps, PostPageState> {
           className="post-content"
           dangerouslySetInnerHTML={{ __html: this.props.post.content }}
         />
-        <Divider />
-        <Context.Consumer>
-          {(context) => {
-            if (typeof document === 'undefined') return null;
-            const url = `${context.root.replace(/\/$/, '')}/${document.location.pathname.replace(
-              /^\//,
-              '',
-            )}`;
-            const shares = [
-              <a
-                target="_blank"
-                href={`http://connect.qq.com/widget/shareqq/index.html?url=${encodeURIComponent(
-                  url,
-                )}&sharesource=qzone&title=${encodeURIComponent(this.props.post.title)}&pics=${
-                  this.props.post.head_image
-                }&summary=${this.props.post.abstract}&desc=${this.props.post.abstract}`}
-              >
-                <QqOutlined />
-              </a>,
-              <a
-                target="_blank"
-                href={`https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=${encodeURIComponent(
-                  url,
-                )}&sharesource=qzone&title=${encodeURIComponent(this.props.post.title)}&pics=${
-                  this.props.post.head_image
-                }&summary=${this.props.post.abstract}`}
-              >
-                <AntdIcon component={QzoneSVG} />
-              </a>,
-              <LinkOutlined
-                onClick={() => {
-                  message.info(`请复制：${url}`, 10);
-                }}
-              />,
-            ];
-            return (
-              <Card type="inner" actions={shares}>
-                <Card.Meta
-                  avatar={<Avatar src={context.avatar} />}
-                  title={context.author}
-                  description={
-                    <div>
-                      本文章发布自<a href={context.root}>{context.blog_name}</a>，原文『
-                      <a href={url}>{this.props.post.title}</a>』
-                      <br />
-                      如无特别说明，可以直接转载，但请注明原文出处链接：
-                      <a href={url}>{url}</a>
-                    </div>
-                  }
-                />
-              </Card>
-            );
-          }}
-        </Context.Consumer>
       </article>
     );
   };
@@ -286,10 +290,13 @@ class PostPage extends React.Component<PostPageProps, PostPageState> {
             </Fragment>
           )}
         </Context.Consumer>
-        <Card>{this.render_post()}</Card>
-        <Card>
-          <CommentPart url={`/post/${this.props.router.query.url as string}`} />
-        </Card>
+        <Space>
+          <Card>{this.render_post()}</Card>
+          {this.render_share()}
+          <Card>
+            <CommentPart url={`/post/${this.props.router.query.url as string}`} />
+          </Card>
+        </Space>
       </Container>
     );
   }
