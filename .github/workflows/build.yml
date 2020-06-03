@@ -18,9 +18,9 @@ jobs:
         with:
           cmd: build
       - run: mkdir deploy
-      - run: mv .next deploy/.next
+      - run: mv .next deploy/
       - run: mv package.json deploy/
-      - run: mv yarn.lock deploy
+      - run: mv yarn.lock deploy/
       - name: Deploy
         uses: s0/git-publish-subdir-action@master
         env:
