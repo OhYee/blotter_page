@@ -34,7 +34,7 @@
 =======
         "@ant-design/compatible": "^1.0.2",
         "@monaco-editor/react": "^3.3.0",
-        "antd": "^4.2.5",
+        "antd": "^4.3.1",
         "next": "^9.4.4",
         "next-dynamic-antd-theme": "^0.0.5",
         "react": "^16.13.1",
@@ -57,7 +57,7 @@
         "less": "^3.10.3",
         "next-compose-plugins": "^2.2.0",
         "next-transpile-modules": "^3.0.2",
-        "null-loader": "^3.0.0",
+        "null-loader": "^4.0.0",
         "react-dom": "^16.12.0",
         "react-responsive": "^8.0.3",
         "react-router": "^5.1.2",

@@ -1,6 +1,7 @@
 {
 	"telemetry": {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		"notifiedAt": "1612681187390",
 		"anonymousId": "71387f16fb2f1ff7ef0a662e426427fba481ee0f1898d16bbc3dc7d1618e6dce",
 		"salt": "ed8851aac5867f72109a7c8eec6cd95b"
@@ -9,5 +10,10 @@
 		"anonymousId": "931ea099fcf4afcd17d8b01b0b51ab3b0eb380a9d953a1d03175b950c01548f1",
 		"salt": "57d20e298d2820389dd2838497a0779a"
 >>>>>>> Update gh-pages to output generated at 56396d7
+=======
+		"notifiedAt": "1591287561490",
+		"anonymousId": "2fda1a69c2968ae548bd6ae7cf0fa8522ae2abb9ffb14878b44a55bf28f43440",
+		"salt": "8a3c4c28197cad7ad39edd4acf010158"
+>>>>>>> Update gh-pages to output generated at 2226f8c
 	}
 }
