@@ -127,11 +127,7 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
       //     // !this.context.big_screen && typeof window !== 'undefined' ? window.innerHeight - 60 : 20
       //     20
       //   }
-      style={Object.assign(
-        { position: 'fixed', marginLeft: 20, zIndex: 100 },
-        // !this.context.big_screen ? { bottom: 20 } : { top: 20 },
-        { top: 20 },
-      )}
+      style={{ position: 'fixed', marginLeft: 20, zIndex: 100, top: 20 }}
     >
       <Button
         type="primary"
