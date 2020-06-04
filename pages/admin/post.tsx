@@ -14,6 +14,7 @@ import {
   Switch,
   Row,
   Col,
+  notification,
 } from 'antd';
 import { Icon } from '@ant-design/compatible';
 import { FormOutlined, MinusOutlined, PlusOutlined } from '@ant-design/icons';
@@ -232,18 +233,26 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
   };
   submit = async () => {
     this.setState({ submitDisabled: true });
-    var obj = this.formRef.current.getFieldsValue([
-      'id',
-      'title',
-      'url',
-      'abstract',
-      'head_image',
-      'view',
-      'publish_time',
-      'edit_time',
-      'published',
-      //   'raw',
-    ]);
+    try {
+      var obj = await this.formRef.current.validateFields([
+        'id',
+        'title',
+        'url',
+        'abstract',
+        'head_image',
+        'view',
+        'publish_time',
+        'edit_time',
+        'published',
+        //   'raw',
+      ]);
+    } catch (e) {
+      const err = e.errorFields.map((item) => item.errors.join(' ')).join('\n');
+      notification.error({ message: '信息错误', description: err });
+      this.setState({ submitDisabled: false });
+      return;
+    }
+
     obj.tags = this.state.tags.map((tag) => tag.id);
     obj.publish_time = obj.publish_time.unix();
     obj.edit_time = obj.edit_time.unix();
