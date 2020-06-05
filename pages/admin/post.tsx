@@ -412,6 +412,22 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
           </Form.Item>
         </Col>
 
+        <Col lg={md ? 12 : 2} md={12}>
+          <Form.Item>
+            <Button
+              onClick={() => {
+                const now = moment(new Date());
+                this.formRef.current.setFieldsValue({
+                  publish_time: now,
+                  edit_time: now,
+                });
+              }}
+            >
+              设置当前日期
+            </Button>
+          </Form.Item>
+        </Col>
+
         <Col span={24}>
           <Form.Item>
             <TagSearch onAdd={this.tagOnAdd} onDelete={this.tagOnDelete} tags={this.state.tags} />
@@ -529,7 +545,7 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
           {this.isSidePreview() ? (
             <Col span={12}>
               <div className={styles.preview + ' shadow'} ref={this.previewRef}>
-                <Card>
+                <Card style={{ overflow: 'auto', height: '100%' }}>
                   {this.renderPreview()}
                   <div style={{ height: 'calc(100vh - 20px)' }}></div>
                 </Card>
