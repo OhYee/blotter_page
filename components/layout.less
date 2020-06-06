@@ -168,10 +168,12 @@ code {
   }
 }
 
-:global(.ant-avatar) {
-  background: unset !important;
-}
-
 :global(.ant-picker-input) > input {
   border: 0 !important;
+}
+
+:global(#blotter-comment) {
+  :global(.ant-avatar) {
+    background: unset;
+  }
 }
