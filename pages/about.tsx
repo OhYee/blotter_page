@@ -153,14 +153,14 @@ class AboutPage extends React.Component<AboutPageProps, AboutPageState> {
         link: `https://www.zhihu.com/people/${this.props.zhihu}`,
         icon: () => <ZhihuOutlined />,
       },
-    ].filter(item => !!item.raw);
+    ].filter((item) => !!item.raw);
 
     return (
       <List
         grid={{ column: ToColumnCount(socialMedia.length), gutter: 10 }}
         dataSource={socialMedia}
         style={{ fontSize: '25px', textAlign: 'center' }}
-        renderItem={item => (
+        renderItem={(item) => (
           <List.Item key={item.name}>
             <a href={item.link} target="_blank">
               <Popover content={item.name}>
@@ -197,7 +197,7 @@ class AboutPage extends React.Component<AboutPageProps, AboutPageState> {
     ];
     return (
       <Table<Education>
-        rowKey={record => record.name}
+        rowKey={(record) => record.name}
         dataSource={this.props.edu}
         columns={columns}
         pagination={false}
@@ -220,7 +220,7 @@ class AboutPage extends React.Component<AboutPageProps, AboutPageState> {
       },
       {
         dataIndex: 'count',
-        render: value => `×${value}`,
+        render: (value) => `×${value}`,
         align: 'center',
         width: 250,
         ellipsis: true,
@@ -229,7 +229,7 @@ class AboutPage extends React.Component<AboutPageProps, AboutPageState> {
     return (
       <Table<Award>
         dataSource={this.props.awards}
-        rowKey={record => record.name}
+        rowKey={(record) => record.name}
         columns={columns}
         size="small"
         showHeader={false}
@@ -285,8 +285,8 @@ class AboutPage extends React.Component<AboutPageProps, AboutPageState> {
         dataIndex: 'language',
         title: '语言',
         filters: Array.from(
-          new Set(this.state.repos.map(item => item.language).filter(l => l !== null)),
-        ).map(l => ({ text: l, value: l })),
+          new Set(this.state.repos.map((item) => item.language).filter((l) => l !== null)),
+        ).map((l) => ({ text: l, value: l })),
         onFilter: (value, record) => record.language && record.language.includes(record.language),
         align: 'center',
         width: 150,
@@ -295,13 +295,13 @@ class AboutPage extends React.Component<AboutPageProps, AboutPageState> {
     ];
     return (
       <Table<GithubRepo>
-        rowKey={record => record.name}
+        rowKey={(record) => record.name}
         dataSource={this.state.repos}
         columns={columns}
         loading={this.state.loading}
         scroll={{ x: true }}
         expandable={{
-          expandedRowRender: record => (
+          expandedRowRender: (record) => (
             <Descriptions bordered size="small">
               <Descriptions.Item key="created_at" label="创建时间">
                 {record.created_at}
@@ -327,7 +327,7 @@ class AboutPage extends React.Component<AboutPageProps, AboutPageState> {
     return (
       <Container>
         <Context.Consumer>
-          {context => (
+          {(context) => (
             <Head>
               <title>{`关于我|${context.blog_name}`}</title>
             </Head>
@@ -336,7 +336,12 @@ class AboutPage extends React.Component<AboutPageProps, AboutPageState> {
         <Card>
           <Typography>
             <Typography.Paragraph style={{ textAlign: 'center' }}>
-              <Avatar size={64} src="/static/img/logo.svg" />
+              <Context.Consumer>
+                {(context) => (
+                  <Avatar size={64} src={context.avatar} style={{ background: 'unset' }} />
+                )}
+              </Context.Consumer>
+
               <br />
               <Typography.Text strong>{this.props.author}</Typography.Text>
             </Typography.Paragraph>
