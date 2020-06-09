@@ -250,6 +250,7 @@ const CommentList: React.FC<{
       header={!!total ? `共 ${total} 条评论` : null}
       itemLayout="horizontal"
       dataSource={comments}
+      split={false}
       renderItem={(comment, idx) => (
         <List.Item key={comment.id} style={{ padding: 0 }}>
           <Comment comment={comment} depth={depth} quote={false} parent={parent} />
