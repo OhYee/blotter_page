@@ -25,7 +25,35 @@ import { UserOutlined } from '@ant-design/icons';
 
 import Container, { Space } from '@/components/container';
 
-import changeTheme from 'next-dynamic-antd-theme';
+// import changeTheme from 'next-dynamic-antd-theme';
+
+// --------
+import getConfig from 'next/config';
+const { publicRuntimeConfig } = getConfig();
+const { next_dynamic_antd_themes } = publicRuntimeConfig;
+
+function modifyVars(vars) {
+  const w = window as any;
+  if (typeof w !== 'undefined' && w.less) {
+    w.less.modifyVars(vars).catch((error) => {
+      console.log(`Failed to update theme`, error);
+    });
+    console.log(vars);
+  } else {
+    console.log('Theme only change in client side render, not server side render');
+  }
+}
+
+function changeTheme(theme) {
+  console.log(next_dynamic_antd_themes, publicRuntimeConfig);
+  if (typeof theme === 'string' || theme == 'dark') {
+    modifyVars({ ...next_dynamic_antd_themes.default, ...next_dynamic_antd_themes[theme] });
+  } else {
+    modifyVars({ ...next_dynamic_antd_themes.default, ...theme });
+  }
+}
+
+//-------
 
 import { layout, logout, info } from '@/utils/api';
 import ShowNotification from '@/utils/notification';
@@ -324,7 +352,7 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
                     >
                       <span style={{ cursor: 'pointer' }}>
                         {context.user.avatar ? (
-                          <Avatar src={context.user.avatar} style={{background:"unset"}}/>
+                          <Avatar src={context.user.avatar} style={{ background: 'unset' }} />
                         ) : (
                           <Avatar icon={<UserOutlined />} />
                         )}
