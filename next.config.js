@@ -49,13 +49,14 @@ function generateTheme2(themeOptions) {
     }
   });
   if (!themeVariables) {
-    themeVariables = Array.from(
-      new Set(
-        Object.values(themes)
-          .map((item) => Object.keys(item))
-          .reduce((a, b) => a.concat(b)),
-      ),
-    );
+    themeVariables = Object.keys(themes.dark);
+    // themeVariables = Array.from(
+    //   new Set(
+    //     Object.values(themes)
+    //       .map((item) => Object.keys(item))
+    //       .reduce((a, b) => a.concat(b)),
+    //   ),
+    // );
   }
   console.log(themeVariables);
   const generator = async () => {
