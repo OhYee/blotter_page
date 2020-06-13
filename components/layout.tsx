@@ -255,10 +255,10 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
     this.context.callback({ user: defaultContext.user });
   };
 
-  renderMenus = (menus: Blotter.Menu[], user: Blotter.User) => {
+  renderMenus = (menus: Blotter.Menu[], theme: 'light' | 'dark') => {
     return (
       <Menu
-        theme={this.context.theme == 'default' ? 'light' : 'dark'}
+        theme={theme}
         selectedKeys={[this.props.router.pathname]}
         mode="inline"
         inlineIndent={10}
@@ -287,9 +287,10 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
   };
 
   renderSider = () => {
+    const theme = this.context.theme === 'default' ? 'light' : 'dark';
     return (
       <Sider
-        theme="light"
+        theme={theme}
         trigger={null}
         breakpoint="xl"
         collapsible={true}
@@ -360,7 +361,7 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
                     </Popover>
                   )}
                 </div>
-                {this.renderMenus(context.menus, context.user)}
+                {this.renderMenus(context.menus, theme)}
               </Fragment>
             )}
           </Context.Consumer>
