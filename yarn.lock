@@ -4,6 +4,7 @@
 
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 "@ampproject/toolbox-core@^2.6.0":
   version "2.6.0"
   resolved "https://registry.yarnpkg.com/@ampproject/toolbox-core/-/toolbox-core-2.6.0.tgz#9824d5f133d82106a9bf0774920843c69fa5c869"
@@ -109,6 +110,12 @@
   resolved "https://registry.yarnpkg.com/@ampproject/toolbox-core/-/toolbox-core-2.5.0.tgz#8ea4575f1c0d0048e73f64bf7e5cfc8a8e5bd6ef"
   integrity sha512-aQjE8wORKXJ2tLWHuevdSL31zhQdUhC+skyEhESBV/8eOzd7ROaOzR/F43bS7uAhnYta1G0Zd/HqofgN7LRSfw==
 >>>>>>> Update gh-pages to output generated at 2226f8c
+=======
+"@ampproject/toolbox-core@^2.4.0-alpha.1", "@ampproject/toolbox-core@^2.5.1":
+  version "2.5.1"
+  resolved "https://registry.yarnpkg.com/@ampproject/toolbox-core/-/toolbox-core-2.5.1.tgz#f01895995a722254807106a3e1422cf1c6c25c13"
+  integrity sha512-XMt7Y7/Ga5HskqILTNwAmkrQSXM6KJ4Xf3fiEMy/yTldVg51SebAeTSzjKH+oisKhSw00Ogo4VL7AB6a2IrT3g==
+>>>>>>> Update gh-pages to output generated at 9e9228f
   dependencies:
     cross-fetch "3.0.4"
     lru-cache "5.1.1"
@@ -132,11 +139,11 @@
     terser "4.6.13"
 
 "@ampproject/toolbox-runtime-version@^2.4.0-alpha.1":
-  version "2.5.0"
-  resolved "https://registry.yarnpkg.com/@ampproject/toolbox-runtime-version/-/toolbox-runtime-version-2.5.0.tgz#671823d749121ffb1b745912a8c2fc8dce27da80"
-  integrity sha512-mDeHgbxkBag1L/HsH3WhA7rRqoq3H7iiqZ8g/1Mvre4wP1YuN2iOjM/8EJvBJ4JM+UQsu3Kyljc88Mf8FHkSmg==
+  version "2.5.1"
+  resolved "https://registry.yarnpkg.com/@ampproject/toolbox-runtime-version/-/toolbox-runtime-version-2.5.1.tgz#904280984a75925ff1d7a851ab15645efaa5cd90"
+  integrity sha512-udkXpuJX+f0ogd/GFlpifXg5K+BSyWpou9gg53uxoSpPTlPO4ZPepJ4PLfgdq0oxMq7f/IDN1YN5ZFFNJHbrzw==
   dependencies:
-    "@ampproject/toolbox-core" "^2.5.0"
+    "@ampproject/toolbox-core" "^2.5.1"
 
 "@ampproject/toolbox-script-csp@^2.3.0":
   version "2.3.0"
@@ -1302,9 +1309,9 @@
 =======
 =======
 "@types/json-schema@^7.0.4":
-  version "7.0.4"
-  resolved "https://registry.yarnpkg.com/@types/json-schema/-/json-schema-7.0.4.tgz#38fd73ddfd9b55abb1e1b2ed578cb55bd7b7d339"
-  integrity sha512-8+KAKzEvSUdeo+kmqnKrqgeE+LcA0tjYWFY7RPProVYwnqDjukzO+3b6dLD56rYX5TdWejnEOLJYOIeh4CXKuA==
+  version "7.0.5"
+  resolved "https://registry.yarnpkg.com/@types/json-schema/-/json-schema-7.0.5.tgz#dcce4430e64b443ba8945f0290fb564ad5bac6dd"
+  integrity sha512-7+2BITlgjgDhH0vvwZU/HZJVyk+2XUlvxXe8dFMedNX/aMkaOq++rMAFXc0tM7ij15QaWlbdQASBR9dihi+bDQ==
 
 >>>>>>> Update gh-pages to output generated at 2226f8c
 "@types/json5@^0.0.29":
@@ -1313,6 +1320,7 @@
   integrity sha1-7ihweulOEdK4J7y+UnC86n8+ce4=
 
 "@types/node@^14.0.5":
+<<<<<<< HEAD
 <<<<<<< HEAD
   version "14.0.5"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-14.0.5.tgz#3d03acd3b3414cf67faf999aed11682ed121f22b"
@@ -1323,6 +1331,11 @@
   resolved "https://registry.yarnpkg.com/@types/node/-/node-14.0.10.tgz#dbfaa170bd9eafccccb6d7060743a761b0844afd"
   integrity sha512-Bz23oN/5bi0rniKT24ExLf4cK0JdvN3dH/3k0whYkdN4eI4vS2ZW/2ENNn2uxHCzWcbdHIa/GRuWQytfzCjRYw==
 >>>>>>> Update gh-pages to output generated at 2226f8c
+=======
+  version "14.0.13"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.0.13.tgz#ee1128e881b874c371374c1f72201893616417c9"
+  integrity sha512-rouEWBImiRaSJsVA+ITTFM6ZxibuAlTuNOCyxVbwreu6k6+ujs7DfnU9o+PShFhET78pMBl3eH+AGSI5eOTkPA==
+>>>>>>> Update gh-pages to output generated at 9e9228f
 
 "@types/prop-types@*":
   version "15.7.3"
@@ -1376,10 +1389,16 @@
 "@types/react@^16.9.35":
 =======
 "@types/react@*", "@types/react@^16.9.35":
+<<<<<<< HEAD
 >>>>>>> Update gh-pages to output generated at 2226f8c
   version "16.9.35"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-16.9.35.tgz#a0830d172e8aadd9bd41709ba2281a3124bbd368"
   integrity sha512-q0n0SsWcGc8nDqH2GJfWQWUOmZSJhXV64CjVN5SvcNti3TdEaA3AH0D8DwNmMdzjMAC/78tB8nAZIlV8yTz+zQ==
+=======
+  version "16.9.36"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-16.9.36.tgz#ade589ff51e2a903e34ee4669e05dbfa0c1ce849"
+  integrity sha512-mGgUb/Rk/vGx4NCvquRuSH0GHBQKb1OqpGS9cT9lFxlTLHZgkksgI60TuIxubmn7JuCb+sENHhQciqa0npm0AQ==
+>>>>>>> Update gh-pages to output generated at 9e9228f
   dependencies:
     "@types/prop-types" "*"
     csstype "^2.2.0"
@@ -1763,11 +1782,17 @@ antd-theme-generator@^1.1.9, antd-theme-generator@^1.2.1:
 antd-theme-generator@^1.1.9:
 =======
 antd-theme-generator@^1.2.3:
+<<<<<<< HEAD
 >>>>>>> Update gh-pages to output generated at 7b8ca1c
   version "1.2.3"
   resolved "https://registry.yarnpkg.com/antd-theme-generator/-/antd-theme-generator-1.2.3.tgz#8fdd94d45a38f19205906135515f0ce87326a8a5"
   integrity sha512-ij/i92jaFSi08vwZkQrOck87FUn6OI89wh0hyfx5o8AFUpo3PKZ0oRFrNverV8X56iI3Mve4qPnIdPz9pj/jVg==
 >>>>>>> Update gh-pages to output generated at 2226f8c
+=======
+  version "1.2.4"
+  resolved "https://registry.yarnpkg.com/antd-theme-generator/-/antd-theme-generator-1.2.4.tgz#a6ba3b32ad744eba4911c26a44ce7ccbc3695415"
+  integrity sha512-27HCj4NTpbQZGNkz1Ip7RF1p85iSN4izf5rY6rQvytM2shvve9qVLnIwHGdNWvsMPrgOPH5wlu8bauKnh7+6dg==
+>>>>>>> Update gh-pages to output generated at 9e9228f
   dependencies:
     glob "^7.1.3"
     hash.js "^1.1.5"
@@ -1777,9 +1802,9 @@ antd-theme-generator@^1.2.3:
     strip-css-comments "^4.1.0"
 
 antd@*, antd@^4.3.1:
-  version "4.3.1"
-  resolved "https://registry.yarnpkg.com/antd/-/antd-4.3.1.tgz#e68af822867bc096cc021e8b5077b2ac47ee1c14"
-  integrity sha512-Pkf6M/UdMnHA8FFHYNveJ6lhvlulot0bV8z1TAkVIiKm5RVSFvdpHmfsB8oUL4eT010nH3xYQKKSd0DkhxW2Ng==
+  version "4.3.3"
+  resolved "https://registry.yarnpkg.com/antd/-/antd-4.3.3.tgz#417061b248e4c69b38930bf750477761e228a199"
+  integrity sha512-psDb3krf0nK0gkZSfxOGfJdqKbi0hzQJif7R2Cg3T6OV1nrNfc6waL4Th8mV72qq/+Ushuk0afRDaARkx9EzEg==
   dependencies:
     "@ant-design/css-animation" "^1.7.2"
     "@ant-design/icons" "^4.2.1"
@@ -1808,15 +1833,15 @@ antd@*, antd@^4.3.1:
     rc-progress "~3.0.0"
     rc-rate "~2.7.0"
     rc-resize-observer "^0.2.3"
-    rc-select "~10.4.0"
+    rc-select "~11.0.0"
     rc-slider "~9.3.0"
     rc-steps "~4.0.0"
     rc-switch "~3.2.0"
     rc-table "~7.7.2"
-    rc-tabs "~11.2.0"
+    rc-tabs "~11.3.1"
     rc-tooltip "~4.2.0"
     rc-tree "~3.3.0"
-    rc-tree-select "~3.2.0"
+    rc-tree-select "~4.0.0"
     rc-trigger "~4.3.0"
     rc-upload "~3.1.0"
     rc-util "^5.0.1"
@@ -2552,9 +2577,9 @@ caniuse-api@^3.0.0:
     lodash.uniq "^4.5.0"
 
 caniuse-lite@^1.0.0, caniuse-lite@^1.0.30001043:
-  version "1.0.30001077"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001077.tgz#5d7da6a120b08d9f4fd94823786ecb454aaa5626"
-  integrity sha512-AEzsGvjBJL0lby/87W96PyEvwN0GsYvk5LHsglLg9tW37K4BqvAvoSCdWIE13OZQ8afupqZ73+oL/1LkedN8hA==
+  version "1.0.30001081"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001081.tgz#40615a3c416a047c5a4d45673e5257bf128eb3b5"
+  integrity sha512-iZdh3lu09jsUtLE6Bp8NAbJskco4Y3UDtkR3GTCJGsbMowBU5IWDFF79sV2ws7lSqTzWyKazxam2thasHymENQ==
 
 caseless@~0.12.0:
   version "0.12.0"
@@ -3761,9 +3786,9 @@ ecc-jsbn@~0.1.1:
     safer-buffer "^2.1.0"
 
 electron-to-chromium@^1.3.413:
-  version "1.3.459"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.459.tgz#49a43d78f60b5bf42312b636f3af43c695e0c652"
-  integrity sha512-aN3Z89qEYIwVjzGi9SrcTjjopRZ3STUA6xTufS0fxZy8xOO2iqVw8rYKdT32CHgOKHOYj5KGmz3n6xUKE4QJiQ==
+  version "1.3.473"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.473.tgz#d0cd5fe391046fb70674ec98149f0f97609d29b8"
+  integrity sha512-smevlzzMNz3vMz6OLeeCq5HRWEj2AcgccNPYnAx4Usx0IOciq9DU36RJcICcS09hXoY7t7deRfVYKD14IrGb9A==
 
 elliptic@^6.0.0, elliptic@^6.5.2:
   version "6.5.2"
@@ -4094,10 +4119,16 @@ extsprintf@^1.2.0:
   integrity sha1-4mifjzVvrWLMplo6kcXfX5VRaS8=
 
 fast-deep-equal@^3.1.1:
+<<<<<<< HEAD
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/fast-deep-equal/-/fast-deep-equal-3.1.1.tgz#545145077c501491e33b15ec408c294376e94ae4"
   integrity sha512-8UEa58QDLauDNfpbrX55Q9jrGHThw2ZMdOky5Gl1CDtVeJDPVrG4Jxx1N8jw2gkWaff5UUuX1KJd+9zGe2B+ZA==
 >>>>>>> Update gh-pages to output generated at 56396d7
+=======
+  version "3.1.3"
+  resolved "https://registry.yarnpkg.com/fast-deep-equal/-/fast-deep-equal-3.1.3.tgz#3a7d56b559d6cbc3eb512325244e619a65c6c525"
+  integrity sha512-f3qQ9oQy9j2AhBe/H9VC91wLmKBCCU/gDOnKNAYG5hswO7BLKj09Hc5HYNz9cGI++xlpDCIgDaitVs03ATR84Q==
+>>>>>>> Update gh-pages to output generated at 9e9228f
 
 fast-json-stable-stringify@^2.0.0:
   version "2.1.0"
@@ -5345,9 +5376,9 @@ less-plugin-npm-import@^2.1.0:
     resolve "~1.1.6"
 
 less@^3.10.3, less@^3.9.0:
-  version "3.11.2"
-  resolved "https://registry.yarnpkg.com/less/-/less-3.11.2.tgz#51a484e9017287f5ac3db921cb86970eb7506e81"
-  integrity sha512-ed8Lir98Tu6a+LeU7+8ShpRLSUdk//lWf1sh+5w7tNju4wGItztqDHp03Z+a2o1nzU6pObVxw1n4Gu7VzQYusQ==
+  version "3.11.3"
+  resolved "https://registry.yarnpkg.com/less/-/less-3.11.3.tgz#2d853954fcfe0169a8af869620bcaa16563dcc1c"
+  integrity sha512-VkZiTDdtNEzXA3LgjQiC3D7/ejleBPFVvq+aRI9mIj+Zhmif5TvFPM244bT4rzkvOCvJ9q4zAztok1M7Nygagw==
   dependencies:
     clone "^2.1.2"
     tslib "^1.10.0"
@@ -5989,6 +6020,7 @@ next-compose-plugins@^2.2.0:
   resolved "https://registry.yarnpkg.com/next-compose-plugins/-/next-compose-plugins-2.2.0.tgz#95cd8eb40ab0652070d76572fb648354191628b0"
   integrity sha512-ChUlpT9tWfJ7YxqGw/WQ2T1gf8EeX93n1XqeQw0lkvGa7seszahvF4eOZUJoq7Hetsbzg4UHVnPoCXfXTyQR3g==
 
+<<<<<<< HEAD
 next-dynamic-antd-theme@^0.0.7:
   version "0.0.7"
   resolved "https://registry.yarnpkg.com/next-dynamic-antd-theme/-/next-dynamic-antd-theme-0.0.7.tgz#f90f0a7558d8c0523741ed384905dd49ece457b2"
@@ -6001,6 +6033,8 @@ next-dynamic-antd-theme@^0.0.7:
     antd-theme-generator "^1.2.3"
 >>>>>>> Update gh-pages to output generated at 7b8ca1c
 
+=======
+>>>>>>> Update gh-pages to output generated at 9e9228f
 next-tick@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/next-tick/-/next-tick-1.0.0.tgz#ca86d1fe8828169b0120208e3dc8424b9db8342c"
@@ -7489,9 +7523,9 @@ rc-collapse@~2.0.0:
     shallowequal "^1.1.0"
 
 rc-dialog@~8.0.0:
-  version "8.0.0"
-  resolved "https://registry.yarnpkg.com/rc-dialog/-/rc-dialog-8.0.0.tgz#fe0658ad9e9eddbbdabf91ba6104e39c1e9f9195"
-  integrity sha512-ucqaAFJKUrvvR1O4UA46upfns7SEkEbtFerLxKUdrOFdx2gb5dcha4FfbRRZhYw4H/vav1cvKSo+3/pb0U/YQQ==
+  version "8.0.1"
+  resolved "https://registry.yarnpkg.com/rc-dialog/-/rc-dialog-8.0.1.tgz#b9265edfc9ac5d75a381bd340bc5e9720572a760"
+  integrity sha512-ZOO2F8KHN4Dkpf1KiXNPKFWaLZutIuAhQw+YCafcFrigDv50AxGivoMSC//k4yjcJr3XRQTQMlMsmdAff4dEhw==
   dependencies:
     babel-runtime "6.x"
     rc-animate "3.x"
@@ -7566,9 +7600,9 @@ rc-form@^2.4.10:
     warning "^4.0.3"
 
 rc-input-number@~5.0.0:
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/rc-input-number/-/rc-input-number-5.0.0.tgz#a0be34bd4cf316203174d7096797c4c36b0e8a67"
-  integrity sha512-n4waZmQQs992n7AdLnWkCskneZITGUSvHQ8YxWU/BhoxK8uuqkZtZ/OEOxXIv3eEFDpD/tBRiGPCCVCBVccMtw==
+  version "5.0.1"
+  resolved "https://registry.yarnpkg.com/rc-input-number/-/rc-input-number-5.0.1.tgz#bafbea11516fdc34ae309dd56b99ab11ab6bc9bf"
+  integrity sha512-4GgnJCjllAVNsZ9fPA+3LnoIgwUqM8QAWpyoKiTkPDN1UWapXYsPiKJCXOhnmiR0X8xpEoYHiobUaiquMliWiQ==
   dependencies:
     classnames "^2.2.0"
     rc-util "^5.0.1"
@@ -7617,9 +7651,9 @@ rc-pagination@~2.2.5:
     classnames "^2.2.1"
 
 rc-picker@~1.6.1:
-  version "1.6.2"
-  resolved "https://registry.yarnpkg.com/rc-picker/-/rc-picker-1.6.2.tgz#5ff68bd6b0c4a78464057d3f2f91c3c0db9df5e4"
-  integrity sha512-WhG+HoOampveeoNxSsadcXguBm7xJ6iKpSpEVOZPZItTMBw++F5knNJ3RZeYV5zvytkYCF/x6mtDyylu96q6sg==
+  version "1.6.4"
+  resolved "https://registry.yarnpkg.com/rc-picker/-/rc-picker-1.6.4.tgz#bafb4bb3edc82440820572a9cefba436fabfc3fd"
+  integrity sha512-F3ahAtKEI1DgKIfH7likOOEZeKs21xTXVshtD7hO3StrkGrSeK0+HzAG80nP8AAc6wMJE667d4+Bo093G0mCHA==
   dependencies:
     "@babel/runtime" "^7.10.1"
     classnames "^2.2.1"
@@ -7654,10 +7688,10 @@ rc-resize-observer@^0.2.0, rc-resize-observer@^0.2.1, rc-resize-observer@^0.2.3:
     rc-util "^5.0.0"
     resize-observer-polyfill "^1.5.1"
 
-rc-select@^10.1.0, rc-select@~10.4.0:
-  version "10.4.0"
-  resolved "https://registry.yarnpkg.com/rc-select/-/rc-select-10.4.0.tgz#3ee7237f0b3c619c29c81717880637398a5b2ce3"
-  integrity sha512-cgEgBITqjz970AHZBr6rW99lV0ByoTUI/+f7Pi4WvSJxPXRdW4rPQN026sXFjs+88LUdvD3UJhDmAvU7/T8tzQ==
+rc-select@^11.0.0, rc-select@~11.0.0:
+  version "11.0.1"
+  resolved "https://registry.yarnpkg.com/rc-select/-/rc-select-11.0.1.tgz#640ba084eac8357bca300ebbc254c0c71fe6fcc9"
+  integrity sha512-gC8uL83iiuQxYUlBKz+JKpBGHj0fTk1GPdLH7612cd2lRDPpjlU7LEmMRSsqopGChnu8h2GJigo43ohbFsiasQ==
   dependencies:
     "@babel/runtime" "^7.10.1"
     classnames "2.x"
@@ -7708,10 +7742,10 @@ rc-table@~7.7.2:
     rc-util "^5.0.0"
     shallowequal "^1.1.0"
 
-rc-tabs@~11.2.0:
-  version "11.2.4"
-  resolved "https://registry.yarnpkg.com/rc-tabs/-/rc-tabs-11.2.4.tgz#6004f8f3edc176318bfdd71695fd5e6bed7338ff"
-  integrity sha512-d8zuL5L2suY3aqi1IJ6IBRhNI78pXdgkn+L0zxr6h83xJVkg8JyNoQ8JGjtJ0tm+Q17BRNCo7TmSuUHJf5P7Uw==
+rc-tabs@~11.3.1:
+  version "11.3.2"
+  resolved "https://registry.yarnpkg.com/rc-tabs/-/rc-tabs-11.3.2.tgz#33793f02d681a8d7f3aa763c8002b7a833c3b63d"
+  integrity sha512-UQQrVmBZm/LrgS5GHPZNpzedTV5ppU1f8dvTV2TX/zmV8byaOVd2uJ9F/f4zkXTvsTLxGzFfCrb6nAn1cwSBLw==
   dependencies:
     "@babel/runtime" "^7.10.1"
     classnames "2.x"
@@ -7729,21 +7763,21 @@ rc-tooltip@^4.0.0, rc-tooltip@~4.2.0:
   dependencies:
     rc-trigger "^4.2.1"
 
-rc-tree-select@~3.2.0:
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/rc-tree-select/-/rc-tree-select-3.2.0.tgz#d36d8280bc2c3e526bfd68422ebed5e1dd845639"
-  integrity sha512-IK1xrUhOy+pdcitBAcFveDxgkqLGZaKma2NWH25VHE3xeVn415l+IEjUA0As4/5elZF/nubQeTRibGrG7pGkKA==
+rc-tree-select@~4.0.0:
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/rc-tree-select/-/rc-tree-select-4.0.1.tgz#0820efbf19624ed1ca37bf3d65bba6f85a1cf16d"
+  integrity sha512-VehfIZgu6Xmko7YfJgshmuIdeI7u7Ar1iLkmlb69/w1HjaDnSHbV3N3xopLABAq8lTlTAnSFU2JCPcYifvTmAA==
   dependencies:
     "@babel/runtime" "^7.10.1"
     classnames "2.x"
-    rc-select "^10.1.0"
+    rc-select "^11.0.0"
     rc-tree "^3.1.0"
     rc-util "^5.0.1"
 
 rc-tree@^3.1.0, rc-tree@~3.3.0:
-  version "3.3.0"
-  resolved "https://registry.yarnpkg.com/rc-tree/-/rc-tree-3.3.0.tgz#9bd839f49931b575a22e2385c5dbdd2edd7a4a4b"
-  integrity sha512-0j6xlAAIresiuCIcooEcg8s3IdQNvyvcywQTiU3yE5MeEnAC9qj0EsMrwMz7iaeei03f7kdh9PNxScmhfBO+KA==
+  version "3.3.1"
+  resolved "https://registry.yarnpkg.com/rc-tree/-/rc-tree-3.3.1.tgz#1b656ded2a8447bc8a7cae18e6cd97f5b85bad0b"
+  integrity sha512-DGyVZN4HRSrmFErn68KOISIl3z0R9EjeNyZE0sgAaa5oqpQDAEK78/lYf5k3rot1N/iFAEJKaTRJfM7eIdWGwg==
   dependencies:
     "@babel/runtime" "^7.10.1"
     classnames "2.x"
@@ -7764,9 +7798,9 @@ rc-trigger@^4.0.0, rc-trigger@^4.2.0, rc-trigger@^4.2.1, rc-trigger@^4.3.0, rc-t
     rc-util "^5.0.1"
 
 rc-upload@~3.1.0:
-  version "3.1.3"
-  resolved "https://registry.yarnpkg.com/rc-upload/-/rc-upload-3.1.3.tgz#d91ce6dec8e6e1bd5b4b2ad7296ad778004a1a4b"
-  integrity sha512-TocOm263ytO6es6Qaxrt4l0z/1hIlWIVflUaZ+ozzElmrnm+iE05seLOFJGvSLAPc6/QlR7IVuSUdaxi0oBLEg==
+  version "3.1.4"
+  resolved "https://registry.yarnpkg.com/rc-upload/-/rc-upload-3.1.4.tgz#f61576b29a32e86b893f2911cb389f850a44f403"
+  integrity sha512-G6nqT4HMrT+mDd32ZHfcFs2eCFilMdIdteylNCHPcfoBBOKkBW4iVo7O6uFhz/8jIGNLJfR3+6S2x/lnXYYrCQ==
   dependencies:
     classnames "^2.2.5"
 
@@ -7782,9 +7816,9 @@ rc-util@^4.10.0, rc-util@^4.15.3:
     shallowequal "^1.1.0"
 
 rc-util@^5.0.0, rc-util@^5.0.1:
-  version "5.0.1"
-  resolved "https://registry.yarnpkg.com/rc-util/-/rc-util-5.0.1.tgz#26a5515ca080b82f5cb7f3b6319966824a928476"
-  integrity sha512-vzpgfdC6FGkrRFQ7NuipR1C/+kNDfber8eIEnuTR9q875Jg+/YO9xd7CG0dCxV/SK30jnMhMsj0rmMEzPHUVyA==
+  version "5.0.4"
+  resolved "https://registry.yarnpkg.com/rc-util/-/rc-util-5.0.4.tgz#297bd719b1bd00b3c947a884ab7ef0a07c55dce6"
+  integrity sha512-cd19RCrE0DJH6UcJ9+V3eaXA/5sNWyVKOKkWl8ZM2OqgNzVb8fv0obf/TkuvSN43tmTsgqY8k7OqpFYHhmef8g==
   dependencies:
     react-is "^16.12.0"
     shallowequal "^1.1.0"
@@ -7797,6 +7831,11 @@ rc-virtual-list@^1.1.0, rc-virtual-list@^1.1.2:
     classnames "^2.2.6"
     raf "^3.4.1"
     rc-util "^5.0.0"
+
+react-amap@^1.2.8:
+  version "1.2.8"
+  resolved "https://registry.yarnpkg.com/react-amap/-/react-amap-1.2.8.tgz#cb5a6441c5e83acb0d7b2e8a1b20dc539b759d9b"
+  integrity sha512-uHPEUXti+CcwFyCeqGGqR0ACnXJA9D8S/lQYal9AG3XEOrwkaOFbWUavrvXxjcfAclROIWg8uKxzlRpMQnkHFg==
 
 react-dnd-html5-backend@^11.0.0:
   version "11.1.3"
@@ -8001,9 +8040,9 @@ regenerate-unicode-properties@^8.2.0:
     regenerate "^1.4.0"
 
 regenerate@^1.4.0:
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/regenerate/-/regenerate-1.4.0.tgz#4a856ec4b56e4077c557589cae85e7a4c8869a11"
-  integrity sha512-1G6jJVDWrt0rK99kBjvEtziZNCICAuvIPkSiUFIQxVP06RCVpq3dmDo2oi6ABpYaDYaTRr67BEhL8r1wgEZZKg==
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/regenerate/-/regenerate-1.4.1.tgz#cad92ad8e6b591773485fbe05a485caf4f457e6f"
+  integrity sha512-j2+C8+NtXQgEKWk49MMP5P/u2GhnahTtVkRIHr5R5lVRlbKvmQ+oS+A5aLKWp2ma5VkT8sh6v+v4hbH0YHR66A==
 
 regenerator-runtime@^0.11.0:
   version "0.11.1"
@@ -8326,9 +8365,9 @@ sass-loader@8.0.2:
     semver "^6.3.0"
 
 sass@^1.25.0:
-  version "1.26.7"
-  resolved "https://registry.yarnpkg.com/sass/-/sass-1.26.7.tgz#d3c9f3dd9771632bfb60af8746c308da3765166d"
-  integrity sha512-xgNazdkr6yvgHEfNaOjKtZzhDZmKYMCmoRKMPrTDo7YvjaITIzU2DDYsIUuN/atAg7/JOxPeCQHH7TtCo5Tq2g==
+  version "1.26.8"
+  resolved "https://registry.yarnpkg.com/sass/-/sass-1.26.8.tgz#312652530721f9568d4c4000b0db07ec6eb23325"
+  integrity sha512-yvtzyrKLGiXQu7H12ekXqsfoGT/aTKeMDyVzCB675k1HYuaj0py63i8Uf4SI9CHXj6apDhpfwbUr3gGOjdpu2Q==
   dependencies:
     chokidar ">=2.0.0 <4.0.0"
 
@@ -9409,10 +9448,16 @@ typescript@^3.7.5, typescript@^3.8.3:
   integrity sha512-MYlEfn5VrLNsgudQTVJeNaQFUAI7DkhnOjdpAp4T+ku1TfQClewlbSuTVHiA+8skNBgaf02TL/kLOvig4y3G8w==
 =======
 typescript@^3.7.5:
+<<<<<<< HEAD
   version "3.9.3"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.9.3.tgz#d3ac8883a97c26139e42df5e93eeece33d610b8a"
   integrity sha512-D/wqnB2xzNFIcoBG9FG8cXRDjiqSTbG2wd8DMZeQyJlP1vfTkIxH4GKveWaEBYySKIg+USu+E+EDIR47SqnaMQ==
 >>>>>>> Update gh-pages to output generated at 2226f8c
+=======
+  version "3.9.5"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.9.5.tgz#586f0dba300cde8be52dd1ac4f7e1009c1b13f36"
+  integrity sha512-hSAifV3k+i6lEoCJ2k6R2Z/rp/H3+8sdmcn5NrS3/3kE7+RyZXm9aqvxWqjEXHAd8b0pShatpcdMTvEdvAJltQ==
+>>>>>>> Update gh-pages to output generated at 9e9228f
 
 ua-parser-js@^0.7.18:
   version "0.7.21"
