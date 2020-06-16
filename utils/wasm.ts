@@ -23,14 +23,14 @@ async function initialWASM<T>(
     };
   }
 
-  const go = new (window.global as any).Go();
+  const go = new (window as any).Go();
   let mod, inst;
   try {
     const result = await WebAssembly.instantiateStreaming(fetch(url), go.importObject);
     mod = result.module;
     inst = result.instance;
     go.run(inst);
-    return (window.global as any)[pkgName];
+    return (window as any)[pkgName];
   } catch (err) {
     console.error(err);
     if (!!callback) callback();

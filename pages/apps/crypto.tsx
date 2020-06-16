@@ -27,6 +27,8 @@ import { InputProps, TextAreaProps } from 'antd/lib/input';
 import Countdown from 'antd/lib/statistic/Countdown';
 import Paragraph from 'antd/lib/skeleton/Paragraph';
 
+import Wasm from '@/utils/wasm_exec';
+
 const CryptoContext = React.createContext({ crypto: undefined as Crypto });
 
 function showError(msg: any) {
@@ -607,9 +609,11 @@ class CryptoApp extends React.Component<CryptoAppProps, CryptoAppState> {
   async componentDidMount() {
     this.setState({ loading: true });
     try {
+      await Wasm();
       this.crypto = await initialCrypto();
       this.setState({ loading: false });
     } catch (error) {
+      console.error(error);
       this.setState({ error });
     }
   }
