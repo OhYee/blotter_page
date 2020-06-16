@@ -29,8 +29,8 @@ import Container, { Space } from '@/components/container';
 
 // --------
 import getConfig from 'next/config';
-const { publicRuntimeConfig } = getConfig();
-const { next_dynamic_antd_themes } = publicRuntimeConfig;
+const { publicRuntimeConfig = {} } = getConfig() || {};
+const { next_dynamic_antd_themes = {} } = publicRuntimeConfig;
 
 function modifyVars(vars) {
   const w = window as any;
