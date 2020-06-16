@@ -21,6 +21,7 @@ jobs:
       - run: sudo mv .next deploy/
       - run: sudo mv package.json deploy/
       - run: sudo mv yarn.lock deploy/
+      - run: sudo mv next.config.js deploy/
       - name: Deploy
         uses: s0/git-publish-subdir-action@master
         env:
