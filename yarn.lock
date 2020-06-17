@@ -1773,6 +1773,7 @@ ansi-styles@^4.1.0:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 antd-theme-generator@^1.1.9, antd-theme-generator@^1.2.1:
   version "1.2.2"
@@ -1789,6 +1790,9 @@ antd-theme-generator@^1.2.3:
   integrity sha512-ij/i92jaFSi08vwZkQrOck87FUn6OI89wh0hyfx5o8AFUpo3PKZ0oRFrNverV8X56iI3Mve4qPnIdPz9pj/jVg==
 >>>>>>> Update gh-pages to output generated at 2226f8c
 =======
+=======
+antd-theme-generator@^1.2.4:
+>>>>>>> Update gh-pages to output generated at 8fe35b3
   version "1.2.4"
   resolved "https://registry.yarnpkg.com/antd-theme-generator/-/antd-theme-generator-1.2.4.tgz#a6ba3b32ad744eba4911c26a44ce7ccbc3695415"
   integrity sha512-27HCj4NTpbQZGNkz1Ip7RF1p85iSN4izf5rY6rQvytM2shvve9qVLnIwHGdNWvsMPrgOPH5wlu8bauKnh7+6dg==
@@ -6021,6 +6025,7 @@ next-compose-plugins@^2.2.0:
   integrity sha512-ChUlpT9tWfJ7YxqGw/WQ2T1gf8EeX93n1XqeQw0lkvGa7seszahvF4eOZUJoq7Hetsbzg4UHVnPoCXfXTyQR3g==
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 next-dynamic-antd-theme@^0.0.7:
   version "0.0.7"
   resolved "https://registry.yarnpkg.com/next-dynamic-antd-theme/-/next-dynamic-antd-theme-0.0.7.tgz#f90f0a7558d8c0523741ed384905dd49ece457b2"
@@ -6035,6 +6040,16 @@ next-dynamic-antd-theme@^0.0.7:
 
 =======
 >>>>>>> Update gh-pages to output generated at 9e9228f
+=======
+next-dynamic-antd-theme@^0.0.9:
+  version "0.0.9"
+  resolved "https://registry.yarnpkg.com/next-dynamic-antd-theme/-/next-dynamic-antd-theme-0.0.9.tgz#d61226cb994cc891fd02ed4b2dfa29013300d5ba"
+  integrity sha512-0kjjBfl8aiTPcX9sSW+GmdcGnbJUWI1OVb4TYnY3M0dEcluiS7UGm332vcF+6HfwY3AH1L8u4weLNWCd5gvGHg==
+  dependencies:
+    antd-theme-generator "^1.2.4"
+    next "^9.4.4"
+
+>>>>>>> Update gh-pages to output generated at 8fe35b3
 next-tick@~1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/next-tick/-/next-tick-1.0.0.tgz#ca86d1fe8828169b0120208e3dc8424b9db8342c"
