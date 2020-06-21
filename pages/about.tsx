@@ -91,11 +91,10 @@ class AboutPage extends React.Component<AboutPageProps, AboutPageState> {
   async componentDidMount() {
     if (!!this.props.github) {
       this.setState({ loading: true });
-      var repos = [];
-      for (var i = 1; ; i++) {
-        var r = await githubRepos(this.props.github, i);
-        if (r.length == 0) break;
-        repos = repos.concat(r);
+      try {
+        var repos = (await githubRepos(this.props.github)).repos;
+      } catch {
+        repos = [];
       }
       this.setState({ repos, loading: false });
     }

@@ -260,17 +260,8 @@ export const githubUser = async (username: string, callback?: RequestCallback<Gi
   return await request('get', `https://api.github.com/users/${username}`, {}, callback);
 };
 
-export const githubRepos = async (
-  username: string,
-  page: number,
-  callback?: RequestCallback<GithubRepo[]>,
-) => {
-  return await request(
-    'get',
-    `https://api.github.com/users/${username}/repos?page=${page}`,
-    {},
-    callback,
-  );
+export const githubRepos = async (username: string, callback?: RequestCallback<{ repos: GithubRepo[] }>) => {
+  return await request('get', `/api/github/repos`, { username }, callback);
 };
 
 export const githubRepo = async (
