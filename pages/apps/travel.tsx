@@ -130,7 +130,18 @@ class Travel extends React.Component<TravelProps, TravelState> {
                 }
               }
             >
-              {/* <div>
+              <div
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  left: 0,
+                  padding: '20px',
+                  height: '100%',
+                  background: 'linear-gradient(90deg, rgba(0,0,0,0.5), transparent)',
+                  overflow: 'auto',
+                  pointerEvents: 'none',
+                }}
+              >
                 <Timeline mode={'left'}>
                   <Timeline.Item label="2015-09-01">Create a services</Timeline.Item>
                   <Timeline.Item label="2015-09-01 09:12:11">
@@ -141,7 +152,7 @@ class Travel extends React.Component<TravelProps, TravelState> {
                     Network problems being solved
                   </Timeline.Item>
                 </Timeline>
-              </div> */}
+              </div>
               <Marker position={{ longitude: 120.2, latitude: 30.26667 }} title={'title'}>
                 <StarFilled color={'yellow'} style={{ color: 'yellow' }} />
               </Marker>
