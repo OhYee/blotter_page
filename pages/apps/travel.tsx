@@ -93,7 +93,7 @@ class Travel extends React.Component<TravelProps, TravelState> {
               center={{ lng: this.state.lng, lat: this.state.lat }}
               loading={<Spin />}
               mapStyle={
-                this.context.theme === 'default' ? 'amap://styles/macaron' : 'amap://styles/dark'
+                this.context.theme === 'default' ? 'amap://styles/normal' : 'amap://styles/dark'
               }
               events={
                 {
