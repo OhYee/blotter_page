@@ -1,7 +1,7 @@
 import React, { ComponentProps, Fragment } from 'react';
 import Head from 'next/head';
 
-import { Card, Spin, InputNumber, Timeline } from 'antd';
+import { Card, Spin, InputNumber, Timeline, Drawer, Button } from 'antd';
 import { StarFilled } from '@ant-design/icons';
 
 import { Map, Marker } from 'react-amap';
@@ -23,6 +23,7 @@ interface TravelState {
   lng: number;
   lat: number;
   zoom: number;
+  drawer: boolean;
   ins?: any;
 }
 
@@ -35,7 +36,7 @@ class Travel extends React.Component<TravelProps, TravelState> {
 
   constructor(props: any) {
     super(props);
-    this.state = { lng: 108, lat: 34, zoom: 4 };
+    this.state = { lng: 108, lat: 34, zoom: 4, drawer: false };
   }
 
   componentDidMount() {}
@@ -85,8 +86,11 @@ class Travel extends React.Component<TravelProps, TravelState> {
           <Input name="lng" />
           <Input name="lat" />
           <Input name="zoom" />
+          <Button onClick={() => this.setState((state) => ({ drawer: !state.drawer }))}>
+            change
+          </Button>
 
-          <div style={{ width: '100%', height: '80vh' }}>
+          <div style={{ width: '100%', height: '80vh', overflow: 'hidden' }}>
             <Map
               amapkey={key}
               zoom={this.state.zoom}
@@ -130,17 +134,13 @@ class Travel extends React.Component<TravelProps, TravelState> {
                 }
               }
             >
-              <div
-                style={{
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                  padding: '20px',
-                  height: '100%',
-                  background: 'linear-gradient(90deg, rgba(0,0,0,0.5), transparent)',
-                  overflow: 'auto',
-                  pointerEvents: 'none',
-                }}
+              <Drawer
+                getContainer={false}
+                closable={false}
+                onClose={() => this.setState({ drawer: false })}
+                visible={this.state.drawer}
+                placement="left"
+                style={{ position: 'absolute' }}
               >
                 <Timeline mode={'left'}>
                   <Timeline.Item label="2015-09-01">Create a services</Timeline.Item>
@@ -152,9 +152,9 @@ class Travel extends React.Component<TravelProps, TravelState> {
                     Network problems being solved
                   </Timeline.Item>
                 </Timeline>
-              </div>
+              </Drawer>
               <Marker position={{ longitude: 120.2, latitude: 30.26667 }} title={'title'}>
-                <StarFilled color={'yellow'} style={{ color: 'yellow' }} />
+                <StarFilled style={{ color: 'yellow' }} />
               </Marker>
             </Map>
           </div>
