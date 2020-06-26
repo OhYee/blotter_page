@@ -2,7 +2,7 @@ import React, { ComponentProps, Fragment } from 'react';
 import Head from 'next/head';
 
 import { Card, Spin, InputNumber, Timeline, Drawer, Button } from 'antd';
-import { StarFilled } from '@ant-design/icons';
+import { StarFilled, MoreOutlined } from '@ant-design/icons';
 
 import { Map, Marker } from 'react-amap';
 
@@ -86,9 +86,6 @@ class Travel extends React.Component<TravelProps, TravelState> {
           <Input name="lng" />
           <Input name="lat" />
           <Input name="zoom" />
-          <Button onClick={() => this.setState((state) => ({ drawer: !state.drawer }))}>
-            change
-          </Button>
 
           <div style={{ width: '100%', height: '80vh', overflow: 'hidden' }}>
             <Map
@@ -134,6 +131,13 @@ class Travel extends React.Component<TravelProps, TravelState> {
                 }
               }
             >
+              <Button
+                icon={<MoreOutlined />}
+                type="primary"
+                shape="circle"
+                style={{ position: 'absolute', left: '10px', top: '10px' }}
+                onClick={() => this.setState((state) => ({ drawer: !state.drawer }))}
+              />
               <Drawer
                 getContainer={false}
                 closable={false}
