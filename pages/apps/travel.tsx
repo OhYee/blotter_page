@@ -17,7 +17,14 @@ import { waitUntil } from '@/utils/debounce';
 
 const key = '81533a71a4db0eb8107620d99b954d9d';
 
-interface TravelProps extends ComponentProps<'base'> {}
+interface TravelProps extends ComponentProps<'base'> {
+  cities: {
+    name: string;
+    lng: number;
+    lat: number;
+    time: number;
+  }[];
+}
 
 interface TravelState {
   lng: number;
@@ -31,12 +38,18 @@ class Travel extends React.Component<TravelProps, TravelState> {
   static contextType = Context;
   context!: React.ContextType<typeof Context>;
 
-  static defaultProps: TravelProps = {};
+  static defaultProps: TravelProps = { cities: [] };
   formRef = React.createRef<FormInstance>();
 
   constructor(props: any) {
     super(props);
     this.state = { lng: 108, lat: 34, zoom: 4, drawer: false };
+  }
+
+  static getInitialProps(): TravelProps {
+    return {
+      cities: [{ name: '乌镇', time: 1593043200, lng: 120.775513, lat: 30.729425 }],
+    };
   }
 
   componentDidMount() {}
