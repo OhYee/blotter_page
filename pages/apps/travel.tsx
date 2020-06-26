@@ -5,6 +5,7 @@ import { Card, Spin, InputNumber, Timeline, Drawer, Button } from 'antd';
 import { StarFilled, MoreOutlined } from '@ant-design/icons';
 
 import { Map, Marker } from 'react-amap';
+import moment from 'moment';
 
 import Container, { Space, TextCenter } from '@/components/container';
 import { Context } from '@/utils/global';
@@ -160,19 +161,30 @@ class Travel extends React.Component<TravelProps, TravelState> {
                 style={{ position: 'absolute' }}
               >
                 <Timeline mode={'left'}>
-                  <Timeline.Item label="2015-09-01">Create a services</Timeline.Item>
-                  <Timeline.Item label="2015-09-01 09:12:11">
-                    Solve initial network problems
-                  </Timeline.Item>
-                  <Timeline.Item>Technical testing</Timeline.Item>
-                  <Timeline.Item label="2015-09-01 09:12:11">
-                    Network problems being solved
-                  </Timeline.Item>
+                  {this.props.cities.map((item) => (
+                    <Timeline.Item label={moment(item.time, 'X').format('YYYY-MM-DD')}>
+                      {item.name}
+                    </Timeline.Item>
+                  ))}
                 </Timeline>
               </Drawer>
-              <Marker position={{ longitude: 120.2, latitude: 30.26667 }} title={'title'}>
-                <StarFilled style={{ color: 'yellow' }} />
-              </Marker>
+              {this.props.cities.map((item) => (
+                <Marker
+                  position={{ longitude: item.lng, latitude: item.lat }}
+                  title={`${item.name}-${moment(item.time, 'X').format('YYYY-MM-DD')}`}
+                >
+                  <StarFilled
+                    style={(() => {
+                      const color = this.context.theme === 'default' ? 'red' : 'yellow';
+                      const filter = `drop-shadow(0px 0px 10px ${color})`;
+                      return {
+                        color,
+                        filter: `${filter} ${filter}`,
+                      };
+                    })()}
+                  />
+                </Marker>
+              ))}
             </Map>
           </div>
         </Card>
