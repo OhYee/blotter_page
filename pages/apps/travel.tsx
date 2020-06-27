@@ -49,7 +49,14 @@ class Travel extends React.Component<TravelProps, TravelState> {
 
   static getInitialProps(): TravelProps {
     return {
-      cities: [{ name: '乌镇', time: 1593043200, lng: 120.775513, lat: 30.729425 }],
+      cities: [
+        { name: '扬州', time: 1491235200, lng: 119.430412, lat: 32.401369 },
+        { name: '苏州', time: 1556640000, lng: 120.629989, lat: 31.323712 },
+        { name: '庐江', time: 1515686400, lng: 120.629989, lat: 31.323712 },
+        { name: '西安', time: 1525363200, lng: 109.285212, lat: 34.385087 },
+        { name: '乌镇', time: 1593043200, lng: 120.498308, lat: 30.735381 },
+        { name: '西塘', time: 1593187200, lng: 120.890814, lat: 30.944785 },
+      ],
     };
   }
 
