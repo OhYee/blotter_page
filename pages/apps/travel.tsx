@@ -168,11 +168,24 @@ class Travel extends React.Component<TravelProps, TravelState> {
                 style={{ position: 'absolute' }}
               >
                 <Timeline mode={'left'}>
-                  {this.props.cities.map((item) => (
-                    <Timeline.Item label={moment(item.time, 'X').format('YYYY-MM-DD')}>
-                      {item.name}
-                    </Timeline.Item>
-                  ))}
+                  {this.props.cities
+                    .sort((a, b) => a.time - b.time)
+                    .map((item) => (
+                      <Timeline.Item label={moment(item.time, 'X').format('YYYY-MM-DD')}>
+                        <a
+                          onClick={() => {
+                            this.setState({
+                              lat: item.lat,
+                              lng: item.lng,
+                              zoom: 15,
+                              drawer: false,
+                            });
+                          }}
+                        >
+                          {item.name}
+                        </a>
+                      </Timeline.Item>
+                    ))}
                 </Timeline>
               </Drawer>
               {this.props.cities.map((item) => (
