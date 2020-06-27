@@ -186,7 +186,7 @@ class Travel extends React.Component<TravelProps, TravelState> {
                       const filter = `drop-shadow(0px 0px 10px ${color})`;
                       return {
                         color,
-                        filter: `${filter} ${filter}`,
+                        filter,
                       };
                     })()}
                   />
