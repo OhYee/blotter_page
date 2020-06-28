@@ -170,8 +170,8 @@ class Travel extends React.Component<TravelProps, TravelState> {
                 <Timeline mode={'left'}>
                   {this.props.cities
                     .sort((a, b) => a.time - b.time)
-                    .map((item) => (
-                      <Timeline.Item label={moment(item.time, 'X').format('YYYY-MM-DD')}>
+                    .map((item, idx) => (
+                      <Timeline.Item key={idx} label={moment(item.time, 'X').format('YYYY-MM-DD')}>
                         <a
                           onClick={() => {
                             this.setState({
