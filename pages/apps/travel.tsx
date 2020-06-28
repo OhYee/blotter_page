@@ -1,7 +1,8 @@
 import React, { ComponentProps, Fragment } from 'react';
 import Head from 'next/head';
+import Link from 'next/link';
 
-import { Card, Spin, InputNumber, Timeline, Drawer, Button } from 'antd';
+import { Card, Spin, InputNumber, Timeline, Drawer, Button, Popover, List } from 'antd';
 import { StarFilled, MoreOutlined } from '@ant-design/icons';
 
 import { Map, Marker } from 'react-amap';
@@ -15,6 +16,7 @@ import { getAll, create } from '@/extensions/queue/api';
 
 import { FormInstance } from 'antd/lib/form';
 import { waitUntil } from '@/utils/debounce';
+import If from '@/components/if';
 
 const key = '81533a71a4db0eb8107620d99b954d9d';
 
@@ -23,7 +25,10 @@ interface TravelProps extends ComponentProps<'base'> {
     name: string;
     lng: number;
     lat: number;
-    time: number;
+    travels: {
+      time: number;
+      link: string;
+    }[];
   }[];
 }
 
@@ -50,12 +55,45 @@ class Travel extends React.Component<TravelProps, TravelState> {
   static getInitialProps(): TravelProps {
     return {
       cities: [
-        { name: '扬州', time: 1491235200, lng: 119.430412, lat: 32.401369 },
-        { name: '苏州', time: 1556640000, lng: 120.629989, lat: 31.323712 },
-        { name: '庐江', time: 1515686400, lng: 120.629989, lat: 31.323712 },
-        { name: '西安', time: 1525363200, lng: 109.285212, lat: 34.385087 },
-        { name: '乌镇', time: 1593043200, lng: 120.498308, lat: 30.735381 },
-        { name: '西塘', time: 1593187200, lng: 120.890814, lat: 30.944785 },
+        {
+          name: '扬州',
+          lng: 119.430412,
+          lat: 32.401369,
+          travels: [{ time: 1491235200, link: '' }],
+        },
+        {
+          name: '苏州',
+          lng: 120.629989,
+          lat: 31.323712,
+          travels: [{ time: 1556640000, link: '' }],
+        },
+        {
+          name: '庐江',
+          lng: 120.629989,
+          lat: 31.323712,
+          travels: [{ time: 1515686400, link: '' }],
+        },
+        {
+          name: '西安',
+          lng: 109.285212,
+          lat: 34.385087,
+          travels: [{ time: 1525363200, link: '' }],
+        },
+        {
+          name: '乌镇',
+          lng: 120.498308,
+          lat: 30.735381,
+          travels: [{ time: 1593043200, link: '' }],
+        },
+        {
+          name: '西塘',
+          lng: 120.890814,
+          lat: 30.944785,
+          travels: [
+            { time: 1593187200, link: '123' },
+            { time: 1693187200, link: '456' },
+          ],
+        },
       ],
     };
   }
@@ -169,6 +207,12 @@ class Travel extends React.Component<TravelProps, TravelState> {
               >
                 <Timeline mode={'left'}>
                   {this.props.cities
+                    .map((item) => {
+                      var result: (typeof item & { time: number; link: string })[] = [];
+                      item.travels.map((i) => result.push({ ...item, ...i }));
+                      return result;
+                    })
+                    .reduce((a, b) => a.concat(b))
                     .sort((a, b) => a.time - b.time)
                     .map((item, idx) => (
                       <Timeline.Item key={idx} label={moment(item.time, 'X').format('YYYY-MM-DD')}>
@@ -184,25 +228,46 @@ class Travel extends React.Component<TravelProps, TravelState> {
                         >
                           {item.name}
                         </a>
+                        <If condition={!!item.link}>
+                          <Link href={item.link}>
+                            <a>游记</a>
+                          </Link>
+                        </If>
                       </Timeline.Item>
                     ))}
                 </Timeline>
               </Drawer>
               {this.props.cities.map((item) => (
-                <Marker
-                  position={{ longitude: item.lng, latitude: item.lat }}
-                  title={`${item.name}-${moment(item.time, 'X').format('YYYY-MM-DD')}`}
-                >
-                  <StarFilled
-                    style={(() => {
-                      const color = this.context.theme === 'default' ? 'red' : 'yellow';
-                      const filter = `drop-shadow(0px 0px 10px ${color})`;
-                      return {
-                        color,
-                        filter,
-                      };
-                    })()}
-                  />
+                <Marker position={{ longitude: item.lng, latitude: item.lat }}>
+                  <Popover
+                    title={`${item.name}`}
+                    content={
+                      <List
+                        dataSource={item.travels.sort((a, b) => a.time - b.time)}
+                        renderItem={(item) => (
+                          <List.Item key={item.time}>
+                            {moment(item.time, 'X').format('YYYY-MM-DD')}
+                            <If condition={!!item.link}>
+                              <Link href={''}>
+                                <a>游记</a>
+                              </Link>
+                            </If>
+                          </List.Item>
+                        )}
+                      />
+                    }
+                  >
+                    <StarFilled
+                      style={(() => {
+                        const color = this.context.theme === 'default' ? 'red' : 'yellow';
+                        const filter = `drop-shadow(0px 0px 10px ${color})`;
+                        return {
+                          color,
+                          filter,
+                        };
+                      })()}
+                    />
+                  </Popover>
                 </Marker>
               ))}
             </Map>
