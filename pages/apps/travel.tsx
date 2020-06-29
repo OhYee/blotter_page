@@ -229,6 +229,7 @@ class Travel extends React.Component<TravelProps, TravelState> {
                           {item.name}
                         </a>
                         <If condition={!!item.link}>
+                          {' '}
                           <Link href={item.link}>
                             <a>游记</a>
                           </Link>
@@ -248,7 +249,8 @@ class Travel extends React.Component<TravelProps, TravelState> {
                           <List.Item key={item.time}>
                             {moment(item.time, 'X').format('YYYY-MM-DD')}
                             <If condition={!!item.link}>
-                              <Link href={''}>
+                              {' '}
+                              <Link href={item.link}>
                                 <a>游记</a>
                               </Link>
                             </If>
