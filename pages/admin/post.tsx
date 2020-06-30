@@ -339,7 +339,6 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
       notification.error({ message: '信息错误', description: err });
     }
     const post = { ...obj, content: this.state.html };
-    console.log(post);
     return (
       <div>
         <Icon type={this.state.loading ? 'loading' : 'check'} />

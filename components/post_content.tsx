@@ -27,7 +27,7 @@ interface PostContentProps {
 }
 
 class PostContent extends Component<PostContentProps> {
-  componentDidMount() {
+  resetImage() {
     const containers = document.getElementsByClassName('image');
     for (var i = 0; i < containers.length; i++) {
       const imgs = containers[i].getElementsByTagName('img');
@@ -35,6 +35,12 @@ class PostContent extends Component<PostContentProps> {
         setImageLightbox(imgs[j]);
       }
     }
+  }
+  componentDidMount() {
+    this.resetImage();
+  }
+  componentDidUpdate() {
+    this.resetImage();
   }
   render() {
     return this.props.post === undefined ? (
