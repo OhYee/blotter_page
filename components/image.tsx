@@ -3,31 +3,86 @@ import { CSSProperties } from 'react';
 
 function CreateBox(props: { src: string; alt?: string; title?: string }) {
   const { src, alt = '', title = '' } = props;
+  const body = document.body;
+  const top = window.scrollY;
+  body.style.position = 'fixed';
+  body.style.top = `${-top}px`;
+
+  const box = document.createElement('div');
+  box.className = 'image-lightbox';
+  document.body.appendChild(box);
+
+  const close = document.createElement('span');
+  close.innerText = '×';
+  box.appendChild(close);
+
+  const p = document.createElement('p');
+  p.innerText = !!alt ? alt : title;
+  if (!!p.innerHTML) box.appendChild(p);
+
   const img = document.createElement('img');
   img.src = src;
   img.alt = alt;
   img.title = title;
-
-  const p = document.createElement('p');
-  p.innerText = !!alt ? alt : title;
-
-  const box = document.createElement('div');
-  box.className = 'image-lightbox';
   box.appendChild(img);
-  if (!!p.innerHTML) box.appendChild(p);
 
+  var scale = 100;
+  var grabbing = false;
+  var offsetX = 0;
+  var offsetY = 0;
+  var mouseX = 0;
+  var mouseY = 0;
+
+  img.onmousedown = (e) => {
+    img.ondragstart = () => false;
+    img.style.cursor = 'grabbing';
+    grabbing = true;
+    mouseX = e.offsetX;
+    mouseY = e.offsetY;
+  };
+  img.onmousemove = (e) => {
+    if (grabbing) {
+      offsetX += e.offsetX - mouseX;
+      offsetY += e.offsetY - mouseY;
+      img.style.marginLeft = `${offsetX}px`;
+      img.style.marginTop = `${offsetY}px`;
+    }
+  };
+  img.onmouseup = (e) => {
+    img.style.cursor = 'grab';
+    grabbing = false;
+  };
+  img.onclick = (e) => {
+    e.stopPropagation();
+  };
+
+  const judgeWheel = (e: WheelEvent) => {
+    console.log(e.deltaY);
+    scale -= e.deltaY / 10;
+    if (scale < 0) scale = 0;
+    img.style.maxHeight = `unset`;
+    img.style.maxWidth = `unset`;
+    img.style.height = `${scale}%`;
+    img.style.width = `${scale}%`;
+  };
   const judgeKey = (e: KeyboardEvent) => {
     if (e.keyCode === 27) remove();
   };
   const remove = () => {
     document.removeEventListener('keydown', judgeKey);
+    document.removeEventListener('mousewheel', judgeWheel);
     box.remove();
+
+    body.style.position = '';
+    body.style.top = '';
+    window.scrollTo(0, top);
   };
 
-  box.onclick = remove;
   document.addEventListener('keydown', judgeKey);
+  document.addEventListener('mousewheel', judgeWheel);
 
-  document.body.appendChild(box);
+  box.onclick = remove;
+  close.onclose = remove;
 }
 
 export default (props: {

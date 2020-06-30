@@ -28,6 +28,14 @@
     background: rgba(0, 0, 0, 0.5);
   }
 }
+@keyframes lightbox-title {
+  from {
+    color: transparent;
+  }
+  to {
+    color: white;
+  }
+}
 
 :global(.image-lightbox) {
   position: fixed;
@@ -35,25 +43,51 @@
   left: 0;
   right: 0;
   bottom: 0;
+
   z-index: 999;
+
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
 
   animation: lightbox-background 1s;
   background: rgba(0, 0, 0, 0.5);
 
-  cursor: pointer;
+  color: white;
+  font-size: 1.25em;
+  font-weight: bold;
+
+  span {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 1001;
+
+    font-size: 2em;
+
+    cursor: pointer;
+
+    animation: lightbox-title 1s;
+  }
+
+  p {
+    position: absolute;
+    bottom: 50px;
+    z-index: 1001;
+
+    animation: lightbox-title 1s;
+  }
+
   img {
-    animation: image-show 1s;
+    position: absolute;
+
     max-width: 80vw;
     max-height: 80vh;
-  }
-  p {
-    color: white;
-    font-size: 1em;
-    margin-top: 10px;
-    font-weight: bold;
+
+    z-index: 1000;
+
+    cursor: grab;
+
+    animation: image-show 1s;
   }
 }
