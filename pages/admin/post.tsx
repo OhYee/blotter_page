@@ -26,6 +26,7 @@ import { ControlledEditor } from '@monaco-editor/react/lib/';
 
 import Container from '@/components/container';
 import TagSearch from '@/components/tag_search';
+import PostContent from '@/components/post_content';
 
 import { waitUntil } from '@/utils/debounce';
 import { markdown, adminPost, postExist, postEdit } from '@/utils/api';
@@ -83,6 +84,19 @@ const Press: React.FC<
     />
   );
 };
+
+const fieldsName = [
+  'id',
+  'title',
+  'url',
+  'abstract',
+  'head_image',
+  'view',
+  'publish_time',
+  'edit_time',
+  'published',
+  //   'raw',
+];
 
 interface PostEditProps extends ComponentProps<'base'>, WithRouterProps {}
 
@@ -231,21 +245,39 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
         (top / height) * this.previewRef.current.scrollHeight + this.state.offset;
     }
   };
+
+  getValidInput = async () => {
+    try {
+      var obj = await this.formRef.current.validateFields(fieldsName);
+    } catch (e) {
+      throw e;
+    }
+
+    obj.tags = this.state.tags.map((tag) => tag.id);
+    obj.publish_time = obj.publish_time.unix();
+    obj.edit_time = obj.edit_time.unix();
+    obj.raw = this.editor.getValue();
+    return obj as Blotter.PostAll;
+  };
+
+  getInput = () => {
+    try {
+      var obj = this.formRef.current.getFieldsValue(fieldsName);
+    } catch (e) {
+      throw e;
+    }
+    obj.tags = this.state.tags;
+    obj.publish_time = (obj.publish_time as moment.Moment).format('YYYY-MM-DD HH:mm:ss');
+    obj.edit_time = (obj.edit_time as moment.Moment).format('YYYY-MM-DD HH:mm:ss');
+    obj.raw = this.editor.getValue();
+    return obj as Blotter.PostAll;
+  };
+
   submit = async () => {
     this.setState({ submitDisabled: true });
+
     try {
-      var obj = await this.formRef.current.validateFields([
-        'id',
-        'title',
-        'url',
-        'abstract',
-        'head_image',
-        'view',
-        'publish_time',
-        'edit_time',
-        'published',
-        //   'raw',
-      ]);
+      var obj = await this.getValidInput();
     } catch (e) {
       const err = e.errorFields.map((item) => item.errors.join(' ')).join('\n');
       notification.error({ message: '信息错误', description: err });
@@ -253,11 +285,7 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
       return;
     }
 
-    obj.tags = this.state.tags.map((tag) => tag.id);
-    obj.publish_time = obj.publish_time.unix();
-    obj.edit_time = obj.edit_time.unix();
-    obj.raw = this.editor.getValue();
-    postEdit(obj as Blotter.PostAll)
+    postEdit(obj)
       .then((r) => {
         if (ShowNotification(r)) {
           Router.push(`/admin/post?url=${obj.url}`);
@@ -304,13 +332,19 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
   };
 
   renderPreview = () => {
+    try {
+      var obj = this.getInput();
+    } catch (e) {
+      const err = e.errorFields.map((item) => item.errors.join(' ')).join('\n');
+      notification.error({ message: '信息错误', description: err });
+    }
+    const post = { ...obj, content: this.state.html };
+    console.log(post);
     return (
       <div>
         <Icon type={this.state.loading ? 'loading' : 'check'} />
         <article className={styles.post}>
-          {this.state.headImage ? <img src={this.state.headImage} /> : null}
-          <Divider />
-          <section className="post-content" dangerouslySetInnerHTML={{ __html: this.state.html }} />
+          <PostContent post={post} />
         </article>
       </div>
     );
