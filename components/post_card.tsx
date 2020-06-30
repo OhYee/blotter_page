@@ -5,6 +5,8 @@ import { Icon } from '@ant-design/compatible';
 const { Meta } = Card;
 import Link from 'next/link';
 
+import Image from '@/components/image';
+
 import TagPart from '@/components/tag';
 
 const { Title, Paragraph, Text } = Typography;
@@ -81,11 +83,12 @@ class PostCard extends React.Component<PostCardProps, {}> {
         hoverable={this.props.hoverable}
         cover={
           !loading && post.head_image ? (
-            <div
-              style={{ maxHeight: '200px', overflow: 'hidden', display: 'flex', alignItems: 'center' }}
-            >
-              <img alt="example" src={post.head_image} style={{ width: '100%' }} />
-            </div>
+            <Image
+              src={post.head_image}
+              height="300px"
+              alt={`文章『${post.title}』的头图`}
+              title={post.title}
+            />
           ) : null
         }
       >
