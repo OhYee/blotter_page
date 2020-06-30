@@ -6,20 +6,17 @@ import Link from 'next/link';
 import { withRouter } from 'next/router';
 import { WithRouterProps } from 'next/dist/client/with-router';
 
-import { Button, Card, PageHeader, Skeleton, Anchor, Avatar, Divider, message } from 'antd';
-import { Icon } from '@ant-design/compatible';
-import AntdIcon, { LinkOutlined, QqOutlined, WechatOutlined } from '@ant-design/icons';
+import { Card, Anchor, Avatar, message } from 'antd';
+import AntdIcon, { LinkOutlined, QqOutlined } from '@ant-design/icons';
 
-import TagPart from '@/components/tag';
-import Visiable from '@/components/visiable';
 import CommentPart from '@/components/comment';
 import Container, { Space } from '@/components/container';
+import PostContent from '@/components/post_content';
 
 import { post, view } from '@/utils/api';
 import { Context } from '@/utils/global';
 
-import styles from './post.less';
-import { parseStringParams } from '@/utils/parse';
+import './post.less';
 import If from '@/components/if';
 
 function QzoneSVG() {
@@ -180,71 +177,6 @@ class PostPage extends React.Component<PostPageProps, PostPageState> {
     );
   };
 
-  render_post = () => {
-    return this.props.post === undefined ? (
-      <Skeleton active={true} />
-    ) : (
-      <article className={styles.post}>
-        <PageHeader className="shadow" title={this.props.post.title}>
-          <div>
-            <div className="right20">
-              <Icon type="eye" className="right5" />
-              {this.props.post.view}
-            </div>
-            <div className="right20">
-              <Icon type="calendar" className="right5" />
-              {this.props.post.publish_time}
-            </div>
-            {this.props.post.publish_time == this.props.post.edit_time ? null : (
-              <div className="right20">
-                <Icon type="edit" className="right5" />
-                {this.props.post.edit_time}
-              </div>
-            )}
-            <Context.Consumer>
-              {(context) =>
-                (context.user.permission & 1) == 1 ? (
-                  <Link href={`/admin/post?url=${this.props.router.query.url}`}>
-                    <Button type="primary" size="small">
-                      编辑
-                    </Button>
-                  </Link>
-                ) : null
-              }
-            </Context.Consumer>
-            <If condition={!!this.props.post.abstract}>
-              <blockquote>{this.props.post.abstract}</blockquote>
-            </If>
-            <div>
-              <Icon type="tag" className="right20" />
-              {this.props.post.tags.length > 0 ? (
-                this.props.post.tags.map((tag: Blotter.Tag) => (
-                  <TagPart key={tag.short} tag={tag} />
-                ))
-              ) : (
-                <span>无标签</span>
-              )}
-            </div>
-          </div>
-        </PageHeader>
-        <If condition={this.props.post.head_image !== ''}>
-          <a
-            className="headimage"
-            target="_blank"
-            rel="noopener noreferrer"
-            href={this.props.post.head_image}
-          >
-            <img src={this.props.post.head_image} alt={this.props.post.title} />
-          </a>
-        </If>
-        <section
-          className="post-content"
-          dangerouslySetInnerHTML={{ __html: this.props.post.content }}
-        />
-      </article>
-    );
-  };
-
   render_anchor = (anchor: AnchorType) => {
     return (
       <Anchor.Link key={`${anchor.id}|${anchor.name}`} href={anchor.id} title={anchor.name}>
@@ -291,7 +223,9 @@ class PostPage extends React.Component<PostPageProps, PostPageState> {
           )}
         </Context.Consumer>
         <Space>
-          <Card>{this.render_post()}</Card>
+          <Card>
+            <PostContent post={this.props.post} />
+          </Card>
           {this.render_share()}
           <Card>
             <CommentPart url={`/post/${this.props.router.query.url as string}`} />
