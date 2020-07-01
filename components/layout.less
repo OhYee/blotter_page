@@ -104,8 +104,11 @@ blockquote {
   padding-top: 15px;
 
   .friends {
-    word-break: keep-all;
-    word-wrap: break-word;
+    // word-wrap does not work on mobile
+    word-break: break-all;
+    // word-break: keep-all;
+    // word-wrap: break-word;
+    // white-space: normal;
 
     span:not(:last-child)::after {
       content: '|';
