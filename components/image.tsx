@@ -26,7 +26,7 @@ function CreateBox(props: { src: string; alt?: string; title?: string }) {
   img.title = title;
   box.appendChild(img);
 
-  var scale = -1;
+  const ratio = img.naturalWidth / img.naturalHeight;
   var grabbing = false;
   var offsetX = 0;
   var offsetY = 0;
@@ -57,13 +57,11 @@ function CreateBox(props: { src: string; alt?: string; title?: string }) {
   };
 
   const judgeWheel = (e: WheelEvent) => {
-    if (scale < 0) scale = (img.height / img.naturalHeight) * 100;
-    scale -= e.deltaY / 10;
-    if (scale < 0) scale = 0;
+    const height = img.height - e.deltaY;
     img.style.maxHeight = `unset`;
     img.style.maxWidth = `unset`;
-    img.style.height = `${scale}%`;
-    img.style.width = `${scale}%`;
+    img.style.height = `${height}px`;
+    img.style.width = `${height * ratio}px`;
   };
   const judgeKey = (e: KeyboardEvent) => {
     if (e.keyCode === 27) remove();
