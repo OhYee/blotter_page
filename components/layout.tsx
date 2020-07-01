@@ -27,7 +27,6 @@ import Container, { Space } from '@/components/container';
 
 import changeTheme from 'next-dynamic-antd-theme';
 
-
 import { layout, logout, info } from '@/utils/api';
 import ShowNotification from '@/utils/notification';
 import { GlobalProps, Context, defaultContext } from '@/utils/global';
@@ -423,7 +422,7 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
         )}
         <Layout
           className={'shadow'}
-          style={{ position: 'fixed', zIndex: 100, height: '100vh', overflow: 'auto' }}
+          style={{ position: 'fixed', zIndex: 100, top: 0, bottom: 0, overflow: 'auto' }}
         >
           {this.renderSider()}
           <Content>{this.renderCollapseButton()}</Content>
