@@ -26,7 +26,7 @@ function CreateBox(props: { src: string; alt?: string; title?: string }) {
   img.title = title;
   box.appendChild(img);
 
-  var scale = 100;
+  var scale = -1;
   var grabbing = false;
   var offsetX = 0;
   var offsetY = 0;
@@ -57,7 +57,7 @@ function CreateBox(props: { src: string; alt?: string; title?: string }) {
   };
 
   const judgeWheel = (e: WheelEvent) => {
-    console.log(e.deltaY);
+    if (scale < 0) scale = (img.height / img.naturalHeight) * 100;
     scale -= e.deltaY / 10;
     if (scale < 0) scale = 0;
     img.style.maxHeight = `unset`;
