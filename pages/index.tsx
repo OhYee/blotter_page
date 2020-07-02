@@ -193,6 +193,11 @@ class Index extends React.Component<IndexProps, IndexState> {
           <Col>从这些标签里排除：</Col>
           <Col>{this.renderTagSearch('without_tags')}</Col>
         </Row>
+        <Space direction="horizontal">
+          {this.state.tags.map((tag) => (
+            <TagPart tag={tag} key={tag.short} />
+          ))}
+        </Space>
       </Fragment>
     );
   };
@@ -211,10 +216,6 @@ class Index extends React.Component<IndexProps, IndexState> {
             <Card className="shadow" style={{ lineHeight: '2em' }}>
               {this.renderSearch()}
             </Card>
-
-            {this.state.tags.map((tag) => (
-              <TagPart tag={tag} key={tag.short} />
-            ))}
 
             <PostList
               posts={this.state.posts}
