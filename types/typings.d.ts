@@ -71,6 +71,7 @@ declare namespace Blotter {
   interface Post extends PostCard {
     content: string;
     keywords: string[];
+    images: string[];
   }
   interface PostAll extends Post {
     id: string;
