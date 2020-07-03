@@ -89,14 +89,24 @@ export default (props: {
   title?: string;
   clickable?: boolean;
   height?: string;
+  maxHeight?: number | string;
   width?: string;
-  styles?: CSSProperties;
+  style?: CSSProperties;
 }) => {
-  const { src, alt, title, height = '100%', width = '100%', clickable = false, styles } = props;
+  const {
+    src,
+    alt,
+    title,
+    height = '100%',
+    width = '100%',
+    maxHeight,
+    clickable = false,
+    style,
+  } = props;
   return (
     <div
       className="image-container"
-      style={{ height, width, cursor: clickable ? 'pointer' : 'unset', ...styles }}
+      style={{ height, width, maxHeight, cursor: clickable ? 'pointer' : 'unset', ...style }}
       onClick={() => {
         if (clickable) CreateBox({ src, alt, title });
       }}
