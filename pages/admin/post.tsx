@@ -15,6 +15,7 @@ import {
   Row,
   Col,
   notification,
+  List,
 } from 'antd';
 import { Icon } from '@ant-design/compatible';
 import { FormOutlined, MinusOutlined, PlusOutlined } from '@ant-design/icons';
@@ -24,7 +25,8 @@ import moment from 'moment';
 import MediaQuery from 'react-responsive';
 import { ControlledEditor } from '@monaco-editor/react/lib/';
 
-import Container from '@/components/container';
+import Carousel from '@/components/carousel';
+import Container, { Space } from '@/components/container';
 import TagSearch from '@/components/tag_search';
 import PostContent from '@/components/post_content';
 
@@ -112,6 +114,7 @@ interface PostEditState {
   draft: string;
   offset: number;
   fontSize: number;
+  images: string[];
 }
 
 class PostEdit extends React.Component<PostEditProps, PostEditState> {
@@ -135,6 +138,7 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
       draft: '',
       offset: 0,
       fontSize: 16,
+      images: [],
     };
   }
 
@@ -161,10 +165,18 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
       published: r.published,
       //   raw: r.raw,
     });
-    this.setState({ tags: r.tags, html: r.content, raw: r.raw }, () => {
-      console.log('got data', r.raw.length);
-      if (!!this.editor) this.editor.setValue(r.raw);
-    });
+    this.setState(
+      {
+        tags: r.tags,
+        html: r.content,
+        raw: r.raw,
+        images: !!r.images ? r.images : [],
+      },
+      () => {
+        console.log('got data', r.raw.length);
+        if (!!this.editor) this.editor.setValue(r.raw);
+      },
+    );
   };
 
   onBigScreen = (match: boolean) => {
@@ -257,6 +269,7 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
     obj.publish_time = obj.publish_time.unix();
     obj.edit_time = obj.edit_time.unix();
     obj.raw = this.editor.getValue();
+    obj.images = this.state.images.filter((item) => !!item);
     return obj as Blotter.PostAll;
   };
 
@@ -270,6 +283,7 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
     obj.publish_time = (obj.publish_time as moment.Moment).format('YYYY-MM-DD HH:mm:ss');
     obj.edit_time = (obj.edit_time as moment.Moment).format('YYYY-MM-DD HH:mm:ss');
     obj.raw = this.editor.getValue();
+    obj.images = this.state.images.filter((item) => !!item);
     return obj as Blotter.PostAll;
   };
 
@@ -476,6 +490,39 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
             ></Input.TextArea>
           </Form.Item>
         </Col>
+        <Col span={24}>
+          <List
+            size="small"
+            dataSource={this.state.images}
+            renderItem={(image, idx) => (
+              <List.Item key={idx}>
+                <Input
+                  value={image}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    this.setState((state) => {
+                      var { images } = state;
+                      images[idx] = value;
+                      return { images };
+                    });
+                  }}
+                />
+                <img src={image} style={{ maxHeight: '100px' }} />
+              </List.Item>
+            )}
+          />
+          <Button
+            onClick={() =>
+              this.setState((state) => {
+                var { images } = state;
+                images.push('');
+                return { images };
+              })
+            }
+          >
+            新建一个
+          </Button>
+        </Col>
       </Row>
     );
   };
@@ -567,10 +614,12 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
                   raw: '',
                 }}
               >
-                {this.renderToolbar()}
-                {this.state.preview && !this.state.bigScreen
-                  ? this.renderPreview()
-                  : this.renderEditor()}
+                <Space>
+                  {this.renderToolbar()}
+                  {this.state.preview && !this.state.bigScreen
+                    ? this.renderPreview()
+                    : this.renderEditor()}
+                </Space>
               </Form>
             </Card>
           </Col>
