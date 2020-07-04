@@ -110,4 +110,22 @@ declare namespace Blotter {
     key: string;
     value: any;
   }
+  interface City {
+    name: string;
+    lng: number;
+    lat: number;
+    zoom: number;
+    travels: {
+      time: number;
+      link: string;
+    }[];
+  }
+  interface Travel {
+    name: string;
+    lng: number;
+    lat: number;
+    zoom: number;
+    time: number;
+    link: string;
+  }
 }
