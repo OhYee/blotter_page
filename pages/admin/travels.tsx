@@ -221,6 +221,7 @@ class Travel extends React.Component<TravelProps, TravelState> {
                         showSearch
                         autoFocus={true}
                         placeholder="搜索游记文章"
+                        value={item.link}
                         style={{ width: '100%' }}
                         defaultActiveFirstOption={false}
                         showArrow={false}
