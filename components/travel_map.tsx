@@ -76,7 +76,9 @@ class TravelMap extends React.Component<TravelMapProps, TravelMapState> {
           amapkey={key}
           loading={<Spin />}
           mapStyle={
-            this.context.theme === 'default' ? 'amap://styles/normal' : 'amap://styles/dark'
+            this.context.theme === 'default'
+              ? 'amap://styles/f5818203233e77c81d9a6555be54758a'
+              : 'amap://styles/dark'
           }
           plugins={['MapType', 'Scale', 'ToolBar']}
           events={{
