@@ -9,7 +9,6 @@ import moment from 'moment';
 import Image, { setImageLightbox } from '@/components/image';
 import If from '@/components/if';
 import TagPart from '@/components/tag';
-import StaticMap from '@/components/static_map';
 import FocusDiv from '@/components/focus';
 
 import { Context } from '@/utils/global';
