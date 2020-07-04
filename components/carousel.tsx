@@ -13,6 +13,7 @@ interface CarouselProps extends CProps {
   width?: string;
   maxHeight?: string;
   background?: string;
+  style?: React.CSSProperties;
 }
 
 class Carousel extends Component<CarouselProps> {
@@ -39,6 +40,7 @@ class Carousel extends Component<CarouselProps> {
       width = '100%',
       maxHeight,
       background,
+      style,
       ...restProps
     } = this.props;
 
@@ -55,7 +57,7 @@ class Carousel extends Component<CarouselProps> {
             height,
             width,
             maxHeight,
-            background,
+            ...style,
           }}
         >
           {images.map((image, idx) => (
