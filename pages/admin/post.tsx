@@ -188,6 +188,7 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
     this.setState({ loading: true });
     var r = await markdown(source);
     this.setState({ html: r.html, loading: false });
+    return r.html;
   };
 
   onChange = (value: string) => {
@@ -311,6 +312,37 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
       .finally(() => {
         this.setState({ submitDisabled: false });
       });
+  };
+
+  importImages = async () => {
+    const html = await this.renderMarkdown(this.editor.getValue());
+    const reg = new RegExp('<img ([^>]*)>', 'g');
+    var images: string[] = [];
+    do {
+      var result = reg.exec(html);
+      if (result !== null) {
+        const part = result[1].split('=');
+        var params: { [key: string]: string } = {};
+        var key = '';
+        var end = '';
+        for (var i = 0; i < part.length; i++) {
+          if (key === '') {
+            key = part[i];
+            end = part[i + 1][0];
+          } else {
+            const tmp = part[i].split(end);
+            params[key] = tmp[1];
+            key = tmp[2].trim();
+          }
+        }
+        if (!!params['src']) {
+          if (!!params['alt'] || !!params['title'])
+            images.push(`${params['src']}#${!!params['title'] ? params['title'] : params['alt']}`);
+          else images.push(params['src']);
+        }
+      }
+    } while (result);
+    this.setState({ images });
   };
 
   renderEditor = () => {
@@ -471,8 +503,14 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
                 });
               }}
             >
-              设置当前日期
+              重置日期
             </Button>
+          </Form.Item>
+        </Col>
+
+        <Col lg={md ? 12 : 2} md={12}>
+          <Form.Item>
+            <Button onClick={this.importImages}>导入图片</Button>
           </Form.Item>
         </Col>
 
