@@ -58,9 +58,16 @@ class Carousel extends Component<CarouselProps> {
             background,
           }}
         >
-          {images.map((image) => (
-            <div>
-              <Image src={image} height={height} maxHeight={maxHeight} clickable />
+          {images.map((image, idx) => (
+            <div key={idx}>
+              <Image
+                src={image}
+                alt={`图片 ${idx + 1}`}
+                title={image.split('#').slice(1).join('#')}
+                height={height}
+                maxHeight={maxHeight}
+                clickable
+              />
             </div>
           ))}
         </C>
