@@ -27,7 +27,7 @@ class AdminIndex extends React.Component<AdminIndexProps, AdminIndexState> {
     return (
       <Container>
         <Context.Consumer>
-          {context => (
+          {(context) => (
             <Head>
               <title>{`后台|${context.blog_name}`}</title>
             </Head>
@@ -43,8 +43,9 @@ class AdminIndex extends React.Component<AdminIndexProps, AdminIndexState> {
               { title: '变量管理', url: '/admin/variables' },
               { title: '评论管理', url: '/admin/comments' },
               { title: '用户管理', url: '/admin/users' },
+              { title: '游记管理', url: '/admin/travels' },
             ]}
-            renderItem={item => (
+            renderItem={(item) => (
               <List.Item key={item.title}>
                 <Typography.Text>
                   <Link href={item.url}>
