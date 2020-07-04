@@ -16,6 +16,7 @@ import {
   Col,
   notification,
   List,
+  Popconfirm,
 } from 'antd';
 import { Icon } from '@ant-design/compatible';
 import { FormOutlined, MinusOutlined, PlusOutlined } from '@ant-design/icons';
@@ -492,36 +493,62 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
         </Col>
         <Col span={24}>
           <List
+            style={{ maxHeight: '50vh', overflow: 'auto' }}
             size="small"
             dataSource={this.state.images}
             renderItem={(image, idx) => (
               <List.Item key={idx}>
-                <Input
-                  value={image}
-                  onChange={(e) => {
-                    const value = e.target.value;
-                    this.setState((state) => {
-                      var { images } = state;
-                      images[idx] = value;
-                      return { images };
-                    });
-                  }}
-                />
-                <img src={image} style={{ maxHeight: '100px' }} />
+                <Row gutter={[5, 5]} className="fullWidth" align="middle">
+                  <Col>
+                    <strong>{idx}</strong>
+                  </Col>
+                  <Col>
+                    <Popconfirm
+                      title="确认删除？"
+                      onConfirm={() =>
+                        this.setState((state) => ({
+                          images: state.images.filter((_, idx2) => idx != idx2),
+                        }))
+                      }
+                    >
+                      <Button danger>删除</Button>
+                    </Popconfirm>
+                  </Col>
+                  <Col flex="1 1 auto">
+                    <Input
+                      value={image}
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        this.setState((state) => {
+                          var { images } = state;
+                          images[idx] = value;
+                          return { images };
+                        });
+                      }}
+                    />
+                  </Col>
+                  <Col>
+                    <img src={image} style={{ maxHeight: '100px' }} />
+                  </Col>
+                </Row>
               </List.Item>
             )}
           />
-          <Button
-            onClick={() =>
-              this.setState((state) => {
-                var { images } = state;
-                images.push('');
-                return { images };
-              })
-            }
-          >
-            新建一个
-          </Button>
+          <Row justify="end">
+            <Col>
+              <Button
+                onClick={() =>
+                  this.setState((state) => {
+                    var { images } = state;
+                    images.push('');
+                    return { images };
+                  })
+                }
+              >
+                新建一个图片
+              </Button>
+            </Col>
+          </Row>
         </Col>
       </Row>
     );
