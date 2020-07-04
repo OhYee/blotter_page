@@ -260,7 +260,10 @@ export const githubUser = async (username: string, callback?: RequestCallback<Gi
   return await request('get', `https://api.github.com/users/${username}`, {}, callback);
 };
 
-export const githubRepos = async (username: string, callback?: RequestCallback<{ repos: GithubRepo[] }>) => {
+export const githubRepos = async (
+  username: string,
+  callback?: RequestCallback<{ repos: GithubRepo[] }>,
+) => {
   return await request('get', `/api/github/repos`, { username }, callback);
 };
 
@@ -391,4 +394,24 @@ export const reset_password = async (
   callback?: RequestCallback<{ password: string }>,
 ) => {
   return await request('get', '/api/admin/user/reset_password', { id }, callback);
+};
+
+export const travels_get = async (
+  callback?: RequestCallback<{ total: number; travels: Blotter.City[] }>,
+) => {
+  return await request('get', '/api/travels', {}, callback);
+};
+
+export const travels_set = async (
+  travels: Blotter.City[],
+  callback?: RequestCallback<Blotter.APIResponse>,
+) => {
+  return await request('post', '/api/travels/set', { travels }, callback);
+};
+
+export const travels_get_url = async (
+  url: string,
+  callback?: RequestCallback<{ exist: boolean; travel: Blotter.Travel }>,
+) => {
+  return await request('get', '/api/travels/url', { url }, callback);
 };
