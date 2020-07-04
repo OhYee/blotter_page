@@ -83,28 +83,24 @@ class PostContent extends Component<PostContentProps, PostContentState> {
     if (!!travel) {
       const lnglat = `${travel.lng},${travel.lat}`;
       return (
-        <FocusDiv distance={0.5}>
-          {(inArea) => (
-            <div>
-              <Image
-                clickable
-                height={inArea ? '512px' : '100px'}
-                style={{ transition: 'height .5s' }}
-                maxHeight="50vh"
-                src={`https://restapi.amap.com/v3/staticmap?location=${lnglat}&zoom${travel.zoom}&scale=2&size=1024*1024&markers=mid,,A:${lnglat}&key=5918961af3c0ffafa1a3cb1056556c98`}
-                alt={`${travel.name}地图`}
-                title={`${moment(travel.time, 'X').format('YYYY-MM-DD')} 于 ${travel.name}`}
-              />
-              <p style={{ textAlign: 'center', fontSize: '1.25em' }}>
-                该文章是一篇 <strong>{moment(travel.time, 'X').format('YYYY-MM-DD')}</strong> 于{' '}
-                <strong>{travel.name}</strong> 的游记， 更多游记见
-                <a href="/apps/travels" target="_blank">
-                  游记列表
-                </a>
-              </p>
-            </div>
-          )}
-        </FocusDiv>
+        <details>
+          <summary>游记详细信息</summary>
+          <Image
+            clickable
+            height={'512px'}
+            maxHeight="50vh"
+            src={`https://restapi.amap.com/v3/staticmap?location=${lnglat}&zoom${travel.zoom}&scale=2&size=1024*1024&markers=mid,,A:${lnglat}&key=5918961af3c0ffafa1a3cb1056556c98`}
+            alt={`${travel.name}地图`}
+            title={`${moment(travel.time, 'X').format('YYYY-MM-DD')} 于 ${travel.name}`}
+          />
+          <p style={{ textAlign: 'center', fontSize: '1.25em' }}>
+            该文章是一篇 <strong>{moment(travel.time, 'X').format('YYYY-MM-DD')}</strong> 于{' '}
+            <strong>{travel.name}</strong> 的游记， 更多游记见
+            <a href="/apps/travels" target="_blank">
+              游记列表
+            </a>
+          </p>
+        </details>
       );
     } else {
       return null;
@@ -163,19 +159,12 @@ class PostContent extends Component<PostContentProps, PostContentState> {
           {this.renderTravel()}
 
           <If condition={!!this.props.post.images}>
-            <FocusDiv distance={0.5}>
-              {(inArea) => {
-                return (
-                  <Carousel
-                    images={this.props.post.images}
-                    height={inArea ? '500px' : '100px'}
-                    maxHeight={'50vh'}
-                    autoplay
-                    style={{ transition: 'height .5s' }}
-                  />
-                );
-              }}
-            </FocusDiv>
+            <Carousel
+              images={this.props.post.images}
+              height={'500px'}
+              maxHeight={'50vh'}
+              autoplay
+            />
           </If>
           {/* <If condition={this.props.post.head_image !== ''}>
           <a
