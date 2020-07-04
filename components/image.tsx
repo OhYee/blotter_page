@@ -17,7 +17,7 @@ function CreateBox(props: { src: string; alt?: string; title?: string }) {
   box.appendChild(close);
 
   const p = document.createElement('p');
-  p.innerText = !!alt ? alt : title;
+  p.innerText = !!title ? title : alt;
   if (!!p.innerHTML) box.appendChild(p);
 
   const img = document.createElement('img');
