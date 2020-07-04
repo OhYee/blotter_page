@@ -2,7 +2,7 @@ import React, { ComponentProps, CSSProperties } from 'react';
 import Head from 'next/head';
 
 import { Avatar, Card, List } from 'antd';
-import { LockFilled } from '@ant-design/icons';
+import { Icon } from '@ant-design/compatible';
 import Link from 'next/link';
 
 import styles from './apps.less';
@@ -17,7 +17,7 @@ function isImageUrl(url: string): boolean {
 }
 
 interface AppsProps extends ComponentProps<'base'> {
-  apps: { name: string; link: string; img: string | JSX.Element; style?: CSSProperties }[];
+  apps: { name: string; link: string; img?: string; icon?: string; style?: CSSProperties }[];
 }
 
 interface AppsState {}
@@ -44,6 +44,12 @@ class Apps extends React.Component<AppsProps, AppsState> {
           img: 'Crypto',
           style: { color: ' #109025', backgroundColor: '#a6d2a8' },
         },
+        {
+          name: '游记',
+          link: '/apps/travels',
+          icon: 'compass',
+          style: { color: ' #f30000', backgroundColor: '#ececec' },
+        },
       ],
     } as AppsProps;
   }
@@ -68,7 +74,7 @@ class Apps extends React.Component<AppsProps, AppsState> {
                 <Link href={item.link}>
                   <a>
                     <div className={styles.img_wrapper}>
-                      {typeof item.img === 'string' ? (
+                      {typeof item.img !== 'undefined' ? (
                         isImageUrl(item.img) ? (
                           <Avatar size={64} src={item.img} style={item.style} />
                         ) : (
@@ -77,7 +83,7 @@ class Apps extends React.Component<AppsProps, AppsState> {
                           </Avatar>
                         )
                       ) : (
-                        <Avatar size={64} icon={item.img} style={item.style} />
+                        <Avatar size={64} icon={<Icon type={item.icon} />} style={item.style} />
                       )}
                     </div>
                     {item.name}
