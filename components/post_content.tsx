@@ -114,7 +114,7 @@ class PostContent extends Component<PostContentProps, PostContentState> {
       <article className={styles.post}>
         <Space size={20}>
           <PageHeader className="shadow" title={this.props.post.title}>
-            <div>
+            <Space>
               <div className="right20">
                 <EyeOutlined className="right5" />
                 {this.props.post.view}
@@ -153,7 +153,7 @@ class PostContent extends Component<PostContentProps, PostContentState> {
                   <span>无标签</span>
                 )}
               </div>
-            </div>
+            </Space>
           </PageHeader>
 
           {this.renderTravel()}
