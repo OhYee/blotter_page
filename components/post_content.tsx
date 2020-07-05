@@ -115,31 +115,33 @@ class PostContent extends Component<PostContentProps, PostContentState> {
         <Space size={20}>
           <PageHeader className="shadow" title={this.props.post.title}>
             <Space>
-              <div className="right20">
-                <EyeOutlined className="right5" />
-                {this.props.post.view}
-              </div>
-              <div className="right20">
-                <CalendarOutlined className="right5" />
-                {this.props.post.publish_time}
-              </div>
-              {this.props.post.publish_time == this.props.post.edit_time ? null : (
-                <div className="right20">
-                  <EditOutlined className="right5" />
-                  {this.props.post.edit_time}
+              <Space direction="horizontal">
+                <div>
+                  <EyeOutlined className="right5" />
+                  {this.props.post.view}
                 </div>
-              )}
-              <Context.Consumer>
-                {(context) =>
-                  (context.user.permission & 1) == 1 ? (
-                    <Link href={`/admin/post?url=${this.props.post.url}`}>
-                      <Button type="primary" size="small">
-                        编辑
-                      </Button>
-                    </Link>
-                  ) : null
-                }
-              </Context.Consumer>
+                <div>
+                  <CalendarOutlined className="right5" />
+                  {this.props.post.publish_time}
+                </div>
+                {this.props.post.publish_time == this.props.post.edit_time ? null : (
+                  <div>
+                    <EditOutlined className="right5" />
+                    {this.props.post.edit_time}
+                  </div>
+                )}
+                <Context.Consumer>
+                  {(context) =>
+                    (context.user.permission & 1) == 1 ? (
+                      <Link href={`/admin/post?url=${this.props.post.url}`}>
+                        <Button type="primary" size="small">
+                          编辑
+                        </Button>
+                      </Link>
+                    ) : null
+                  }
+                </Context.Consumer>
+              </Space>
               <If condition={!!this.props.post.abstract}>
                 <blockquote>{this.props.post.abstract}</blockquote>
               </If>
