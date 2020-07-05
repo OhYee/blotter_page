@@ -162,7 +162,7 @@ class PostPage extends React.Component<PostPageProps, PostPageState> {
                 title={context.author}
                 description={
                   <div>
-                    本文章发布自<a href={context.root}>{context.blog_name}</a>，原文『
+                    本文章发布自 <a href={context.root}>{context.blog_name}</a>，原文『
                     <a href={url}>{this.props.post.title}</a>』
                     <br />
                     如无特别说明，可以直接转载，但请注明原文出处链接：
