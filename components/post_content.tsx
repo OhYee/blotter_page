@@ -158,14 +158,15 @@ class PostContent extends Component<PostContentProps, PostContentState> {
 
           {this.renderTravel()}
 
-          <If condition={!!this.props.post.images && this.props.post.images.length > 0}>
+          {!!this.props.post.images && this.props.post.images.length > 0 ? (
             <Carousel
               images={this.props.post.images}
               height={'500px'}
               maxHeight={'50vh'}
               autoplay
             />
-          </If>
+          ) : null}
+
           {/* <If condition={this.props.post.head_image !== ''}>
           <a
             className="headimage image"
