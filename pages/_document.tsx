@@ -30,31 +30,35 @@ export default class MyDocument extends Document {
           <link rel="shortcut icon" href="/static/img/favicon.ico"></link>
           <script
             dangerouslySetInnerHTML={{
-              __html: `// 百度自动推送
-(function(){
-    var bp = document.createElement('script');
-    var curProtocol = window.location.protocol.split(':')[0];
-    if (curProtocol === 'https') {
-        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
-    }
-    else {
-        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-    }
-    var s = document.getElementsByTagName("script")[0];
-    s.parentNode.insertBefore(bp, s);
-})();`,
-            }}
-          ></script>
-          <script
-            dangerouslySetInnerHTML={{
-              __html: `// 百度统计
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "https://hm.baidu.com/hm.js?9f114bc8c6227268e6d0e44abd656932";
+              __html: `
+window.onload = function() { 
+    // 百度自动推送
+    (function(){
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        }
+        else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+
+    // 百度统计
+    var _hmt = _hmt || [];
+    (function() {
+    var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?9f114bc8c6227268e6d0e44abd656932";
+    var s = document.getElementsByTagName("script")[0]; 
   var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();`,
+    var s = document.getElementsByTagName("script")[0]; 
+    s.parentNode.insertBefore(hm, s);
+    })();
+
+}            
+`,
             }}
           ></script>
         </Head>
