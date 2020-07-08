@@ -52,8 +52,6 @@ window.onload = function() {
     var hm = document.createElement("script");
     hm.src = "https://hm.baidu.com/hm.js?9f114bc8c6227268e6d0e44abd656932";
     var s = document.getElementsByTagName("script")[0]; 
-  var s = document.getElementsByTagName("script")[0]; 
-    var s = document.getElementsByTagName("script")[0]; 
     s.parentNode.insertBefore(hm, s);
     })();
 
@@ -62,19 +60,7 @@ window.onload = function() {
             }}
           ></script>
         </Head>
-        <head></head>
         <body>
-          {/* theme */}
-          <link rel="stylesheet/less" type="text/css" href="/_next/static/color.less" />
-          <script
-            dangerouslySetInnerHTML={{
-              __html: `window.less = { async: false, env: 'production' };`,
-            }}
-          ></script>
-          <script
-            type="text/javascript"
-            src="https://cdnjs.cloudflare.com/ajax/libs/less.js/2.7.2/less.min.js"
-          ></script>
           <Main />
           <NextScript />
         </body>
