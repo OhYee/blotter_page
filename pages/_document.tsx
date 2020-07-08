@@ -28,13 +28,6 @@ export default class MyDocument extends Document {
           <meta name="msapplication-TileColor" content="#1565c0" />
           <meta name="msapplication-TileImage" content="/static/img/logo_196x196.png" />
           <link rel="shortcut icon" href="/static/img/favicon.ico"></link>
-          <link
-            rel="stylesheet"
-            href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css"
-            integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq"
-            crossOrigin="anonymous"
-          ></link>
-          {/* 百度自动推送 */}
           <script
             dangerouslySetInnerHTML={{
               __html: `// 百度自动推送

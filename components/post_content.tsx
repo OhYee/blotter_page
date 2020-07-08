@@ -17,6 +17,7 @@ import { travels_get_url } from '@/utils/api';
 import styles from '@/pages/post/post.less';
 import Carousel from './carousel';
 import { Space } from './container';
+import Head from 'next/head';
 
 interface PostContentProps {
   post: {
@@ -112,6 +113,16 @@ class PostContent extends Component<PostContentProps, PostContentState> {
       <Skeleton active={true} />
     ) : (
       <article className={styles.post}>
+        <Head>
+          {this.props.post.content.indexOf('katex') != -1 ? (
+            <link
+              rel="stylesheet"
+              href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css"
+              integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq"
+              crossOrigin="anonymous"
+            ></link>
+          ) : null}
+        </Head>
         <Space size={20}>
           <PageHeader className="shadow" title={this.props.post.title}>
             <Space>
