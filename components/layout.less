@@ -1,3 +1,5 @@
+@import '../node_modules/antd/lib/style/themes/default.less';
+
 .main_content {
   margin: 20px;
 }
@@ -192,3 +194,15 @@ details {
   line-height: 1.25em;
 }
 
+:global(.primary-color) {
+  color: @primary-color;
+}
+
+:global(.text-color) {
+  color: @text-color;
+}
+
+:global(.ant-tag) a,
+:global(.ant-tag) a:hover {
+  color: currentColor !important;
+}
