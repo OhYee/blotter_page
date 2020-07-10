@@ -6028,6 +6028,7 @@ next-compose-plugins@^2.2.0:
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 next-dynamic-antd-theme@^0.0.7:
   version "0.0.7"
   resolved "https://registry.yarnpkg.com/next-dynamic-antd-theme/-/next-dynamic-antd-theme-0.0.7.tgz#f90f0a7558d8c0523741ed384905dd49ece457b2"
@@ -6059,6 +6060,12 @@ next-dynamic-antd-theme@^0.0.12:
   resolved "https://registry.yarnpkg.com/next-dynamic-antd-theme/-/next-dynamic-antd-theme-0.0.12.tgz#3989d255fa49f9ed1216e7c2e0255e3d043f9d0d"
   integrity sha512-cjHVCvfTFuMCS3lF15xIrFw3hBWTngS8SyxrWZBMM/Wmf44MHpfOsgwxxoVcr484ly2K3BhuZs/XV9FUA8N0iw==
 >>>>>>> Update gh-pages to output generated at ff21876
+=======
+next-dynamic-antd-theme@^0.0.13:
+  version "0.0.13"
+  resolved "https://registry.yarnpkg.com/next-dynamic-antd-theme/-/next-dynamic-antd-theme-0.0.13.tgz#b674814726e91559a3f6057f7ff1f3dfb8239433"
+  integrity sha512-PaPo4comUwi/qhG6othl58fmcm2A/uoOPcX9s0ZHgd8XjD/gVMHxIeT8xjSF9XKvdy9uzXMvQfK756mbb+moIA==
+>>>>>>> Update gh-pages to output generated at 36543eb
   dependencies:
     antd-theme-generator "^1.2.4"
     next "^9.4.4"
