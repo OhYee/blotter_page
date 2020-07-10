@@ -1,17 +1,43 @@
-.item {
-  text-align: center;
-  .img_wrapper {
-    display: block;
-    :global(.ant-avatar) {
-      background: unset;
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-wrap: wrap;
+
+  .wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: column;
+
+    width: 150px;
+    height: 150px;
+
+    p {
+      margin-top: 10px;
     }
     .img {
+      display: flex;
       width: 100px;
       height: 100px;
-      border-radius: 25px;
+      justify-content: center;
+      align-items: center;
+      border-radius: 10px;
+      box-shadow: -1px -1px 5px white, 5px 5px 15px rgba(0, 0, 0, 0.5);
+      transition: box-shadow 0.2s ease-out;
+      cursor: pointer;
+
+      &:hover {
+        box-shadow: -1px -1px 5px white, 1px 1px 5px rgba(0, 0, 0, 0.5);
+      }
+      &:active {
+        box-shadow: 1px 1px 5px white, -1px -1px 5px rgba(0, 0, 0, 0.1),
+          inset -20px -20px 30px rgba(255, 255, 255, 0.3), inset 20px 20px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      :global(.ant-avatar) {
+        background: unset;
+      }
     }
-  }
-  a {
-    color: black;
   }
 }

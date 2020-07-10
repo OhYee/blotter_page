@@ -42,13 +42,13 @@ class Apps extends React.Component<AppsProps, AppsState> {
           name: '在线密码学',
           link: '/apps/crypto',
           img: 'Crypto',
-          style: { color: ' #109025', backgroundColor: '#a6d2a8' },
+          style: { color: ' #109025' },
         },
         {
           name: '游记',
           link: '/apps/travels',
           icon: 'compass',
-          style: { color: ' #f30000', backgroundColor: '#ececec' },
+          style: { color: ' #f30000' },
         },
       ],
     } as AppsProps;
@@ -65,33 +65,28 @@ class Apps extends React.Component<AppsProps, AppsState> {
           )}
         </Context.Consumer>
         <Card>
-          <List
-            grid={{ column: 3 }}
-            itemLayout="horizontal"
-            dataSource={this.props.apps}
-            renderItem={(item) => (
-              <List.Item key={item.name} className={styles.item}>
-                <Link href={item.link}>
-                  <a>
-                    <div className={styles.img_wrapper}>
-                      {typeof item.img !== 'undefined' ? (
-                        isImageUrl(item.img) ? (
-                          <Avatar size={64} src={item.img} style={item.style} />
-                        ) : (
-                          <Avatar size={64} style={item.style}>
-                            {item.img}
-                          </Avatar>
-                        )
+          <div className={styles.container}>
+            {this.props.apps.map((item) => (
+              <Link href={item.link} key={item.name}>
+                <a className={[styles.wrapper, 'text-color'].join(' ')}>
+                  <div className={styles.img}>
+                    {typeof item.img !== 'undefined' ? (
+                      isImageUrl(item.img) ? (
+                        <Avatar size={64} src={item.img} style={item.style} />
                       ) : (
-                        <Avatar size={64} icon={<Icon type={item.icon} />} style={item.style} />
-                      )}
-                    </div>
-                    {item.name}
-                  </a>
-                </Link>
-              </List.Item>
-            )}
-          />
+                        <Avatar size={64} style={item.style}>
+                          {item.img}
+                        </Avatar>
+                      )
+                    ) : (
+                      <Avatar size={64} icon={<Icon type={item.icon} />} style={item.style} />
+                    )}
+                  </div>
+                  <p>{item.name}</p>
+                </a>
+              </Link>
+            ))}
+          </div>
         </Card>
       </Container>
     );
