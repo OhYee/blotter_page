@@ -128,4 +128,9 @@ declare namespace Blotter {
     time: number;
     link: string;
   }
+  interface File {
+    name: string;
+    size: number;
+    time: number;
+  }
 }
