@@ -85,6 +85,7 @@ function CreateBox(props: { src: string; alt?: string; title?: string }) {
 
 export default (props: {
   src: string;
+  thumbnail?: string;
   alt?: string;
   title?: string;
   clickable?: boolean;
@@ -95,6 +96,7 @@ export default (props: {
 }) => {
   const {
     src,
+    thumbnail = src,
     alt,
     title,
     height = '100%',
@@ -114,7 +116,7 @@ export default (props: {
       <div
         className="image"
         style={{
-          backgroundImage: `url('${src}')`,
+          backgroundImage: `url('${thumbnail}')`,
         }}
       />
     </div>
