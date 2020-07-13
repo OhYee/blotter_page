@@ -415,3 +415,25 @@ export const travels_get_url = async (
 ) => {
   return await request('get', '/api/travels/url', { url }, callback);
 };
+
+export const qiniu_get_buckets = async (callback?: RequestCallback<{ buckets: string[] }>) => {
+  return await request('get', '/api/qiniu/buckets', {}, callback);
+};
+
+export const qiniu_get_images = async (
+  bucket: string,
+  prefix: string,
+  marker: string,
+  number: number,
+  callback?: RequestCallback<{
+    files: Blotter.File[];
+    marker: string;
+    has_next: boolean;
+  }>,
+) => {
+  return await request('get', '/api/qiniu/images', { bucket, prefix, marker, number }, callback);
+};
+
+export const qiniu_get_token = async (callback?: RequestCallback<{ token: string }>) => {
+  return await request('get', '/api/qiniu/token', {}, callback);
+};
