@@ -416,7 +416,9 @@ export const travels_get_url = async (
   return await request('get', '/api/travels/url', { url }, callback);
 };
 
-export const qiniu_get_buckets = async (callback?: RequestCallback<{ buckets: string[] }>) => {
+export const qiniu_get_buckets = async (
+  callback?: RequestCallback<{ buckets: string[]; prefix: string[] }>,
+) => {
   return await request('get', '/api/qiniu/buckets', {}, callback);
 };
 
@@ -436,4 +438,21 @@ export const qiniu_get_images = async (
 
 export const qiniu_get_token = async (callback?: RequestCallback<{ token: string }>) => {
   return await request('get', '/api/qiniu/token', {}, callback);
+};
+
+export const qiniu_delete_image = async (
+  bucket: string,
+  key: string,
+  callback?: RequestCallback<Blotter.APIResponse>,
+) => {
+  return await request('get', '/api/qiniu/image/delete', { bucket, key }, callback);
+};
+
+export const qiniu_rename_image = async (
+  bucket: string,
+  key: string,
+  new_key: string,
+  callback?: RequestCallback<Blotter.APIResponse>,
+) => {
+  return await request('get', '/api/qiniu/image/rename', { bucket, key, new_key }, callback);
 };
