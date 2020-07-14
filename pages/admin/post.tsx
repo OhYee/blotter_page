@@ -19,7 +19,7 @@ import {
   Popconfirm,
 } from 'antd';
 import { Icon } from '@ant-design/compatible';
-import { FormOutlined, MinusOutlined, PlusOutlined } from '@ant-design/icons';
+import { FormOutlined, MinusOutlined, PlusOutlined, FileImageOutlined } from '@ant-design/icons';
 import { FormInstance } from 'antd/lib/form';
 
 import moment from 'moment';
@@ -41,6 +41,8 @@ import { Context } from '@/utils/global';
 import ShowNotification from '@/utils/notification';
 import { setLocalStorage, getLocalStorage, removeLocalStorage } from '@/utils/storage';
 import { ButtonProps } from 'antd/lib/button';
+import Qiniu from '@/components/upload';
+import If from '@/components/if';
 
 function Editor(props) {
   const { onChange, getRef, ...restProps } = props;
@@ -116,6 +118,7 @@ interface PostEditState {
   offset: number;
   fontSize: number;
   images: string[];
+  upload: boolean;
 }
 
 class PostEdit extends React.Component<PostEditProps, PostEditState> {
@@ -140,6 +143,7 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
       offset: 0,
       fontSize: 16,
       images: [],
+      upload: false,
     };
   }
 
@@ -597,7 +601,7 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
       shape="circle"
       size="large"
       type="primary"
-      style={{ position: 'fixed', right: '20px', top: '60px' }}
+      style={{ position: 'fixed', right: '20px', top: '60px', zIndex: 2 }}
       onClick={() => {
         const editor = document.getElementById('editor');
         if (!!editor && editor.offsetTop > 0) {
@@ -621,7 +625,7 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
     };
 
     return (
-      <Button.Group style={{ position: 'fixed', right: '20px', top: '160px' }}>
+      <Button.Group style={{ position: 'fixed', right: '20px', top: '120px', zIndex: 2 }}>
         <Press
           initArg={-diff}
           onClick={() => scroll(-diff)}
@@ -646,6 +650,34 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
     );
   };
 
+  renderImages = () => {
+    return (
+      <div>
+        <Button
+          shape="circle"
+          size="large"
+          type="primary"
+          danger={this.state.upload}
+          style={{ position: 'fixed', right: 20, top: 180, zIndex: 2 }}
+          onClick={() => this.setState((state) => ({ upload: !state.upload }))}
+          icon={<FileImageOutlined />}
+        />
+        <div
+          className={['upload', 'shadow'].join(' ')}
+          style={{
+            right: 120,
+            top: 180,
+            ...(this.state.upload
+              ? { opacity: 1, visibility: 'visible' }
+              : { opacity: 0, visibility: 'hidden' }),
+          }}
+        >
+          <Qiniu defaultTab="upload" />
+        </div>
+      </div>
+    );
+  };
+
   render() {
     return (
       <Container xxl={20} xl={20} lg={20} md={24} sm={24} xs={24}>
@@ -661,6 +693,7 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
         </MediaQuery>
         {this.renderJump()}
         {this.renderOffset()}
+        {this.renderImages()}
         <Row gutter={5}>
           <Col span={this.isSidePreview() ? 12 : 24}>
             <Card>

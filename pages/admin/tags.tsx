@@ -5,6 +5,7 @@ import Head from 'next/head';
 import { Card, Table, Button, Typography, Form, Input, Popconfirm } from 'antd';
 import { ColumnProps } from 'antd/lib/table';
 import { Icon } from '@ant-design/compatible';
+import { FileImageOutlined } from '@ant-design/icons';
 import { PaginationConfig } from 'antd/lib/pagination';
 import {
   SorterResult,
@@ -14,6 +15,7 @@ import {
 
 import Container from '@/components/container';
 import TagPart from '@/components/tag';
+import Qiniu from '@/components/upload';
 
 import { Context } from '@/utils/global';
 import { adminTags, tagDelete, tagEdit } from '@/utils/api';
@@ -33,6 +35,7 @@ interface AdminTagListState {
   size: number;
   page: number;
   keyword: string;
+  upload: boolean;
 }
 
 const defaultSortField = 'count';
@@ -51,6 +54,7 @@ class AdminTagList extends React.Component<AdminTagListProps, AdminTagListState>
       page: 1,
       size: 10,
       keyword: '',
+      upload: false,
     };
   }
 
@@ -242,6 +246,34 @@ class AdminTagList extends React.Component<AdminTagListProps, AdminTagListState>
     );
   };
 
+  renderImages = () => {
+    return (
+      <div>
+        <Button
+          shape="circle"
+          size="large"
+          type="primary"
+          danger={this.state.upload}
+          style={{ position: 'fixed', right: 20, top: 50, zIndex: 2 }}
+          onClick={() => this.setState((state) => ({ upload: !state.upload }))}
+          icon={<FileImageOutlined />}
+        />
+        <div
+          className={['upload', 'shadow'].join(' ')}
+          style={{
+            right: 120,
+            top: 50,
+            ...(this.state.upload
+              ? { opacity: 1, visibility: 'visible' }
+              : { opacity: 0, visibility: 'hidden' }),
+          }}
+        >
+          <Qiniu defaultTab="upload" />
+        </div>
+      </div>
+    );
+  };
+
   render() {
     return (
       <Container lg={20} md={20} sm={24} xs={24}>
@@ -252,6 +284,7 @@ class AdminTagList extends React.Component<AdminTagListProps, AdminTagListState>
             </Head>
           )}
         </Context.Consumer>
+        {this.renderImages()}
         <Card>
           <Form layout="inline">
             <Form.Item wrapperCol={{ md: 20, sm: 24 }}>
