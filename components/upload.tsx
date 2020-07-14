@@ -27,6 +27,8 @@ import {
 import { waitUntil } from '@/utils/debounce';
 import ShowNotification from '@/utils/notification';
 
+import styles from './upload.less'
+
 const img_file_type = ['psd', 'jpg', 'jpeg', 'png', 'gif', 'webp', 'tiff', 'bmp'];
 function generateThumbnail(img: string) {
   if (img_file_type.indexOf(img.split('.').slice(-1)[0]) != -1)
@@ -236,22 +238,16 @@ function imageList(
 
   console.log(images);
   return (
-    <div style={{ display: 'flex', flexDirection: 'column' }}>
+    <div className={styles.wrapper}>
       <div
-        style={{
-          display: 'flex',
-          justifyContent: 'space-evenly',
-          flexWrap: 'wrap',
-          alignContent: 'center',
-          flexDirection: 'row',
-        }}
+      className={styles.inner}
       >
         {images.map((image, idx) => {
           console.log(image);
           return (
             <Card
               key={image.new_key}
-              style={{ width: 128, margin: 10 }}
+              className={styles.card}
               size="small"
               cover={
                 <Image
