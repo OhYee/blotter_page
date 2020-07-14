@@ -17,9 +17,16 @@ import * as qiniu from 'qiniu-js';
 import { Space } from '@/components/container';
 import Image from '@/components/image';
 
-import { qiniu_get_buckets, qiniu_get_images, qiniu_get_token } from '@/utils/api';
+import {
+  qiniu_get_buckets,
+  qiniu_get_images,
+  qiniu_get_token,
+  qiniu_delete_image,
+  qiniu_rename_image,
+} from '@/utils/api';
+import { waitUntil } from '@/utils/debounce';
+import ShowNotification from '@/utils/notification';
 
-const prefixs = ['post', 'tags', 'travels'];
 const img_file_type = ['psd', 'jpg', 'jpeg', 'png', 'gif', 'webp', 'tiff', 'bmp'];
 function generateThumbnail(img: string) {
   if (img_file_type.indexOf(img.split('.').slice(-1)[0]) != -1)
@@ -31,21 +38,24 @@ function BucketSelector(props: {
   bucket: string;
   prefix: string;
   onChange?: (bucket: string, prefix: string) => void;
-  refresh?: () => void;
+  imgRef?: React.MutableRefObject<ImageListRef>;
 }) {
-  const { bucket, prefix, onChange = () => {}, refresh = () => {} } = props;
+  const { bucket, prefix, onChange = () => {}, imgRef } = props;
+  const [prefixList, setPrefixList] = React.useState([]);
   const [loading, setLoading] = React.useState(false);
   const [buckets, setBuckets] = React.useState([]);
-  const initial = () => {
+
+  function initial() {
     setLoading(true);
     qiniu_get_buckets()
       .then((r) => {
         setBuckets(r.buckets);
+        setPrefixList(Array.from(new Set([''].concat(r.prefix))));
         if (bucket == '' && r.buckets.length != 0) onChange(r.buckets[0], '');
       })
       .catch(console.error)
       .finally(() => setLoading(false));
-  };
+  }
   React.useEffect(initial, []);
 
   return (
@@ -59,14 +69,37 @@ function BucketSelector(props: {
         ))}
       </Select>
       <Button onClick={initial} icon={<SyncOutlined spin={loading} />} />
-      <Select value={prefix} onChange={(p) => onChange(bucket, p)} loading={loading}>
-        {prefixs.map((p) => (
+      <Select
+        style={{ minWidth: 100 }}
+        value={prefix}
+        onChange={(p) => onChange(bucket, p)}
+        showSearch
+        clearIcon
+        onSearch={(p) => {
+          waitUntil(
+            'image_prefix',
+            () => {
+              if (p !== '') onChange(bucket, p);
+            },
+            500,
+          );
+        }}
+        loading={loading}
+        notFoundContent={null}
+      >
+        {prefixList.map((p) => (
           <Select.Option key={p} value={p}>
             {p}
           </Select.Option>
         ))}
       </Select>
-      <Button onClick={refresh}>刷新图片</Button>
+      <Button
+        onClick={() => {
+          if (!!imgRef && !!imgRef.current) imgRef.current.refresh();
+        }}
+      >
+        刷新图片
+      </Button>
     </Space>
   );
 }
@@ -96,10 +129,7 @@ function Upload(props: { bucket: string; prefix: string }) {
     <U.Dragger
       name={'file'}
       multiple={true}
-      customRequest={async (opts) => {
-        console.log(opts);
-        upload(opts.file);
-      }}
+      customRequest={(opts) => upload(opts.file)}
       showUploadList={false}
     >
       <div style={{ height: 100, width: '100%' }}>
@@ -109,57 +139,102 @@ function Upload(props: { bucket: string; prefix: string }) {
   );
 }
 
-function ImageList(props: {
-  bucket: string;
-  prefix: string;
-  refresh?: (ref?: React.MutableRefObject<() => void>) => {};
-}) {
-  const { bucket, prefix, refresh = () => {} } = props;
-  const [images, setImages] = React.useState([] as Blotter.File[]);
+interface ImageListRef {
+  refresh: () => void;
+}
+
+const ImageList = React.forwardRef(imageList);
+function imageList(
+  props: {
+    bucket: string;
+    prefix: string;
+    group_number?: number;
+  },
+  ref?: React.Ref<ImageListRef>,
+) {
+  // props
+  const { bucket, prefix, group_number = 10 } = props;
+  // state
   const [marker, setMarker] = React.useState('');
   const [hasNext, setHasNext] = React.useState(false);
   const [loading, setLoading] = React.useState(false);
+  const [images, setImages] = React.useReducer<
+    (
+      images: Blotter.File[],
+      action: {
+        method: 'initial' | 'concat' | 'update';
+        value?: Blotter.File[];
+        key?: string;
+        index?: number;
+      },
+    ) => Blotter.File[]
+  >((images, action) => {
+    const { method } = action;
+    switch (method) {
+      case 'initial': {
+        const { value = [] } = action;
+        return value.map((img) => ({ ...img, new_key: img.key }));
+      }
+      case 'concat': {
+        const { value = [] } = action;
+        return images.concat(value.map((img) => ({ ...img, new_key: img.key })));
+      }
+      case 'update': {
+        const { index = 0, key = images[index].new_key } = action;
+        return [
+          ...images.slice(0, index),
+          { ...images[index], new_key: key },
+          ...images.slice(index + 1),
+        ];
+      }
+      default: {
+        throw new Error();
+      }
+    }
+  }, []);
+  // ref
   const [id, setID] = React.useState(0);
-  const refreshRef = React.useRef(() => getData(bucket, prefix, ''));
+  const idRef = React.useRef(id);
+  idRef.current = id;
+
+  const getData = React.useCallback(
+    (b, p, m) => {
+      setLoading(true);
+      var thisID = id + 1;
+      setID(thisID);
+      // setID((i) => (idRef.current = thisID = i + 1));
+      qiniu_get_images(b, p, m, group_number)
+        .then((r) => {
+          if (idRef.current === thisID) {
+            setImages({
+              method: !!m ? 'concat' : 'initial',
+              value: r.files,
+            });
+            setMarker(r.marker), setHasNext(r.has_next);
+          }
+        })
+        .catch(console.error)
+        .finally(() => setLoading(false));
+    },
+    [id, group_number],
+  );
+  const initial = React.useCallback(() => getData(bucket, prefix, ''), [bucket, prefix]);
+
+  React.useImperativeHandle(
+    ref,
+    () => ({
+      refresh: initial,
+    }),
+    [bucket, prefix],
+  );
+
+  // init data
   React.useEffect(() => {
-    refresh(refreshRef);
+    setImages({ method: 'initial' }), setMarker(''), setHasNext(false);
+    initial();
   }, [bucket, prefix]);
 
-  const getData = (b, p, m) => {
-    console.log(b, p, m);
-    setLoading(true);
-    var thisID = 0;
-    setID((i) => {
-      thisID = i + 1;
-      return thisID;
-    });
-    qiniu_get_images(b, p, m, 5)
-      .then((r) => {
-        setID((newID) => {
-          console.log(b, p, m, thisID, newID);
-          if (thisID == newID) {
-            setImages((images) => images.concat(r.files));
-            setMarker(r.marker);
-            setHasNext(r.has_next);
-          }
-          return newID;
-        });
-      })
-      .catch(console.error)
-      .finally(() => {
-        setLoading(false);
-      });
-  };
-
-  React.useEffect(() => getData(bucket, '', ''), [bucket]);
-  React.useEffect(() => {
-    setImages([]);
-    setMarker('');
-    setHasNext(false);
-    console.log('clear');
-    getData(bucket, prefix, '');
-  }, [prefix]);
-
+  console.log(images);
   return (
     <div style={{ display: 'flex', flexDirection: 'column' }}>
       <div
@@ -171,31 +246,56 @@ function ImageList(props: {
           flexDirection: 'row',
         }}
       >
-        {images.map((image, idx) => (
-          <Card
-            style={{ width: 128, margin: 10 }}
-            size="small"
-            cover={
-              <Image
-                src={image.name}
-                thumbnail={generateThumbnail(image.name)}
-                height="128px"
-                width="128px"
-                clickable
-              />
-            }
-            actions={[
-              <SaveOutlined />,
-              <Popconfirm title="确定删除？" onConfirm={() => {}}>
-                <DeleteOutlined style={{ color: 'red' }} />
-              </Popconfirm>,
-            ]}
-          >
-            <Typography.Text ellipsis copyable editable={{ onChange: () => {} }}>
-              {image.name}
-            </Typography.Text>
-          </Card>
-        ))}
+        {images.map((image, idx) => {
+          console.log(image);
+          return (
+            <Card
+              key={image.new_key}
+              style={{ width: 128, margin: 10 }}
+              size="small"
+              cover={
+                <Image
+                  src={image.link}
+                  thumbnail={generateThumbnail(image.link)}
+                  height="128px"
+                  width="128px"
+                  clickable
+                />
+              }
+              actions={[
+                <SaveOutlined
+                  onClick={async () => {
+                    if (
+                      ShowNotification(await qiniu_rename_image(bucket, image.key, image.new_key))
+                    )
+                      initial();
+                  }}
+                />,
+                <Popconfirm
+                  title="确定删除？"
+                  onConfirm={async () => {
+                    if (ShowNotification(await qiniu_delete_image(bucket, image.key))) initial();
+                  }}
+                >
+                  <DeleteOutlined style={{ color: 'red' }} />
+                </Popconfirm>,
+              ]}
+            >
+              <Typography.Text
+                ellipsis
+                copyable={{ text: image.link }}
+                editable={{
+                  onChange: (v) => {
+                    console.log(image, v);
+                    setImages({ method: 'update', index: idx, key: v });
+                  },
+                }}
+              >
+                {image.new_key}
+              </Typography.Text>
+            </Card>
+          );
+        })}
       </div>
       <Button onClick={() => getData(bucket, prefix, marker)} disabled={!hasNext} loading={loading}>
         获取更多
@@ -204,14 +304,13 @@ function ImageList(props: {
   );
 }
 
-function Qiniu(props: { defaultTab?: 'upload' | 'list' }) {
-  const { defaultTab = 'upload' } = props;
+function Qiniu(props: { defaultTab?: 'upload' | 'list'; group_number?: number }) {
+  const { defaultTab = 'upload', group_number = 10 } = props;
   const [bucket, setBucket] = React.useState('');
   const [prefix, setPrefix] = React.useState('');
-  const [ref, setRef] = React.useState<React.MutableRefObject<() => void>>(undefined);
+  const ref = React.useRef<ImageListRef>();
   const setState = React.useCallback(
     (b, p) => {
-      console.log(b, p, bucket, prefix);
       if (b !== bucket) setBucket(b);
       if (p !== prefix) setPrefix(p);
     },
@@ -219,18 +318,13 @@ function Qiniu(props: { defaultTab?: 'upload' | 'list' }) {
   );
   return (
     <Space direction="vertical">
-      <BucketSelector
-        bucket={bucket}
-        prefix={prefix}
-        onChange={setState}
-        refresh={!!ref ? ref.current : () => {}}
-      />
+      <BucketSelector bucket={bucket} prefix={prefix} onChange={setState} imgRef={ref} />
       <Tabs defaultValue={defaultTab} tabPosition="left">
         <Tabs.TabPane tab="上传图片" key="upload">
           <Upload bucket={bucket} prefix={prefix} />
         </Tabs.TabPane>
         <Tabs.TabPane tab="图片列表" key="list">
-          <ImageList bucket={bucket} prefix={prefix} />
+          <ImageList ref={ref} bucket={bucket} prefix={prefix} group_number={group_number} />
         </Tabs.TabPane>
       </Tabs>
     </Space>
