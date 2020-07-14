@@ -249,6 +249,7 @@ function imageList(
                 <Image
                   src={image.link}
                   thumbnail={generateThumbnail(image.link)}
+                  title={image.link}
                   height="128px"
                   width="128px"
                   clickable
