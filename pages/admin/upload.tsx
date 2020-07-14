@@ -33,7 +33,7 @@ class AdminImages extends React.Component<AdminImagesProps, AdminImagesState> {
         <Context.Consumer>
           {(context) => (
             <Head>
-              <title>{`图片管理|${context.blog_name}`}</title>
+              <title>{`上传管理|${context.blog_name}`}</title>
             </Head>
           )}
         </Context.Consumer>

@@ -44,6 +44,7 @@ class AdminIndex extends React.Component<AdminIndexProps, AdminIndexState> {
               { title: '评论管理', url: '/admin/comments' },
               { title: '用户管理', url: '/admin/users' },
               { title: '游记管理', url: '/admin/travels' },
+              { title: '上传管理', url: '/admin/upload' },
             ]}
             renderItem={(item) => (
               <List.Item key={item.title}>
