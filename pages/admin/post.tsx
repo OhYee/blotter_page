@@ -19,7 +19,13 @@ import {
   Popconfirm,
 } from 'antd';
 import { Icon } from '@ant-design/compatible';
-import { FormOutlined, MinusOutlined, PlusOutlined, FileImageOutlined } from '@ant-design/icons';
+import {
+  FormOutlined,
+  MinusOutlined,
+  PlusOutlined,
+  FileImageOutlined,
+  SaveOutlined,
+} from '@ant-design/icons';
 import { FormInstance } from 'antd/lib/form';
 
 import moment from 'moment';
@@ -469,14 +475,6 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
 
         <Col lg={md ? 12 : 2} md={12}>
           <Form.Item>
-            <Button loading={this.state.submitDisabled} onClick={this.submit} type="primary">
-              提交
-            </Button>
-          </Form.Item>
-        </Col>
-
-        <Col lg={md ? 12 : 2} md={12}>
-          <Form.Item>
             <Button
               onClick={() => {
                 this.editor.setValue(this.state.draft);
@@ -596,22 +594,6 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
     );
   };
 
-  renderJump = () => (
-    <Button
-      shape="circle"
-      size="large"
-      type="primary"
-      style={{ position: 'fixed', right: '20px', top: '60px', zIndex: 2 }}
-      onClick={() => {
-        const editor = document.getElementById('editor');
-        if (!!editor && editor.offsetTop > 0) {
-          scrollTo(0, editor.offsetTop + 10);
-        }
-      }}
-      icon={<FormOutlined />}
-    />
-  );
-
   renderOffset = () => {
     const diff = 10;
     const scroll = (diff: number) => {
@@ -625,8 +607,9 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
     };
 
     return (
-      <Button.Group style={{ position: 'fixed', right: '20px', top: '120px', zIndex: 2 }}>
+      <Button.Group>
         <Press
+          size="small"
           initArg={-diff}
           onClick={() => scroll(-diff)}
           onPressing={(arg) => {
@@ -637,6 +620,7 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
           icon={<MinusOutlined />}
         />
         <Press
+          size="small"
           initArg={diff}
           onClick={() => scroll(diff)}
           onPressing={(arg) => {
@@ -655,10 +639,7 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
       <div>
         <Button
           shape="circle"
-          size="large"
-          type="primary"
           danger={this.state.upload}
-          style={{ position: 'fixed', right: 20, top: 180, zIndex: 2 }}
           onClick={() => this.setState((state) => ({ upload: !state.upload }))}
           icon={<FileImageOutlined />}
         />
@@ -678,6 +659,40 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
     );
   };
 
+  render_fixed_button = () => {
+    const items = [
+      this.renderOffset(),
+      <Button
+        shape="circle"
+        onClick={() => {
+          const editor = document.getElementById('editor');
+          if (!!editor && editor.offsetTop > 0) {
+            scrollTo(0, editor.offsetTop + 10);
+          }
+        }}
+        icon={<FormOutlined />}
+      />,
+      this.renderImages(),
+      <Button
+        loading={this.state.submitDisabled}
+        onClick={this.submit}
+        shape="circle"
+        icon={<SaveOutlined />}
+        type="primary"
+      />,
+    ];
+    return (
+      <Space
+        size={30}
+        className={styles.fixed_button}
+      >
+        {items.map((item, idx) => (
+          <div key={idx}>{item}</div>
+        ))}
+      </Space>
+    );
+  };
+
   render() {
     return (
       <Container xxl={20} xl={20} lg={20} md={24} sm={24} xs={24}>
@@ -691,9 +706,7 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
         <MediaQuery minDeviceWidth={dimensionMaxMap.lg} onChange={this.onBigScreen}>
           {null}
         </MediaQuery>
-        {this.renderJump()}
-        {this.renderOffset()}
-        {this.renderImages()}
+        {this.render_fixed_button()}
         <Row gutter={5}>
           <Col span={this.isSidePreview() ? 12 : 24}>
             <Card>
