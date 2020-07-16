@@ -25,11 +25,14 @@ import {
   PlusOutlined,
   FileImageOutlined,
   SaveOutlined,
+  ShrinkOutlined,
+  ArrowsAltOutlined,
 } from '@ant-design/icons';
 import { FormInstance } from 'antd/lib/form';
 
 import moment from 'moment';
 import MediaQuery from 'react-responsive';
+
 import { ControlledEditor } from '@monaco-editor/react/lib/';
 
 import Carousel from '@/components/carousel';
@@ -374,9 +377,16 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
               //   value={this.state.raw}
               getRef={(ref) => {
                 this.editor = ref;
+                window.e = ref;
                 ref.onDidScrollChange((e) => {
                   this.syncScroll(e.scrollTop, e.scrollHeight);
                 });
+
+                // monaco.KeyMod.chord(monaco.KeyMod.Alt, monaco.KeyMod.Shift, monaco.KeyCode.KEY_I)
+                // ref.addCommand(67109376, () => {
+                //   console.log('S!');
+                // });
+
                 if (this.state.raw !== '') ref.setValue(this.state.raw);
               }}
               options={opts}
@@ -662,6 +672,17 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
   render_fixed_button = () => {
     const items = [
       this.renderOffset(),
+      <Button.Group>
+        <Button
+          size="small"
+          icon={<ShrinkOutlined onClick={() => this.editor.trigger('fold', 'editor.foldAll')} />}
+        />
+        <Button
+          size="small"
+          icon={<ArrowsAltOutlined />}
+          onClick={() => this.editor.trigger('unfold', 'editor.unfoldAll')}
+        />
+      </Button.Group>,
       <Button
         shape="circle"
         onClick={() => {
@@ -682,10 +703,7 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
       />,
     ];
     return (
-      <Space
-        size={30}
-        className={styles.fixed_button}
-      >
+      <Space size={30} className={styles.fixed_button}>
         {items.map((item, idx) => (
           <div key={idx}>{item}</div>
         ))}
