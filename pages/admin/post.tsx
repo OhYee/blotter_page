@@ -377,7 +377,7 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
               //   value={this.state.raw}
               getRef={(ref) => {
                 this.editor = ref;
-                window.e = ref;
+
                 ref.onDidScrollChange((e) => {
                   this.syncScroll(e.scrollTop, e.scrollHeight);
                 });
