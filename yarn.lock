@@ -1070,10 +1070,10 @@
     lodash "^4.17.13"
     to-fast-properties "^2.0.0"
 
-"@monaco-editor/react@^3.3.0":
-  version "3.3.1"
-  resolved "https://registry.yarnpkg.com/@monaco-editor/react/-/react-3.3.1.tgz#abc2a587f7413b60b250c170a9cfa3454875ac6a"
-  integrity sha512-0Slv0d7aX6yS3/Rbk2AWKGSsD4zc7J7BSMCygzXlNJUlzxk1fXb7iITkCYrqLWtQzlGCTCXHrn9kW8PYVpmxQA==
+"@monaco-editor/react@^3.4.1":
+  version "3.4.2"
+  resolved "https://registry.yarnpkg.com/@monaco-editor/react/-/react-3.4.2.tgz#ce135e415d9ab6ff8edc52bda34c2e3d67c73f20"
+  integrity sha512-k/Muzh1bO4qzmspf2F6xfbn7EQ95BV2l9Tq6kZeDV9rM9EoDeHXnotHQ6UACBqdfPS4MFRAg8ro+vuKOYOPVPQ==
 
 "@next/react-dev-overlay@9.4.4":
   version "9.4.4"
