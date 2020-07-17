@@ -17,6 +17,7 @@ import {
   notification,
   List,
   Popconfirm,
+  Radio,
 } from 'antd';
 import { Icon } from '@ant-design/compatible';
 import {
@@ -52,6 +53,7 @@ import { setLocalStorage, getLocalStorage, removeLocalStorage } from '@/utils/st
 import { ButtonProps } from 'antd/lib/button';
 import Qiniu from '@/components/upload';
 import If from '@/components/if';
+import { RadioChangeEvent } from 'antd/lib/radio';
 
 function Editor(props) {
   const { onChange, getRef, ...restProps } = props;
@@ -118,7 +120,7 @@ interface PostEditState {
   raw: string;
   html: string;
   bigScreen: boolean;
-  preview: boolean;
+  preview: 0 | 1 | 2;
   loading: boolean;
   tags: Blotter.Tag[];
   headImage: string;
@@ -142,7 +144,7 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
     this.state = {
       raw: '',
       html: '',
-      preview: false,
+      preview: 0,
       bigScreen: true,
       loading: false,
       tags: [],
@@ -233,20 +235,6 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
   //     );
   //   };
 
-  previewClick = () => {
-    if (!this.state.preview) {
-      this.renderMarkdown(this.editor.getValue());
-    }
-    this.setState(
-      (state) => ({
-        preview: !state.preview,
-      }),
-      () => {
-        if (!!this.editor) this.editor.layout();
-      },
-    );
-  };
-
   tagOnAdd = (tag: Blotter.Tag) => {
     this.setState((state) => {
       var tags = state.tags;
@@ -262,12 +250,8 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
     });
   };
 
-  isSidePreview = () => {
-    return this.state.bigScreen && this.state.preview;
-  };
-
   syncScroll = (top: number, height: number) => {
-    if (this.isSidePreview()) {
+    if (this.state.preview === 2) {
       this.previewRef.current.scrollTop =
         (top / height) * this.previewRef.current.scrollHeight + this.state.offset;
     }
@@ -409,15 +393,13 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
     return (
       <div>
         <Icon type={this.state.loading ? 'loading' : 'check'} />
-        <article className={styles.post}>
-          <PostContent post={post} />
-        </article>
+        <PostContent post={post} />
       </div>
     );
   };
 
   renderToolbar = () => {
-    var md = this.isSidePreview();
+    var md = this.state.preview === 2;
     return (
       <Row gutter={15}>
         <Col lg={24}>
@@ -466,14 +448,6 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
                 this.setState({ headImage: e.currentTarget.value });
               }}
             ></Input>
-          </Form.Item>
-        </Col>
-
-        <Col lg={md ? 12 : 2} md={12}>
-          <Form.Item>
-            <Button onClick={this.previewClick}>
-              <Icon type={this.state.preview ? 'eye-invisible' : 'eye'} />
-            </Button>
           </Form.Item>
         </Col>
 
@@ -669,8 +643,37 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
     );
   };
 
-  render_fixed_button = () => {
+  previewClick = (e: RadioChangeEvent) => {
+    const v = e.target.value;
+    this.setState(
+      {
+        preview: v,
+      },
+      () => {
+        if (!!this.editor) this.editor.layout();
+        this.renderMarkdown(this.editor.getValue());
+      },
+    );
+  };
+
+  renderPreviewButton = () => {
+    return (
+      <Radio.Group
+        value={this.state.preview}
+        buttonStyle="solid"
+        onChange={this.previewClick}
+        size="small"
+      >
+        <Radio.Button value={0}>编辑</Radio.Button>
+        <Radio.Button value={1}>预览</Radio.Button>
+        <Radio.Button value={2}>双栏</Radio.Button>
+      </Radio.Group>
+    );
+  };
+
+  renderFixedButton = () => {
     const items = [
+      this.renderPreviewButton(),
       this.renderOffset(),
       <Button.Group>
         <Button
@@ -724,9 +727,9 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
         <MediaQuery minDeviceWidth={dimensionMaxMap.lg} onChange={this.onBigScreen}>
           {null}
         </MediaQuery>
-        {this.render_fixed_button()}
+        {this.renderFixedButton()}
         <Row gutter={5}>
-          <Col span={this.isSidePreview() ? 12 : 24}>
+          <Col span={this.state.preview == 2 ? 12 : 24}>
             <Card>
               <Form
                 ref={this.formRef}
@@ -745,15 +748,16 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
               >
                 <Space>
                   {this.renderToolbar()}
-                  {this.state.preview && !this.state.bigScreen
-                    ? this.renderPreview()
-                    : this.renderEditor()}
+                  {this.state.preview === 1 ? this.renderPreview() : null}
+                  <div style={{ display: this.state.preview === 1 ? 'none' : 'unset' }}>
+                    {this.renderEditor()}
+                  </div>
                 </Space>
               </Form>
             </Card>
           </Col>
 
-          {this.isSidePreview() ? (
+          {this.state.preview == 2 ? (
             <Col span={12}>
               <div className={styles.preview + ' shadow'} ref={this.previewRef}>
                 <Card>
