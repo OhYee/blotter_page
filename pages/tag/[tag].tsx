@@ -68,7 +68,7 @@ class TagDetail extends React.Component<TagDetailProps, TagDetailState> {
     return (
       <Container>
         <Context.Consumer>
-          {context => (
+          {(context) => (
             <Head>
               <title>{`${this.props.tag.name}|标签页|${context.blog_name}`}</title>
             </Head>
@@ -76,7 +76,12 @@ class TagDetail extends React.Component<TagDetailProps, TagDetailState> {
         </Context.Consumer>
 
         <Card>
-          <Descriptions title="标签信息" bordered layout="vertical">
+          <Descriptions
+            title="标签信息"
+            bordered
+            layout="vertical"
+            column={{ xs: 1, sm: 3 }}
+          >
             <Descriptions.Item key="name" label="标签名称">
               {this.props.tag.name}
             </Descriptions.Item>
@@ -88,6 +93,13 @@ class TagDetail extends React.Component<TagDetailProps, TagDetailState> {
                 style={{ maxWidth: '50px' }}
                 src={this.props.tag.icon === '' ? '/static/img/noimg.png' : this.props.tag.icon}
               />
+            </Descriptions.Item>
+            <Descriptions.Item key="description" label="标签描述" span={3}>
+              {!!this.props.tag.description ? (
+                <p dangerouslySetInnerHTML={{ __html: this.props.tag.description }}></p>
+              ) : (
+                <i>暂无描述</i>
+              )}
             </Descriptions.Item>
           </Descriptions>
         </Card>
