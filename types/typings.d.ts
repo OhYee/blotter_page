@@ -54,6 +54,7 @@ declare namespace Blotter {
     short: string;
     icon: string;
     color: string;
+    description: string;
   }
   interface TagWithCount extends Tag {
     count: number;
