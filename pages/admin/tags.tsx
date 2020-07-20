@@ -74,8 +74,8 @@ class AdminTagList extends React.Component<AdminTagListProps, AdminTagListState>
     this.setState({ data: r.tags, total: r.total, loading: false });
   };
 
-  renderEditableCell = (idx: number, key: string) => {
-    const width = this.columns.find((item) => item.key == key).width;
+  renderEditableCell = (idx: number, key: string, textarea = false) => {
+    const width = textarea ? '100%' : this.columns.find((item) => item.key == key).width;
     const padding = 16;
     var style = { width: undefined };
     if (typeof width === 'number') {
@@ -193,6 +193,7 @@ class AdminTagList extends React.Component<AdminTagListProps, AdminTagListState>
         color: '',
         icon: '',
         count: 0,
+        description: '',
       });
       data = data.map((d) => d);
       return { data };
@@ -201,7 +202,7 @@ class AdminTagList extends React.Component<AdminTagListProps, AdminTagListState>
 
   onEdit = async (idx: number) => {
     var tag = this.state.data[idx];
-    var r = await tagEdit(tag.id, tag.name, tag.short, tag.color, tag.icon);
+    var r = await tagEdit(tag.id, tag.name, tag.short, tag.color, tag.icon, tag.description);
     ShowNotification(r);
   };
 
@@ -305,6 +306,7 @@ class AdminTagList extends React.Component<AdminTagListProps, AdminTagListState>
             dataSource={this.state.data}
             loading={this.state.loading}
             onChange={(a, b, c, d) => this.onTableChange(a, b, Array.isArray(c) ? c[0] : c, d)}
+            expandedRowRender={(_, idx) => this.renderEditableCell(idx, 'description', true)}
             pagination={{
               current: this.state.page,
               total: this.state.total,
