@@ -217,9 +217,15 @@ export const tagEdit = async (
   short: string,
   color: string,
   icon: string,
+  description: string,
   callback?: RequestCallback<Blotter.APIResponse>,
 ) => {
-  return await request('get', '/api/admin/tag/edit', { id, name, short, color, icon }, callback);
+  return await request(
+    'get',
+    '/api/admin/tag/edit',
+    { id, name, short, color, icon, description },
+    callback,
+  );
 };
 
 export const tagDelete = async (id: string, callback?: RequestCallback<Blotter.APIResponse>) => {
