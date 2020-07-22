@@ -102,6 +102,7 @@ declare namespace Blotter {
     description: string;
     rss: string;
     posts: FriendPost[];
+    error: boolean;
   }
   interface FriendPost {
     title: string;
