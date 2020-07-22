@@ -94,10 +94,17 @@ class Friends extends React.Component<FriendsProps, FriendsState> {
           className={styles.list}
           itemLayout="horizontal"
           size="small"
-          // style={}
           dataSource={this.getSourceData(friend.posts)}
           renderItem={this.renderListItem}
         />
+        {!!friend.rss ? (
+          <div
+            className={styles.corner}
+            style={{ background: !!friend.error ? 'crimson' : 'mediumseagreen' }}
+          >
+            {!!friend.error ? '抓取失败' : '抓取成功'}
+          </div>
+        ) : null}
       </Card>
     );
   };
@@ -148,7 +155,10 @@ class Friends extends React.Component<FriendsProps, FriendsState> {
                 grid={{ xxl: 3, xl: 3, md: 2, sm: 1, xs: 1, gutter: 30 }}
                 dataSource={this.props.friends}
                 renderItem={(friend: Blotter.Friend) => (
-                  <List.Item key={friend.link} style={{ width: '100vw' }}>
+                  <List.Item
+                    key={friend.link}
+                    style={{ width: '100vw', overflow: 'hidden', position: 'relative' }}
+                  >
                     {this.renderCard(friend)}
                   </List.Item>
                 )}
