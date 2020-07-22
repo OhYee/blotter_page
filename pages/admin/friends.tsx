@@ -2,7 +2,7 @@ import React, { ComponentProps } from 'react';
 
 import Head from 'next/head';
 
-import { Card, Table, Button, Typography, Popconfirm } from 'antd';
+import { Card, Table, Button, Typography, Popconfirm, Checkbox } from 'antd';
 import { ColumnProps } from 'antd/lib/table';
 import { Icon } from '@ant-design/compatible';
 
@@ -118,6 +118,25 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
       render: (_, __, idx) => this.renderEditableCell(idx, 'rss'),
     },
     {
+      title: '出错',
+      key: 'error',
+      dataIndex: 'error',
+      width: 50,
+      ellipsis: true,
+        render: (_, __, idx) => <Checkbox checked={!!this.state.data[idx].error} onChange={v => {
+            const e = v.target.checked;
+           this.setState((state) => {
+             var { data } = state;
+             data[idx].error = e;
+             data.map((d) => {
+               d.posts = d.posts.map((dd) => dd);
+               return d;
+             });
+             return { data };
+           });
+        }} />,
+    },
+    {
       title: '图片',
       key: 'image',
       dataIndex: 'image',
@@ -201,6 +220,7 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
               description: '',
               rss: '',
               posts: [],
+              error: false,
             });
             data = data.map((d) => {
               d.posts = d.posts.map((dd) => dd);
