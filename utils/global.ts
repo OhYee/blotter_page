@@ -17,6 +17,7 @@ export const defaultContext: GlobalProps = {
   root: '',
   author: '',
   avatar: '',
+  from: '',
   user: {
     id: '000000000000000000000000',
     username: '',
@@ -57,4 +58,5 @@ export declare interface GlobalProps {
   user: Blotter.User;
   author: string;
   avatar: string;
+  from: string;
 }
