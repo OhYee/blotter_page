@@ -679,6 +679,7 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
         buttonStyle="solid"
         onChange={this.previewClick}
         size="small"
+        style={{ flexDirection: 'column', display: 'flex' }}
       >
         <Radio.Button value={0}>编辑</Radio.Button>
         <Radio.Button value={1}>预览</Radio.Button>
@@ -722,7 +723,7 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
       />,
     ];
     return (
-      <Space size={30} className={styles.fixed_button}>
+      <Space size={15} className={styles.fixed_button}>
         {items.map((item, idx) => (
           <div key={idx}>{item}</div>
         ))}
