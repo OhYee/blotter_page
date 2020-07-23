@@ -173,15 +173,15 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
   }
 
   ctrlS = (e) => {
-    e.preventDefault();
-    var currKey = 0,
-      e = e || event || window.event;
-    currKey = e.keyCode || e.which || e.charCode;
-    if (currKey == 83 && (e.ctrlKey || e.metaKey)) {
+    var keyCode = e.keyCode || e.which || e.charCode;
+    var ctrlKey = e.ctrlKey || e.metaKey;
+    if (ctrlKey && keyCode == 83) {
+      e.preventDefault();
+      e.returnValue = false;
       this.submit();
-      return false;
+      return true;
     }
-    return true;
+    return false;
   };
 
   getData = async (url: string) => {
