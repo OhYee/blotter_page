@@ -118,11 +118,11 @@ function Upload(props: { bucket: string; prefix: string }) {
         console.log(res);
       },
       error(err) {
-        notification.error({ message: `${filename} 上传发生错误`, description: `${err}` });
+        notification.error({ message: `上传发生错误`, description: `${filename}\n${err}` });
         console.error(err);
       },
       complete(res) {
-        notification.success({ message: `${filename} 上传成功` });
+        notification.success({ message: `上传成功`, description: `${filename}` });
       },
     });
   };
