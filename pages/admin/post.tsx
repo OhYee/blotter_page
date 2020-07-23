@@ -181,6 +181,7 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
       this.submit();
       return false;
     }
+    return true;
   };
 
   getData = async (url: string) => {
