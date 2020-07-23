@@ -165,7 +165,23 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
     if (url != '' && typeof url != 'undefined') {
       this.getData(url);
     }
+    document.addEventListener('keydown', this.ctrlS);
   }
+
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.ctrlS);
+  }
+
+  ctrlS = (e) => {
+    e.preventDefault();
+    var currKey = 0,
+      e = e || event || window.event;
+    currKey = e.keyCode || e.which || e.charCode;
+    if (currKey == 83 && (e.ctrlKey || e.metaKey)) {
+      this.submit();
+      return false;
+    }
+  };
 
   getData = async (url: string) => {
     var r = await adminPost(url);
