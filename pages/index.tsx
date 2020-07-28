@@ -39,7 +39,7 @@ class Index extends React.Component<IndexProps, IndexState> {
   static defaultProps = { posts: [] };
 
   static async getInitialProps(args: NextPageContext) {
-    var data = await indexPosts('', [], 1, 5, [], []);
+    var data = await indexPosts('', [], 1, 10, [], []);
     return {
       posts: data.posts,
     } as IndexProps;
