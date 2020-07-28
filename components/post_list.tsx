@@ -1,9 +1,12 @@
 import React, { ComponentProps } from 'react';
 
-import { List } from 'antd';
+import { Row, Col, Pagination } from 'antd';
 
 import PostCard from '@/components/post_card';
-import Container from '@/components/container';
+import { Context } from '@/utils/global';
+import { Space } from './container';
+
+import styles from './post_list.less';
 
 type PostListProps = {
   posts: (Blotter.PostCard | undefined)[];
@@ -23,6 +26,9 @@ type PostListProps = {
 type PostListState = {};
 
 class PostList extends React.Component<PostListProps & ComponentProps<'base'>, PostListState> {
+  static contextType = Context;
+  context!: React.ContextType<typeof Context>;
+
   static defaultProps: PostListProps = {
     posts: [],
     page: undefined,
@@ -37,6 +43,18 @@ class PostList extends React.Component<PostListProps & ComponentProps<'base'>, P
     super(props);
   }
 
+  renderList = (posts: Blotter.PostCard[]) => {
+    return (
+      <Space size="middle">
+        {posts.map((post) => (
+          <div key={post.url}>
+            <PostCard post={post} loading={this.props.loading} />
+          </div>
+        ))}
+      </Space>
+    );
+  };
+
   render() {
     var pagination =
       typeof this.props.callback === 'undefined'
@@ -50,20 +68,61 @@ class PostList extends React.Component<PostListProps & ComponentProps<'base'>, P
             onShowSizeChange: this.props.callback,
             itemRender: this.props.pageRender,
           };
+
+    if (this.context.big_screen && this.props.posts.length > 1) {
+      var l: Blotter.PostCard[] = [];
+      var r: Blotter.PostCard[] = [];
+      var ln = 0;
+      var rn = 0;
+      for (var i = 0; i < this.props.posts.length; i++) {
+        const p = this.props.posts[i];
+        if (ln <= rn) {
+          ln += p.head_image === '' ? 1 : 2;
+          l.push(p);
+        } else {
+          rn += p.head_image === '' ? 1 : 2;
+          r.push(p);
+        }
+      }
+      if (rn > ln) {
+        if (r.slice(-1)[0].head_image === '') {
+          l.push(r.pop());
+        } else {
+          [l[l.length - 1], r[r.length - 1]] = [r[r.length - 1], l[l.length - 1]];
+        }
+      }
+    }
+
     return (
-      <List
-        itemLayout="horizontal"
-        grid={{ column: 1, gutter: 10 }}
-        header={this.props.header}
-        dataSource={this.props.posts}
-        renderItem={post => (
-          <List.Item key={post.url}>
-            <PostCard post={post} loading={this.props.loading} />
-          </List.Item>
+      <Space size="middle">
+        {this.props.header ? <p>{this.props.header}</p> : null}
+        {this.props.posts.length == 0 ? (
+          <div
+            className="textCenter"
+            style={{
+              lineHeight: '3em',
+              fontSize: '1.5em',
+              color: 'grey',
+            }}
+          >
+            暂无数据
+          </div>
+        ) : this.context.big_screen && this.props.posts.length > 1 ? (
+          <div className={styles.container}>
+            <div className={styles.column}>{this.renderList(l)}</div>
+            <div className={styles.column}>{this.renderList(r)}</div>
+          </div>
+        ) : (
+          this.renderList(this.props.posts)
         )}
-        split={false}
-        pagination={pagination}
-      />
+        {!!pagination ? (
+          <Row justify="end">
+            <Col>
+              <Pagination {...pagination} />
+            </Col>
+          </Row>
+        ) : null}
+      </Space>
     );
   }
 }
