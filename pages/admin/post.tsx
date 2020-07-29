@@ -731,31 +731,31 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
         {this.renderFixedButton()}
         <Row gutter={5}>
           <Col span={this.state.preview == 2 ? 12 : 24}>
-            <Card>
-              <Form
-                ref={this.formRef}
-                initialValues={{
-                  id: '',
-                  title: '',
-                  url: '',
-                  abstract: '',
-                  head_image: '',
-                  view: 0,
-                  publish_time: this.now,
-                  edit_time: this.now,
-                  published: false,
-                  raw: '',
-                }}
-              >
-                <Space>
+            <Space>
+              <Card>
+                <Form
+                  ref={this.formRef}
+                  initialValues={{
+                    id: '',
+                    title: '',
+                    url: '',
+                    abstract: '',
+                    head_image: '',
+                    view: 0,
+                    publish_time: this.now,
+                    edit_time: this.now,
+                    published: false,
+                    raw: '',
+                  }}
+                >
                   {this.renderToolbar()}
-                  {this.state.preview === 1 ? this.renderPreview() : null}
-                  <div style={{ display: this.state.preview === 1 ? 'none' : 'unset' }}>
-                    {this.renderEditor()}
-                  </div>
-                </Space>
-              </Form>
-            </Card>
+                </Form>
+              </Card>
+
+              {this.state.preview === 1 ? <Card>{this.renderPreview()}</Card> : null}
+
+              <Card>{this.renderEditor()}</Card>
+            </Space>
           </Col>
 
           {this.state.preview == 2 ? (
