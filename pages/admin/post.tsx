@@ -165,24 +165,7 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
     if (url != '' && typeof url != 'undefined') {
       this.getData(url);
     }
-    document.addEventListener('keydown', this.ctrlS);
   }
-
-  componentWillUnmount() {
-    document.removeEventListener('keydown', this.ctrlS);
-  }
-
-  ctrlS = (e) => {
-    var keyCode = e.keyCode || e.which || e.charCode;
-    var ctrlKey = e.ctrlKey || e.metaKey;
-    if (ctrlKey && keyCode == 83) {
-      e.preventDefault();
-      e.returnValue = false;
-      this.submit();
-      return true;
-    }
-    return false;
-  };
 
   getData = async (url: string) => {
     var r = await adminPost(url);
@@ -383,10 +366,8 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
                   this.syncScroll(e.scrollTop, e.scrollHeight);
                 });
 
-                // monaco.KeyMod.chord(monaco.KeyMod.Alt, monaco.KeyMod.Shift, monaco.KeyCode.KEY_I)
-                // ref.addCommand(67109376, () => {
-                //   console.log('S!');
-                // });
+                // Save post when Ctrl + S clicked
+                ref.addCommand(2097, this.submit);
 
                 if (this.state.raw !== '') ref.setValue(this.state.raw);
               }}
