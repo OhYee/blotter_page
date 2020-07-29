@@ -647,10 +647,13 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
     this.setState(
       {
         preview: v,
+        raw: !!this.editor ? this.editor.getValue() : this.state.raw,
       },
       () => {
-        if (!!this.editor) this.editor.layout();
-        this.renderMarkdown(this.editor.getValue());
+        if (!!this.editor) {
+          this.editor.layout();
+          this.renderMarkdown(this.editor.getValue());
+        }
       },
     );
   };
