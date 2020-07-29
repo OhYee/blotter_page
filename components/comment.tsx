@@ -18,6 +18,7 @@ import moment from 'moment';
 import { comments, avatar, addComment } from '@/utils/api';
 import { Context } from '@/utils/global';
 import ShowNotification from '@/utils/notification';
+import getOffsetTop from '@/utils/offset';
 
 const adWarning = <b>广告评论，已被屏蔽</b>;
 const delWarning = <b>该评论已被删除</b>;
@@ -26,10 +27,6 @@ const CommentContext = React.createContext({ url: '', callback: () => {} });
 
 function getCommentID(id: string) {
   return `blotter-comment-${id}`;
-}
-
-function getOffsetTop(e: HTMLElement): number {
-  return e.offsetTop + (e.offsetParent ? getOffsetTop(e.offsetParent as any) : 0);
 }
 
 function jumpParent(id: string) {
