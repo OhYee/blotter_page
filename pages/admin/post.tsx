@@ -30,31 +30,27 @@ import {
   ArrowsAltOutlined,
 } from '@ant-design/icons';
 import { FormInstance } from 'antd/lib/form';
+import { ButtonProps } from 'antd/lib/button';
+import { RadioChangeEvent } from 'antd/lib/radio';
 
 import moment from 'moment';
 import MediaQuery from 'react-responsive';
-
 import { ControlledEditor } from '@monaco-editor/react/lib/';
 
-import Carousel from '@/components/carousel';
 import Container, { Space } from '@/components/container';
 import TagSearch from '@/components/tag_search';
 import PostContent from '@/components/post_content';
+import Qiniu from '@/components/upload';
 
+import { Context } from '@/utils/global';
+import ShowNotification from '@/utils/notification';
 import getOffsetTop from '@/utils/offset';
 import { waitUntil } from '@/utils/debounce';
 import { markdown, adminPost, postExist, postEdit } from '@/utils/api';
 import { dimensionMaxMap } from '@/utils/responsive';
+import { setLocalStorage, getLocalStorage, removeLocalStorage } from '@/utils/storage';
 
 import styles from '@/pages/post/post.less';
-
-import { Context } from '@/utils/global';
-import ShowNotification from '@/utils/notification';
-import { setLocalStorage, getLocalStorage, removeLocalStorage } from '@/utils/storage';
-import { ButtonProps } from 'antd/lib/button';
-import Qiniu from '@/components/upload';
-import If from '@/components/if';
-import { RadioChangeEvent } from 'antd/lib/radio';
 
 function Editor(props) {
   const { onChange, getRef, ...restProps } = props;
@@ -190,7 +186,6 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
         images: !!r.images ? r.images : [],
       },
       () => {
-        console.log('got data', r.raw.length);
         if (!!this.editor) this.editor.setValue(r.raw);
       },
     );
