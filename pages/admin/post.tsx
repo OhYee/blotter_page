@@ -41,6 +41,7 @@ import Container, { Space } from '@/components/container';
 import TagSearch from '@/components/tag_search';
 import PostContent from '@/components/post_content';
 
+import getOffsetTop from '@/utils/offset';
 import { waitUntil } from '@/utils/debounce';
 import { markdown, adminPost, postExist, postEdit } from '@/utils/api';
 import { dimensionMaxMap } from '@/utils/responsive';
@@ -689,8 +690,9 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
         shape="circle"
         onClick={() => {
           const editor = document.getElementById('editor');
-          if (!!editor && editor.offsetTop > 0) {
-            scrollTo(0, editor.offsetTop + 10);
+          const top = getOffsetTop(editor);
+          if (!!editor && top > 0) {
+            scrollTo(0, top - 10);
           }
         }}
         icon={<FormOutlined />}
