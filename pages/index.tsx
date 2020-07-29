@@ -227,7 +227,7 @@ class Index extends React.Component<IndexProps, IndexState> {
               callback={this.state.callback}
             />
             <div className="textCenter">
-              <Link href="/archives">
+              <Link href="/archives?page=2&size=10">
                 <Button type="dashed">查看更多</Button>
               </Link>
             </div>
