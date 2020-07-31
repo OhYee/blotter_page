@@ -139,8 +139,11 @@ export const setImageLightbox = (img: HTMLImageElement) => {
 export const setSVGLightbox = (svg: SVGSVGElement) => {
   svg.style.cursor = 'pointer';
   const content = window.btoa(svg.outerHTML).replace(/\n/g, '');
+  const title = !!svg.getAttribute('title') ? svg.getAttribute('title') : svg.parentElement.title;
   svg.onclick = () =>
     CreateBox({
       src: `data:image/svg+xml;base64,${content} `,
+      title: title,
+      alt: title,
     });
 };
