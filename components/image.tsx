@@ -129,3 +129,12 @@ export const setImageLightbox = (img: HTMLImageElement) => {
   parent.removeAttribute('href');
   parent.onclick = () => CreateBox({ src, alt, title });
 };
+
+export const setSVGLightbox = (svg: SVGSVGElement) => {
+  svg.style.cursor = 'pointer';
+  const content = window.btoa(svg.outerHTML).replace(/\n/g, '');
+  svg.onclick = () =>
+    CreateBox({
+      src: `data:image/svg+xml;base64,${content} `,
+    });
+};

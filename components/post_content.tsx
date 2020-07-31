@@ -6,7 +6,7 @@ import { EyeOutlined, CalendarOutlined, EditOutlined, TagOutlined } from '@ant-d
 
 import moment from 'moment';
 
-import Image, { setImageLightbox } from '@/components/image';
+import Image, { setImageLightbox, setSVGLightbox } from '@/components/image';
 import If from '@/components/if';
 import TagPart from '@/components/tag';
 import FocusDiv from '@/components/focus';
@@ -49,6 +49,15 @@ class PostContent extends Component<PostContentProps, PostContentState> {
       const imgs = containers[i].getElementsByTagName('img');
       for (var j = 0; j < imgs.length; j++) {
         setImageLightbox(imgs[j]);
+      }
+    }
+
+    const post_content = document.getElementsByClassName('post-content');
+    if (post_content.length > 0) {
+      const svgs = post_content[0].getElementsByTagName('svg');
+      for (var i = 0; i < svgs.length; i++) {
+        const svg = svgs[i];
+        setSVGLightbox(svg);
       }
     }
   }
