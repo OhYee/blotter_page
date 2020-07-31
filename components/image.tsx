@@ -1,5 +1,6 @@
 import './image.less';
 import { CSSProperties } from 'react';
+import { exception } from 'console';
 
 function CreateBox(props: {
   src: string;
@@ -138,21 +139,29 @@ export default (props: {
 };
 
 export const setImageLightbox = (img: HTMLImageElement) => {
-  const parent = img.parentElement;
-  const { src, alt, title } = img;
-  parent.removeAttribute('href');
-  parent.onclick = () => CreateBox({ src, alt, title });
+  try {
+    const parent = img.parentElement;
+    const { src, alt, title } = img;
+    parent.removeAttribute('href');
+    parent.onclick = () => CreateBox({ src, alt, title });
+  } catch (err) {
+    console.error(err);
+  }
 };
 
 export const setSVGLightbox = (svg: SVGSVGElement) => {
-  svg.style.cursor = 'pointer';
-  const content = window.btoa(svg.outerHTML).replace(/\n/g, '');
-  const title = !!svg.getAttribute('title') ? svg.getAttribute('title') : svg.parentElement.title;
-  svg.onclick = () =>
-    CreateBox({
-      src: `data:image/svg+xml;base64,${content} `,
-      title: title,
-      alt: title,
-      initialHeight: '50%',
-    });
+  try {
+    svg.style.cursor = 'pointer';
+    const content = window.btoa(svg.outerHTML).replace(/\n/g, '');
+    const title = !!svg.getAttribute('title') ? svg.getAttribute('title') : svg.parentElement.title;
+    svg.onclick = () =>
+      CreateBox({
+        src: `data:image/svg+xml;base64,${content} `,
+        title: title,
+        alt: title,
+        initialHeight: '50%',
+      });
+  } catch (err) {
+    console.error(err);
+  }
 };
