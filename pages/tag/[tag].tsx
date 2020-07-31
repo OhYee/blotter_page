@@ -9,7 +9,7 @@ import Link from 'next/link';
 import { Card, Descriptions } from 'antd';
 
 import PostList from '@/components/post_list';
-import Container from '@/components/container';
+import Container, { Space } from '@/components/container';
 
 import { parseNumberParams } from '@/utils/parse';
 import { tagPosts } from '@/utils/api';
@@ -75,58 +75,55 @@ class TagDetail extends React.Component<TagDetailProps, TagDetailState> {
           )}
         </Context.Consumer>
 
-        <Card>
-          <Descriptions
-            title="标签信息"
-            bordered
-            layout="vertical"
-            column={{ xs: 1, sm: 3 }}
-          >
-            <Descriptions.Item key="name" label="标签名称">
-              {this.props.tag.name}
-            </Descriptions.Item>
-            <Descriptions.Item key="short" label="标签链接">
-              {this.props.tag.short}
-            </Descriptions.Item>
-            <Descriptions.Item key="img" label="标签图片">
-              <img
-                style={{ maxWidth: '50px' }}
-                src={this.props.tag.icon === '' ? '/static/img/noimg.png' : this.props.tag.icon}
-              />
-            </Descriptions.Item>
-            <Descriptions.Item key="description" label="标签描述" span={3}>
-              {!!this.props.tag.description ? (
-                <p dangerouslySetInnerHTML={{ __html: this.props.tag.description }}></p>
-              ) : (
-                <i>暂无描述</i>
-              )}
-            </Descriptions.Item>
-          </Descriptions>
-        </Card>
+        <Space size="middle">
+          <Card>
+            <Descriptions title="标签信息" bordered layout="vertical" column={{ xs: 1, sm: 3 }}>
+              <Descriptions.Item key="name" label="标签名称">
+                {this.props.tag.name}
+              </Descriptions.Item>
+              <Descriptions.Item key="short" label="标签链接">
+                {this.props.tag.short}
+              </Descriptions.Item>
+              <Descriptions.Item key="img" label="标签图片">
+                <img
+                  style={{ maxWidth: '50px' }}
+                  src={this.props.tag.icon === '' ? '/static/img/noimg.png' : this.props.tag.icon}
+                />
+              </Descriptions.Item>
+              <Descriptions.Item key="description" label="标签描述" span={3}>
+                {!!this.props.tag.description ? (
+                  <p dangerouslySetInnerHTML={{ __html: this.props.tag.description }}></p>
+                ) : (
+                  <i>暂无描述</i>
+                )}
+              </Descriptions.Item>
+            </Descriptions>
+          </Card>
 
-        <PostList
-          header={`共有 ${this.props.total} 篇文章`}
-          posts={this.props.posts}
-          page={this.props.page}
-          size={this.props.size}
-          total={this.props.total}
-          callback={this.onChange}
-          pageRender={(page, type, origin) =>
-            type == 'page' || type == 'prev' || type == 'next' ? (
-              // On the first page, prev button will get disabled props, and link can not recvive disabled props.
-              <div>
-                <Link
-                  href="/tag/[tag]"
-                  as={`/tag/${this.props.router.query.tag}?page=${page}&size=${this.props.size}`}
-                >
-                  {origin}
-                </Link>
-              </div>
-            ) : (
-              origin
-            )
-          }
-        />
+          <PostList
+            header={`共有 ${this.props.total} 篇文章`}
+            posts={this.props.posts}
+            page={this.props.page}
+            size={this.props.size}
+            total={this.props.total}
+            callback={this.onChange}
+            pageRender={(page, type, origin) =>
+              type == 'page' || type == 'prev' || type == 'next' ? (
+                // On the first page, prev button will get disabled props, and link can not recvive disabled props.
+                <div>
+                  <Link
+                    href="/tag/[tag]"
+                    as={`/tag/${this.props.router.query.tag}?page=${page}&size=${this.props.size}`}
+                  >
+                    {origin}
+                  </Link>
+                </div>
+              ) : (
+                origin
+              )
+            }
+          />
+        </Space>
       </Container>
     );
   }

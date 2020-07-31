@@ -95,7 +95,7 @@ class PostList extends React.Component<PostListProps & ComponentProps<'base'>, P
 
     return (
       <Space size="middle">
-        {this.props.header ? <p>{this.props.header}</p> : null}
+        {this.props.header ? <div>{this.props.header}</div> : null}
         {this.props.posts.length == 0 ? (
           <div
             className="textCenter"
