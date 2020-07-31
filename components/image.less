@@ -61,16 +61,20 @@
 
   span {
     position: absolute;
+    z-index: 1001;
+    text-shadow: black 2.5px 2.5px 7.5px;
+    animation: lightbox-title 1s;
+  }
+
+  :global(span.close) {
     top: 10px;
     right: 10px;
-    z-index: 1001;
-
     font-size: 2em;
-
     cursor: pointer;
-    text-shadow: black 2.5px 2.5px 7.5px;
-
-    animation: lightbox-title 1s;
+  }
+  :global(span.hint) {
+    top: 10px;
+    font-size: 16px;
   }
 
   p {

@@ -14,7 +14,13 @@ function CreateBox(props: { src: string; alt?: string; title?: string }) {
 
   const close = document.createElement('span');
   close.innerText = '×';
+  close.className = 'close';
   box.appendChild(close);
+
+  const hint = document.createElement('span');
+  hint.innerText = '滚轮缩放图片，拖拽修改位置';
+  hint.className = 'hint';
+  box.appendChild(hint);
 
   const p = document.createElement('p');
   p.innerText = !!title ? title : alt;
