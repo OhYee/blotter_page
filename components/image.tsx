@@ -1,8 +1,14 @@
 import './image.less';
 import { CSSProperties } from 'react';
 
-function CreateBox(props: { src: string; alt?: string; title?: string }) {
-  const { src, alt = '', title = '' } = props;
+function CreateBox(props: {
+  src: string;
+  alt?: string;
+  title?: string;
+  initialWidth?: string;
+  initialHeight?: string;
+}) {
+  const { src, alt = '', title = '', initialWidth = 'unset', initialHeight = 'unset' } = props;
   const body = document.body;
   const top = window.scrollY;
   body.style.position = 'fixed';
@@ -30,6 +36,8 @@ function CreateBox(props: { src: string; alt?: string; title?: string }) {
   img.src = src;
   img.alt = alt;
   img.title = title;
+  img.style.height = initialHeight;
+  img.style.width = initialWidth;
   box.appendChild(img);
 
   const ratio = img.naturalWidth / img.naturalHeight;
@@ -145,5 +153,6 @@ export const setSVGLightbox = (svg: SVGSVGElement) => {
       src: `data:image/svg+xml;base64,${content} `,
       title: title,
       alt: title,
+      initialHeight: '50%',
     });
 };
