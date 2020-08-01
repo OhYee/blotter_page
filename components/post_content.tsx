@@ -97,7 +97,7 @@ function AnchorsPart(props: { content: string; container?: HTMLElement }) {
       <div className={styles.button} onClick={() => setShow(!show)}>
         {show ? <RightOutlined /> : <LeftOutlined />}
       </div>
-      <div>{anchors.map(renderAnchor)}</div>
+      <div className={styles.anchors_content}>{anchors.map(renderAnchor)}</div>
     </Anchor>
   );
 }
