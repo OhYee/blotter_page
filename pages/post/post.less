@@ -174,9 +174,8 @@
   -webkit-backdrop-filter: blur(2.5px);
   backdrop-filter: blur(2.5px);
   font-weight: bold;
-  width: calc(300px - 25px);
+  width: 250px;
 
-  max-height: 'calc(100% - 100px)';
   top: 50px;
   z-index: 5;
   width: 275;
@@ -199,4 +198,10 @@
 
     box-shadow: 2.5px 2.5px 5px rgba(0, 0, 0, 0.5);
   }
+  
+  .anchors_content{
+    max-height: calc(100vh - 150px);
+    overflow: auto;
+  }
+
 }
