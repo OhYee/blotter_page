@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Link from 'next/link';
 
-import { Skeleton, PageHeader, Button } from 'antd';
+import { Anchor, Skeleton, PageHeader, Button } from 'antd';
 import { EyeOutlined, CalendarOutlined, EditOutlined, TagOutlined } from '@ant-design/icons';
 
 import moment from 'moment';
@@ -9,7 +9,6 @@ import moment from 'moment';
 import Image, { setImageLightbox, setSVGLightbox } from '@/components/image';
 import If from '@/components/if';
 import TagPart from '@/components/tag';
-import FocusDiv from '@/components/focus';
 
 import { Context } from '@/utils/global';
 import { travels_get_url } from '@/utils/api';
@@ -18,6 +17,61 @@ import styles from '@/pages/post/post.less';
 import Carousel from './carousel';
 import { Space } from './container';
 import Head from 'next/head';
+
+interface AnchorType {
+  name: string;
+  id: string;
+  level: number;
+  children: AnchorType[];
+}
+
+function findAnchors(text: string): AnchorType[] {
+  var re = new RegExp(`<h([1-6]) id="(.*)">(.*)</h\\1>`, 'g');
+  var result_list: AnchorType[] = [];
+
+  do {
+    var result = re.exec(text);
+    if (result !== null) {
+      result_list.push({
+        id: `#${result[2]}`,
+        name: result[3],
+        level: parseInt(result[1]),
+        children: [],
+      });
+    }
+  } while (result);
+
+  var anchors: AnchorType[] = [];
+
+  var insert = (lst: AnchorType[], value: AnchorType) => {
+    if (lst.length > 0 && lst[lst.length - 1].level < value.level) {
+      insert(lst[lst.length - 1].children, value);
+    } else {
+      lst.push(value);
+    }
+  };
+
+  result_list.map((anchor: AnchorType) => {
+    insert(anchors, anchor);
+  });
+
+  anchors.push({
+    id: '#blotter-comment',
+    name: '评论区',
+    level: 1,
+    children: [],
+  });
+
+  return anchors;
+}
+
+function renderAnchor(anchor: AnchorType) {
+  return (
+    <Anchor.Link key={`${anchor.id}|${anchor.name}`} href={anchor.id} title={anchor.name}>
+      {anchor.children.map(renderAnchor)}
+    </Anchor.Link>
+  );
+}
 
 interface PostContentProps {
   post: {
@@ -117,6 +171,30 @@ class PostContent extends Component<PostContentProps, PostContentState> {
     }
   };
 
+  renderAnchors = () => {
+    const anchors = findAnchors(this.props.post.content);
+    return (
+      <Context.Consumer>
+        {(context) =>
+          context.big_screen ? (
+            <Anchor
+              offsetTop={10}
+              style={{
+                maxHeight: 'calc(100% - 100px)',
+                background: 'transparent',
+                position: 'fixed',
+                top: '50px',
+                right: '30px',
+                width: '15%',
+              }}
+            >
+              {anchors.map(renderAnchor)}
+            </Anchor>
+          ) : null
+        }
+      </Context.Consumer>
+    );
+  };
   render() {
     return this.props.post === undefined ? (
       <Skeleton active={true} />
@@ -189,20 +267,12 @@ class PostContent extends Component<PostContentProps, PostContentState> {
             />
           ) : null}
 
-          {/* <If condition={this.props.post.head_image !== ''}>
-          <a
-            className="headimage image"
-            target="_blank"
-            rel="noopener noreferrer"
-            href={this.props.post.head_image}
-          >
-            <img src={this.props.post.head_image} alt={this.props.post.title} />
-          </a>
-        </If> */}
           <section
             className="post-content"
             dangerouslySetInnerHTML={{ __html: this.props.post.content }}
           />
+
+          {this.renderAnchors()}
         </Space>
       </article>
     );
