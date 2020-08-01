@@ -2,7 +2,14 @@ import React, { Component } from 'react';
 import Link from 'next/link';
 
 import { Anchor, Skeleton, PageHeader, Button } from 'antd';
-import { EyeOutlined, CalendarOutlined, EditOutlined, TagOutlined } from '@ant-design/icons';
+import {
+  EyeOutlined,
+  CalendarOutlined,
+  EditOutlined,
+  TagOutlined,
+  RightOutlined,
+  LeftOutlined,
+} from '@ant-design/icons';
 
 import moment from 'moment';
 
@@ -70,6 +77,28 @@ function renderAnchor(anchor: AnchorType) {
     <Anchor.Link key={`${anchor.id}|${anchor.name}`} href={anchor.id} title={anchor.name}>
       {anchor.children.map(renderAnchor)}
     </Anchor.Link>
+  );
+}
+
+function AnchorsPart(props: { content: string; container?: HTMLElement }) {
+  const { container, content } = props;
+  const anchors = React.useMemo(() => findAnchors(content), [content]);
+  const [show, setShow] = React.useState(true);
+  const [top, setTop] = React.useState(50);
+
+  if (!!container) container.onscroll = () => setTop(container.scrollTop + 50);
+
+  return (
+    <Anchor
+      getContainer={!!container ? () => container : undefined}
+      offsetTop={10}
+      style={{ right: show ? 10 : -275, top, position: !!container ? 'absolute' : 'fixed' }}
+    >
+      <div className={styles.button} onClick={() => setShow(!show)}>
+        {show ? <RightOutlined /> : <LeftOutlined />}
+      </div>
+      <div>{anchors.map(renderAnchor)}</div>
+    </Anchor>
   );
 }
 
@@ -172,46 +201,6 @@ class PostContent extends Component<PostContentProps, PostContentState> {
     }
   };
 
-  renderAnchors = () => {
-    const anchors = findAnchors(this.props.post.content);
-    const { container } = this.props;
-    var anchorID: HTMLElement;
-    if (!!container) {
-      container.onscroll = (ev) => {
-        if (!anchorID) {
-          anchorID = document.getElementById('anchor');
-        }
-        anchorID.style.top = `${50 + container.scrollTop}`;
-      };
-    }
-    return (
-      <Context.Consumer>
-        {(context) =>
-          context.big_screen ? (
-            <div
-              id="anchor"
-              style={{
-                maxHeight: 'calc(100% - 100px)',
-                position: container ? 'absolute' : 'fixed',
-                top: '50px',
-                right: '30px',
-                width: '15%',
-                zIndex: 5,
-              }}
-            >
-              <Anchor
-                getContainer={!!container ? () => container : undefined}
-                offsetTop={10}
-                style={{ background: 'transparent' }}
-              >
-                {anchors.map(renderAnchor)}
-              </Anchor>
-            </div>
-          ) : null
-        }
-      </Context.Consumer>
-    );
-  };
   render() {
     return this.props.post === undefined ? (
       <Skeleton active={true} />
@@ -272,9 +261,7 @@ class PostContent extends Component<PostContentProps, PostContentState> {
               </div>
             </Space>
           </PageHeader>
-
           {this.renderTravel()}
-
           {!!this.props.post.images && this.props.post.images.length > 0 ? (
             <Carousel
               images={this.props.post.images}
@@ -283,13 +270,11 @@ class PostContent extends Component<PostContentProps, PostContentState> {
               autoplay
             />
           ) : null}
-
           <section
             className="post-content"
             dangerouslySetInnerHTML={{ __html: this.props.post.content }}
           />
-
-          {this.renderAnchors()}
+          <AnchorsPart container={this.props.container} content={this.props.post.content} />
         </Space>
       </article>
     );
