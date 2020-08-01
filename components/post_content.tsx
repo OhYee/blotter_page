@@ -86,6 +86,7 @@ interface PostContentProps {
     tags: Blotter.Tag[];
     images: string[];
   };
+  container?: HTMLElement;
 }
 
 interface PostContentState {
@@ -173,23 +174,38 @@ class PostContent extends Component<PostContentProps, PostContentState> {
 
   renderAnchors = () => {
     const anchors = findAnchors(this.props.post.content);
+    const { container } = this.props;
+    var anchorID: HTMLElement;
+    if (!!container) {
+      container.onscroll = (ev) => {
+        if (!anchorID) {
+          anchorID = document.getElementById('anchor');
+        }
+        anchorID.style.top = `${50 + container.scrollTop}`;
+      };
+    }
     return (
       <Context.Consumer>
         {(context) =>
           context.big_screen ? (
-            <Anchor
-              offsetTop={10}
+            <div
+              id="anchor"
               style={{
                 maxHeight: 'calc(100% - 100px)',
-                background: 'transparent',
-                position: 'fixed',
+                position: container ? 'absolute' : 'fixed',
                 top: '50px',
                 right: '30px',
                 width: '15%',
               }}
             >
-              {anchors.map(renderAnchor)}
-            </Anchor>
+              <Anchor
+                getContainer={!!container ? () => container : undefined}
+                offsetTop={10}
+                style={{ background: 'transparent' }}
+              >
+                {anchors.map(renderAnchor)}
+              </Anchor>
+            </div>
           ) : null
         }
       </Context.Consumer>

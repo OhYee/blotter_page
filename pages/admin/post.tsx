@@ -387,7 +387,7 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
     return (
       <div>
         <Icon type={this.state.loading ? 'loading' : 'check'} />
-        <PostContent post={post} />
+        <PostContent post={post} container={this.previewRef.current} />
       </div>
     );
   };
