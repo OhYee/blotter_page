@@ -196,6 +196,7 @@ class PostContent extends Component<PostContentProps, PostContentState> {
                 top: '50px',
                 right: '30px',
                 width: '15%',
+                zIndex: 5,
               }}
             >
               <Anchor
