@@ -82,8 +82,9 @@ function renderAnchor(anchor: AnchorType) {
 
 function AnchorsPart(props: { content: string; container?: HTMLElement }) {
   const { container, content } = props;
+  const context = React.useContext(Context);
   const anchors = React.useMemo(() => findAnchors(content), [content]);
-  const [show, setShow] = React.useState(true);
+  const [show, setShow] = React.useState(context.big_screen);
   const [top, setTop] = React.useState(50);
 
   if (!!container) container.onscroll = () => setTop(container.scrollTop + 50);
