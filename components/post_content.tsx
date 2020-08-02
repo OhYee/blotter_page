@@ -82,6 +82,8 @@ function renderAnchor(anchor: AnchorType) {
 
 function AnchorsPart(props: { content: string; container?: HTMLElement }) {
   const { container, content } = props;
+  const width = 275;
+
   const context = React.useContext(Context);
   const anchors = React.useMemo(() => findAnchors(content), [content]);
   const [show, setShow] = React.useState(context.big_screen);
@@ -93,7 +95,12 @@ function AnchorsPart(props: { content: string; container?: HTMLElement }) {
     <Anchor
       getContainer={!!container ? () => container : undefined}
       offsetTop={10}
-      style={{ right: show ? 10 : -275, top, position: !!container ? 'absolute' : 'fixed' }}
+      style={{
+        right: show ? 10 : -width,
+        top,
+        position: !!container ? 'absolute' : 'fixed',
+        width,
+      }}
     >
       <div className={styles.button} onClick={() => setShow(!show)}>
         {show ? <RightOutlined /> : <LeftOutlined />}
