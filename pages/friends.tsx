@@ -13,6 +13,9 @@ import { friends } from '@/utils/api';
 
 import styles from './friends.less';
 
+import moment from 'moment';
+moment.locale('zh-cn');
+
 const maxPostNumber = 5;
 
 interface FriendsProps extends ComponentProps<'base'> {
@@ -45,10 +48,20 @@ class Friends extends React.Component<FriendsProps, FriendsState> {
         list.push(
           <a href={post.link} target="_blank">
             <Tooltip title={post.title}>
-              <Typography.Text ellipsis={true} style={{ width: '100%' }}>
+              <Typography.Text
+                ellipsis={true}
+                style={{ width: post.time !== 0 ? 'calc(100% - 4em)' : '100%' }}
+              >
                 {post.title}
               </Typography.Text>
             </Tooltip>
+            {post.time !== 0 ? (
+              <Tooltip title={moment(post.time, 'X').format('YYYY-MM-DD HH:mm:SS')}>
+                <Typography.Text ellipsis={true} style={{ width: '4em', textAlign: 'right' }}>
+                  <span style={{ fontSize: '0.75em' }}>{moment(post.time, 'X').fromNow()}</span>
+                </Typography.Text>
+              </Tooltip>
+            ) : null}
           </a>,
         );
       } else {
