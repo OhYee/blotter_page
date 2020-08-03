@@ -107,6 +107,7 @@ declare namespace Blotter {
   interface FriendPost {
     title: string;
     link: string;
+    time: number;
   }
   interface Variable {
     key: string;
