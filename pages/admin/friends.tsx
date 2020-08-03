@@ -123,18 +123,23 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
       dataIndex: 'error',
       width: 50,
       ellipsis: true,
-        render: (_, __, idx) => <Checkbox checked={!!this.state.data[idx].error} onChange={v => {
+      render: (_, __, idx) => (
+        <Checkbox
+          checked={!!this.state.data[idx].error}
+          onChange={(v) => {
             const e = v.target.checked;
-           this.setState((state) => {
-             var { data } = state;
-             data[idx].error = e;
-             data.map((d) => {
-               d.posts = d.posts.map((dd) => dd);
-               return d;
-             });
-             return { data };
-           });
-        }} />,
+            this.setState((state) => {
+              var { data } = state;
+              data[idx].error = e;
+              data.map((d) => {
+                d.posts = d.posts.map((dd) => dd);
+                return d;
+              });
+              return { data };
+            });
+          }}
+        />
+      ),
     },
     {
       title: '图片',
@@ -192,7 +197,7 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
         onClick={() => {
           this.setState((state) => {
             var { data } = state;
-            data[index].posts.unshift({ title: randomString(), link: '' });
+            data[index].posts.unshift({ title: randomString(), link: '', time: 0 });
             data.map((d) => {
               d.posts = d.posts.map((dd) => dd);
               return d;
