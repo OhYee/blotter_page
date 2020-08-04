@@ -2,7 +2,7 @@ import React, { ComponentProps } from 'react';
 
 import Head from 'next/head';
 
-import { Card, Table, Button, Typography, Popconfirm, Checkbox } from 'antd';
+import { Card, Table, Button, Typography, Popconfirm, Checkbox, DatePicker } from 'antd';
 import { ColumnProps } from 'antd/lib/table';
 import { Icon } from '@ant-design/compatible';
 
@@ -13,6 +13,8 @@ import { Context } from '@/utils/global';
 import { friends, friendsSet } from '@/utils/api';
 import ShowNotification from '@/utils/notification';
 import randomString from '@/utils/random';
+
+import moment from 'moment';
 
 interface T extends Blotter.Friend {}
 interface T2 {
@@ -269,6 +271,28 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
         dataIndex: 'link',
         width: 400,
         render: (_, __, idx) => renderSubEditableCell(index, idx, 'link'),
+      },
+      {
+        key: 'time',
+        title: '日期',
+        dataIndex: 'time',
+        width: 400,
+        render: (_, __, idx) => (
+          <DatePicker
+            value={moment(this.state.data[index].posts[idx].time, 'X')}
+            onChange={(e) => {
+              this.setState((state) => {
+                var { data } = state;
+                data[index].posts[idx].time = e.unix();
+                data.map((d) => {
+                  d.posts = d.posts.map((dd) => dd);
+                  return d;
+                });
+                return { data };
+              });
+            }}
+          />
+        ),
       },
       {
         title: '操作',
