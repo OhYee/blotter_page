@@ -392,7 +392,7 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
         <Context.Consumer>
           {(context) => (
             <Head>
-              <title>{`友链列表|后台|${context.blog_name}`}</title>
+              <title>{`优秀博客订阅|后台|${context.blog_name}`}</title>
             </Head>
           )}
         </Context.Consumer>

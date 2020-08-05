@@ -128,7 +128,7 @@ class Friends extends React.Component<FriendsProps, FriendsState> {
           {(context) => (
             <Fragment>
               <Head>
-                <title>{`友情链接|${context.blog_name}`}</title>
+                <title>{`优秀博客订阅|${context.blog_name}`}</title>
               </Head>
 
               <Card style={{ marginBottom: '10px' }}>
@@ -138,7 +138,7 @@ class Friends extends React.Component<FriendsProps, FriendsState> {
                     <a>评论区</a>
                   </Link>
                   或者使用
-                  <a href={`mailto:${context.email}`}>邮件</a>申请友链
+                  <a href={`mailto:${context.email}`}>邮件</a>添加订阅(申请友链)
                 </Typography.Paragraph>
 
                 <Typography.Paragraph>

@@ -375,7 +375,9 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
                 <Icon type="eye" style={{ fontSize: '0.75em' }} /> 全站访问量 {context.view}
               </Typography.Paragraph>
               <Typography.Paragraph>
-                <span className="right5">{this.context.from} – {new Date().getFullYear()}</span>
+                <span className="right5">
+                  {this.context.from} – {new Date().getFullYear()}
+                </span>
                 <a href="http://beian.miit.gov.cn/">{context.beian}</a>
               </Typography.Paragraph>
               <Typography.Paragraph>
@@ -392,7 +394,7 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
               </Typography.Paragraph>
               <If condition={context.friends.length > 0}>
                 <Typography.Paragraph className={styles.friends}>
-                  <strong>友情链接：</strong>
+                  <strong>优秀博客订阅：</strong>
                   {context.friends.map((friend) => (
                     <span key={friend.name}>
                       <a href={friend.link}>{friend.name}</a>
