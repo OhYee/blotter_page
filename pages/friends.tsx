@@ -4,7 +4,18 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { NextPageContext } from 'next';
 
-import { Row, Col, Card, Avatar, List, Divider, Tooltip, Typography, Popover } from 'antd';
+import {
+  Row,
+  Col,
+  Card,
+  Avatar,
+  List,
+  Divider,
+  Tooltip,
+  Typography,
+  Popover,
+  PageHeader,
+} from 'antd';
 
 import Container from '@/components/container';
 
@@ -132,36 +143,38 @@ class Friends extends React.Component<FriendsProps, FriendsState> {
               </Head>
 
               <Card style={{ marginBottom: '10px' }}>
-                <Typography.Paragraph>
-                  可以在
-                  <Link href="/comment">
-                    <a>评论区</a>
-                  </Link>
-                  或者使用
-                  <a href={`mailto:${context.email}`}>邮件</a>添加订阅(申请友链)
-                </Typography.Paragraph>
+                <PageHeader title="优秀博客订阅" subTitle="友情链接">
+                  <Typography.Paragraph>
+                    可以在
+                    <Link href="/comment">
+                      <a>评论区</a>
+                    </Link>
+                    或者使用
+                    <a href={`mailto:${context.email}`}>邮件</a>添加订阅(申请友链)
+                  </Typography.Paragraph>
 
-                <Typography.Paragraph>
-                  唯一的要求就是起码一年能更新几篇文章吧，别的只要内容合法合规，来者不拒
-                </Typography.Paragraph>
+                  <Typography.Paragraph>
+                    唯一的要求就是起码一年能更新几篇文章吧，别的只要内容合法合规，来者不拒
+                  </Typography.Paragraph>
 
-                <Typography.Paragraph>
-                  如果可以，最好提供logo以及站点RSS，RSS将用于更新最新文章（没有也没事，就当我练习爬虫技术了）
-                  <br />
-                  友链顺序会按照博客最新文章手动随缘排序（更新勤快的高质量大佬优先）
-                  <br />
-                  每次会将最新 {maxPostNumber}{' '}
-                  篇文章更新到这里，这样我就可以在一个页面看到诸位大佬的最新成果了
-                </Typography.Paragraph>
+                  <Typography.Paragraph>
+                    如果可以，最好提供logo以及站点RSS，RSS将用于更新最新文章（没有也没事，就当我练习爬虫技术了）
+                    <br />
+                    友链顺序会按照博客最新文章手动随缘排序（更新勤快的高质量大佬优先）
+                    <br />
+                    每次会将最新 {maxPostNumber}{' '}
+                    篇文章更新到这里，这样我就可以在一个页面看到诸位大佬的最新成果了
+                  </Typography.Paragraph>
 
-                <Typography.Paragraph>
-                  友链文章爬虫见
-                  <a href="https://github.com/OhYee/blotter/tree/master/spider" target="_blank">
-                    相关代码
-                  </a>
-                  ，User-Agent 为<Typography.Text code>OhYee Spider</Typography.Text>
-                  ，如有必要，请加白名单。文章爬取任务会在每天凌晨 3 点执行
-                </Typography.Paragraph>
+                  <Typography.Paragraph>
+                    友链文章爬虫见
+                    <a href="https://github.com/OhYee/blotter/tree/master/spider" target="_blank">
+                      相关代码
+                    </a>
+                    ，User-Agent 为<Typography.Text code>OhYee Spider</Typography.Text>
+                    ，如有必要，请加白名单。文章爬取任务会在每天凌晨 3 点执行
+                  </Typography.Paragraph>
+                </PageHeader>
               </Card>
 
               <List
