@@ -1943,29 +1943,6 @@ textarea.ant-picker-input > input {
   margin: 0 2px 0 8px;
 }
 
-.list___3Aai2 .ant-list-item {
-  width: 100%;
-  display: block;
-}
-.avatar___2gg1R img {
-  background: white;
-}
-.corner___30jqg {
-  position: absolute;
-  right: -40px;
-  top: 20px;
-  height: 2em;
-  width: 150px;
-  transform: rotateZ(45deg);
-  color: white;
-  background: orangered;
-  font-weight: bolder;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 /* stylelint-disable at-rule-empty-line-before,at-rule-name-space-after,at-rule-no-unknown */
 /* stylelint-disable no-duplicate-selectors */
 /* stylelint-disable */
@@ -5598,5 +5575,28 @@ textarea.ant-input-number {
 .ant-steps-rtl.ant-steps-vertical.ant-steps-dot .ant-steps-item-process .ant-steps-icon-dot {
   right: -2px;
   left: auto;
+}
+
+.list___3Aai2 .ant-list-item {
+  width: 100%;
+  display: block;
+}
+.avatar___2gg1R img {
+  background: white;
+}
+.corner___30jqg {
+  position: absolute;
+  right: -40px;
+  top: 20px;
+  height: 2em;
+  width: 150px;
+  transform: rotateZ(45deg);
+  color: white;
+  background: orangered;
+  font-weight: bolder;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
