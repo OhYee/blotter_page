@@ -38,7 +38,7 @@ class AdminIndex extends React.Component<AdminIndexProps, AdminIndexState> {
             dataSource={[
               { title: '标签管理', url: '/admin/tags' },
               { title: '文章管理', url: '/admin/posts' },
-              { title: '友链管理', url: '/admin/friends' },
+              { title: '订阅管理', url: '/admin/friends' },
               { title: '菜单管理', url: '/admin/menus' },
               { title: '变量管理', url: '/admin/variables' },
               { title: '评论管理', url: '/admin/comments' },

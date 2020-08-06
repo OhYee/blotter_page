@@ -238,7 +238,7 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
         }}
       >
         <Icon type="plus" />
-        新建友链
+        新建订阅
       </Button>{' '}
       <Button
         type="primary"
