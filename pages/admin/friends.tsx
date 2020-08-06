@@ -279,6 +279,7 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
         width: 400,
         render: (_, __, idx) => (
           <DatePicker
+            showTime
             value={moment(this.state.data[index].posts[idx].time, 'X')}
             onChange={(e) => {
               this.setState((state) => {
