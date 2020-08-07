@@ -8,7 +8,7 @@ import Container from '@/components/container';
 
 import { Context } from '@/utils/global';
 import { commentsAdmin, commentSet } from '@/utils/api';
-import moment from 'moment';
+import moment from '@/utils/moment';
 import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 import ShowNotification from '@/utils/notification';
 

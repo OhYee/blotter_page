@@ -33,7 +33,7 @@ import { FormInstance } from 'antd/lib/form';
 import { ButtonProps } from 'antd/lib/button';
 import { RadioChangeEvent } from 'antd/lib/radio';
 
-import moment from 'moment';
+import moment from '@/utils/moment';
 import MediaQuery from 'react-responsive';
 import { ControlledEditor } from '@monaco-editor/react/lib/';
 

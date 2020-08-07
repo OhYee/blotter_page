@@ -11,7 +11,7 @@ import {
   LeftOutlined,
 } from '@ant-design/icons';
 
-import moment from 'moment';
+import moment from '@/utils/moment';
 
 import Image, { setImageLightbox, setSVGLightbox } from '@/components/image';
 import If from '@/components/if';

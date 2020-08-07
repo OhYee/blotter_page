@@ -10,7 +10,7 @@ import {
 } from '@ant-design/icons';
 
 import { Map, Marker } from 'react-amap';
-import moment from 'moment';
+import moment from '@/utils/moment';
 
 import { Context } from '@/utils/global';
 import If from '@/components/if';

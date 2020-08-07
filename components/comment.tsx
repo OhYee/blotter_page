@@ -13,7 +13,7 @@ import {
 } from 'antd';
 import { Icon } from '@ant-design/compatible';
 
-import moment from 'moment';
+import moment from '@/utils/moment';
 
 import { comments, avatar, addComment } from '@/utils/api';
 import { Context } from '@/utils/global';

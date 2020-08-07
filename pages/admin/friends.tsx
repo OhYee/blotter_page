@@ -14,7 +14,7 @@ import { friends, friendsSet } from '@/utils/api';
 import ShowNotification from '@/utils/notification';
 import randomString from '@/utils/random';
 
-import moment from 'moment';
+import moment from '@/utils/moment';
 
 interface T extends Blotter.Friend {}
 interface T2 {

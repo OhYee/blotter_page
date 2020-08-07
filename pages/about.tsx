@@ -38,7 +38,7 @@ import { JsxElement } from 'typescript';
 import { githubUser, githubRepos, githubRepo, about } from '@/utils/api';
 import { GithubRepo } from '@/types/github';
 import Visiable from '@/components/visiable';
-import moment from 'moment';
+import moment from '@/utils/moment';
 
 interface Education {
   name: string;

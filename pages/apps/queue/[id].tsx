@@ -41,7 +41,7 @@ import { LoginModal } from '@/components/login';
 import { Queue, Member } from '@/extensions/queue/types';
 import { get, finish, update, insert, land, out } from '@/extensions/queue/api';
 
-import moment from 'moment';
+import moment from '@/utils/moment';
 import { FormInstance } from 'antd/lib/form';
 import TextArea from 'antd/lib/input/TextArea';
 import ShowNotification, { H5Notification } from '@/utils/notification';

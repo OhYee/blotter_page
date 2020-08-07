@@ -1,7 +1,7 @@
 import React, { ComponentProps } from 'react';
 import Head from 'next/head';
 
-import moment from 'moment';
+import moment from '@/utils/moment';
 
 import { Card, List, Form, Input, Button, DatePicker, Row, Col, Popconfirm, Select } from 'antd';
 import { FormInstance } from 'antd/lib/form';

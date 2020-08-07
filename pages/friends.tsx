@@ -24,7 +24,7 @@ import { friends } from '@/utils/api';
 
 import styles from './friends.less';
 
-import moment from 'moment';
+import moment from '@/utils/moment';
 moment.locale('zh-cn');
 
 const maxPostNumber = 5;

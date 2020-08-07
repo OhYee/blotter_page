@@ -29,7 +29,7 @@ import { LoginModal } from '@/components/login';
 import { Queue } from '@/extensions/queue/types';
 import { getAll, create } from '@/extensions/queue/api';
 
-import moment from 'moment';
+import moment from '@/utils/moment';
 import { FormInstance } from 'antd/lib/form';
 import TextArea from 'antd/lib/input/TextArea';
 import ShowNotification from '@/utils/notification';
