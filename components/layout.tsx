@@ -165,16 +165,22 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
               content: (
                 <div>
                   <p>
-                    有一个 <a href="https://github.com/OhYee/blotter_page/issues">前端的Bug</a>
+                    有一个{' '}
+                    <a href="https://github.com/OhYee/blotter_page/issues" target="__blank">
+                      前端的Bug
+                    </a>
                     ，包括但不限于页面渲染不正常
                   </p>
                   <p>
-                    有一个 <a href="https://github.com/OhYee/blotter/issues">后端的Bug</a>
+                    有一个{' '}
+                    <a href="https://github.com/OhYee/blotter/issues" target="__blank">
+                      后端的Bug
+                    </a>
                     ，包括但不限于各种功能性故障
                   </p>
                   <p>
                     直接使用
-                    <a href={`mailto:${context.email}`}>
+                    <a href={`mailto:${context.email}`} target="__blank">
                       {' '}
                       <Icon type="mail" /> 邮件
                     </a>{' '}
@@ -182,9 +188,20 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
                   </p>
                   <p>
                     直接使用
-                    <a href={`//wpa.qq.com/msgrd?v=3&uin=${context.qq}&site=qq&menu=yes`}>
+                    <a
+                      href={`//wpa.qq.com/msgrd?v=3&uin=${context.qq}&site=qq&menu=yes`}
+                      target="__blank"
+                    >
                       {' '}
                       <Icon type="qq" /> QQ
+                    </a>{' '}
+                    反馈bug
+                  </p>
+                  <p>
+                    直接在评论区
+                    <a href="/comment" target="__blank">
+                      {' '}
+                      <Icon type="comment" /> 评论区
                     </a>{' '}
                     反馈bug
                   </p>
