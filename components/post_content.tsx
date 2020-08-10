@@ -282,8 +282,8 @@ class PostContent extends Component<PostContentProps, PostContentState> {
             className="post-content"
             dangerouslySetInnerHTML={{ __html: this.props.post.content }}
           />
-          <AnchorsPart container={this.props.container} content={this.props.post.content} />
         </Space>
+        <AnchorsPart container={this.props.container} content={this.props.post.content} />
       </article>
     );
   }
