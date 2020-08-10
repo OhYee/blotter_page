@@ -4,14 +4,12 @@
   margin: 20px;
 }
 
-.dimmed::before {
-  content: ' ';
+.dimmed {
   position: fixed;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
-  z-index: 20;
   background: rgba(0, 0, 0, 0);
   animation: dimmed-change 0.5s 1 alternate;
   animation-iteration-count: 1;
@@ -25,6 +23,11 @@
 }
 
 .sider {
+  overflow: auto;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+
   .avatar {
     margin: 20px 0;
     -webkit-transition: 0.4s;
