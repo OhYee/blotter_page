@@ -122,22 +122,15 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
   );
 
   renderCollapseButton = () => (
-    <Affix
-      //   offsetTop={
-      //     // !this.context.big_screen && typeof window !== 'undefined' ? window.innerHeight - 60 : 20
-      //     20
-      //   }
+    <Button
+      type="primary"
+      shape="circle"
+      size="large"
+      icon={this.state.collapsed ? <Icon type="bars" /> : <Icon type="left" />}
+      className="shadow"
+      onClick={this.onCollapseButtonClick}
       style={{ position: 'fixed', marginLeft: 20, zIndex: 100, top: 20 }}
-    >
-      <Button
-        type="primary"
-        shape="circle"
-        size="large"
-        icon={this.state.collapsed ? <Icon type="bars" /> : <Icon type="left" />}
-        className="shadow"
-        onClick={this.onCollapseButtonClick}
-      />
-    </Affix>
+    />
   );
 
   renderBackToTop = () => (
