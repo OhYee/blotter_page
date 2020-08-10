@@ -129,7 +129,13 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
       icon={this.state.collapsed ? <Icon type="bars" /> : <Icon type="left" />}
       className="shadow"
       onClick={this.onCollapseButtonClick}
-      style={{ position: 'fixed', marginLeft: 20, zIndex: 100, top: 20 }}
+      style={{
+        position: 'fixed',
+        left: this.state.collapsed ? 100 : 220,
+        zIndex: 100,
+        top: 20,
+        transition: 'all 0.2s',
+      }}
     />
   );
 
