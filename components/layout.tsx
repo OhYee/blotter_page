@@ -33,6 +33,8 @@ import { GlobalProps, Context, defaultContext } from '@/utils/global';
 import { setCookie } from '@/utils/storage';
 
 import styles from './layout.less';
+import layer from '@/style/layer.less';
+
 import { AvatarProps } from 'antd/lib/avatar';
 import If from './if';
 import { LoginModal } from '@/components/login';
@@ -131,7 +133,7 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
       onClick={this.onCollapseButtonClick}
       style={{
         position: 'fixed',
-        left: this.state.collapsed ? 100 : 220,
+        left: this.state.collapsed ? (this.context.big_screen ? 100 : 20) : 220,
         zIndex: 100,
         top: 20,
         transition: 'all 0.2s',
@@ -278,6 +280,7 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
     const theme = this.context.theme === 'default' ? 'light' : 'dark';
     return (
       <Sider
+        className={['shadow', layer.float_layer, styles.sider].join(' ')}
         theme={theme}
         trigger={null}
         breakpoint="xl"
@@ -287,73 +290,68 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
         collapsedWidth={!this.context.big_screen ? 0 : 80}
         onBreakpoint={this.onBreakpoint}
       >
-        <div className={styles.sider}>
-          <div className={[styles.avatar, 'textCenter'].join(' ')}>
-            <img
-              src={this.context.avatar}
-              width={'100%'}
-              height={'100%'}
-              style={{ background: 'white', borderRadius: '100px', maxWidth: '120px' }}
-            />
-          </div>
-          {/* <Divider className={this.state.collapsed ? styles.divider : undefined}>
-            <b className={styles.divider}>OhYee</b>
-          </Divider> */}
+        <div className={[styles.avatar, 'textCenter'].join(' ')}>
+          <img
+            src={this.context.avatar}
+            width={'100%'}
+            height={'100%'}
+            style={{ background: 'white', borderRadius: '100px', maxWidth: '120px' }}
+          />
+        </div>
 
-          <Context.Consumer>
-            {(context) => (
-              <Fragment>
-                <div className={[styles.avatar, 'textCenter'].join(' ')}>
-                  {!context.user.existed ? (
-                    <a onClick={this.onLoginClick}>
-                      <Avatar icon={<UserOutlined />} />
-                    </a>
-                  ) : (
-                    <Popover
-                      placement="right"
-                      trigger={['click', 'hover']}
-                      title={context.user.username}
-                      content={
-                        <div>
-                          <Row gutter={[10, 10]}>
+        <Context.Consumer>
+          {(context) => (
+            <Fragment>
+              <div className={[styles.avatar, 'textCenter'].join(' ')}>
+                {!context.user.existed ? (
+                  <a onClick={this.onLoginClick}>
+                    <Avatar icon={<UserOutlined />} />
+                  </a>
+                ) : (
+                  <Popover
+                    placement="right"
+                    trigger={['click', 'hover']}
+                    title={context.user.username}
+                    content={
+                      <div>
+                        <Row gutter={[10, 10]}>
+                          <Col span={12}>
+                            <Link href="/user/[username]" as={`/user/${context.user.username}`}>
+                              <a>设置</a>
+                            </Link>
+                          </Col>
+
+                          <Col span={12}>
+                            <a onClick={this.onLogoutClick}>登出</a>
+                          </Col>
+                        </Row>
+
+                        <If condition={(context.user.permission & 1) != 0}>
+                          <Row gutter={10}>
                             <Col span={12}>
-                              <Link href="/user/[username]" as={`/user/${context.user.username}`}>
-                                <a>设置</a>
+                              <Link href="/admin">
+                                <a>管理</a>
                               </Link>
                             </Col>
-
-                            <Col span={12}>
-                              <a onClick={this.onLogoutClick}>登出</a>
-                            </Col>
                           </Row>
-
-                          <If condition={(context.user.permission & 1) != 0}>
-                            <Row gutter={10}>
-                              <Col span={12}>
-                                <Link href="/admin">
-                                  <a>管理</a>
-                                </Link>
-                              </Col>
-                            </Row>
-                          </If>
-                        </div>
-                      }
-                    >
-                      <span style={{ cursor: 'pointer' }}>
-                        {context.user.avatar ? (
-                          <Avatar src={context.user.avatar} style={{ background: 'unset' }} />
-                        ) : (
-                          <Avatar icon={<UserOutlined />} />
-                        )}
-                      </span>
-                    </Popover>
-                  )}
-                </div>
-                {this.renderMenus(context.menus, theme)}
-              </Fragment>
-            )}
-          </Context.Consumer>
-        </div>
+                        </If>
+                      </div>
+                    }
+                  >
+                    <span style={{ cursor: 'pointer' }}>
+                      {context.user.avatar ? (
+                        <Avatar src={context.user.avatar} style={{ background: 'unset' }} />
+                      ) : (
+                        <Avatar icon={<UserOutlined />} />
+                      )}
+                    </span>
+                  </Popover>
+                )}
+              </div>
+              {this.renderMenus(context.menus, theme)}
+            </Fragment>
+          )}
+        </Context.Consumer>
       </Sider>
     );
   };
@@ -435,18 +433,21 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
             </Head>
           )}
         </Context.Consumer>
-        {this.state.collapsed ? null : (
-          <div className={styles.dimmed} onClick={(e) => this.setState({ collapsed: true })} />
-        )}
-        <Layout
+        {/* <Layout
           className={'shadow'}
           style={{ position: 'fixed', zIndex: 100, top: 0, bottom: 0, overflow: 'auto' }}
-        >
-          {this.renderSider()}
-          <Content>{this.renderCollapseButton()}</Content>
-        </Layout>
+        > */}
+        {this.renderSider()}
+        {/* </Layout> */}
         <Layout>
           <Content>
+            {this.state.collapsed ? null : (
+              <div
+                className={[styles.dimmed, layer.mask_layer].join(' ')}
+                onClick={(e) => this.setState({ collapsed: true })}
+              />
+            )}
+            {this.renderCollapseButton()}
             <div className={styles.main_content}>{this.props.children}</div>
             {/* <BackTop /> */}
             {this.renderBackToTop()}
