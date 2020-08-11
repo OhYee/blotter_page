@@ -1,8 +1,19 @@
 import React from 'react';
+
+import styles from './svg.less';
+
+function SVG(props: React.PropsWithChildren<{ style?: React.CSSProperties; className?: string }>) {
+  const { style, className, children } = props;
+  return (
+    <div className={[styles.svg, className].join(' ')} style={{ ...style }}>
+      {children}
+    </div>
+  );
+}
 export function RSS(props: { style: React.CSSProperties }) {
   const { style } = props;
   return (
-    <div style={style}>
+    <SVG>
       <svg
         className="icon"
         viewBox="0 0 1024 1024"
@@ -17,6 +28,8 @@ export function RSS(props: { style: React.CSSProperties }) {
           p-id="1116"
         ></path>
       </svg>
-    </div>
+    </SVG>
   );
 }
+
+export default SVG;
