@@ -1,4 +1,4 @@
-@import '../node_modules/antd/lib/style/themes/default.less';
+@import '../../node_modules/antd/lib/style/themes/default.less';
 
 .main_content {
   margin: 20px;
@@ -97,25 +97,6 @@ blockquote {
 :global(.ant-comment-content) {
   :global(.ant-form-item-label) > label {
     color: rgba(0, 0, 0, 0.65);
-  }
-}
-
-.footer {
-  text-align: center;
-  line-height: 1em;
-  padding-top: 15px;
-
-  .friends {
-    // word-wrap does not work on mobile
-    word-break: break-all;
-    // word-break: keep-all;
-    // word-wrap: break-word;
-    // white-space: normal;
-
-    span:not(:last-child)::after {
-      content: '|';
-      padding: 0px 0.5em;
-    }
   }
 }
 

@@ -32,11 +32,12 @@ import ShowNotification from '@/utils/notification';
 import { GlobalProps, Context, defaultContext } from '@/utils/global';
 import { setCookie } from '@/utils/storage';
 
-import styles from './layout.less';
+import styles from '@/components/layout/layout.less';
+import FooterRenderer from '@/components/layout/footer';
 import layer from '@/style/layer.less';
 
 import { AvatarProps } from 'antd/lib/avatar';
-import If from './if';
+import If from '@/components/if';
 import { LoginModal } from '@/components/login';
 import Paragraph from 'antd/lib/skeleton/Paragraph';
 
@@ -356,73 +357,6 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
     );
   };
 
-  renderRSSIcon = () => (
-    <svg
-      className="icon"
-      viewBox="0 0 1024 1024"
-      version="1.1"
-      xmlns="http://www.w3.org/2000/svg"
-      p-id="1115"
-      data-spm-anchor-id="a313x.7781069.0.i1"
-    >
-      <path
-        d="M42.666667 853.333333a128 128 0 1 1 256 0 128 128 0 0 1-256 0z m938.666666 128h-178.773333c0-418.986667-340.906667-759.893333-759.893333-759.893333V42.666667c517.546667 0 938.666667 421.12 938.666666 938.666666z m-298.666666 0h-182.826667c0-252.074667-205.098667-457.130667-457.173333-457.130666V341.333333c352.896 0 640 287.104 640 640z"
-        fill="#EE802F"
-        p-id="1116"
-      ></path>
-    </svg>
-  );
-
-  renderFooter = () => {
-    return (
-      <Container>
-        <Context.Consumer>
-          {(context) => (
-            <Typography.Paragraph className={styles.footer}>
-              <Typography.Paragraph>
-                <a href="/rss.xml">
-                  <Icon style={{ width: '1em' }} component={this.renderRSSIcon} />
-                  RSS订阅
-                </a>
-              </Typography.Paragraph>
-              <Typography.Paragraph>
-                <Icon type="eye" style={{ fontSize: '0.75em' }} /> 全站访问量 {context.view}
-              </Typography.Paragraph>
-              <Typography.Paragraph>
-                <span className="right5">
-                  {this.context.from} – {new Date().getFullYear()}
-                </span>
-                <a href="http://beian.miit.gov.cn/">{context.beian}</a>
-              </Typography.Paragraph>
-              <Typography.Paragraph>
-                Powered by <a href="https://github.com/OhYee/blotter">Blotter</a>
-                (Go + React)
-              </Typography.Paragraph>
-              <Typography.Paragraph>
-                <span className="right5">
-                  <a href="/sitemap.txt">站点地图(TXT)</a>
-                </span>
-                <span>
-                  <a href="/sitemap.xml">站点地图(XML)</a>
-                </span>
-              </Typography.Paragraph>
-              <If condition={context.friends.length > 0}>
-                <Typography.Paragraph className={styles.friends}>
-                  <strong>优秀博客订阅：</strong>
-                  {context.friends.map((friend) => (
-                    <span key={friend.name}>
-                      <a href={friend.link}>{friend.name}</a>
-                    </span>
-                  ))}
-                </Typography.Paragraph>
-              </If>
-            </Typography.Paragraph>
-          )}
-        </Context.Consumer>
-      </Container>
-    );
-  };
-
   render() {
     return (
       <Layout style={{ minHeight: '100%' }} className={`${this.context.theme}`}>
@@ -461,7 +395,14 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
               }}
             />
           </Content>
-          <Footer>{this.renderFooter()}</Footer>
+          <Footer>
+            <FooterRenderer
+              beian={this.context.beian}
+              friends={this.context.friends}
+              view={this.context.view}
+              from={this.context.from}
+            />
+          </Footer>
         </Layout>
       </Layout>
     );
