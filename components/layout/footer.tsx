@@ -4,8 +4,6 @@ import { Flex } from '@/components/container';
 import If from '@/components/if';
 import { RSS } from '@/components/svg';
 
-import styles from '@/components/layout/footer.less';
-
 export default function (props: {
   beian?: string;
   from?: string;
@@ -35,7 +33,7 @@ export default function (props: {
         <a href="/sitemap.xml">站点地图(XML)</a>
       </Flex>
       <If condition={!!friends && friends.length > 0}>
-        <Flex className={styles.friends} subSize="small">
+        <Flex subSize="small">
           {[
             <strong>优秀博客订阅：</strong>,
             ...friends.map((friend) => (
