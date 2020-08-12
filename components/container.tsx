@@ -123,18 +123,18 @@ function getSize(size: SizeProp): number {
     : size;
 }
 
-export const Flex: React.FC<{
+export declare type FlexProps = {
   direction?: 'LR' | 'TB' | 'row' | 'row-reverse' | 'column' | 'column-reverse';
   wrap?: true | false | 'nowrap' | 'wrap' | 'wrap-reverse';
   mainAxis?: 'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around';
   subAxis?: 'flex-start' | 'flex-end' | 'center' | 'baseline' | 'stretch';
   mainSize?: SizeProp;
   subSize?: SizeProp;
-  subAxisSizeEnable?: boolean;
   style?: React.CSSProperties;
   itemStyle?: React.CSSProperties;
   className?: string;
-}> = (props) => {
+};
+const FlexComponent: React.FC<FlexProps> = (props) => {
   const {
     direction = 'LR',
     wrap = true,
@@ -222,7 +222,7 @@ export const Flex: React.FC<{
   return (
     <div className={className} style={{ ...containerStyles, ...style }}>
       {list.map((child, idx) => (
-        <div
+        <FlexItem
           key={idx}
           style={{
             ...(idx === specialPos ? specialStyle : defaultStyle),
@@ -230,8 +230,39 @@ export const Flex: React.FC<{
           }}
         >
           {child}
-        </div>
+        </FlexItem>
       ))}
     </div>
   );
 };
+
+export declare type FlexItemProps = {
+  style?: React.CSSProperties;
+  className?: string;
+};
+const FlexItem: React.FC<FlexItemProps> = (props) => {
+  var { style = {}, className = '', children } = props;
+  var child: any = children;
+
+  if (
+    !Array.isArray(child) &&
+    !!child.type &&
+    !!child.type.name &&
+    child.type.displayName === FlexItem.displayName
+  ) {
+    const { style: style2, className: className2, children: child2 } = child.props;
+    style = { ...style, ...style2 };
+    className = [className, className2].filter((s) => s != '').join(' ');
+    child = child2;
+    console.log('rewrite', children, child2);
+  }
+
+  return (
+    <div style={style} className={className}>
+      {child}
+    </div>
+  );
+};
+FlexItem.displayName = 'FlexItem';
+
+export const Flex = Object.assign(FlexComponent, { Item: FlexItem });
