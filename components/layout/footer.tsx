@@ -5,10 +5,10 @@ import If from '@/components/if';
 import { RSS } from '@/components/svg';
 
 export default function (props: {
-  beian?: string;
-  from?: string;
-  view?: number;
-  friends?: Blotter.FriendSimple[];
+  beian: string;
+  from: string;
+  view: number;
+  friends: Blotter.FriendSimple[];
 }) {
   const { beian, from, view, friends } = props;
   return (
