@@ -1,0 +1,118 @@
+.sider {
+  --transition-variable: all 0.25s ease-in-out 0.1s;
+
+  overflow-x: auto hidden;
+  height: 100vh;
+  position: fixed !important;
+  left: 0;
+
+  .siderbar {
+    transition: var(--transition-variable);
+    width: 0px;
+    height: 100vh;
+    background: var(--background);
+    overflow-x: hidden;
+    img {
+      transition: var(--transition-variable);
+      -webkit-transition: 0.25s;
+      -webkit-transition: -webkit-transform 0.25s ease-out;
+      -moz-transition: -moz-transform 0.25s ease-out;
+    }
+    img:hover {
+      transform: rotateZ(360deg);
+      -webkit-transform: rotateZ(360deg);
+      -moz-transform: rotateZ(360deg);
+    }
+  }
+
+  .button_wrapper {
+    margin: 20px 5px 5px;
+  }
+
+  .menu {
+    width: 100%;
+    & > div {
+      transition: var(--transition-variable);
+      width: 100%;
+    }
+    li {
+      transition: var(--transition-variable);
+      list-style: none;
+      width: 100%;
+
+      // 垂直居中
+      height: 3em;
+      padding-top: 0.5em;
+
+      // 展开时，左对齐
+      padding-left: 25px;
+      text-align: left;
+
+      a {
+        color: var(--secondary);
+        &:active {
+          color: var(--secondary);
+        }
+        .prefix {
+          font-size: 1.25em;
+          margin-right: 5px;
+          transition: var(--transition-variable);
+        }
+        .text {
+          font-size: 1em;
+          transition: var(--transition-variable);
+        }
+      }
+
+      &.active {
+        border-right: 2px solid var(--primary);
+        background: var(--primary-light1);
+        a {
+          color: var(--primary);
+          &:active {
+            color: var(--primary);
+          }
+        }
+      }
+    }
+  }
+}
+
+// 折叠状态（动画用）
+.sider_collapsed {
+  .siderbar {
+    .menu {
+      li {
+        padding-left: 0 !important;
+        text-align: center !important;
+        .prefix {
+          margin-right: 0 !important;
+        }
+        .text {
+          font-size: 0 !important;
+        }
+        &.active {
+          padding-left: 2px !important;
+        }
+      }
+    }
+  }
+}
+
+.divider {
+  :global(.ant-divider-inner-text) {
+    padding: 5px 0;
+  }
+}
+
+.dimmed {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.5);
+  animation: dimmed-change 0.5s 1 alternate;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
