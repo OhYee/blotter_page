@@ -243,6 +243,7 @@ export declare type FlexItemProps = {
 const FlexItem: React.FC<FlexItemProps> = (props) => {
   var { style = {}, className = '', children } = props;
   var child: any = children;
+  const key = child.key;
 
   if (
     !Array.isArray(child) &&
@@ -254,11 +255,10 @@ const FlexItem: React.FC<FlexItemProps> = (props) => {
     style = { ...style, ...style2 };
     className = [className, className2].filter((s) => s != '').join(' ');
     child = child2;
-    console.log('rewrite', children, child2);
   }
 
   return (
-    <div style={style} className={className}>
+    <div key={key} style={style} className={className}>
       {child}
     </div>
   );
