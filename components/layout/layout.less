@@ -4,47 +4,9 @@
   margin: 20px;
 }
 
-.dimmed {
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background: rgba(0, 0, 0, 0);
-  animation: dimmed-change 0.5s 1 alternate;
-  animation-iteration-count: 1;
-  animation-fill-mode: forwards;
-}
-
 @keyframes dimmed-change {
   100% {
     background: rgba(0, 0, 0, 0.5);
-  }
-}
-
-.sider {
-  overflow: auto;
-  height: 100vh;
-  position: fixed !important;
-  left: 0;
-
-  .avatar {
-    margin: 20px 0;
-    -webkit-transition: 0.4s;
-    -webkit-transition: -webkit-transform 0.4s ease-out;
-    transition: transform 0.4s ease-out;
-    -moz-transition: -moz-transform 0.4s ease-out;
-  }
-  .avatar:hover {
-    transform: rotateZ(360deg);
-    -webkit-transform: rotateZ(360deg);
-    -moz-transform: rotateZ(360deg);
-  }
-
-  .divider {
-    :global(.ant-divider-inner-text) {
-      padding: 5px 0;
-    }
   }
 }
 
