@@ -2,13 +2,14 @@ import React from 'react';
 
 import Link from 'next/link';
 
-import { Avatar, Layout, Popover, Row, Col, Menu, Button } from 'antd';
+import { Avatar, Layout, Popover, Row, Col, Menu } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { Icon } from '@ant-design/compatible';
 
 import If from '@/components/if';
 import { Flex } from '@/components/container';
 import { Left, Bar } from '@/components/svg';
+import Button from '@/components/button';
 
 import { layout, logout, info } from '@/utils/api';
 import ShowNotification from '@/utils/notification';
@@ -125,8 +126,8 @@ export default function (props: {
         </Flex>
         <div className={styles.button_wrapper}>
           <Button
-            type="primary"
-            shape="circle"
+            primary
+            circle
             size="middle"
             icon={collapsed ? <Bar /> : <Left />}
             className="shadow"
