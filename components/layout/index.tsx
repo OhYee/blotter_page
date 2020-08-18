@@ -12,6 +12,7 @@ import styles from '@/components/layout/layout.less';
 import SiderRenderer from '@/components/layout/sider';
 import FooterRenderer from '@/components/layout/footer';
 import FixedButton from '@/components/layout/fixed_button';
+import { Flex } from '@/components/container';
 
 import '@/style/theme.less';
 
@@ -63,7 +64,7 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
 
   render() {
     return (
-      <div style={{ minHeight: '100%' }} className={`${this.context.theme}`}>
+      <div className={[styles.root, this.context.theme].join(' ')}>
         <Context.Consumer>
           {(context) => (
             <Head>
@@ -80,18 +81,22 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
           menus={this.context.menus}
           callback={this.context.callback}
         />
+        <FixedButton />
 
-        <div className={styles.main_content}>
+        <Flex
+          direction="TB"
+          mainAxis="space-around"
+          style={{ width: this.context.big_screen ? 'calc(100vw - 320px)' : '90%', margin: 'auto' }}
+          itemStyle={{ width: '100%' }}
+        >
           {this.props.children}
-          <FixedButton />
-        </div>
-
-        <FooterRenderer
-          beian={this.context.beian}
-          friends={this.context.friends}
-          view={this.context.view}
-          from={this.context.from}
-        />
+          <FooterRenderer
+            beian={this.context.beian}
+            friends={this.context.friends}
+            view={this.context.view}
+            from={this.context.from}
+          />
+        </Flex>
       </div>
     );
   }
