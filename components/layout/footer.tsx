@@ -12,40 +12,38 @@ export default function (props: {
 }) {
   const { beian, from, view, friends } = props;
   return (
-    <Container>
-      <Flex direction="TB">
-        <a href="/rss.xml">
-          <RSS style={{ width: '1em' }} />
-          RSS订阅
-        </a>
-        <div>全站访问量 {view}</div>
-        <Flex direction="LR">
-          <div>
-            {from} – {new Date().getFullYear()}
-          </div>
-          <a href="http://beian.miit.gov.cn/">{beian}</a>
-        </Flex>
+    <Flex direction="TB">
+      <a href="/rss.xml">
+        <RSS style={{ width: '1em' }} />
+        RSS订阅
+      </a>
+      <div>全站访问量 {view}</div>
+      <Flex direction="LR">
         <div>
-          Powered by <a href="https://github.com/OhYee/blotter">Blotter</a>
-          (Go + React)
+          {from} – {new Date().getFullYear()}
         </div>
-        <Flex mainAxis="space-between">
-          <a href="/sitemap.txt">站点地图(TXT)</a>
-          <a href="/sitemap.xml">站点地图(XML)</a>
-        </Flex>
-        <If condition={!!friends && friends.length > 0}>
-          <Flex mainAxis="center" subSize="small">
-            {[
-              <strong key="title">优秀博客订阅：</strong>,
-              ...friends.map((friend) => (
-                <a key={friend.name} href={friend.link}>
-                  {friend.name}
-                </a>
-              )),
-            ]}
-          </Flex>
-        </If>
+        <a href="http://beian.miit.gov.cn/">{beian}</a>
       </Flex>
-    </Container>
+      <div>
+        Powered by <a href="https://github.com/OhYee/blotter">Blotter</a>
+        (Go + React)
+      </div>
+      <Flex mainAxis="space-between">
+        <a href="/sitemap.txt">站点地图(TXT)</a>
+        <a href="/sitemap.xml">站点地图(XML)</a>
+      </Flex>
+      <If condition={!!friends && friends.length > 0}>
+        <Flex mainAxis="center" subSize="small">
+          {[
+            <strong key="title">优秀博客订阅：</strong>,
+            ...friends.map((friend) => (
+              <a key={friend.name} href={friend.link}>
+                {friend.name}
+              </a>
+            )),
+          ]}
+        </Flex>
+      </If>
+    </Flex>
   );
 }
