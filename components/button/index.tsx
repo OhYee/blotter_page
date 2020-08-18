@@ -32,6 +32,7 @@ export default function Button(props: React.PropsWithChildren<ButtonProps>) {
     style.width = `${size + 1}em`;
     style.height = `${size + 1}em`;
   }
+  if (!!icon && !primary) classList.push(styles.icon);
   if (circle) classList.push(styles.circle);
   if (primary) classList.push(styles.primary);
 
