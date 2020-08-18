@@ -59,7 +59,6 @@ export default function (props: {
         ].join(' ')}
         mainAxis="flex-start"
         subAxis="flex-start"
-        mainSize="large"
       >
         <Flex
           mainAxis="flex-start"
@@ -128,7 +127,6 @@ export default function (props: {
           <Button
             primary
             circle
-            size="middle"
             icon={collapsed ? <Bar /> : <Left />}
             className="shadow"
             onClick={() => setCollapsed(!collapsed)}
