@@ -29,7 +29,7 @@ function scrollTopAnimation(_currentY?: number) {
 
 function BackToTop() {
   return (
-    <Button circle className="shadow" icon={<Rocket />} onClick={() => scrollTopAnimation()} />
+    <Button circle className="neumorphism" icon={<Rocket />} onClick={() => scrollTopAnimation()} />
   );
 }
 
@@ -39,7 +39,7 @@ function Feedback() {
     <Button
       circle
       icon={<Message />}
-      className="shadow"
+      className="neumorphism"
       onClick={() => {
         Modal.info({
           title: '反馈Bug！',
@@ -101,11 +101,11 @@ function ChangeTheme() {
     <Button
       circle
       icon={theme == 'default' ? <Dark /> : <Light />}
-      className="shadow"
+      className="neumorphism"
       onClick={() => {
         const newTheme = theme == 'default' ? 'dark' : 'default';
         callback({ theme: newTheme }, () => {
-          changeTheme(theme);
+          //   changeTheme(newTheme);
         });
       }}
     />
