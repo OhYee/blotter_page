@@ -2,14 +2,15 @@ import React from 'react';
 
 import Link from 'next/link';
 
-import { Avatar, Layout, Popover, Row, Col, Menu } from 'antd';
+import { Popover, Row, Col } from 'antd';
 import { UserOutlined } from '@ant-design/icons';
 import { Icon } from '@ant-design/compatible';
 
 import If from '@/components/if';
 import { Flex } from '@/components/container';
-import { Left, Bar } from '@/components/svg';
+import { Left, Bar ,User} from '@/components/svg';
 import Button from '@/components/button';
+import Avatar from '@/components/avatar';
 
 import { layout, logout, info } from '@/utils/api';
 import ShowNotification from '@/utils/notification';
@@ -76,7 +77,9 @@ export default function (props: {
           />
           {!user.existed ? (
             <a onClick={onLoginClick}>
-              <Avatar icon={<UserOutlined />} />
+              <Avatar>
+                <User />
+              </Avatar>
             </a>
           ) : (
             <Popover
@@ -111,9 +114,11 @@ export default function (props: {
             >
               <span style={{ cursor: 'pointer' }}>
                 {user.avatar ? (
-                  <Avatar src={user.avatar} style={{ background: 'unset' }} />
+                  <Avatar src={user.avatar} />
                 ) : (
-                  <Avatar icon={<UserOutlined />} />
+                  <Avatar>
+                    <User />
+                  </Avatar>
                 )}
               </span>
             </Popover>
