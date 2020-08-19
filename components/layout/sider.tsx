@@ -123,7 +123,6 @@ export default function (props: {
               </span>
             </Popover>
           )}
-          <div />
           <Flex.Item style={{ width: '100%' }}>
             <Menus menus={menus} theme={theme} pathname={pathname} />
           </Flex.Item>
