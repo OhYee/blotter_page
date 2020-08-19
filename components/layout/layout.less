@@ -3,6 +3,7 @@
 .root {
   min-height: 100%;
   background: var(--background);
+  transition: var(--transition);
 }
 
 @keyframes dimmed-change {
@@ -24,11 +25,27 @@ body {
   min-height: 100vh !important;
 }
 
-@shadow-color: rgba(100, 100, 100, 0.5);
-:global(.shadow) {
-  -moz-box-shadow: 2px 2px 2px @shadow-color;
-  -webkit-box-shadow: 2px 2px 2px @shadow-color;
-  box-shadow: 2px 2px 2px 2px @shadow-color;
+:global {
+  .shadow {
+    transition: var(--transition);
+    box-shadow: 5px 5px 5px var(--shadow);
+    &:hover {
+      box-shadow: 2.5px 2.5px 2.5px var(--shadow);
+    }
+    &:active {
+      box-shadow: 1px 1px 1px var(--shadow);
+    }
+  }
+  .neumorphism {
+    transition: var(--transition);
+    box-shadow: 5px 5px 5px var(--shadow), -5px -5px 5px var(--shadow-white);
+    &:hover {
+      box-shadow: 1px 1px 1px var(--shadow), -1px -1px 1px var(--shadow-white);
+    }
+    &:active {
+      box-shadow: inset 5px 5px 5px var(--shadow), inset -5px -5px 5px var(--shadow-white);
+    }
+  }
 }
 
 :global(.right5),
