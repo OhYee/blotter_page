@@ -18,7 +18,7 @@ import { setCookie } from '@/utils/storage';
 import { GlobalProps, defaultContext } from '@/utils/global';
 
 import styles from './sider.less';
-import layer from '@/style/layer.less';
+import layer from '@/styles/layer.less';
 import { LoginModal } from '../login';
 
 export default function (props: {

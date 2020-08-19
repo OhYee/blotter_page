@@ -14,7 +14,7 @@ import FooterRenderer from '@/components/layout/footer';
 import FixedButton from '@/components/layout/fixed_button';
 import { Flex } from '@/components/container';
 
-import '@/style/theme.less';
+import '@/styles/theme.less';
 
 interface BasicLayoutProps extends ComponentProps<'base'>, WithRouterProps {}
 interface BasicLayoutState {
