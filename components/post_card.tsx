@@ -1,103 +1,78 @@
 import React from 'react';
 
-import { Card, Typography, Divider, Row, Col, Skeleton } from 'antd';
-import { Icon } from '@ant-design/compatible';
-const { Meta } = Card;
+import { Skeleton } from 'antd';
 import Link from 'next/link';
 
 import Image from '@/components/image';
-
 import TagPart from '@/components/tag';
+import Card from '@/components/card';
+import { Flex } from '@/components/container';
+import { Eye, Calendar, Tag, Edit } from '@/components/svg';
 
-const { Title, Paragraph, Text } = Typography;
+import { concat } from '@/utils/component';
+
+import textStyles from '@/styles/text.less';
 
 type PostCardProps = {
   post: Blotter.PostCard | undefined;
-  hoverable?: boolean;
   loading: boolean;
 };
-class PostCard extends React.Component<PostCardProps, {}> {
-  static defaultProps = {
-    hoverable: true,
-    loading: false,
-  };
-  constructor(props: PostCardProps) {
-    super(props);
-  }
+export default function PostCard(props: PostCardProps) {
+  const post = props.post as Blotter.PostCard;
+  const loading = props.loading || typeof props.post === 'undefined';
 
-  render_post(post: Blotter.PostCard) {
-    return (
-      <div>
-        <Link href="/post/[url]" as={`/post/${post.url}`}>
-          <a>
-            <Title level={4} ellipsis={true}>
-              {post.title}
-            </Title>
-            <Paragraph>{post.abstract}</Paragraph>
-          </a>
-        </Link>
-        <Row>
-          <Col span={4}>
-            <Text ellipsis={true} />
-          </Col>
-          <Col span={10}>
-            <Text ellipsis={true} />
-          </Col>
-        </Row>
+  return (
+    <Card
+      neumorphism
+      cover={
+        !loading && post.head_image ? (
+          <Image
+            src={post.head_image}
+            height="300px"
+            alt={`文章『${post.title}』的头图`}
+            title={post.title}
+          />
+        ) : null
+      }
+    >
+      <Skeleton loading={loading} active>
+        {loading ? null : (
+          <Flex direction="TB" fullWidth>
+            <Link href="/post/[url]" as={`/post/${post.url}`}>
+              <a>
+                <h2 className={concat(textStyles.color, textStyles.ellipsis)} title={post.title}>
+                  {post.title}
+                </h2>
+                <p className={textStyles.color}>{post.abstract}</p>
+              </a>
+            </Link>
 
-        <div>
-          <div className="right20">
-            <Icon type="eye" className="right5" />
-            {post.view}
-          </div>
-          <div className="right20">
-            <Icon type="calendar" className="right5" />
-            {post.publish_time}
-          </div>
-          {post.publish_time == post.edit_time ? null : (
-            <div className="right20">
-              <Icon type="edit" className="right5" />
-              {post.edit_time}
-            </div>
-          )}
-        </div>
+            <Flex mainAxis="flex-start">
+              <Flex mainAxis="flex-start" mainSize="small">
+                <Eye />
+                {post.view}
+              </Flex>
+              <Flex mainAxis="flex-start" mainSize="small">
+                <Calendar />
+                {post.publish_time}
+              </Flex>
+              {post.publish_time == post.edit_time ? null : (
+                <Flex mainAxis="flex-start" mainSize="small">
+                  <Edit />
+                  {post.edit_time}
+                </Flex>
+              )}
+            </Flex>
 
-        <Divider style={{ margin: '10px 0' }} />
-        <div>
-          <Icon type="tag" className="right20" />
-          {post.tags.map((tag: Blotter.Tag) => (
-            <TagPart key={tag.short} tag={tag} />
-          ))}
-        </div>
-      </div>
-    );
-  }
-  render() {
-    var post = this.props.post as Blotter.PostCard;
-    var loading = this.props.loading || typeof this.props.post === 'undefined';
-
-    return (
-      <Card
-        className="shadow"
-        bordered={false}
-        hoverable={this.props.hoverable}
-        cover={
-          !loading && post.head_image ? (
-            <Image
-              src={post.head_image}
-              height="300px"
-              alt={`文章『${post.title}』的头图`}
-              title={post.title}
-            />
-          ) : null
-        }
-      >
-        <Skeleton loading={loading} active>
-          {loading ? null : this.render_post(post)}
-        </Skeleton>
-      </Card>
-    );
-  }
+            <Flex mainAxis="flex-start">
+              {[
+                <Tag />,
+                ...post.tags.map((tag: Blotter.Tag) => <TagPart key={tag.short} tag={tag} />),
+              ]}
+            </Flex>
+          </Flex>
+        )}
+      </Skeleton>
+    </Card>
+  );
 }
-
-export default PostCard;
