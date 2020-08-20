@@ -2,50 +2,43 @@ import React, { ComponentProps } from 'react';
 import { Row, Col, Space as S } from 'antd';
 import { Gutter } from 'antd/lib/grid/row';
 import { ObjectFilter } from '@/utils/object';
+import { Context } from '@/utils/global';
 
-interface ContainerProps extends ComponentProps<'base'> {
-  xs?: number;
-  sm?: number;
-  md?: number;
-  lg?: number;
-  xl?: number;
-  xxl?: number;
-  gutter_h?: number;
-  gutter_v?: number;
-}
+// interface ContainerProps extends ComponentProps<'base'> {
+//   xs?: number;
+//   sm?: number;
+//   md?: number;
+//   lg?: number;
+//   xl?: number;
+//   xxl?: number;
+//   gutter_h?: number;
+//   gutter_v?: number;
+// }
 
-interface ContainerState {}
+// interface ContainerState {}
 
-class Container extends React.Component<ContainerProps, ContainerState> {
-  static defaultProps: ContainerProps = {
-    xs: 24,
-    sm: 20,
-    md: 18,
-    lg: 16,
-    xl: undefined,
-    xxl: undefined,
-    gutter_h: 20,
-    gutter_v: 40,
-  };
-  constructor(props: ContainerProps) {
-    super(props);
-  }
-  render() {
-    return (
-      <Row justify="center" gutter={[this.props.gutter_h, this.props.gutter_v] as [Gutter, Gutter]}>
-        <Col
-          xs={this.props.xs}
-          sm={this.props.sm}
-          md={this.props.md}
-          lg={this.props.lg}
-          xl={this.props.xl}
-          xxl={this.props.xxl}
-        >
-          {this.props.children}
-        </Col>
-      </Row>
-    );
-  }
+// class Container extends React.Component<ContainerProps, ContainerState> {
+//   static defaultProps: ContainerProps = {
+//     xs: 24,
+//     sm: 20,
+//     md: 18,
+//     lg: 16,
+//     xl: undefined,
+//     xxl: undefined,
+//     gutter_h: 20,
+//     gutter_v: 40,
+//   };
+//   constructor(props: ContainerProps) {
+//     super(props);
+//   }
+//   render() {
+//     return <div style={{}}>{this.props.children}</div>;
+//   }
+// }
+
+function Container(props: React.PropsWithChildren<{}>) {
+  const context = React.useContext(Context);
+  return <div>{props.children}</div>;
 }
 
 export interface SpaceProps extends ComponentProps<'base'> {
@@ -130,6 +123,7 @@ export declare type FlexProps = {
   subAxis?: 'flex-start' | 'flex-end' | 'center' | 'baseline' | 'stretch';
   mainSize?: SizeProp;
   subSize?: SizeProp;
+  fullWidth?: boolean;
   style?: React.CSSProperties;
   itemStyle?: React.CSSProperties;
   className?: string;
@@ -143,12 +137,14 @@ const FlexComponent: React.FC<FlexProps> = (props) => {
     mainAxis = 'space-between',
     subAxis = 'center',
     itemStyle = {},
+    fullWidth = false,
     children,
     style,
     className,
   } = props;
-  const list = Array.isArray(children) ? children : [children];
+  const list = (Array.isArray(children) ? children : [children]).filter((s) => !!s);
   const dir = direction === 'LR' ? 'row' : direction === 'TB' ? 'column' : direction;
+
   const mSize = getSize(mainSize);
   const sSize = getSize(subSize);
 
@@ -220,11 +216,15 @@ const FlexComponent: React.FC<FlexProps> = (props) => {
   specialStyle = ObjectFilter(specialStyle, (_, value) => value != 0);
 
   return (
-    <div className={className} style={{ ...containerStyles, ...style }}>
+    <div
+      className={className}
+      style={{ ...(fullWidth ? { width: '100%' } : {}), ...containerStyles, ...style }}
+    >
       {list.map((child, idx) => (
         <FlexItem
           key={idx}
           style={{
+            ...(fullWidth ? { width: '100%' } : {}),
             ...(idx === specialPos ? specialStyle : defaultStyle),
             ...itemStyle,
           }}
@@ -243,6 +243,7 @@ export declare type FlexItemProps = {
 const FlexItem: React.FC<FlexItemProps> = (props) => {
   var { style = {}, className = '', children } = props;
   var child: any = children;
+  if (!!!child) return null;
   const key = child.key;
 
   if (
