@@ -1,9 +1,10 @@
-import { PropsWithChildren, CSSProperties } from 'react';
+import { PropsWithChildren, CSSProperties, ReactNode } from 'react';
 
 export declare type ComponentProps<T> = PropsWithChildren<
   {
     className?: string;
     style?: CSSProperties;
+    children?: ReactNode;
   } & T
 >;
 
