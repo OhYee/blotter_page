@@ -4,7 +4,7 @@ import { Row, Col, Pagination } from 'antd';
 
 import PostCard from '@/components/post_card';
 import { Context } from '@/utils/global';
-import { Space } from './container';
+import { Flex } from './container';
 
 import styles from './post_list.less';
 
@@ -45,13 +45,13 @@ class PostList extends React.Component<PostListProps & ComponentProps<'base'>, P
 
   renderList = (posts: Blotter.PostCard[]) => {
     return (
-      <Space size="middle">
+      <Flex direction="TB" fullWidth>
         {posts.map((post) => (
           <div key={post.url}>
             <PostCard post={post} loading={this.props.loading} />
           </div>
         ))}
-      </Space>
+      </Flex>
     );
   };
 
@@ -94,7 +94,7 @@ class PostList extends React.Component<PostListProps & ComponentProps<'base'>, P
     }
 
     return (
-      <Space size="middle">
+      <Flex direction="TB" fullWidth>
         {this.props.header ? <div>{this.props.header}</div> : null}
         {this.props.posts.length == 0 ? (
           <div
@@ -122,7 +122,7 @@ class PostList extends React.Component<PostListProps & ComponentProps<'base'>, P
             </Col>
           </Row>
         ) : null}
-      </Space>
+      </Flex>
     );
   }
 }
