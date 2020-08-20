@@ -12,7 +12,7 @@ export const defaultContext: GlobalProps = {
   //   token: '',
   friends: [],
   big_screen: false,
-  theme: 'default',
+  theme: getTimeTheme(),
   grey: false,
   root: '',
   author: '',
@@ -59,4 +59,9 @@ export declare interface GlobalProps {
   author: string;
   avatar: string;
   from: string;
+}
+
+export function getTimeTheme() {
+  const hour = new Date().getHours();
+  return hour >= 19 || hour < 7 ? 'dark' : 'default';
 }
