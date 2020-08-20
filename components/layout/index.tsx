@@ -15,6 +15,7 @@ import FixedButton from '@/components/layout/fixed_button';
 import { Flex } from '@/components/container';
 
 import '@/styles/theme.less';
+import { concat } from '@/utils/component';
 
 interface BasicLayoutProps extends ComponentProps<'base'>, WithRouterProps {}
 interface BasicLayoutState {
@@ -53,6 +54,7 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
   componentWillUnmount() {
     window.removeEventListener('resize', this.onResize);
   }
+
   onResize = () => {
     const width = document.body.clientWidth;
     if (width > 1024 && !this.context.big_screen) {
@@ -64,7 +66,7 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
 
   render() {
     return (
-      <div className={[styles.root, this.context.theme].join(' ')}>
+      <div className={concat(styles.root, 'default', this.context.theme)}>
         <Context.Consumer>
           {(context) => (
             <Head>
@@ -86,7 +88,12 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
         <Flex
           direction="TB"
           mainAxis="space-around"
-          style={{ width: this.context.big_screen ? 'calc(100vw - 320px)' : '90%', margin: 'auto' }}
+          mainSize="large"
+          style={{
+            minHeight: '100vh',
+            width: this.context.big_screen ? 'calc(100vw - 320px)' : '90%',
+            margin: 'auto',
+          }}
           itemStyle={{ width: '100%' }}
         >
           {this.props.children}
