@@ -1,24 +1,27 @@
 :global {
   .default {
     --color: black;
-    --background: #e5e5e5;
-    --primary: #40a9ff;
+    --color-dark: #333;
+    --color-white: #ddd;
+    --background: #f1f2f6;
+    --primary: #5a7da5;
     --primary-light1: #e6f7ff;
     --secondary: #555;
     --shadow: rgba(100, 100, 100, 0.5);
-    --shadow-white: rgba(255, 255, 255, 0.5);
-    --transition: all 0.25s ease-in-out 0.1s;
-  }
+    --shadow-white: white;
+    --transition-time: 0.25s ease-in-out 0.1s;
+    --transition: all var(--transition-time);
 
-  .dark {
-    // &:extend(.default);
-    .default;
-    --color: #e5e5e5;
-    --background: #333;
-    --primary-light1: #1b4153;
-    --secondary: #aaa;
-    --shadow: rgba(0, 0, 0, 0.5);
-    --shadow-white: rgba(100, 100, 100, 0.5);
+    transition: var(--transition);
     color: var(--color);
+
+    &.dark {
+      --color: #f1f2f6;
+      --background: #333;
+      --primary-light1: #1b4153;
+      --secondary: #aaa;
+      --shadow: rgba(0, 0, 0, 0.5);
+      --shadow-white: rgba(100, 100, 100, 0.5);
+    }
   }
 }
