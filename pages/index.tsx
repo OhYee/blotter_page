@@ -4,10 +4,10 @@ import { NextPageContext } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
 
-import { Input, Card, Button, Row, Col, Checkbox, List } from 'antd';
+import { Input, Row, Col, Checkbox, List } from 'antd';
 import { Icon } from '@ant-design/compatible';
 
-import Container, { Space } from '@/components/container';
+import Container, { Space, Flex } from '@/components/container';
 import PostList from '@/components/post_list';
 
 import { Context } from '@/utils/global';
@@ -16,6 +16,8 @@ import { indexPosts, tagsSearch } from '@/utils/api';
 import { waitUntil } from '@/utils/debounce';
 import TagPart from '@/components/tag';
 import TagSearch from '@/components/tag_search';
+import Card from '@/components/card';
+import Button from '@/components/button';
 
 interface IndexProps extends ComponentProps<'base'> {
   posts: Blotter.PostCard[];
@@ -212,8 +214,8 @@ class Index extends React.Component<IndexProps, IndexState> {
           )}
         </Context.Consumer>
         <Container>
-          <Space size="large">
-            <Card className="shadow" style={{ lineHeight: '2em' }}>
+          <Flex direction="TB" fullWidth>
+            <Card neumorphism style={{ lineHeight: '2em' }}>
               {this.renderSearch()}
             </Card>
 
@@ -228,10 +230,10 @@ class Index extends React.Component<IndexProps, IndexState> {
             />
             <div className="textCenter">
               <Link href="/archives?page=2&size=10">
-                <Button type="dashed">查看更多</Button>
+                <Button neumorphism>查看更多</Button>
               </Link>
             </div>
-          </Space>
+          </Flex>
         </Container>
       </div>
     );
