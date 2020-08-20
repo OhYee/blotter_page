@@ -1,37 +1,61 @@
 .button {
   border: 0px;
-  color: var(--color);
+  color: var(--primary);
   background: var(--background);
   outline: none;
-  padding: 0.25em;
+  padding: 1em;
   line-height: 1em;
   cursor: pointer;
+  // 拟态和阴影将会覆盖 button 的过渡动画，需要强制这里生效，并对阴影部分添加过渡
+  transition: color var(--transition-time), background var(--transition-time),
+    box-shadow var(--transition-time) !important;
 }
 
 .primary {
   color: white;
   background: var(--primary);
+  &.icon {
+    color: white;
+  }
 }
 
 .icon {
   color: var(--primary);
+  padding: 0.5em;
 }
 
 .small {
-  font-size: 1em;
-  width: 2em;
-  height: 2em;
+  font-size: 0.75em;
+  &.icon {
+    font-size: 1em;
+  }
+
+  //   height: 2em;
+  //   &.circle {
+  //     width: 2em;
+  //   }
 }
 
 .middle {
-  font-size: 1.25em;
-  width: 2.25em;
-  height: 2.25em;
+  font-size: 1em;
+  &.icon {
+    font-size: 1.25em;
+  }
+  //   height: 2.25em;
+  //   &.circle {
+  //     width: 2.25em;
+  //   }
 }
+
 .large {
-  font-size: 1.5em;
-  width: 2.5em;
-  height: 2.5em;
+  font-size: 1.25em;
+  &.icon {
+    font-size: 1.5em;
+  }
+  //   height: 2.5em;
+  //   &.circle {
+  //     width: 2.5em;
+  //   }
 }
 
 .circle {
