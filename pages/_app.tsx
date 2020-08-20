@@ -4,7 +4,7 @@ import App, { AppProps, AppContext } from 'next/app';
 import Head from 'next/head';
 
 import { getCookie } from '@/utils/storage';
-import { Context, defaultContext, GlobalProps } from '@/utils/global';
+import { Context, defaultContext, GlobalProps, getTimeTheme } from '@/utils/global';
 import BasicLayout from '@/components/layout';
 const Layout = BasicLayout as any;
 
@@ -70,7 +70,7 @@ export default class MyApp extends App<MyAppProps, {}, MyAppState> {
   async componentDidMount() {
     view();
     const user = await info();
-    this.setState({ user });
+    this.setState({ user, theme: getTimeTheme() });
   }
 
   render() {
