@@ -3,12 +3,11 @@ import React from 'react';
 import Link from 'next/link';
 
 import { Popover, Row, Col } from 'antd';
-import { UserOutlined } from '@ant-design/icons';
 import { Icon } from '@ant-design/compatible';
 
 import If from '@/components/if';
 import { Flex } from '@/components/container';
-import { Left, Bar ,User} from '@/components/svg';
+import { Left, Bar, User } from '@/components/svg';
 import Button from '@/components/button';
 import Avatar from '@/components/avatar';
 
@@ -19,6 +18,7 @@ import { GlobalProps, defaultContext } from '@/utils/global';
 
 import styles from './sider.less';
 import layer from '@/styles/layer.less';
+import shadowStyles from '@/styles/shadow.less';
 import { LoginModal } from '../login';
 
 export default function (props: {
@@ -64,7 +64,7 @@ export default function (props: {
         <Flex
           mainAxis="flex-start"
           direction="TB"
-          className={['shadow', styles.siderbar].join(' ')}
+          className={[shadowStyles.shadow, styles.siderbar].join(' ')}
           style={{ width: collapsed ? (big_screen ? 80 : 0) : 200 }}
         >
           <div />
@@ -132,7 +132,7 @@ export default function (props: {
             primary
             circle
             icon={collapsed ? <Bar /> : <Left />}
-            className="shadow"
+            shadow
             onClick={() => setCollapsed(!collapsed)}
           />
         </div>

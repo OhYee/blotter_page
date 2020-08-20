@@ -1,19 +1,17 @@
 .sider {
-  --transition-variable: all 0.25s ease-in-out 0.1s;
-
   overflow-x: auto hidden;
   height: 100vh;
   position: fixed !important;
   left: 0;
 
   .siderbar {
-    transition: var(--transition-variable);
+    transition: background var(--transition-time), width var(--transition-time);
     width: 0px;
     height: 100vh;
     background: var(--background);
     overflow-x: hidden;
     img {
-      transition: var(--transition-variable);
+      transition: transform var(--transition-time);
       -webkit-transition: 0.25s;
       -webkit-transition: -webkit-transform 0.25s ease-out;
       -moz-transition: -moz-transform 0.25s ease-out;
@@ -32,13 +30,15 @@
   .menu {
     width: 100%;
     & > div {
-      transition: var(--transition-variable);
+      transition: width var(--transition-time);
       width: 100%;
     }
     li {
-      transition: var(--transition-variable);
+      transition: padding-left var(--transition-time), text-align var(--transition-time),
+        background var(--transition-time), border-right var(--transition-time);
       list-style: none;
       width: 100%;
+      border-right: 0px;
 
       // 垂直居中
       height: 3em;
@@ -48,22 +48,6 @@
       padding-left: 25px;
       text-align: left;
 
-      a {
-        color: var(--secondary);
-        &:active {
-          color: var(--secondary);
-        }
-        .prefix {
-          font-size: 1.25em;
-          margin-right: 5px;
-          transition: var(--transition-variable);
-        }
-        .text {
-          font-size: 1em;
-          transition: var(--transition-variable);
-        }
-      }
-
       &.active {
         border-right: 2px solid var(--primary);
         background: var(--primary-light1);
@@ -72,6 +56,24 @@
           &:active {
             color: var(--primary);
           }
+        }
+      }
+
+      a {
+        color: var(--secondary);
+        transition: color var(--transition-time);
+
+        &:active {
+          color: var(--secondary);
+        }
+        .prefix {
+          font-size: 1.25em;
+          margin-right: 5px;
+          transition: font-size var(--transition-time), margin-right var(--transition-time);
+        }
+        .text {
+          font-size: 1em;
+          transition: font-size var(--transition-time);
         }
       }
     }
