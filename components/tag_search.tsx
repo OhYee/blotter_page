@@ -32,7 +32,7 @@ class TagSearch extends React.Component<TagSearchProps & ComponentProps<'base'>,
     this.setState({ inputVisible: true });
   };
   onChange = (value: string) => {
-    var tag = this.state.options.find(tag => tag.short == value);
+    var tag = this.state.options.find((tag) => tag.short == value);
     if (typeof tag != 'undefined') {
       this.add(tag);
     }
@@ -73,7 +73,7 @@ class TagSearch extends React.Component<TagSearchProps & ComponentProps<'base'>,
         notFoundContent={null}
         size="small"
       >
-        {this.state.options.map(tag => (
+        {this.state.options.map((tag) => (
           <Select.Option key={tag.short} value={tag.short}>
             {tag.name}
           </Select.Option>
@@ -89,8 +89,8 @@ class TagSearch extends React.Component<TagSearchProps & ComponentProps<'base'>,
   render() {
     return (
       <div>
-        {this.props.tags.map(tag => (
-          <TagPart key={tag.short} tag={tag} closable={true} onClose={this.props.onDelete} />
+        {this.props.tags.map((tag) => (
+          <TagPart key={tag.short} tag={tag} onClose={this.props.onDelete} />
         ))}
         {this.renderInput()}
       </div>
