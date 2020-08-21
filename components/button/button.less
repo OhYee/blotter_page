@@ -9,12 +9,24 @@
   // 拟态和阴影将会覆盖 button 的过渡动画，需要强制这里生效，并对阴影部分添加过渡
   transition: color var(--transition-time), background var(--transition-time),
     box-shadow var(--transition-time) !important;
+  &:hover {
+    color: var(--primary);
+  }
+  &:active {
+    color: var(--primary);
+  }
 }
 
 .primary {
   color: white;
   background: var(--primary);
   &.icon {
+    color: white;
+  }
+  &:hover {
+    color: white;
+  }
+  &:active {
     color: white;
   }
 }
