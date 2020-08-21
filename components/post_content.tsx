@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Link from 'next/link';
 
-import { Anchor, Skeleton, PageHeader, Button } from 'antd';
+import { Anchor, Skeleton } from 'antd';
 import {
   EyeOutlined,
   CalendarOutlined,
@@ -16,13 +16,16 @@ import moment from '@/utils/moment';
 import Image, { setImageLightbox, setSVGLightbox } from '@/components/image';
 import If from '@/components/if';
 import TagPart from '@/components/tag';
+import { CardContent } from '@/components/post_card';
+import Card from '@/components/card';
+import Button from '@/components/button';
 
 import { Context } from '@/utils/global';
 import { travels_get_url } from '@/utils/api';
 
 import styles from '@/pages/post/post.less';
 import Carousel from './carousel';
-import { Space } from './container';
+import { Flex } from './container';
 import Head from 'next/head';
 
 interface AnchorType {
@@ -224,52 +227,18 @@ class PostContent extends Component<PostContentProps, PostContentState> {
             ></link>
           ) : null}
         </Head>
-        <Space size={20}>
-          <PageHeader className="shadow" title={this.props.post.title}>
-            <Space>
-              <Space direction="horizontal">
-                <div>
-                  <EyeOutlined className="right5" />
-                  {this.props.post.view}
-                </div>
-                <div>
-                  <CalendarOutlined className="right5" />
-                  {this.props.post.publish_time}
-                </div>
-                {this.props.post.publish_time == this.props.post.edit_time ? null : (
-                  <div>
-                    <EditOutlined className="right5" />
-                    {this.props.post.edit_time}
-                  </div>
-                )}
-                <Context.Consumer>
-                  {(context) =>
-                    (context.user.permission & 1) == 1 ? (
-                      <Link href={`/admin/post?url=${this.props.post.url}`}>
-                        <Button type="primary" size="small">
-                          编辑
-                        </Button>
-                      </Link>
-                    ) : null
-                  }
-                </Context.Consumer>
-              </Space>
-              <If condition={!!this.props.post.abstract}>
-                <blockquote>{this.props.post.abstract}</blockquote>
-              </If>
-              <div>
-                <TagOutlined className="right20" />
-                {this.props.post.tags.length > 0 ? (
-                  this.props.post.tags.map((tag: Blotter.Tag) => (
-                    <TagPart key={tag.short} tag={tag} />
-                  ))
-                ) : (
-                  <span>无标签</span>
-                )}
-              </div>
-            </Space>
-          </PageHeader>
+
+        <Flex direction="TB" fullWidth>
+          <Card neumorphismInset>
+            <Context.Consumer>
+              {(context) => (
+                <CardContent post={this.props.post} editable={(context.user.permission & 1) == 1} />
+              )}
+            </Context.Consumer>
+          </Card>
+
           {this.renderTravel()}
+
           {!!this.props.post.images && this.props.post.images.length > 0 ? (
             <Carousel
               images={this.props.post.images}
@@ -278,11 +247,12 @@ class PostContent extends Component<PostContentProps, PostContentState> {
               autoplay
             />
           ) : null}
+
           <section
             className="post-content"
             dangerouslySetInnerHTML={{ __html: this.props.post.content }}
           />
-        </Space>
+        </Flex>
         <AnchorsPart container={this.props.container} content={this.props.post.content} />
       </article>
     );
