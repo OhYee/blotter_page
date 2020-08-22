@@ -1,20 +1,20 @@
-import React, { ComponentProps } from 'react';
+import React from 'react';
 
 import Head from 'next/head';
 import { NextPageContext } from 'next';
 
-import { Card, Badge, Row } from 'antd';
-
 import TagPart from '@/components/tag';
 import Container from '@/components/container';
+import Card from '@/components/card';
+import { Flex } from '@/components/container';
 
 import { tags } from '@/utils/api';
-import {  Context } from '@/utils/global';
+import { Context } from '@/utils/global';
 import { sortTagsByPinYin, TagGroup } from '@/utils/sort';
 
 import styles from './tags.less';
 
-interface TagsProps extends ComponentProps<'base'> {
+interface TagsProps extends React.ComponentProps<'base'> {
   total: number;
   tags: TagGroup[];
 }
@@ -41,26 +41,24 @@ class Tags extends React.Component<TagsProps, TagsState> {
     };
   }
 
-  render_tag = (tag: Blotter.TagWithCount) => {
+  renderTag = (tag: Blotter.TagWithCount) => {
     return (
-      <div key={tag.short} className={styles.tag}>
-        <Badge
-          className={styles.badge}
-          count={tag.count}
-          overflowCount={9999}
-          showZero={true}
-          title={`共有${tag.count}篇文章`}
-        >
-          <TagPart tag={tag} />
-        </Badge>
+      <div key={tag.short} className={styles.tag} title={`${tag.name} 共有 ${tag.count} 篇文章`}>
+        <span>{tag.count > 99 ? '99+' : tag.count}</span>
+        <TagPart tag={tag} />
       </div>
     );
   };
 
-  render_group = (group: TagGroup) => {
+  renderGroup = (group: TagGroup) => {
     return group.tags.length > 0 ? (
-      <Card className={styles.card} key={group.title} title={group.title}>
-        <Row>{group.tags.map(this.render_tag)}</Row>
+      <Card key={group.title} neumorphism>
+        <Flex direction="TB" subAxis="flex-start" fullWidth>
+          <h2>{group.title}</h2>
+          <Flex mainAxis="flex-start" mainSize={15} subSize={15}>
+            {group.tags.map(this.renderTag)}
+          </Flex>
+        </Flex>
       </Card>
     ) : null;
   };
@@ -69,14 +67,19 @@ class Tags extends React.Component<TagsProps, TagsState> {
     return (
       <Container>
         <Context.Consumer>
-          {context => (
+          {(context) => (
             <Head>
               <title>{`标签列表|${context.blog_name}`}</title>
             </Head>
           )}
         </Context.Consumer>
 
-        {this.props.tags.map(this.render_group)}
+        <Flex direction="TB" subAxis="flex-start" fullWidth>
+          {[
+            <p key="total">共有 {this.props.total} 个标签</p>,
+            ...this.props.tags.map(this.renderGroup),
+          ]}
+        </Flex>
       </Container>
     );
   }

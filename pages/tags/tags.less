@@ -1,0 +1,24 @@
+.tag {
+  display: block;
+  position: relative;
+  span {
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    font-size: 0.75em;
+    width: 2em;
+    height: 2em;
+    padding: 2px;
+    border: 0.5px solid var(--background);
+    border-radius: 100%;
+    color: var(--background);
+    background: var(--color);
+    transition: color var(--transition-time), background var(--transition-time),
+      border var(--transition-time);
+    text-align: center;
+    overflow: hidden;
+    cursor: pointer;
+    opacity: 0.75;
+    font-weight: bold;
+  }
+}
