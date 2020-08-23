@@ -4,8 +4,7 @@ import Head from 'next/head';
 import { withRouter } from 'next/router';
 import { WithRouterProps } from 'next/dist/client/with-router';
 
-import { Card } from 'antd';
-
+import Card from '@/components/card';
 import Container from '@/components/container';
 import CommentPart from '@/components/comment';
 
@@ -21,15 +20,15 @@ class CommentPage extends React.Component<CommentPageProps, CommentPageState> {
 
   render() {
     return (
-      <Container lg={16}>
+      <Container>
         <Context.Consumer>
-          {context => (
+          {(context) => (
             <Head>
               <title>{`评论区|${context.blog_name}`}</title>
             </Head>
           )}
         </Context.Consumer>
-        <Card>
+        <Card neumorphism>
           <CommentPart url={this.props.router.asPath} />
         </Card>
       </Container>
