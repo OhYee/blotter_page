@@ -442,8 +442,11 @@ export const qiniu_get_images = async (
   return await request('get', '/api/qiniu/images', { bucket, prefix, marker, number }, callback);
 };
 
-export const qiniu_get_token = async (callback?: RequestCallback<{ token: string }>) => {
-  return await request('get', '/api/qiniu/token', {}, callback);
+export const qiniu_get_token = async (
+  bucket: string,
+  callback?: RequestCallback<{ token: string }>,
+) => {
+  return await request('get', '/api/qiniu/token', { buket }, callback);
 };
 
 export const qiniu_delete_image = async (

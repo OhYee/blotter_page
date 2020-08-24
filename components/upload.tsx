@@ -110,7 +110,7 @@ function Upload(props: { bucket: string; prefix: string }) {
   const { bucket, prefix } = props;
 
   const upload = async (file: File) => {
-    const token = (await qiniu_get_token()).token;
+    const token = (await qiniu_get_token(bucket)).token;
     const filename = !!prefix ? `${prefix}/${file.name}` : file.name;
     const observable = qiniu.upload(file, filename, token, {}, {});
     const subscription = observable.subscribe({
