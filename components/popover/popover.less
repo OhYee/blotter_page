@@ -1,0 +1,51 @@
+// https://juejin.im/post/6844903765527494663
+
+.popover {
+  --popover-backgroud: red;
+
+  position: absolute;
+  top: -99999px;
+  left: -99999px;
+
+  z-index: 10;
+
+  transition: opacity 0.25s ease-in-out 0.1s, visibility 0.25s ease-in-out 0.1s;
+  opacity: 0;
+  visibility: hidden;
+
+  &.show {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  &::after {
+    content: '';
+    border: 5px solid transparent;
+    position: absolute;
+    z-index: 99;
+  }
+
+  &.top::after {
+    border-top: 5px solid var(--popover-backgroud);
+    bottom: -10px;
+    left: calc(50% - 5px);
+  }
+
+  &.right::after {
+    border-right: 5px solid var(--popover-backgroud);
+    left: -10px;
+    top: calc(50% - 5px);
+  }
+
+  &.left::after {
+    border-left: 5px solid var(--popover-backgroud);
+    right: -10px;
+    top: calc(50% - 5px);
+  }
+
+  &.bottom::after {
+    border-bottom: 5px solid var(--popover-backgroud);
+    top: -10px;
+    left: calc(50% - 5px);
+  }
+}

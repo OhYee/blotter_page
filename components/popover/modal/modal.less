@@ -1,0 +1,20 @@
+.modal {
+  position: fixed;
+  z-index: 5;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.dimmed {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.5);
+  animation: dimmed-change 0.5s 1 alternate;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+  z-index: 3;
+}
