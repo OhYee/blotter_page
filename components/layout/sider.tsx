@@ -64,6 +64,7 @@ export default function (props: {
         <Flex
           mainAxis="flex-start"
           direction="TB"
+          wrap={false}
           className={[shadowStyles.shadow, styles.siderbar].join(' ')}
           style={{ width: collapsed ? (big_screen ? 80 : 0) : 200 }}
         >
