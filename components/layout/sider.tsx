@@ -2,7 +2,6 @@ import React from 'react';
 
 import Link from 'next/link';
 
-import { Popover, Row, Col } from 'antd';
 import { Icon } from '@ant-design/compatible';
 
 import If from '@/components/if';
@@ -10,6 +9,7 @@ import { Flex } from '@/components/container';
 import { Left, Bar, User } from '@/components/svg';
 import Button from '@/components/button';
 import Avatar from '@/components/avatar';
+import Popover, { Tooltip } from '@/components/popover';
 
 import { layout, logout, info } from '@/utils/api';
 import ShowNotification from '@/utils/notification';
@@ -17,9 +17,9 @@ import { setCookie } from '@/utils/storage';
 import { GlobalProps, defaultContext } from '@/utils/global';
 
 import styles from './sider.less';
-import layer from '@/styles/layer.less';
 import shadowStyles from '@/styles/shadow.less';
 import { LoginModal } from '../login';
+import Card from '../card';
 
 export default function (props: {
   user: Blotter.User;
@@ -79,31 +79,31 @@ export default function (props: {
             <Popover
               placement="right"
               trigger={['click', 'hover']}
-              title={user.username}
-              content={
-                <div>
-                  <Row gutter={[10, 10]}>
-                    <Col span={12}>
+              popoverClass={shadowStyles.shadow}
+              popoverStyle={
+                {
+                  boxShadow: '5px 5px 30px var(--shadow)',
+                  ['--popover-backgroud']: 'var(--background)',
+                } as React.CSSProperties
+              }
+              getOffset={() => ({ top: document.documentElement.scrollTop })}
+              component={
+                <Card style={{ background: 'var(--background)', maxWidth: 200 }}>
+                  <Flex direction="TB" fullWidth>
+                    <strong>{user.username}</strong>
+                    <Flex>
                       <Link href="/user/[username]" as={`/user/${user.username}`}>
                         <a>设置</a>
                       </Link>
-                    </Col>
-
-                    <Col span={12}>
                       <a onClick={onLogoutClick}>登出</a>
-                    </Col>
-                  </Row>
-
-                  <If condition={(user.permission & 1) != 0}>
-                    <Row gutter={10}>
-                      <Col span={12}>
+                      {(user.permission & 1) != 0 ? (
                         <Link href="/admin">
                           <a>管理</a>
                         </Link>
-                      </Col>
-                    </Row>
-                  </If>
-                </div>
+                      ) : null}
+                    </Flex>
+                  </Flex>
+                </Card>
               }
             >
               <span style={{ cursor: 'pointer' }}>
@@ -155,15 +155,21 @@ function Menus(props: { menus: Blotter.Menu[]; theme: 'light' | 'dark'; pathname
         );
         return (
           <li key={item.link} className={item.link === pathname ? styles.active : ''}>
-            {item.link.length > 0 && item.link[0] !== '/' ? (
-              <a target="_blank" href={item.link}>
-                {menuItem}
-              </a>
-            ) : (
-              <Link href={item.link}>
-                <a>{menuItem}</a>
-              </Link>
-            )}
+            <Tooltip
+              placement="right"
+              title={item.name}
+              getOffset={() => ({ top: document.documentElement.scrollTop })}
+            >
+              {item.link.length > 0 && item.link[0] !== '/' ? (
+                <a target="_blank" href={item.link}>
+                  {menuItem}
+                </a>
+              ) : (
+                <Link href={item.link}>
+                  <a>{menuItem}</a>
+                </Link>
+              )}
+            </Tooltip>
           </li>
         );
       })}
