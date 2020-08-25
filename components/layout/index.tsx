@@ -66,7 +66,7 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
 
   render() {
     return (
-      <div className={concat(styles.root, 'default', this.context.theme)}>
+      <div id="blotter_root" className={concat(styles.root, 'default', this.context.theme)}>
         <Context.Consumer>
           {(context) => (
             <Head>
