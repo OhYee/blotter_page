@@ -1,13 +1,11 @@
 import React from 'react';
 
-import { Modal } from 'antd';
 import { Icon } from '@ant-design/compatible';
-
-import changeTheme from 'next-dynamic-antd-theme';
 
 import { Flex } from '@/components/container';
 import { Light, Dark, Message, Rocket } from '@/components/svg';
 import Button from '@/components/button';
+import { Modal } from '@/components/popover';
 
 import { Context } from '@/utils/global';
 
@@ -28,9 +26,7 @@ function scrollTopAnimation(_currentY?: number) {
 }
 
 function BackToTop() {
-  return (
-    <Button circle neumorphism icon={<Rocket />} onClick={() => scrollTopAnimation()} />
-  );
+  return <Button circle neumorphism icon={<Rocket />} onClick={() => scrollTopAnimation()} />;
 }
 
 function Feedback() {
@@ -41,9 +37,9 @@ function Feedback() {
       icon={<Message />}
       neumorphism
       onClick={() => {
+        console.log(Modal.info);
         Modal.info({
-          title: '反馈Bug！',
-          content: (
+          children: (
             <div>
               <p>
                 有一个{' '}
