@@ -47,17 +47,10 @@ export default function (props: {
   return (
     <div>
       {collapsed ? null : (
-        <div
-          className={[styles.dimmed, layer.mask_layer].join(' ')}
-          onClick={() => setCollapsed(true)}
-        />
+        <div className={[styles.dimmed].join(' ')} onClick={() => setCollapsed(true)} />
       )}
       <Flex
-        className={[
-          layer.float_layer,
-          styles.sider,
-          ...(collapsed ? [styles.sider_collapsed] : []),
-        ].join(' ')}
+        className={[styles.sider, ...(collapsed ? [styles.sider_collapsed] : [])].join(' ')}
         mainAxis="flex-start"
         subAxis="flex-start"
       >
