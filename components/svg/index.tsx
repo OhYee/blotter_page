@@ -214,3 +214,36 @@ export function Close(props: { style?: React.CSSProperties; className?: string }
     </SVG>
   );
 }
+
+export function Dots(props: { style?: React.CSSProperties; className?: string }) {
+  const { style, className } = props;
+  return (
+    <SVG style={style} className={className}>
+      <svg viewBox="0 0 1024 1024" fill="currentColor">
+        <path d="M448 448h128v128H448zM768 448h128v128H768zM128 448h128v128H128z"></path>
+      </svg>
+    </SVG>
+  );
+}
+
+export function Pre(props: { style?: React.CSSProperties; className?: string }) {
+  const { style, className } = props;
+  return (
+    <SVG style={style} className={className}>
+      <svg viewBox="0 0 1024 1024" fill="currentColor">
+        <path d="M352 512l384-384c12.8-12.8 12.8-32 0-44.8-12.8-12.8-32-12.8-44.8 0L288 486.4C281.6 492.8 275.2 505.6 275.2 512c0 6.4 0 19.2 6.4 25.6l409.6 409.6c12.8 12.8 32 12.8 44.8 0s12.8-32 0-44.8L352 512z"></path>
+      </svg>
+    </SVG>
+  );
+}
+
+export function Next(props: { style?: React.CSSProperties; className?: string }) {
+  const { style, className } = props;
+  return (
+    <SVG style={style} className={className}>
+      <svg viewBox="0 0 1024 1024" fill="currentColor">
+        <path d="M672 512l-384 384c-12.8 12.8-12.8 32 0 44.8 12.8 12.8 32 12.8 44.8 0l403.2-403.2c6.4-6.4 12.8-19.2 12.8-25.6 0-6.4 0-19.2-6.4-25.6L332.8 83.2C320 70.4 300.8 70.4 288 83.2S275.2 115.2 288 128L672 512z"></path>
+      </svg>
+    </SVG>
+  );
+}
