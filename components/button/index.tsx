@@ -14,6 +14,8 @@ export declare type ButtonProps = ComponentProps<{
   shadow?: boolean;
   neumorphism?: boolean;
   className?: string;
+  disabled?: boolean;
+  clicked?: boolean;
   style?: React.CSSProperties;
   onClick?: (e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement, MouseEvent>) => void;
 }>;
@@ -26,6 +28,8 @@ function parseProps(props: ButtonProps) {
     primary = false,
     shadow = false,
     neumorphism = false,
+    disabled = false,
+    clicked = false,
     onClick,
     style = {},
     className,
@@ -42,15 +46,18 @@ function parseProps(props: ButtonProps) {
   if (!!icon) classList.push(styles.icon);
   if (circle) classList.push(styles.circle);
   if (primary) classList.push(styles.primary);
-  if (shadow) classList.push(shadowStyles.shadow, shadowStyles.clickable);
-  if (neumorphism) classList.push(shadowStyles.neumorphism, shadowStyles.clickable);
-  return { classList, style, onClick, icon, children };
+  if (shadow) classList.push(shadowStyles.shadow);
+  if (neumorphism && !clicked) classList.push(shadowStyles.neumorphism);
+  if (neumorphism && clicked) classList.push(shadowStyles.neumorphism_inset);
+  if (disabled) classList.push('disabled');
+  if ((shadow || neumorphism) && !disabled) classList.push(shadowStyles.clickable);
+  return { classList, style, onClick: disabled ? () => {} : onClick, icon, children, disabled };
 }
 
 function Button(props: ButtonProps, ref) {
-  const { classList, style, onClick, icon, children } = parseProps(props);
+  const { classList, style, onClick, icon, children, disabled } = parseProps(props);
   return (
-    <button className={concat(...classList)} style={style} onClick={onClick}>
+    <button className={concat(...classList)} style={style} onClick={onClick} disabled={disabled}>
       {!!icon ? icon : children}
     </button>
   );
@@ -63,7 +70,7 @@ export declare type ALinkProps = ButtonProps & {
   linkType?: string;
 };
 function ALink(props: ALinkProps, ref: React.LegacyRef<HTMLAnchorElement>) {
-  const { classList, style, onClick, icon, children } = parseProps(props);
+  const { classList, style, onClick, icon, children, disabled } = parseProps(props);
   const { href, target, rel, linkType } = props;
   return (
     <a
