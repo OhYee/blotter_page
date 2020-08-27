@@ -9,6 +9,17 @@
   }
 }
 
+.primary {
+  transition: color var(--transition-time);
+  color: var(--primary);
+  &:hover {
+    color: var(--primary);
+  }
+  &:active {
+    color: var(--primary);
+  }
+}
+
 .secondary {
   transition: color var(--transition-time);
   color: var(--secondary);
@@ -19,7 +30,6 @@
     color: var(--secondary);
   }
 }
-
 
 .ellipsis {
   text-overflow: ellipsis;
