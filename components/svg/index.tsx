@@ -247,3 +247,25 @@ export function Next(props: { style?: React.CSSProperties; className?: string })
     </SVG>
   );
 }
+
+export function Right(props: { style?: React.CSSProperties; className?: string }) {
+  const { style, className } = props;
+  return (
+    <SVG style={style} className={className}>
+      <svg viewBox="0 0 1024 1024" fill="currentColor">
+        <path d="M416.832 798.08C400.64 798.08 384.512 791.872 372.16 779.52L119.424 525.76C94.784 500.992 94.784 460.8 119.424 436.032 144.128 411.264 184.128 411.264 208.768 436.032L416.832 644.928 814.4 245.76C839.04 220.928 879.04 220.928 903.744 245.76 928.384 270.528 928.384 310.656 903.744 335.424L461.504 779.52C449.152 791.872 432.96 798.08 416.832 798.08Z"></path>
+      </svg>
+    </SVG>
+  );
+}
+
+export function Search(props: { style?: React.CSSProperties; className?: string }) {
+  const { style, className } = props;
+  return (
+    <SVG style={style} className={className}>
+      <svg viewBox="64 64 896 896" data-icon="search" fill="currentColor" aria-hidden="true">
+        <path d="M909.6 854.5L649.9 594.8C690.2 542.7 712 479 712 412c0-80.2-31.3-155.4-87.9-212.1-56.6-56.7-132-87.9-212.1-87.9s-155.5 31.3-212.1 87.9C143.2 256.5 112 331.8 112 412c0 80.1 31.3 155.5 87.9 212.1C256.5 680.8 331.8 712 412 712c67 0 130.6-21.8 182.7-62l259.7 259.6a8.2 8.2 0 0011.6 0l43.6-43.5a8.2 8.2 0 000-11.6zM570.4 570.4C528 612.7 471.8 636 412 636s-116-23.3-158.4-65.6C211.3 528 188 471.8 188 412s23.3-116.1 65.6-158.4C296 211.3 352.2 188 412 188s116.1 23.2 158.4 65.6S636 352.2 636 412s-23.3 116.1-65.6 158.4z"></path>
+      </svg>
+    </SVG>
+  );
+}
