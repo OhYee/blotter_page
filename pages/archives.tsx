@@ -1,18 +1,75 @@
 import React, { ComponentProps } from 'react';
 
 import Head from 'next/head';
-import { NextPageContext } from 'next';
 import Link from 'next/link';
+import { NextPageContext } from 'next';
 
 import Router, { withRouter } from 'next/router';
 import { WithRouterProps } from 'next/dist/client/with-router';
 
 import PostList from '@/components/post_list';
 import Container from '@/components/container';
+import { Pre, Next, Dots } from '@/components/svg';
+import { A } from '@/components/button';
 
 import { archives } from '@/utils/api';
 import { parseNumberParams } from '@/utils/parse';
 import { Context } from '@/utils/global';
+
+function pageRender(
+  current: number,
+  pageNumber: number,
+  size: number,
+  page: number,
+  onChange: (page: number, size: number) => void,
+) {
+  switch (page) {
+    case -2: {
+      return (
+        <Link href={`/archives?page=${current - 1}&size=${size}`}>
+          <A
+            size="small"
+            neumorphism
+            disabled={current - 1 < 1}
+            onClick={() => onChange(current - 1, size)}
+            icon={<Pre />}
+          />
+        </Link>
+      );
+    }
+    case -3: {
+      return (
+        <Link href={`/archives?page=${current + 1}&size=${size}`}>
+          <A
+            size="small"
+            neumorphism
+            disabled={current + 1 > pageNumber}
+            onClick={() => onChange(current + 1, size)}
+            icon={<Next />}
+          />
+        </Link>
+      );
+    }
+    case -1: {
+      return <Dots />;
+    }
+    default: {
+      return (
+        <Link href={`/archives?page=${page}&size=${size}`}>
+          <A
+            size="small"
+            neumorphism
+            disabled={current === page}
+            clicked={current === page}
+            onClick={() => onChange(page, size)}
+          >
+            {page}
+          </A>
+        </Link>
+      );
+    }
+  }
+}
 
 interface ArchivesProps extends ComponentProps<'base'>, WithRouterProps {
   page: number;
@@ -52,9 +109,10 @@ class Archives extends React.Component<ArchivesProps, ArchivesState> {
     };
   }
 
-  onChange = (page: number, size?: number): void => {
-    if (typeof size !== 'undefined' && size != this.props.size) {
-      Router.push(`/archives?page=${page}&size=${size}`);
+  onChange = (page: number, size: number): void => {
+    if (size != this.props.size) {
+      const newPage = Math.floor(((this.props.page - 1) * this.props.size) / size + 1);
+      Router.push(`/archives?page=${newPage}&size=${size}`);
     }
   };
 
@@ -62,7 +120,7 @@ class Archives extends React.Component<ArchivesProps, ArchivesState> {
     return (
       <Container>
         <Context.Consumer>
-          {context => (
+          {(context) => (
             <Head>
               <title>{`第${this.props.page}页|归档页|${context.blog_name}`}</title>
             </Head>
@@ -76,16 +134,7 @@ class Archives extends React.Component<ArchivesProps, ArchivesState> {
           total={this.props.total}
           loading={this.state.loading}
           callback={this.onChange}
-          pageRender={(page, type, origin) =>
-            type == 'page' || type == 'prev' || type == 'next' ? (
-              // On the first page, prev button will get disabled props, and link can not recvive disabled props.
-              <div>
-                <Link href={`/archives?page=${page}&size=${this.props.size}`}>{origin}</Link>
-              </div>
-            ) : (
-              origin
-            )
-          }
+          pageRender={pageRender}
         />
       </Container>
     );
