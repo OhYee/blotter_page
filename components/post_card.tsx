@@ -53,8 +53,11 @@ export function CardContent(props: { post: Blotter.PostCard; editable?: boolean 
         ) : null}
       </Flex>
 
-      <Flex mainAxis="flex-start">
-        {[<Tag key="tag_icon"/>, ...post.tags.map((tag: Blotter.Tag) => <TagPart key={tag.short} tag={tag} />)]}
+      <Flex mainAxis="flex-start" subSize="middle">
+        {[
+          <Tag key="tag_icon" />,
+          ...post.tags.map((tag: Blotter.Tag) => <TagPart key={tag.short} tag={tag} />),
+        ]}
       </Flex>
     </Flex>
   );
