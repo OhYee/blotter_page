@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Container, { Flex } from '@/components/container';
+import { Flex } from '@/components/container';
 import If from '@/components/if';
 import { RSS } from '@/components/svg';
 

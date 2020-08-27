@@ -13,7 +13,6 @@ import {
   TablePaginationConfig,
 } from 'antd/lib/table/interface';
 
-import Container from '@/components/container';
 import TagPart from '@/components/tag';
 
 import { adminPosts, postDelete } from '@/utils/api';
@@ -320,7 +319,7 @@ class AdminPostList extends React.Component<AdminPostListProps, AdminPostListSta
   };
   render() {
     return (
-      <Container lg={20} md={20} sm={24} xs={24}>
+      <Card>
         <Context.Consumer>
           {(context) => (
             <Head>
@@ -328,36 +327,34 @@ class AdminPostList extends React.Component<AdminPostListProps, AdminPostListSta
             </Head>
           )}
         </Context.Consumer>
-        <Card>
-          {this.renderSearch()}
-          <Table<T>
-            rowKey={(record) => record.id}
-            columns={this.columns}
-            scroll={{ x: true }}
-            dataSource={this.state.data}
-            loading={this.state.loading}
-            onChange={(a, b, c, d) => this.onTableChange(a, b, Array.isArray(c) ? c[0] : c, d)}
-            title={() => (
-              <div style={{ textAlign: 'right' }}>
-                <Link href="/admin/post">
-                  <a>
-                    <Button type="primary">
-                      <Icon type="plus" />
-                      新建文章
-                    </Button>
-                  </a>
-                </Link>
-              </div>
-            )}
-            pagination={{
-              current: this.state.page,
-              total: this.state.total,
-              pageSize: this.state.size,
-              showSizeChanger: true,
-            }}
-          />
-        </Card>
-      </Container>
+        {this.renderSearch()}
+        <Table<T>
+          rowKey={(record) => record.id}
+          columns={this.columns}
+          scroll={{ x: true }}
+          dataSource={this.state.data}
+          loading={this.state.loading}
+          onChange={(a, b, c, d) => this.onTableChange(a, b, Array.isArray(c) ? c[0] : c, d)}
+          title={() => (
+            <div style={{ textAlign: 'right' }}>
+              <Link href="/admin/post">
+                <a>
+                  <Button type="primary">
+                    <Icon type="plus" />
+                    新建文章
+                  </Button>
+                </a>
+              </Link>
+            </div>
+          )}
+          pagination={{
+            current: this.state.page,
+            total: this.state.total,
+            pageSize: this.state.size,
+            showSizeChanger: true,
+          }}
+        />
+      </Card>
     );
   }
 }

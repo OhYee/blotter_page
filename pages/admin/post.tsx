@@ -37,7 +37,7 @@ import moment from '@/utils/moment';
 import MediaQuery from 'react-responsive';
 import { ControlledEditor } from '@monaco-editor/react/lib/';
 
-import Container, { Space } from '@/components/container';
+import  { Space } from '@/components/container';
 import TagSearch from '@/components/tag_search';
 import PostContent from '@/components/post_content';
 import Qiniu from '@/components/upload';
@@ -714,8 +714,8 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
   };
 
   render() {
-    return (
-      <Container xxl={20} xl={20} lg={20} md={24} sm={24} xs={24}>
+      return (
+        <div>
         <Context.Consumer>
           {(context) => (
             <Head>
@@ -767,7 +767,7 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
             </Col>
           ) : null}
         </Row>
-      </Container>
+      </div>
     );
   }
 }

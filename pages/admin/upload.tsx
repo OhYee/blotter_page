@@ -4,7 +4,6 @@ import Head from 'next/head';
 
 import { Card, List, Typography, Select, Button, Tabs } from 'antd';
 
-import Container from '@/components/container';
 import { Space } from '@/components/container';
 import Qiniu, { Upload, BucketSelector, ImageList } from '@/components/upload';
 
@@ -29,7 +28,7 @@ class AdminImages extends React.Component<AdminImagesProps, AdminImagesState> {
 
   render() {
     return (
-      <Container>
+      <Card>
         <Context.Consumer>
           {(context) => (
             <Head>
@@ -37,10 +36,8 @@ class AdminImages extends React.Component<AdminImagesProps, AdminImagesState> {
             </Head>
           )}
         </Context.Consumer>
-        <Card>
-          <Qiniu />
-        </Card>
-      </Container>
+        <Qiniu />
+      </Card>
     );
   }
 }

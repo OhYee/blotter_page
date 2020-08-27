@@ -4,7 +4,6 @@ import Head from 'next/head';
 import { Card } from 'antd';
 
 import TravelMap from '@/components/travel_map';
-import Container from '@/components/container';
 import { Context } from '@/utils/global';
 import { travels_get } from '@/utils/api';
 
@@ -28,7 +27,7 @@ class Travel extends React.Component<TravelProps, TravelState> {
 
   render() {
     return (
-      <Container>
+      <Card>
         <Context.Consumer>
           {(context) => (
             <Head>
@@ -36,10 +35,8 @@ class Travel extends React.Component<TravelProps, TravelState> {
             </Head>
           )}
         </Context.Consumer>
-        <Card>
-          <TravelMap cities={this.props.cities} />
-        </Card>
-      </Container>
+        <TravelMap cities={this.props.cities} />
+      </Card>
     );
   }
 }

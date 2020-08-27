@@ -7,7 +7,7 @@ import { Card, List, Form, Input, Button, DatePicker, Row, Col, Popconfirm, Sele
 import { FormInstance } from 'antd/lib/form';
 
 import TravelMap from '@/components/travel_map';
-import Container, { Space } from '@/components/container';
+import  { Space } from '@/components/container';
 import { Context } from '@/utils/global';
 import { posts, tagsSearch, travels_set, travels_get } from '@/utils/api';
 import ShowNotification from '@/utils/notification';
@@ -266,7 +266,7 @@ class Travel extends React.Component<TravelProps, TravelState> {
 
   render() {
     return (
-      <Container>
+      <Card>
         <Context.Consumer>
           {(context) => (
             <Head>
@@ -274,54 +274,52 @@ class Travel extends React.Component<TravelProps, TravelState> {
             </Head>
           )}
         </Context.Consumer>
-        <Card>
-          <Space>
-            <TravelMap cities={this.state.cities} onCreate={(ins) => this.setState({ ins })} />
-            <Row justify="end">
-              <Col>
-                <Row gutter={[10, 10]}>
-                  <Col>
-                    <Button
-                      type="primary"
-                      loading={this.state.loading}
-                      onClick={async () => {
-                        this.setState({ loading: true });
-                        travels_set(this.state.cities)
-                          .then(ShowNotification)
-                          .catch(console.error)
-                          .finally(() => this.setState({ loading: false }));
-                      }}
-                    >
-                      保存
-                    </Button>
-                  </Col>
-                  <Col>
-                    <Button
-                      type="primary"
-                      onClick={() =>
-                        this.setState((state) => ({
-                          cities: [
-                            { name: '', lng: 0, lat: 0, zoom: 15, travels: [] },
-                            ...state.cities,
-                          ],
-                        }))
-                      }
-                    >
-                      新建城市
-                    </Button>
-                  </Col>
-                </Row>
-              </Col>
-            </Row>
-            <List
-              renderItem={this.renderCity}
-              dataSource={this.state.cities}
-              itemLayout="vertical"
-              loading={this.state.loading}
-            />
-          </Space>
-        </Card>
-      </Container>
+        <Space>
+          <TravelMap cities={this.state.cities} onCreate={(ins) => this.setState({ ins })} />
+          <Row justify="end">
+            <Col>
+              <Row gutter={[10, 10]}>
+                <Col>
+                  <Button
+                    type="primary"
+                    loading={this.state.loading}
+                    onClick={async () => {
+                      this.setState({ loading: true });
+                      travels_set(this.state.cities)
+                        .then(ShowNotification)
+                        .catch(console.error)
+                        .finally(() => this.setState({ loading: false }));
+                    }}
+                  >
+                    保存
+                  </Button>
+                </Col>
+                <Col>
+                  <Button
+                    type="primary"
+                    onClick={() =>
+                      this.setState((state) => ({
+                        cities: [
+                          { name: '', lng: 0, lat: 0, zoom: 15, travels: [] },
+                          ...state.cities,
+                        ],
+                      }))
+                    }
+                  >
+                    新建城市
+                  </Button>
+                </Col>
+              </Row>
+            </Col>
+          </Row>
+          <List
+            renderItem={this.renderCity}
+            dataSource={this.state.cities}
+            itemLayout="vertical"
+            loading={this.state.loading}
+          />
+        </Space>
+      </Card>
     );
   }
 }

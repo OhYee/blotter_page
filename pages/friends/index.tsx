@@ -4,7 +4,7 @@ import Head from 'next/head';
 import Link from 'next/link';
 import { NextPageContext } from 'next';
 
-import Container, { Flex } from '@/components/container';
+import { Flex } from '@/components/container';
 import Card from '@/components/card';
 import Avatar from '@/components/avatar';
 import Popover, { Tooltip } from '@/components/popover';
@@ -145,65 +145,63 @@ class Friends extends React.Component<FriendsProps, FriendsState> {
 
   render() {
     return (
-      <Container>
-        <Context.Consumer>
-          {(context) => (
-            <Fragment>
-              <Head>
-                <title>{`优秀博客订阅|${context.blog_name}`}</title>
-              </Head>
+      <Context.Consumer>
+        {(context) => (
+          <Fragment>
+            <Head>
+              <title>{`优秀博客订阅|${context.blog_name}`}</title>
+            </Head>
 
-              <Flex direction="TB" fullWidth>
-                <Card neumorphism>
-                  <h1
-                    className={textStyles.color}
-                    style={{ display: 'inline-block', marginRight: 10 }}
-                  >
-                    优秀博客订阅
-                  </h1>
-                  <p className={textStyles.secondary} style={{ display: 'inline-block' }}>
-                    友情链接
-                  </p>
-                  <p>
-                    可以在
-                    <Link href="/comment">
-                      <a>评论区</a>
-                    </Link>
-                    或者使用
-                    <a href={`mailto:${context.email}`}>邮件</a>添加订阅(申请友链)
-                  </p>
+            <Flex direction="TB" fullWidth>
+              <Card neumorphism>
+                <h1
+                  className={textStyles.color}
+                  style={{ display: 'inline-block', marginRight: 10 }}
+                >
+                  优秀博客订阅
+                </h1>
+                <p className={textStyles.secondary} style={{ display: 'inline-block' }}>
+                  友情链接
+                </p>
+                <p>
+                  可以在
+                  <Link href="/comment">
+                    <a>评论区</a>
+                  </Link>
+                  或者使用
+                  <a href={`mailto:${context.email}`}>邮件</a>添加订阅(申请友链)
+                </p>
 
-                  <p>唯一的要求就是起码一年能更新几篇文章吧，别的只要内容合法合规，来者不拒</p>
+                <p>唯一的要求就是起码一年能更新几篇文章吧，别的只要内容合法合规，来者不拒</p>
 
-                  <p>
-                    如果可以，最好提供logo以及站点RSS，RSS将用于更新最新文章（没有也没事，就当我练习爬虫技术了）
-                    <br />
-                    友链顺序会按照博客最新文章手动随缘排序（更新勤快的高质量大佬优先）
-                    <br />
-                    每次会将最新 {maxPostNumber}{' '}
-                    篇文章更新到这里，这样我就可以在一个页面看到诸位大佬的最新成果了
-                  </p>
+                <p>
+                  如果可以，最好提供logo以及站点RSS，RSS将用于更新最新文章（没有也没事，就当我练习爬虫技术了）
+                  <br />
+                  友链顺序会按照博客最新文章手动随缘排序（更新勤快的高质量大佬优先）
+                  <br />
+                  每次会将最新 {maxPostNumber}{' '}
+                  篇文章更新到这里，这样我就可以在一个页面看到诸位大佬的最新成果了
+                </p>
 
-                  <p>
-                    友链文章爬虫见
-                    <a href="https://github.com/OhYee/blotter/tree/master/spider" target="_blank">
-                      相关代码
-                    </a>
-                    ，User-Agent 为<code>OhYee Spider</code>
-                    ，如有必要，请加白名单。文章爬取任务会在每天凌晨 3 点执行
-                  </p>
-                </Card>
+                <p>
+                  友链文章爬虫见
+                  <a href="https://github.com/OhYee/blotter/tree/master/spider" target="_blank">
+                    相关代码
+                  </a>
+                  ，User-Agent 为<code>OhYee Spider</code>
+                  ，如有必要，请加白名单。文章爬取任务会在每天凌晨 3 点执行
+                </p>
+              </Card>
 
-                <Flex mainAxis="space-around" itemStyle={{ margin: 10 }}>
-                  {this.props.friends.map((friend) => (
-                    <Flex.Item key={friend.name}>{this.renderCard(friend)}</Flex.Item>
-                  ))}
-                </Flex>
+              <Flex mainAxis="space-around" itemStyle={{ margin: 10 }}>
+                {this.props.friends.map((friend) => (
+                  <Flex.Item key={friend.name}>{this.renderCard(friend)}</Flex.Item>
+                ))}
               </Flex>
-            </Fragment>
-          )}
-        </Context.Consumer>
-      </Container>
+            </Flex>
+          </Fragment>
+        )}
+      </Context.Consumer>
     );
   }
 }

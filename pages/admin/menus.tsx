@@ -6,7 +6,6 @@ import { Card, Button, Typography, Popconfirm } from 'antd';
 import { Icon } from '@ant-design/compatible';
 import { ColumnsType } from 'antd/lib/table/interface';
 
-import Container from '@/components/container';
 import DragableTable from '@/components/dragable_table';
 
 import { Context } from '@/utils/global';
@@ -47,7 +46,7 @@ class AdminMenus extends React.Component<AdminMenusProps, AdminMenusState> {
   };
 
   renderEditableCell = (idx: number, key: string) => {
-    const width = this.columns.find(item => item.key == key).width;
+    const width = this.columns.find((item) => item.key == key).width;
     const padding = 16;
     var style = { width: undefined };
     if (typeof width === 'number') {
@@ -61,8 +60,8 @@ class AdminMenus extends React.Component<AdminMenusProps, AdminMenusState> {
           style={{ width: '100%' }}
           ellipsis={true}
           editable={{
-            onChange: value => {
-              this.setState(state => {
+            onChange: (value) => {
+              this.setState((state) => {
                 var { data } = state;
                 data[idx][key] = value;
                 return { data };
@@ -123,10 +122,10 @@ class AdminMenus extends React.Component<AdminMenusProps, AdminMenusState> {
         <Popconfirm
           title="真的要删除么？"
           onConfirm={() => {
-            this.setState(state => {
+            this.setState((state) => {
               var data = state.data;
-              data = data.filter(item => item.name !== record.name);
-              data.map(d => d);
+              data = data.filter((item) => item.name !== record.name);
+              data.map((d) => d);
               return { data };
             });
           }}
@@ -146,14 +145,14 @@ class AdminMenus extends React.Component<AdminMenusProps, AdminMenusState> {
     <div style={{ textAlign: 'right' }}>
       <Button
         onClick={() => {
-          this.setState(state => {
+          this.setState((state) => {
             var { data } = state;
             data.push({
               name: randomString(),
               link: '',
               icon: '',
             });
-            data = data.map(d => d);
+            data = data.map((d) => d);
             return { data };
           });
         }}
@@ -179,38 +178,36 @@ class AdminMenus extends React.Component<AdminMenusProps, AdminMenusState> {
 
   render() {
     return (
-      <Container lg={20} md={20} sm={24} xs={24}>
+      <Card>
         <Context.Consumer>
-          {context => (
+          {(context) => (
             <Head>
               <title>{`菜单列表|后台|${context.blog_name}`}</title>
             </Head>
           )}
         </Context.Consumer>
-        <Card>
-          <DragableTable<T>
-            columns={this.columns}
-            dataSource={this.state.data}
-            loading={this.state.loading}
-            pagination={false}
-            title={() => this.renderTableHead()}
-            rowKey={(col, idx) => `${col.name}_${idx}`}
-            dragKey="root"
-            scroll={{ x: true }}
-            moveRow={(i, j) => {
-              this.setState(state => {
-                var { data } = state;
-                var temp = data[i];
-                data[i] = data[j];
-                data[j] = temp;
-                data = data.map(d => d);
-                return { data };
-              });
-            }}
-            size="large"
-          />
-        </Card>
-      </Container>
+        <DragableTable<T>
+          columns={this.columns}
+          dataSource={this.state.data}
+          loading={this.state.loading}
+          pagination={false}
+          title={() => this.renderTableHead()}
+          rowKey={(col, idx) => `${col.name}_${idx}`}
+          dragKey="root"
+          scroll={{ x: true }}
+          moveRow={(i, j) => {
+            this.setState((state) => {
+              var { data } = state;
+              var temp = data[i];
+              data[i] = data[j];
+              data[j] = temp;
+              data = data.map((d) => d);
+              return { data };
+            });
+          }}
+          size="large"
+        />
+      </Card>
     );
   }
 }

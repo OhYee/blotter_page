@@ -6,7 +6,6 @@ import { Card, Table, Button, Typography, Popconfirm, Checkbox, DatePicker } fro
 import { ColumnProps } from 'antd/lib/table';
 import { Icon } from '@ant-design/compatible';
 
-import Container from '@/components/container';
 import DragableTable from '@/components/dragable_table';
 
 import { Context } from '@/utils/global';
@@ -389,7 +388,7 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
 
   render() {
     return (
-      <Container lg={20} md={20} sm={24} xs={24}>
+      <Card>
         <Context.Consumer>
           {(context) => (
             <Head>
@@ -397,34 +396,32 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
             </Head>
           )}
         </Context.Consumer>
-        <Card>
-          <DragableTable<T>
-            columns={this.columns}
-            dataSource={this.state.data}
-            loading={this.state.loading}
-            pagination={false}
-            expandedRowRender={this.renderExpand}
-            title={() => this.renderTableHead()}
-            rowKey={(col, idx) => `${col.name}_${idx}`}
-            dragKey="root"
-            scroll={{ x: true }}
-            moveRow={(i, j) => {
-              this.setState((state) => {
-                var { data } = state;
-                var temp = data[i];
-                data[i] = data[j];
-                data[j] = temp;
-                data.map((d) => {
-                  d.posts = d.posts.map((dd) => dd);
-                  return d;
-                });
-                return { data };
+        <DragableTable<T>
+          columns={this.columns}
+          dataSource={this.state.data}
+          loading={this.state.loading}
+          pagination={false}
+          expandedRowRender={this.renderExpand}
+          title={() => this.renderTableHead()}
+          rowKey={(col, idx) => `${col.name}_${idx}`}
+          dragKey="root"
+          scroll={{ x: true }}
+          moveRow={(i, j) => {
+            this.setState((state) => {
+              var { data } = state;
+              var temp = data[i];
+              data[i] = data[j];
+              data[j] = temp;
+              data.map((d) => {
+                d.posts = d.posts.map((dd) => dd);
+                return d;
               });
-            }}
-            size="small"
-          />
-        </Card>
-      </Container>
+              return { data };
+            });
+          }}
+          size="small"
+        />
+      </Card>
     );
   }
 }

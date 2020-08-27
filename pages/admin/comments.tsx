@@ -4,8 +4,6 @@ import Head from 'next/head';
 
 import { Card, List, Comment, Tooltip, Avatar, Checkbox, Button } from 'antd';
 
-import Container from '@/components/container';
-
 import { Context } from '@/utils/global';
 import { commentsAdmin, commentSet } from '@/utils/api';
 import moment from '@/utils/moment';
@@ -130,7 +128,7 @@ class AdminComments extends React.Component<AdminCommentsProps, AdminCommentsSta
       onShowSizeChange: this.onChange,
     };
     return (
-      <Container lg={20} md={20} sm={24} xs={24}>
+      <Card>
         <Context.Consumer>
           {(context) => (
             <Head>
@@ -138,44 +136,42 @@ class AdminComments extends React.Component<AdminCommentsProps, AdminCommentsSta
             </Head>
           )}
         </Context.Consumer>
-        <Card>
-          <List
-            className="comment-list"
-            header={`共 ${this.state.total} 条评论`}
-            itemLayout="horizontal"
-            loading={this.state.loading}
-            dataSource={this.state.data}
-            renderItem={(comment, idx) => (
-              <List.Item key={comment.id}>
-                {this.renderComment(comment, true)}
-                <div style={{ textAlign: 'right' }}>
-                  <p>
-                    <a href={comment.url} target="_blank">
-                      《{comment.title !== '' ? comment.title : '评论区'}》
-                    </a>
-                  </p>
-                  <p>
-                    <Button
-                      onClick={async (e) => {
-                        const r = await commentSet(
-                          comment.id,
-                          comment.ad,
-                          comment.recv,
-                          comment.show,
-                        );
-                        ShowNotification(r);
-                      }}
-                    >
-                      保存
-                    </Button>
-                  </p>
-                </div>
-              </List.Item>
-            )}
-            pagination={pagination}
-          />
-        </Card>
-      </Container>
+        <List
+          className="comment-list"
+          header={`共 ${this.state.total} 条评论`}
+          itemLayout="horizontal"
+          loading={this.state.loading}
+          dataSource={this.state.data}
+          renderItem={(comment, idx) => (
+            <List.Item key={comment.id}>
+              {this.renderComment(comment, true)}
+              <div style={{ textAlign: 'right' }}>
+                <p>
+                  <a href={comment.url} target="_blank">
+                    《{comment.title !== '' ? comment.title : '评论区'}》
+                  </a>
+                </p>
+                <p>
+                  <Button
+                    onClick={async (e) => {
+                      const r = await commentSet(
+                        comment.id,
+                        comment.ad,
+                        comment.recv,
+                        comment.show,
+                      );
+                      ShowNotification(r);
+                    }}
+                  >
+                    保存
+                  </Button>
+                </p>
+              </div>
+            </List.Item>
+          )}
+          pagination={pagination}
+        />
+      </Card>
     );
   }
 }

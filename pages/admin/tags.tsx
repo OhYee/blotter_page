@@ -13,7 +13,6 @@ import {
   TablePaginationConfig,
 } from 'antd/lib/table/interface';
 
-import Container from '@/components/container';
 import TagPart from '@/components/tag';
 import Qiniu from '@/components/upload';
 
@@ -277,7 +276,7 @@ class AdminTagList extends React.Component<AdminTagListProps, AdminTagListState>
 
   render() {
     return (
-      <Container lg={20} md={20} sm={24} xs={24}>
+      <Card>
         <Context.Consumer>
           {(context) => (
             <Head>
@@ -286,36 +285,34 @@ class AdminTagList extends React.Component<AdminTagListProps, AdminTagListState>
           )}
         </Context.Consumer>
         {this.renderImages()}
-        <Card>
-          <Form layout="inline">
-            <Form.Item wrapperCol={{ md: 20, sm: 24 }}>
-              <Input placeholder="搜索标签" onChange={this.searchOnChange}></Input>
-            </Form.Item>
-            <Form.Item wrapperCol={{ md: 4, sm: 24 }}>
-              <Button type="primary" onClick={this.onInsert}>
-                <Icon type="plus" />
-                新建标签
-              </Button>
-            </Form.Item>
-          </Form>
+        <Form layout="inline">
+          <Form.Item wrapperCol={{ md: 20, sm: 24 }}>
+            <Input placeholder="搜索标签" onChange={this.searchOnChange}></Input>
+          </Form.Item>
+          <Form.Item wrapperCol={{ md: 4, sm: 24 }}>
+            <Button type="primary" onClick={this.onInsert}>
+              <Icon type="plus" />
+              新建标签
+            </Button>
+          </Form.Item>
+        </Form>
 
-          <Table<T>
-            rowKey={(record) => record.id}
-            columns={this.columns}
-            scroll={{ x: true }}
-            dataSource={this.state.data}
-            loading={this.state.loading}
-            onChange={(a, b, c, d) => this.onTableChange(a, b, Array.isArray(c) ? c[0] : c, d)}
-            expandedRowRender={(_, idx) => this.renderEditableCell(idx, 'description', true)}
-            pagination={{
-              current: this.state.page,
-              total: this.state.total,
-              pageSize: this.state.size,
-              showSizeChanger: true,
-            }}
-          />
-        </Card>
-      </Container>
+        <Table<T>
+          rowKey={(record) => record.id}
+          columns={this.columns}
+          scroll={{ x: true }}
+          dataSource={this.state.data}
+          loading={this.state.loading}
+          onChange={(a, b, c, d) => this.onTableChange(a, b, Array.isArray(c) ? c[0] : c, d)}
+          expandedRowRender={(_, idx) => this.renderEditableCell(idx, 'description', true)}
+          pagination={{
+            current: this.state.page,
+            total: this.state.total,
+            pageSize: this.state.size,
+            showSizeChanger: true,
+          }}
+        />
+      </Card>
     );
   }
 }

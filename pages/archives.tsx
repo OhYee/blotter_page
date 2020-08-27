@@ -8,7 +8,6 @@ import Router, { withRouter } from 'next/router';
 import { WithRouterProps } from 'next/dist/client/with-router';
 
 import PostList from '@/components/post_list';
-import Container from '@/components/container';
 import { Pre, Next, Dots } from '@/components/svg';
 import { A } from '@/components/button';
 
@@ -118,7 +117,7 @@ class Archives extends React.Component<ArchivesProps, ArchivesState> {
 
   render() {
     return (
-      <Container>
+      <div>
         <Context.Consumer>
           {(context) => (
             <Head>
@@ -136,7 +135,7 @@ class Archives extends React.Component<ArchivesProps, ArchivesState> {
           callback={this.onChange}
           pageRender={pageRender}
         />
-      </Container>
+      </div>
     );
   }
 }

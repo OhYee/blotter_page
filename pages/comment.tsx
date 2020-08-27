@@ -5,7 +5,6 @@ import { withRouter } from 'next/router';
 import { WithRouterProps } from 'next/dist/client/with-router';
 
 import Card from '@/components/card';
-import Container from '@/components/container';
 import CommentPart from '@/components/comment';
 
 import { Context } from '@/utils/global';
@@ -20,7 +19,7 @@ class CommentPage extends React.Component<CommentPageProps, CommentPageState> {
 
   render() {
     return (
-      <Container>
+      <Card neumorphism>
         <Context.Consumer>
           {(context) => (
             <Head>
@@ -28,10 +27,8 @@ class CommentPage extends React.Component<CommentPageProps, CommentPageState> {
             </Head>
           )}
         </Context.Consumer>
-        <Card neumorphism>
-          <CommentPart url={this.props.router.asPath} />
-        </Card>
-      </Container>
+        <CommentPart url={this.props.router.asPath} />
+      </Card>
     );
   }
 }

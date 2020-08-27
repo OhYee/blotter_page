@@ -119,7 +119,7 @@ class User extends React.Component<UserProps, UserState> {
     const fields = this.state.user.self ? allFields : allFields.filter((item) => !item.self);
 
     return (
-      <Container>
+      <Card>
         <Context.Consumer>
           {(context) => (
             <Head>
@@ -127,105 +127,103 @@ class User extends React.Component<UserProps, UserState> {
             </Head>
           )}
         </Context.Consumer>
-        <Card>
-          <p style={{ textAlign: 'center' }}>
-            <Avatar size={128} src={this.state.user.avatar} />
-          </p>
-          <If condition={this.state.user.self}>
-            <Space direction="horizontal" flexCenter>
-              <Button
-                loading={this.state.loadingAvatar}
-                onClick={async () => {
-                  this.setState({ loadingAvatar: true });
-                  const r = await avatar(this.state.user.email);
-                  this.setState((state) => {
-                    var { user } = state;
-                    user.avatar = r.avatar;
-                    return { user, loadingAvatar: false };
-                  });
-                }}
-              >
-                根据邮箱更新 Github、Gavatar 头像
-              </Button>
+        <p style={{ textAlign: 'center' }}>
+          <Avatar size={128} src={this.state.user.avatar} />
+        </p>
+        <If condition={this.state.user.self}>
+          <Space direction="horizontal" flexCenter>
+            <Button
+              loading={this.state.loadingAvatar}
+              onClick={async () => {
+                this.setState({ loadingAvatar: true });
+                const r = await avatar(this.state.user.email);
+                this.setState((state) => {
+                  var { user } = state;
+                  user.avatar = r.avatar;
+                  return { user, loadingAvatar: false };
+                });
+              }}
+            >
+              根据邮箱更新 Github、Gavatar 头像
+            </Button>
 
-              <a href="/api/user/qq_avatar" target="_blank">
-                <Button disabled={!this.state.user.qq_connected}>更新 QQ 头像</Button>
-              </a>
+            <a href="/api/user/qq_avatar" target="_blank">
+              <Button disabled={!this.state.user.qq_connected}>更新 QQ 头像</Button>
+            </a>
 
-              <Button onClick={() => this.getData()}>刷新数据</Button>
-            </Space>
-          </If>
-          <List
-            dataSource={fields}
-            renderItem={(item) => (
-              <List.Item key={item.key}>
-                <Row style={{ width: '100%' }}>
-                  <Col span={4}>
-                    <Typography.Text strong>{item.name}</Typography.Text>
-                  </Col>
-                  <Col span={20}>
-                    {this.state.user.self ? (
-                      <Input
-                        addonBefore={item.prefix}
-                        addonAfter={item.suffix}
-                        value={this.state.user[item.key]}
-                        onChange={(e) => {
-                          var value = e.target.value;
-                          if (!!item.rewrite) value = item.rewrite(value);
-                          this.setState((state) => {
-                            var { user } = state;
-                            user[item.key] = value;
-                            return { user };
-                          });
-                        }}
-                      />
-                    ) : (
-                      <p>
-                        {item.prefix} {this.state.user[item.key]} {item.suffix}
-                      </p>
-                    )}
-                  </Col>
-                </Row>
-              </List.Item>
-            )}
-          />
-          <If condition={this.state.user.self}>
-            <Space>
-              <Input
-                type="password"
-                placeholder="如果不需要修改密码请留空"
-                value={this.state.password}
-                onChange={(e) => this.setState({ password: e.target.value })}
-              />
-              <Row justify="space-between">
-                <Col>
-                  {!this.state.user.qq_connected ? (
-                    <a href="/api/user/jump_to_qq?state=connect" target="_blank">
-                      <Button>绑定 QQ 登录</Button>
-                    </a>
-                  ) : (
-                    <Button disabled={true}>已绑定 QQ 登录</Button>
-                  )}
+            <Button onClick={() => this.getData()}>刷新数据</Button>
+          </Space>
+        </If>
+        <List
+          dataSource={fields}
+          renderItem={(item) => (
+            <List.Item key={item.key}>
+              <Row style={{ width: '100%' }}>
+                <Col span={4}>
+                  <Typography.Text strong>{item.name}</Typography.Text>
                 </Col>
-                <Col>
-                  {!this.state.user.github_connected ? (
-                    <a href="/api/user/jump_to_github?state=connect" target="_blank">
-                      <Button>绑定 Github 登录</Button>
-                    </a>
+                <Col span={20}>
+                  {this.state.user.self ? (
+                    <Input
+                      addonBefore={item.prefix}
+                      addonAfter={item.suffix}
+                      value={this.state.user[item.key]}
+                      onChange={(e) => {
+                        var value = e.target.value;
+                        if (!!item.rewrite) value = item.rewrite(value);
+                        this.setState((state) => {
+                          var { user } = state;
+                          user[item.key] = value;
+                          return { user };
+                        });
+                      }}
+                    />
                   ) : (
-                    <Button disabled={true}>已绑定 Github 登录</Button>
+                    <p>
+                      {item.prefix} {this.state.user[item.key]} {item.suffix}
+                    </p>
                   )}
-                </Col>
-                <Col style={{ textAlign: 'right' }}>
-                  <Button loading={this.state.loading} type="primary" onClick={this.update}>
-                    更新信息
-                  </Button>
                 </Col>
               </Row>
-            </Space>
-          </If>
-        </Card>
-      </Container>
+            </List.Item>
+          )}
+        />
+        <If condition={this.state.user.self}>
+          <Space>
+            <Input
+              type="password"
+              placeholder="如果不需要修改密码请留空"
+              value={this.state.password}
+              onChange={(e) => this.setState({ password: e.target.value })}
+            />
+            <Row justify="space-between">
+              <Col>
+                {!this.state.user.qq_connected ? (
+                  <a href="/api/user/jump_to_qq?state=connect" target="_blank">
+                    <Button>绑定 QQ 登录</Button>
+                  </a>
+                ) : (
+                  <Button disabled={true}>已绑定 QQ 登录</Button>
+                )}
+              </Col>
+              <Col>
+                {!this.state.user.github_connected ? (
+                  <a href="/api/user/jump_to_github?state=connect" target="_blank">
+                    <Button>绑定 Github 登录</Button>
+                  </a>
+                ) : (
+                  <Button disabled={true}>已绑定 Github 登录</Button>
+                )}
+              </Col>
+              <Col style={{ textAlign: 'right' }}>
+                <Button loading={this.state.loading} type="primary" onClick={this.update}>
+                  更新信息
+                </Button>
+              </Col>
+            </Row>
+          </Space>
+        </If>
+      </Card>
     );
   }
 }

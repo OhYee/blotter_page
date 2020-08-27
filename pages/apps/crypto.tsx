@@ -19,7 +19,7 @@ import {
 } from 'antd';
 import { ArrowDownOutlined, ArrowUpOutlined } from '@ant-design/icons';
 
-import Container, { Space, TextCenter } from '@/components/container';
+import { Space, TextCenter } from '@/components/container';
 import { Context } from '@/utils/global';
 import initialCrypto, { Crypto, HashType } from '@/utils/wasm_crypto';
 import { isNull } from 'util';
@@ -647,7 +647,7 @@ class CryptoApp extends React.Component<CryptoAppProps, CryptoAppState> {
       return new Uint8Array();
     };
     return (
-      <Container>
+      <Card>
         <Context.Consumer>
           {(context) => (
             <Head>
@@ -655,38 +655,36 @@ class CryptoApp extends React.Component<CryptoAppProps, CryptoAppState> {
             </Head>
           )}
         </Context.Consumer>
-        <Card>
-          <Space>
-            <Alert
-              showIcon
-              message="提示"
-              description={
-                <Typography.Paragraph>
-                  本应用用于实验 WASM 相关技术，加密算法使用 Go WebAssembly
-                  实现，可能无法在较老的浏览器运行
-                  <br />
-                  （看上去这是个前端，其实使用后端写的，但是实际上最花时间的还是前端）
-                </Typography.Paragraph>
-              }
-            />
+        <Space>
+          <Alert
+            showIcon
+            message="提示"
+            description={
+              <Typography.Paragraph>
+                本应用用于实验 WASM 相关技术，加密算法使用 Go WebAssembly
+                实现，可能无法在较老的浏览器运行
+                <br />
+                （看上去这是个前端，其实使用后端写的，但是实际上最花时间的还是前端）
+              </Typography.Paragraph>
+            }
+          />
 
-            {!!this.state.error ? (
-              <Result
-                status="error"
-                title="WebAssembly 加载错误"
-                subTitle="或许你需要尝试使用更现代的浏览器"
-                extra={`${this.state.error}`}
-              ></Result>
-            ) : this.state.loading ? (
-              <Result icon={<Spin size="large" />} title="正在加载 WebAssembly 模块" />
-            ) : (
-              <CryptoContext.Provider value={{ crypto: this.crypto }}>
-                {this.renderTabs()}
-              </CryptoContext.Provider>
-            )}
-          </Space>
-        </Card>
-      </Container>
+          {!!this.state.error ? (
+            <Result
+              status="error"
+              title="WebAssembly 加载错误"
+              subTitle="或许你需要尝试使用更现代的浏览器"
+              extra={`${this.state.error}`}
+            ></Result>
+          ) : this.state.loading ? (
+            <Result icon={<Spin size="large" />} title="正在加载 WebAssembly 模块" />
+          ) : (
+            <CryptoContext.Provider value={{ crypto: this.crypto }}>
+              {this.renderTabs()}
+            </CryptoContext.Provider>
+          )}
+        </Space>
+      </Card>
     );
   }
 }

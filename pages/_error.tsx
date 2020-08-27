@@ -7,8 +7,6 @@ import { WithRouterProps } from 'next/dist/client/with-router';
 
 import { Card, PageHeader, Typography, Result } from 'antd';
 
-import Container from '@/components/container';
-
 import { guessPath } from '@/utils/redirect';
 import { Context } from '@/utils/global';
 
@@ -54,7 +52,7 @@ class ErrorPage extends Component<ErrorPageProps, ErrorPageState> {
     };
 
     return (
-      <Container>
+      <Card>
         <Context.Consumer>
           {(context) => (
             <Head>
@@ -62,29 +60,27 @@ class ErrorPage extends Component<ErrorPageProps, ErrorPageState> {
             </Head>
           )}
         </Context.Consumer>
-        <Card>
-          <PageHeader
-            title={`发生一个${this.props.status}错误！`}
-            subTitle={errorMessage[this.props.status]}
-          />
-          {this.props.status == 404 && path !== '' ? (
-            <Typography.Paragraph strong>
-              当前您访问的页面是{this.props.router.asPath}，猜测得出你实际要访问得连接是
-              <a href={path}>{path}</a>（纯粹猜测）
-            </Typography.Paragraph>
-          ) : null}
-          <Typography.Paragraph style={{ lineHeight: '2em' }}>
-            一般而言，所有发生错误可能的情况如下：
-            <ul>
-              {Object.keys(errorMessage).map((status) => (
-                <li key={status}>
-                  <strong>{status}错误</strong>,{errorMessage[status]}
-                </li>
-              ))}
-            </ul>
+        <PageHeader
+          title={`发生一个${this.props.status}错误！`}
+          subTitle={errorMessage[this.props.status]}
+        />
+        {this.props.status == 404 && path !== '' ? (
+          <Typography.Paragraph strong>
+            当前您访问的页面是{this.props.router.asPath}，猜测得出你实际要访问得连接是
+            <a href={path}>{path}</a>（纯粹猜测）
           </Typography.Paragraph>
-        </Card>
-      </Container>
+        ) : null}
+        <Typography.Paragraph style={{ lineHeight: '2em' }}>
+          一般而言，所有发生错误可能的情况如下：
+          <ul>
+            {Object.keys(errorMessage).map((status) => (
+              <li key={status}>
+                <strong>{status}错误</strong>,{errorMessage[status]}
+              </li>
+            ))}
+          </ul>
+        </Typography.Paragraph>
+      </Card>
     );
   }
 }

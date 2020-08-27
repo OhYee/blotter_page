@@ -8,7 +8,6 @@ import { SaveOutlined } from '@ant-design/icons';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 
-import Container from '@/components/container';
 
 import { variables, variablesSet } from '@/utils/api';
 import { Context } from '@/utils/global';
@@ -45,7 +44,7 @@ class AdminVariables extends React.Component<AdminVariablesProps, AdminVariables
 
   render() {
     return (
-      <Container lg={20} md={20} sm={24} xs={24}>
+      <Card style={{ overflow: 'auto' }}>
         <Context.Consumer>
           {(context) => (
             <Head>
@@ -53,18 +52,16 @@ class AdminVariables extends React.Component<AdminVariablesProps, AdminVariables
             </Head>
           )}
         </Context.Consumer>
-        <Card style={{ overflow: 'auto' }}>
-          <div style={{ minWidth: 1000 }}>
-            <DndProvider backend={HTML5Backend}>
-              <DynamicForm
-                value={this.state.variables}
-                callback={(value) => {
-                  this.setState({ variables: value });
-                }}
-              />
-            </DndProvider>
-          </div>
-        </Card>
+        <div style={{ minWidth: 1000 }}>
+          <DndProvider backend={HTML5Backend}>
+            <DynamicForm
+              value={this.state.variables}
+              callback={(value) => {
+                this.setState({ variables: value });
+              }}
+            />
+          </DndProvider>
+        </div>
         <Button
           shape="circle"
           size="large"
@@ -79,7 +76,7 @@ class AdminVariables extends React.Component<AdminVariablesProps, AdminVariables
           }}
           style={{ position: 'fixed', right: '20px', top: '120px' }}
         />
-      </Container>
+      </Card>
     );
   }
 }

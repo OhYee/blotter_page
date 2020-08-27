@@ -8,7 +8,6 @@ import { Card, Button, Form, Input, Checkbox, Modal, Typography } from 'antd';
 import { Icon } from '@ant-design/compatible';
 const { Paragraph, Text, Title } = Typography;
 
-import Container from '@/components/container';
 import QuickLogin from '@/components/auth';
 
 import { Context } from '@/utils/global';
@@ -237,7 +236,7 @@ class Register extends React.Component<RegisterProps, RegisterState> {
 
   render() {
     return (
-      <div>
+      <Card>
         <Context.Consumer>
           {(context) => (
             <Head>
@@ -245,84 +244,80 @@ class Register extends React.Component<RegisterProps, RegisterState> {
             </Head>
           )}
         </Context.Consumer>
-        <Container>
-          <Card>
-            <Form layout="vertical" ref={this.formRef}>
-              <Form.Item
-                label="用户名"
-                name="username"
-                rules={[
-                  {
-                    required: true,
-                    message: '请输入用户名',
-                  },
-                  {
-                    validator: async (_, value) =>
-                      (await checkUsername(value)).existed
-                        ? Promise.reject('该用户名已被使用')
-                        : Promise.resolve(),
-                  },
-                ]}
-              >
-                <Input />
-              </Form.Item>
-              <Form.Item
-                label="密码"
-                name="password"
-                rules={[
-                  {
-                    required: true,
-                    message: '请输入密码',
-                  },
-                ]}
-              >
-                <Input type="password" />
-              </Form.Item>
-              <Form.Item
-                label="再次输入"
-                name="repassword"
-                rules={[
-                  {
-                    required: true,
-                    message: '请输入密码',
-                  },
-                  {
-                    validator: (_, value) =>
-                      this.formRef.current.getFieldValue('password') == value
-                        ? Promise.resolve()
-                        : Promise.reject('两次输入的密码不一致'),
-                  },
-                ]}
-              >
-                <Input type="password" />
-              </Form.Item>
-              <Form.Item
-                name="agreement"
-                valuePropName="checked"
-                rules={[
-                  {
-                    validator: (_, value) =>
-                      value ? Promise.resolve() : Promise.reject('未浏览并同意用户协议，请勿注册'),
-                  },
-                ]}
-              >
-                <Checkbox>
-                  我同意<a onClick={this.agreement}>用户协议</a>
-                </Checkbox>
-              </Form.Item>
+        <Form layout="vertical" ref={this.formRef}>
+          <Form.Item
+            label="用户名"
+            name="username"
+            rules={[
+              {
+                required: true,
+                message: '请输入用户名',
+              },
+              {
+                validator: async (_, value) =>
+                  (await checkUsername(value)).existed
+                    ? Promise.reject('该用户名已被使用')
+                    : Promise.resolve(),
+              },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label="密码"
+            name="password"
+            rules={[
+              {
+                required: true,
+                message: '请输入密码',
+              },
+            ]}
+          >
+            <Input type="password" />
+          </Form.Item>
+          <Form.Item
+            label="再次输入"
+            name="repassword"
+            rules={[
+              {
+                required: true,
+                message: '请输入密码',
+              },
+              {
+                validator: (_, value) =>
+                  this.formRef.current.getFieldValue('password') == value
+                    ? Promise.resolve()
+                    : Promise.reject('两次输入的密码不一致'),
+              },
+            ]}
+          >
+            <Input type="password" />
+          </Form.Item>
+          <Form.Item
+            name="agreement"
+            valuePropName="checked"
+            rules={[
+              {
+                validator: (_, value) =>
+                  value ? Promise.resolve() : Promise.reject('未浏览并同意用户协议，请勿注册'),
+              },
+            ]}
+          >
+            <Checkbox>
+              我同意<a onClick={this.agreement}>用户协议</a>
+            </Checkbox>
+          </Form.Item>
 
-              <Form.Item>
-                <QuickLogin />
-                <span style={{ float: 'right' }}>
-                  <Button type="primary" loading={this.state.loading} onClick={() => this.submit()}>
-                    注册
-                  </Button>
-                </span>
-              </Form.Item>
-            </Form>
-          </Card>
-        </Container>
-      </div>
+          <Form.Item>
+            <QuickLogin />
+            <span style={{ float: 'right' }}>
+              <Button type="primary" loading={this.state.loading} onClick={() => this.submit()}>
+                注册
+              </Button>
+            </span>
+          </Form.Item>
+        </Form>
+      </Card>
     );
   }
 }

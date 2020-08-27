@@ -9,7 +9,9 @@ import Link from 'next/link';
 import { Card, Descriptions } from 'antd';
 
 import PostList from '@/components/post_list';
-import Container, { Space } from '@/components/container';
+import { Space } from '@/components/container';
+import { Pre, Next, Dots } from '@/components/svg';
+import { A } from '@/components/button';
 
 import { parseNumberParams } from '@/utils/parse';
 import { tagPosts } from '@/utils/api';
@@ -64,9 +66,67 @@ class TagDetail extends React.Component<TagDetailProps, TagDetailState> {
     }
   };
 
+  pageRender = (
+    current: number,
+    pageNumber: number,
+    size: number,
+    page: number,
+    onChange: (page: number, size: number) => void,
+  ) => {
+    switch (page) {
+      case -2: {
+        return (
+          <Link
+            href="/tag/[tag]"
+            as={`/tag/${this.props.router.query.tag}?page=${page}&size=${this.props.size}`}
+          >
+            <A
+              size="small"
+              neumorphism
+              disabled={current - 1 < 1}
+              onClick={() => onChange(current - 1, size)}
+              icon={<Pre />}
+            />
+          </Link>
+        );
+      }
+      case -3: {
+        return (
+          <Link href={`/archives?page=${current + 1}&size=${size}`}>
+            <A
+              size="small"
+              neumorphism
+              disabled={current + 1 > pageNumber}
+              onClick={() => onChange(current + 1, size)}
+              icon={<Next />}
+            />
+          </Link>
+        );
+      }
+      case -1: {
+        return <Dots />;
+      }
+      default: {
+        return (
+          <Link href={`/archives?page=${page}&size=${size}`}>
+            <A
+              size="small"
+              neumorphism
+              disabled={current === page}
+              clicked={current === page}
+              onClick={() => onChange(page, size)}
+            >
+              {page}
+            </A>
+          </Link>
+        );
+      }
+    }
+  };
+
   render() {
     return (
-      <Container>
+      <Space size="middle">
         <Context.Consumer>
           {(context) => (
             <Head>
@@ -74,57 +134,40 @@ class TagDetail extends React.Component<TagDetailProps, TagDetailState> {
             </Head>
           )}
         </Context.Consumer>
-
-        <Space size="middle">
-          <Card>
-            <Descriptions title="标签信息" bordered layout="vertical" column={{ xs: 1, sm: 3 }}>
-              <Descriptions.Item key="name" label="标签名称">
-                {this.props.tag.name}
-              </Descriptions.Item>
-              <Descriptions.Item key="short" label="标签链接">
-                {this.props.tag.short}
-              </Descriptions.Item>
-              <Descriptions.Item key="img" label="标签图片">
-                <img
-                  style={{ maxWidth: '50px' }}
-                  src={this.props.tag.icon === '' ? '/static/img/noimg.png' : this.props.tag.icon}
-                />
-              </Descriptions.Item>
-              <Descriptions.Item key="description" label="标签描述" span={3}>
-                {!!this.props.tag.description ? (
-                  <p dangerouslySetInnerHTML={{ __html: this.props.tag.description }}></p>
-                ) : (
-                  <i>暂无描述</i>
-                )}
-              </Descriptions.Item>
-            </Descriptions>
-          </Card>
-
-          <PostList
-            header={`共有 ${this.props.total} 篇文章`}
-            posts={this.props.posts}
-            page={this.props.page}
-            size={this.props.size}
-            total={this.props.total}
-            callback={this.onChange}
-            pageRender={(page, type, origin) =>
-              type == 'page' || type == 'prev' || type == 'next' ? (
-                // On the first page, prev button will get disabled props, and link can not recvive disabled props.
-                <div>
-                  <Link
-                    href="/tag/[tag]"
-                    as={`/tag/${this.props.router.query.tag}?page=${page}&size=${this.props.size}`}
-                  >
-                    {origin}
-                  </Link>
-                </div>
+        <Card>
+          <Descriptions title="标签信息" bordered layout="vertical" column={{ xs: 1, sm: 3 }}>
+            <Descriptions.Item key="name" label="标签名称">
+              {this.props.tag.name}
+            </Descriptions.Item>
+            <Descriptions.Item key="short" label="标签链接">
+              {this.props.tag.short}
+            </Descriptions.Item>
+            <Descriptions.Item key="img" label="标签图片">
+              <img
+                style={{ maxWidth: '50px' }}
+                src={this.props.tag.icon === '' ? '/static/img/noimg.png' : this.props.tag.icon}
+              />
+            </Descriptions.Item>
+            <Descriptions.Item key="description" label="标签描述" span={3}>
+              {!!this.props.tag.description ? (
+                <p dangerouslySetInnerHTML={{ __html: this.props.tag.description }}></p>
               ) : (
-                origin
-              )
-            }
-          />
-        </Space>
-      </Container>
+                <i>暂无描述</i>
+              )}
+            </Descriptions.Item>
+          </Descriptions>
+        </Card>
+
+        <PostList
+          header={`共有 ${this.props.total} 篇文章`}
+          posts={this.props.posts}
+          page={this.props.page}
+          size={this.props.size}
+          total={this.props.total}
+          callback={this.onChange}
+          pageRender={this.pageRender}
+        />
+      </Space>
     );
   }
 }

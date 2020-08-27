@@ -21,7 +21,7 @@ import { PaginationConfig } from 'antd/lib/pagination';
 import { ColumnsType, TablePaginationConfig } from 'antd/lib/table/interface';
 import { UserOutlined, SolutionOutlined, CheckOutlined } from '@ant-design/icons';
 
-import Container, { Space, TextCenter } from '@/components/container';
+import  { Space, TextCenter } from '@/components/container';
 import Steps from '@/components/steps';
 import { Context } from '@/utils/global';
 import { LoginModal } from '@/components/login';
@@ -317,7 +317,7 @@ class Queues extends React.Component<QueuesProps, QueuesState> {
 
   render() {
     return (
-      <Container>
+      <div>
         <Context.Consumer>
           {(context) => (
             <Head>
@@ -337,7 +337,7 @@ class Queues extends React.Component<QueuesProps, QueuesState> {
             if (success) this.setState({ loginModal: false });
           }}
         />
-      </Container>
+      </div>
     );
   }
 }

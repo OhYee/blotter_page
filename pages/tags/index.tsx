@@ -4,7 +4,6 @@ import Head from 'next/head';
 import { NextPageContext } from 'next';
 
 import TagPart from '@/components/tag';
-import Container from '@/components/container';
 import Card from '@/components/card';
 import { Flex } from '@/components/container';
 
@@ -65,7 +64,7 @@ class Tags extends React.Component<TagsProps, TagsState> {
 
   render() {
     return (
-      <Container>
+      <div>
         <Context.Consumer>
           {(context) => (
             <Head>
@@ -80,7 +79,7 @@ class Tags extends React.Component<TagsProps, TagsState> {
             ...this.props.tags.map(this.renderGroup),
           ]}
         </Flex>
-      </Container>
+      </div>
     );
   }
 }

@@ -6,7 +6,6 @@ import { Icon } from '@ant-design/compatible';
 import Link from 'next/link';
 
 import styles from './apps.less';
-import Container from '@/components/container';
 import { Context } from '@/utils/global';
 
 const imageSuffix = ['jpg', 'gif', 'jpeg', 'png', 'svg', 'bmp'];
@@ -56,7 +55,7 @@ class Apps extends React.Component<AppsProps, AppsState> {
 
   render() {
     return (
-      <Container>
+      <Card>
         <Context.Consumer>
           {(context) => (
             <Head>
@@ -64,31 +63,29 @@ class Apps extends React.Component<AppsProps, AppsState> {
             </Head>
           )}
         </Context.Consumer>
-        <Card>
-          <div className={styles.container}>
-            {this.props.apps.map((item) => (
-              <Link href={item.link} key={item.name}>
-                <a className={[styles.wrapper, 'text-color'].join(' ')}>
-                  <div className={styles.img}>
-                    {typeof item.img !== 'undefined' ? (
-                      isImageUrl(item.img) ? (
-                        <Avatar size={64} src={item.img} style={item.style} />
-                      ) : (
-                        <Avatar size={64} style={item.style}>
-                          {item.img}
-                        </Avatar>
-                      )
+        <div className={styles.container}>
+          {this.props.apps.map((item) => (
+            <Link href={item.link} key={item.name}>
+              <a className={[styles.wrapper, 'text-color'].join(' ')}>
+                <div className={styles.img}>
+                  {typeof item.img !== 'undefined' ? (
+                    isImageUrl(item.img) ? (
+                      <Avatar size={64} src={item.img} style={item.style} />
                     ) : (
-                      <Avatar size={64} icon={<Icon type={item.icon} />} style={item.style} />
-                    )}
-                  </div>
-                  <p>{item.name}</p>
-                </a>
-              </Link>
-            ))}
-          </div>
-        </Card>
-      </Container>
+                      <Avatar size={64} style={item.style}>
+                        {item.img}
+                      </Avatar>
+                    )
+                  ) : (
+                    <Avatar size={64} icon={<Icon type={item.icon} />} style={item.style} />
+                  )}
+                </div>
+                <p>{item.name}</p>
+              </a>
+            </Link>
+          ))}
+        </div>
+      </Card>
     );
   }
 }

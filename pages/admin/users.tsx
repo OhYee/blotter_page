@@ -14,7 +14,7 @@ import {
 } from 'antd/lib/table/interface';
 import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
 
-import Container, { Space } from '@/components/container';
+import { Space } from '@/components/container';
 
 import { postDelete, users, reset_password } from '@/utils/api';
 import { Context } from '@/utils/global';
@@ -191,7 +191,7 @@ class AdminUsers extends React.Component<AdminUsersProps, AdminUsersState> {
       },
     ];
     return (
-      <Container lg={20} md={20} sm={24} xs={24}>
+      <Card>
         <Context.Consumer>
           {(context) => (
             <Head>
@@ -199,32 +199,30 @@ class AdminUsers extends React.Component<AdminUsersProps, AdminUsersState> {
             </Head>
           )}
         </Context.Consumer>
-        <Card>
-          <Space>
-            <Input
-              placeholder="搜索用户"
-              onChange={this.onChange}
-              allowClear
-              prefix={<Icon type="search" />}
-              size="large"
-            />
-            <Table<Blotter.User>
-              rowKey={(record) => record.id}
-              columns={columns}
-              scroll={{ x: true }}
-              dataSource={this.state.data}
-              loading={this.state.loading}
-              onChange={(a, b, c, d) => this.onTableChange(a, b, Array.isArray(c) ? c[0] : c, d)}
-              pagination={{
-                current: this.state.page,
-                total: this.state.total,
-                pageSize: this.state.size,
-                showSizeChanger: true,
-              }}
-            />
-          </Space>
-        </Card>
-      </Container>
+        <Space>
+          <Input
+            placeholder="搜索用户"
+            onChange={this.onChange}
+            allowClear
+            prefix={<Icon type="search" />}
+            size="large"
+          />
+          <Table<Blotter.User>
+            rowKey={(record) => record.id}
+            columns={columns}
+            scroll={{ x: true }}
+            dataSource={this.state.data}
+            loading={this.state.loading}
+            onChange={(a, b, c, d) => this.onTableChange(a, b, Array.isArray(c) ? c[0] : c, d)}
+            pagination={{
+              current: this.state.page,
+              total: this.state.total,
+              pageSize: this.state.size,
+              showSizeChanger: true,
+            }}
+          />
+        </Space>
+      </Card>
     );
   }
 }

@@ -4,7 +4,7 @@ import { NextPageContext } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
 
-import Container, { Flex } from '@/components/container';
+import  { Flex } from '@/components/container';
 import PostList from '@/components/post_list';
 import Input, { CheckBox } from '@/components/input';
 import { Search } from '@/components/svg';

@@ -33,7 +33,7 @@ import {
   CoffeeOutlined,
 } from '@ant-design/icons';
 
-import Container, { Space, TextCenter } from '@/components/container';
+import { Space, TextCenter } from '@/components/container';
 import { Context, defaultContext } from '@/utils/global';
 import Steps from '@/components/steps';
 import { LoginModal } from '@/components/login';
@@ -597,7 +597,7 @@ class QueueDetail extends React.Component<QueueDetailProps, QueueDetailState> {
 
   render() {
     return (
-      <Container>
+      <div>
         <Context.Consumer>
           {(context) => (
             <Head>
@@ -617,7 +617,7 @@ class QueueDetail extends React.Component<QueueDetailProps, QueueDetailState> {
             if (success) this.setState({ loginModal: false });
           }}
         />
-      </Container>
+      </div>
     );
   }
 }
