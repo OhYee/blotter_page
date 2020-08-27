@@ -1,0 +1,64 @@
+@import '../../../styles/shadow.less';
+
+.checkbox {
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+  .icon {
+    height: 1em;
+    width: 1em;
+    display: inline-block;
+    margin-right: 5px;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto;
+    line-height: 1em;
+    color: var(--primary);
+    border: 1px solid var(--color);
+    transition: color var(--transition-time), border var(--transition-time);
+  }
+  .text {
+    margin-left: 1.5em;
+  }
+}
+
+.switch {
+  .neumorphism_inset;
+
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+  padding: 0 10px;
+  border-radius: 1em;
+
+  .icon {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: calc(100% - 20px);
+
+    height: 1em;
+    width: 1em;
+    border-radius: 1em;
+    margin: auto;
+
+    background: var(--primary);
+    transition: background var(--transition-time), left var(--transition-time);
+  }
+  .text {
+    margin-left: 0px;
+    margin-right: 20px;
+    transition: margin-left var(--transition-time), margin-right var(--transition-time);
+  }
+
+  &.checked {
+    .icon {
+      left: 5px;
+    }
+    .text {
+      margin-left: 20px;
+      margin-right: 0px;
+    }
+  }
+}
