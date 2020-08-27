@@ -33,9 +33,13 @@ export default function Tag(props: TagProps) {
           )}
           mainAxis="space-around"
           mainSize="small"
+          wrap={false}
           style={{
             ...(!!tag.color
-              ? { background: tag.color, color: isLight(tag.color) ? 'var(--color-dark)' : 'var(--color-white)' }
+              ? {
+                  background: tag.color,
+                  color: isLight(tag.color) ? 'var(--color-dark)' : 'var(--color-white)',
+                }
               : {}),
             ...style,
           }}
