@@ -3,14 +3,16 @@ import React from 'react';
 import { Flex } from '@/components/container';
 import Button from '@/components/button';
 import { Dots, Pre, Next } from '@/components/svg';
+import Input from '@/components/input';
 
 import { ComponentProps } from '@/utils/component';
 
 function defaultRender(
   current: number,
   pageNumber: number,
+  size: number,
   page: number,
-  callback: (page: number) => void,
+  onChange: (page: number, size: number) => void,
 ) {
   switch (page) {
     case -2: {
@@ -19,7 +21,7 @@ function defaultRender(
           size="small"
           neumorphism
           disabled={current - 1 < 1}
-          onClick={() => callback(current - 1)}
+          onClick={() => onChange(current - 1, size)}
           icon={<Pre />}
         />
       );
@@ -30,7 +32,7 @@ function defaultRender(
           size="small"
           neumorphism
           disabled={current + 1 > pageNumber}
-          onClick={() => callback(current + 1)}
+          onClick={() => onChange(current + 1, size)}
           icon={<Next />}
         />
       );
@@ -45,7 +47,7 @@ function defaultRender(
           neumorphism
           disabled={current === page}
           clicked={current === page}
-          onClick={() => callback(page)}
+          onClick={() => onChange(page, size)}
         >
           {page}
         </Button>
@@ -58,12 +60,14 @@ export declare type PaginationProps = ComponentProps<{
   size?: number;
   total?: number;
   range?: number;
-  callback?: (page: number) => void;
+  sizeSelect?: number[];
+  onChange?: (page: number, size: number) => void;
   render?: (
     current: number,
     pageNumber: number,
+    size: number,
     page: number,
-    callback: (page: number) => void,
+    onChange: (page: number, size: number) => void,
   ) => React.ReactNode; // -2 prepage -3 next page -1 dots
 }>;
 
@@ -73,8 +77,9 @@ export default function Pagination(props: PaginationProps) {
     size = 10,
     total = 0,
     range = 3,
+    sizeSelect = [],
     render = defaultRender,
-    callback = () => {},
+    onChange = () => {},
   } = props;
   const pageNumber = React.useMemo(() => Math.ceil(total / size), [total, size]);
 
@@ -91,13 +96,23 @@ export default function Pagination(props: PaginationProps) {
   pages.unshift(-2);
   pages.push(-3);
 
-  console.log(pages);
+  var items = pages.map((p) => (
+    <Flex.Item key={p}>{render(page, pageNumber, size, p, onChange)}</Flex.Item>
+  ));
+  if (!!sizeSelect && sizeSelect.length > 1)
+    items.push(
+      <Input
+        key="size"
+        editable={false}
+        value={`${size}个/页`}
+        options={sizeSelect.map((s) => ({ key: `${s}个/页`, value: s }))}
+        onSelect={(_, v) => onChange(page, v)}
+      />,
+    );
 
   return (
-    <Flex mainAxis="flex-end">
-      {pages.map((p) => (
-        <Flex.Item key={p}>{render(page, pageNumber, p, callback)}</Flex.Item>
-      ))}
+    <Flex mainAxis="flex-end" subSize="middle">
+      {items}
     </Flex>
   );
 }
