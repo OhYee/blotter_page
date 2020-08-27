@@ -1,1 +1,0 @@
-{"ast":null,"code":"function getOffsetTop(e) {\n  return e.offsetTop + (e.offsetParent ? getOffsetTop(e.offsetParent) : 0);\n}\n\nexport default getOffsetTop;","map":null,"metadata":{},"sourceType":"module"}

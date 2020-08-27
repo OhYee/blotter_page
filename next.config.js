@@ -10,18 +10,18 @@ const withPlugins = require('next-compose-plugins');
 const path = require('path');
 const withTM = require('next-transpile-modules');
 const cssLoaderGetLocalIdent = require('css-loader/lib/getLocalIdent.js');
-const generateTheme = require('next-dynamic-antd-theme/plugin');
+// const generateTheme = require('next-dynamic-antd-theme/plugin');
 
 
 
 const prod = process.env.NODE_ENV === 'production';
 
-const withAntdTheme = generateTheme({
-  antDir: path.join(__dirname, './node_modules/antd'),
-  stylesDir: path.join(__dirname, './theme'),
-  varFile: path.join(__dirname, './theme/vars.less'),
-  outputFilePath: path.join(__dirname, './.next/static/color.less'),
-});
+// const withAntdTheme = generateTheme({
+//   antDir: path.join(__dirname, './node_modules/antd'),
+//   stylesDir: path.join(__dirname, './theme'),
+//   varFile: path.join(__dirname, './theme/vars.less'),
+//   outputFilePath: path.join(__dirname, './.next/static/color.less'),
+// });
 
 // with ant design
 // https://juejin.im/post/5cc74b925188252e741cce09
@@ -65,8 +65,12 @@ withAntd = (nextConfig = {}) => {
   });
 };
 
+<<<<<<< HEAD
 module.exports = withPlugins([withAntd, withTM, withLess, withCss, withSass, withAntdTheme], {
 >>>>>>> Update gh-pages to output generated at dac18c8
+=======
+module.exports = withPlugins([withAntd, withTM, withLess, withCss, withSass], {
+>>>>>>> Update gh-pages to output generated at 9d66009
   serverRuntimeConfig: {
     //这里的配置项只能在服务端获取到，在浏览器端是获取不到的
   },
