@@ -63,7 +63,10 @@ export default function Popover(props: PopoverProps) {
     if (!show) setPos(getPosition());
     setShow(true);
   };
-  const moveOut = () => setShow(false);
+  const moveOut = () => {
+    setPos({});
+    setShow(false);
+  };
   return (
     <div
       ref={ref}
