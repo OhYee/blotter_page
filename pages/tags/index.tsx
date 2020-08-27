@@ -12,6 +12,7 @@ import { Context } from '@/utils/global';
 import { sortTagsByPinYin, TagGroup } from '@/utils/sort';
 
 import styles from './tags.less';
+import textStyles from '@/styles/text.less';
 
 interface TagsProps extends React.ComponentProps<'base'> {
   total: number;
@@ -53,7 +54,7 @@ class Tags extends React.Component<TagsProps, TagsState> {
     return group.tags.length > 0 ? (
       <Card key={group.title} neumorphism>
         <Flex direction="TB" subAxis="flex-start" fullWidth>
-          <h2>{group.title}</h2>
+          <h2 className={textStyles.color}>{group.title}</h2>
           <Flex mainAxis="flex-start" mainSize={15} subSize={15}>
             {group.tags.map(this.renderTag)}
           </Flex>
