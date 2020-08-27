@@ -28,14 +28,14 @@ export default function Popover(props: PopoverProps) {
     popoverClass,
     popoverStyle,
     children,
-    closeDelay = 500,
+    closeDelay = 200,
     getOffset = () => ({ top: 0, left: 0 }),
   } = props;
   const ref = React.useRef<HTMLDivElement>();
   const childRef = React.useRef<HTMLDivElement>();
   const [pos, setPos] = React.useState({} as React.CSSProperties);
   const [show, setShow] = React.useState(false);
-  const [willClose, setWillClose] = React.useState(false);
+  //   const [willClose, setWillClose] = React.useState(false);
   const getPosition = React.useCallback(() => {
     const { top = 0, left = 0 } = getOffset();
     return {
@@ -62,16 +62,22 @@ export default function Popover(props: PopoverProps) {
   if (show) classList.push(styles.show);
   const click = React.useMemo(() => trigger.indexOf('click') !== -1, [trigger]);
   const hover = React.useMemo(() => trigger.indexOf('hover') !== -1, [trigger]);
+  var willClose = false;
   const moveIn = () => {
     if (!show) setPos(getPosition());
     setShow(true);
-    setWillClose(false);
+    // setWillClose(false);
+    willClose = false;
   };
   const moveOut = () => {
-    setPos({});
-    setWillClose(true);
+    // setWillClose(true);
+    willClose = true;
+
     setTimeout(() => {
-      if (willClose) setShow(false);
+      if (willClose) {
+        setPos({});
+        setShow(false);
+      }
     }, closeDelay);
   };
   return (
