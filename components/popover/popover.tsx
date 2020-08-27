@@ -14,6 +14,7 @@ export declare type PopoverProps = ComponentProps<{
   trigger?: ('click' | 'hover')[];
   popoverClass?: string;
   popoverStyle?: React.CSSProperties;
+  closeDelay?: number;
   getOffset?: () => { top?: number; left?: number };
 }>;
 
@@ -27,12 +28,14 @@ export default function Popover(props: PopoverProps) {
     popoverClass,
     popoverStyle,
     children,
+    closeDelay = 500,
     getOffset = () => ({ top: 0, left: 0 }),
   } = props;
   const ref = React.useRef<HTMLDivElement>();
   const childRef = React.useRef<HTMLDivElement>();
   const [pos, setPos] = React.useState({} as React.CSSProperties);
   const [show, setShow] = React.useState(false);
+  const [willClose, setWillClose] = React.useState(false);
   const getPosition = React.useCallback(() => {
     const { top = 0, left = 0 } = getOffset();
     return {
@@ -62,10 +65,14 @@ export default function Popover(props: PopoverProps) {
   const moveIn = () => {
     if (!show) setPos(getPosition());
     setShow(true);
+    setWillClose(false);
   };
   const moveOut = () => {
     setPos({});
-    setShow(false);
+    setWillClose(true);
+    setTimeout(() => {
+      if (willClose) setShow(false);
+    }, closeDelay);
   };
   return (
     <div
