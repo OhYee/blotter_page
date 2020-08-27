@@ -1,10 +1,10 @@
 import React, { ComponentProps } from 'react';
 
-import { Row, Col, Pagination } from 'antd';
-
+import Pagination from '@/components/pagination';
 import PostCard from '@/components/post_card';
+import { Flex } from '@/components/container';
+
 import { Context } from '@/utils/global';
-import { Flex } from './container';
 
 import styles from './post_list.less';
 
@@ -17,9 +17,11 @@ type PostListProps = {
   callback?: (page: number, size?: number) => void;
   header?: string;
   pageRender?: (
+    current: number,
+    pageNumber: number,
+    size: number,
     page: number,
-    type: 'page' | 'prev' | 'next' | 'jump-prev' | 'jump-next',
-    originalElement: React.ReactElement<HTMLElement>,
+    onChange: (page: number, size: number) => void,
   ) => React.ReactNode;
 };
 
@@ -56,19 +58,6 @@ class PostList extends React.Component<PostListProps & ComponentProps<'base'>, P
   };
 
   render() {
-    var pagination =
-      typeof this.props.callback === 'undefined'
-        ? false
-        : {
-            showSizeChanger: true,
-            current: this.props.page,
-            pageSize: this.props.size,
-            total: this.props.total,
-            onChange: this.props.callback,
-            onShowSizeChange: this.props.callback,
-            itemRender: this.props.pageRender,
-          };
-
     if (this.context.big_screen && this.props.posts.length > 1) {
       var l: Blotter.PostCard[] = [];
       var r: Blotter.PostCard[] = [];
@@ -115,12 +104,15 @@ class PostList extends React.Component<PostListProps & ComponentProps<'base'>, P
         ) : (
           this.renderList(this.props.posts)
         )}
-        {!!pagination ? (
-          <Row justify="end">
-            <Col>
-              <Pagination {...pagination} />
-            </Col>
-          </Row>
+        {!!this.props.callback ? (
+          <Pagination
+            sizeSelect={[10, 20, 30, 40]}
+            page={this.props.page}
+            size={this.props.size}
+            total={this.props.total}
+            onChange={this.props.callback}
+            render={this.props.pageRender}
+          />
         ) : null}
       </Flex>
     );
