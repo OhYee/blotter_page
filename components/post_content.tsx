@@ -3,10 +3,9 @@ import Link from 'next/link';
 
 import { Anchor, Skeleton } from 'antd';
 import {
-  EyeOutlined,
-  CalendarOutlined,
-  EditOutlined,
-  TagOutlined,
+ 
+
+
   RightOutlined,
   LeftOutlined,
 } from '@ant-design/icons';
@@ -14,11 +13,10 @@ import {
 import moment from '@/utils/moment';
 
 import Image, { setImageLightbox, setSVGLightbox } from '@/components/image';
-import If from '@/components/if';
-import TagPart from '@/components/tag';
+
 import { CardContent } from '@/components/post_card';
 import Card from '@/components/card';
-import Button from '@/components/button';
+
 
 import { Context } from '@/utils/global';
 import { travels_get_url } from '@/utils/api';
@@ -230,11 +228,7 @@ class PostContent extends Component<PostContentProps, PostContentState> {
 
         <Flex direction="TB" fullWidth>
           <Card neumorphismInset>
-            <Context.Consumer>
-              {(context) => (
-                <CardContent post={this.props.post} editable={(context.user.permission & 1) == 1} />
-              )}
-            </Context.Consumer>
+            <CardContent post={this.props.post} inPost />
           </Card>
 
           {this.renderTravel()}

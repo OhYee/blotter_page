@@ -11,6 +11,7 @@ import { Flex } from '@/components/container';
 import { Eye, Calendar, Tag, Edit } from '@/components/svg';
 import { A } from '@/components/button';
 
+import { Context } from '@/utils/global';
 import { concat } from '@/utils/component';
 
 import textStyles from '@/styles/text.less';
@@ -20,14 +21,24 @@ type PostCardProps = {
   loading: boolean;
 };
 
-export function CardContent(props: { post: Blotter.PostCard; editable?: boolean }) {
-  const { editable = false, post } = props;
+export function CardContent(props: { post: Blotter.PostCard; inPost?: boolean }) {
+  const { inPost = false, post } = props;
+  const context = React.useContext(Context);
+  const title = [
+    <h2 className={concat(textStyles.color, textStyles.ellipsis)} title={post.title}>
+      {post.title}
+    </h2>,
+    <p className={textStyles.color}>{post.abstract}</p>,
+  ];
   return (
     <Flex direction="TB" fullWidth>
-      <h2 className={concat(textStyles.color, textStyles.ellipsis)} title={post.title}>
-        {post.title}
-      </h2>
-      <p className={textStyles.color}>{post.abstract}</p>
+      {!inPost ? (
+        <Link href="/post/[url]" as={`/post/${post.url}`}>
+          <a className={textStyles.color}>{title}</a>
+        </Link>
+      ) : (
+        title
+      )}
 
       <Flex mainAxis="flex-start">
         <Flex mainAxis="flex-start" mainSize="small">
@@ -44,7 +55,7 @@ export function CardContent(props: { post: Blotter.PostCard; editable?: boolean 
             {post.edit_time}
           </Flex>
         )}
-        {editable ? (
+        {inPost && (context.user.permission & 1) == 1 ? (
           <Link href={`/admin/post?url=${post.url}`} passHref>
             <A primary neumorphism size="small" target="_blank">
               编辑
@@ -82,13 +93,7 @@ export default function PostCard(props: PostCardProps) {
       }
     >
       <Skeleton loading={loading} active>
-        {loading ? null : (
-          <Link href="/post/[url]" as={`/post/${post.url}`}>
-            <a className={textStyles.color}>
-              <CardContent post={post} />
-            </a>
-          </Link>
-        )}
+        {loading ? null : <CardContent post={post} />}
       </Skeleton>
     </Card>
   );
