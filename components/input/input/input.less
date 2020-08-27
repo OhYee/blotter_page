@@ -1,0 +1,102 @@
+.wrapper {
+  width: 10em;
+  .label {
+    color: var(--color);
+    background: var(--background);
+    transition: color var(--transition-time), background var(--transition-time),
+      box-shadow var(--transition-time);
+    margin-right: 10px;
+  }
+  .inner {
+    display: inline-grid;
+    width: 100%;
+    .input {
+      width: 100%;
+      color: var(--color);
+      background: var(--background);
+      transition: color var(--transition-time), background var(--transition-time),
+        box-shadow var(--transition-time);
+      border-radius: 20px;
+      position: relative;
+      &.small {
+        padding: 0px 10px;
+      }
+      &.middle {
+        padding: 5px 10px;
+      }
+      &.large {
+        padding: 10 10px;
+      }
+      &:focus {
+        border-color: #66afe9;
+        outline: 0;
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+      }
+      .prefix {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 10px;
+        width: 1em;
+        height: 1em;
+        line-height: 1em;
+        margin: auto;
+      }
+      .suffix {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: 10px;
+        width: 1em;
+        height: 1em;
+        line-height: 1em;
+        margin: auto;
+      }
+      input {
+        width: 100%;
+        outline-style: none;
+        border: none;
+        background: transparent;
+        &::placeholder {
+          color: var(--secondary);
+          transition: color var(--transition-time);
+        }
+      }
+    }
+    .select {
+      position: relative;
+      z-index: 2;
+      ul {
+        position: absolute;
+        list-style: none;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        color: var(--color);
+        background: var(--background);
+        transition: color var(--transition-time), background var(--transition-time),
+          box-shadow var(--transition-time), opacity var(--transition-time),
+          visibility var(--transition-time);
+
+        li {
+          cursor: pointer;
+          padding: 10px;
+          &:hover {
+            color: var(--background);
+            background: var(--secondary);
+          }
+        }
+      }
+    }
+    &:global(.disabled) {
+      opacity: 0.5;
+      .select {
+        ul {
+          li {
+            cursor: not-allowed;
+          }
+        }
+      }
+    }
+  }
+}
