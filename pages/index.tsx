@@ -4,7 +4,7 @@ import { NextPageContext } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
 
-import  { Flex } from '@/components/container';
+import { Flex } from '@/components/container';
 import PostList from '@/components/post_list';
 import Input, { CheckBox } from '@/components/input';
 import { Search } from '@/components/svg';
@@ -164,6 +164,7 @@ class Index extends React.Component<IndexProps, IndexState> {
             '搜索范围',
             ...checkboxs.map((item) => (
               <CheckBox
+                key={item.key}
                 value={this.state.search_fields.indexOf(item.key) !== -1}
                 onChange={(checked) => {
                   this.setState((state) => {
@@ -206,26 +207,26 @@ class Index extends React.Component<IndexProps, IndexState> {
             </Head>
           )}
         </Context.Consumer>
-          <Flex direction="TB" fullWidth>
-            <Card neumorphism style={{ lineHeight: '2em' }}>
-              {this.renderSearch()}
-            </Card>
+        <Flex direction="TB" fullWidth>
+          <Card neumorphism style={{ lineHeight: '2em' }}>
+            {this.renderSearch()}
+          </Card>
 
-            <PostList
-              posts={this.state.posts}
-              header={this.state.total == 0 ? undefined : `共 ${this.state.total} 条搜索结果`}
-              loading={this.state.loading}
-              page={this.state.page}
-              size={this.state.size}
-              total={this.state.total}
-              callback={this.state.callback}
-            />
-            <div className="textCenter">
-              <Link href="/archives?page=2&size=10">
-                <Button neumorphism>查看更多</Button>
-              </Link>
-            </div>
-          </Flex>
+          <PostList
+            posts={this.state.posts}
+            header={this.state.total == 0 ? undefined : `共 ${this.state.total} 条搜索结果`}
+            loading={this.state.loading}
+            page={this.state.page}
+            size={this.state.size}
+            total={this.state.total}
+            callback={this.state.callback}
+          />
+          <div className="textCenter">
+            <Link href="/archives?page=2&size=10">
+              <Button neumorphism>查看更多</Button>
+            </Link>
+          </div>
+        </Flex>
       </div>
     );
   }
