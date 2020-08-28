@@ -12,7 +12,7 @@ export const defaultContext: GlobalProps = {
   //   token: '',
   friends: [],
   big_screen: false,
-  theme: getTimeTheme(),
+  theme: 'default',
   grey: false,
   root: '',
   author: '',
