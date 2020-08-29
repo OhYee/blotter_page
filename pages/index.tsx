@@ -183,10 +183,10 @@ class Index extends React.Component<IndexProps, IndexState> {
           ]}
         </Flex>
         <Flex mainAxis="flex-start">
-          {['从这些标签里搜索：', this.renderTagSearch('with_tags')]}
+          <span>从这些标签里搜索：</span> {this.renderTagSearch('with_tags')}
         </Flex>
         <Flex mainAxis="flex-start">
-          {['从这些标签里排除：', this.renderTagSearch('without_tags')]}
+          <span>从这些标签里排除：</span> {this.renderTagSearch('without_tags')}
         </Flex>
 
         <Flex mainAxis="flex-start" subSize="middle">
