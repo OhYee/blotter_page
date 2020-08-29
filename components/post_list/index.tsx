@@ -97,10 +97,14 @@ class PostList extends React.Component<PostListProps & ComponentProps<'base'>, P
             暂无数据
           </div>
         ) : this.context.big_screen && this.props.posts.length > 1 ? (
-          <div className={styles.container}>
-            <div className={styles.column}>{this.renderList(l)}</div>
-            <div className={styles.column}>{this.renderList(r)}</div>
-          </div>
+          <Flex
+            subAxis="flex-start"
+            mainSize={20}
+            itemStyle={{ flex: 1, width: 'calc(50% - 10px)' }}
+          >
+            {this.renderList(l)}
+            {this.renderList(r)}
+          </Flex>
         ) : (
           this.renderList(this.props.posts)
         )}
