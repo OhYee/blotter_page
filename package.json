@@ -65,7 +65,11 @@
         "react-router": "^5.1.2",
         "sass": "^1.25.0",
         "tsconfig-paths-webpack-plugin": "^3.2.0",
+<<<<<<< HEAD
         "typescript": "^3.7.5"
 >>>>>>> Update gh-pages to output generated at 56396d7
+=======
+        "typescript": "^4.0.2"
+>>>>>>> Update gh-pages to output generated at 671564e
     }
 }
