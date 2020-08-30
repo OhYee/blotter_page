@@ -1,0 +1,37 @@
+.collspase {
+  width: 100%;
+  border: 1px solid var(--secondary);
+
+  .title {
+    cursor: pointer;
+    min-height: 1em;
+    padding: 10px;
+    border-bottom: 1px solid transparent;
+    transition: border var(--transition-time), background var(--transition-time);
+    background: var(--background-1);
+
+    .prefix {
+      margin-right: 10px;
+      display: inline-block;
+      transform: rotate(180deg);
+      transition: transform var(--transition-time);
+    }
+  }
+  .content {
+    max-height: 0px;
+    overflow: hidden;
+    transition: max-height var(--transition-time);
+  }
+
+  &.open {
+    .title {
+      border-bottom: 1px solid var(--secondary);
+      .prefix {
+        transform: rotate(270deg);
+      }
+    }
+    .content {
+      max-height: 100%;
+    }
+  }
+}
