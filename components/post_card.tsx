@@ -25,10 +25,12 @@ export function CardContent(props: { post: Blotter.PostCard; inPost?: boolean })
   const { inPost = false, post } = props;
   const context = React.useContext(Context);
   const title = [
-    <h2 className={concat(textStyles.color, textStyles.ellipsis)} title={post.title}>
+    <h2 key="title" className={concat(textStyles.color, textStyles.ellipsis)} title={post.title}>
       {post.title}
     </h2>,
-    <p className={textStyles.color}>{post.abstract}</p>,
+    <p key="abstract" className={textStyles.color}>
+      {post.abstract}
+    </p>,
   ];
   return (
     <Flex direction="TB" fullWidth>
