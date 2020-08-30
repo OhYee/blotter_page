@@ -324,3 +324,14 @@ export function Wechat(props: { style?: React.CSSProperties; className?: string 
     </SVG>
   );
 }
+
+export function Triangle(props: { style?: React.CSSProperties; className?: string }) {
+  const { style, className } = props;
+  return (
+    <SVG style={style} className={className}>
+      <svg viewBox="0 0 1024 1024" fill="currentColor">
+        <path d="M27.273 753.613l485.222-484.233 484.233 485.222z" p-id="2313"></path>
+      </svg>
+    </SVG>
+  );
+}
