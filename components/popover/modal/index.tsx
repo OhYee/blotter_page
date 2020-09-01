@@ -9,23 +9,14 @@ import Button from '@/components/button';
 
 import styles from './modal.less';
 
-export declare type ModalProps = ComponentProps<{ show?: boolean; close?: boolean }>;
+export declare type ModalProps = ComponentProps<{ show?: boolean; close?: boolean | (() => void) }>;
 
-const Modal = (props: ModalProps) => {
-  const { show = true, className, style, children } = props;
+const ModalContent = (
+  props: ModalProps & { update: (child: React.ReactNode) => void; remove: () => void },
+) => {
+  const { show = true, className, style, children, update, remove, close = true } = props;
   return (
-    <Body>
-      <div className={concat(className, styles.modal)} style={style}>
-        {children}
-      </div>
-    </Body>
-  );
-};
-
-const info = (props: ModalProps) => {
-  const { show = true, className, style, children, close = true } = props;
-  const { update, remove } = Body.Insert(({ update, remove }) => (
-    <div>
+    <div style={{ visibility: show ? 'visible' : 'hidden' }}>
       <div className={concat(className, styles.modal)} style={style}>
         <Card style={{ background: 'var(--background)' }}>
           {close ? (
@@ -41,11 +32,35 @@ const info = (props: ModalProps) => {
               onClick={remove}
             />
           ) : null}
-          <div style={{ clear: 'both' }}>{children}</div>
+          <div style={{ clear: 'both' }}>
+            {typeof children === 'function' ? children({ update, remove }) : children}
+          </div>
         </Card>
       </div>
       <div className={styles.dimmed} onClick={remove}></div>
     </div>
+  );
+};
+
+const Modal = (props: ModalProps) => {
+  return (
+    <Body>
+      {({ update, remove }) => (
+        <ModalContent
+          {...props}
+          close={!!props.close}
+          update={update}
+          remove={typeof props.close === 'function' ? props.close : () => {}}
+        />
+      )}
+    </Body>
+  );
+};
+
+const info = (props: ModalProps) => {
+  console.log('info', props);
+  const { update, remove } = Body.Insert(({ update, remove }) => (
+    <ModalContent {...props} update={update} remove={remove} />
   ));
   return { update, remove };
 };
