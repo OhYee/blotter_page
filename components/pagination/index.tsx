@@ -18,7 +18,6 @@ function defaultRender(
     case -2: {
       return (
         <Button
-          size="small"
           neumorphism
           disabled={current - 1 < 1}
           onClick={() => onChange(current - 1, size)}
@@ -29,7 +28,6 @@ function defaultRender(
     case -3: {
       return (
         <Button
-          size="small"
           neumorphism
           disabled={current + 1 > pageNumber}
           onClick={() => onChange(current + 1, size)}
@@ -43,7 +41,6 @@ function defaultRender(
     default: {
       return (
         <Button
-          size="small"
           neumorphism
           disabled={current === page}
           clicked={current === page}
@@ -80,6 +77,8 @@ export default function Pagination(props: PaginationProps) {
     sizeSelect = [],
     render = defaultRender,
     onChange = () => {},
+    className,
+    style,
   } = props;
   const pageNumber = React.useMemo(() => Math.ceil(total / size), [total, size]);
 
@@ -111,7 +110,7 @@ export default function Pagination(props: PaginationProps) {
     );
 
   return (
-    <Flex mainAxis="flex-end" subSize="middle">
+    <Flex mainAxis="flex-end" subSize="middle" className={className} style={style}>
       {items}
     </Flex>
   );
