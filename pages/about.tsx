@@ -1,11 +1,6 @@
 import React, { ComponentProps } from 'react';
 
 import Head from 'next/head';
-import { NextPageContext } from 'next';
-
-import { List, Table, Descriptions, Collapse } from 'antd';
-import { ColumnCount } from 'antd/lib/list';
-import { ColumnsType } from 'antd/lib/table';
 
 import If from '@/components/if';
 import Card from '@/components/card';
@@ -14,6 +9,8 @@ import { Tooltip } from '@/components/popover';
 import Button from '@/components/button';
 import { QQ, Github, Mail, Zhihu, Alipay, Wechat } from '@/components/svg';
 import { Flex } from '@/components/container';
+import Table, { Column } from '@/components/table';
+import Collapse from '@/components/collapse';
 
 import { Context } from '@/utils/global';
 import { showQR } from '@/utils/payment';
@@ -51,13 +48,7 @@ interface AboutPageState {
   loading: boolean;
 }
 
-function ToColumnCount(num: number): ColumnCount {
-  const count: ColumnCount[] = [1, 2, 3, 4, 6, 8, 12, 24];
-  for (var i = 0; i < count.length; i++) {
-    if (count[i] >= num) return count[i];
-  }
-  return count[count.length - 1];
-}
+
 
 class AboutPage extends React.Component<AboutPageProps, AboutPageState> {
   static defaultProps = {};
@@ -83,27 +74,25 @@ class AboutPage extends React.Component<AboutPageProps, AboutPageState> {
       this.setState({ repos, loading: false });
     }
   }
-  render_pay = () => {
-    return (
-      <List
-        dataSource={[
+    render_pay = () => {
+      const socialMedia: {
+      name: string;
+      icon: React.ReactNode;
+    }[] = [
           { name: 'wechat', icon: <Wechat /> },
           { name: 'alipay', icon: <Alipay /> },
-        ]}
-        grid={{ column: 2 }}
-        style={{ textAlign: 'center' }}
-        renderItem={(item, idx) => (
-          <List.Item key={idx}>
+        ]
+      return (
+        <Flex mainAxis="space-around">
+          {socialMedia.map((item) => (
             <Button
               size="large"
-              circle
               icon={item.icon}
               onClick={() => showQR(item.name as 'wechat' | 'alipay')}
             />
-          </List.Item>
-        )}
-      />
-    );
+          ))}
+        </Flex>
+      );
   };
   render_social = () => {
     const socialMedia: {
@@ -152,79 +141,80 @@ class AboutPage extends React.Component<AboutPageProps, AboutPageState> {
   };
 
   render_education = () => {
-    const columns: ColumnsType<Education> = [
+    const columns: Column<Education>[] = [
       {
-        dataIndex: 'name',
+        key: 'name',
         title: '名称',
-        align: 'center',
+        headStyle: { textAlign: 'center' },
+        style: { textAlign: 'center' },
+        width: '50%',
+        minWidth: 100,
       },
       {
-        dataIndex: 'major',
+        key: 'major',
         title: '方向',
-        align: 'center',
-        width: 250,
-        ellipsis: true,
+        headStyle: { textAlign: 'center' },
+        style: { textAlign: 'center' },
+        width: '25%',
+        minWidth: 50,
       },
       {
-        dataIndex: 'time',
+        key: 'time',
         title: '时间',
-        align: 'center',
-        width: 250,
-        ellipsis: true,
+        headStyle: { textAlign: 'center' },
+        style: { textAlign: 'center' },
+        width: '25%',
+        minWidth: 50,
       },
     ];
     return (
       <Table<Education>
-        rowKey={(record) => record.name}
-        dataSource={this.props.edu}
+        // rowKey={(record) => record.name}
+        data={this.props.edu}
         columns={columns}
-        pagination={false}
-        scroll={{ x: true }}
+        // pagination={false}
+        // scroll={{ x: true }}
       />
     );
   };
 
   render_awards = () => {
-    const columns: ColumnsType<Award> = [
+    const columns: Column<Award>[] = [
       {
-        dataIndex: 'name',
-        align: 'center',
+        key: 'name',
+        headStyle: { textAlign: 'center' },
+        style: { textAlign: 'center' },
+        width: '50%',
+        minWidth: 100,
       },
       {
-        dataIndex: 'level',
-        align: 'center',
-        width: 250,
-        ellipsis: true,
+        key: 'level',
+        headStyle: { textAlign: 'center' },
+        style: { textAlign: 'center' },
+        width: '25%',
+        minWidth: 50,
       },
       {
-        dataIndex: 'count',
+        key: 'count',
         render: (value) => `×${value}`,
-        align: 'center',
-        width: 250,
-        ellipsis: true,
+        headStyle: { textAlign: 'center' },
+        style: { textAlign: 'center' },
+        width: '25%',
+        minWidth: 50,
       },
     ];
-    return (
-      <Table<Award>
-        dataSource={this.props.awards}
-        rowKey={(record) => record.name}
-        columns={columns}
-        size="small"
-        showHeader={false}
-        pagination={false}
-        scroll={{ x: true }}
-      />
-    );
+    return <Table<Award> data={this.props.awards} columns={columns} showHeader={false} />;
   };
 
   render_projects = () => {
     if (!!!this.props.github) return null;
-    const columns: ColumnsType<GithubRepo> = [
+    const columns: Column<GithubRepo>[] = [
       {
-        dataIndex: 'name',
+        key: 'name',
         title: '项目名',
-        ellipsis: true,
-        align: 'center',
+        minWidth: 100,
+        headStyle: { textAlign: 'center' },
+        style: { textAlign: 'center' },
         render: (value, record) => (
           <a target="_blank" href={record.html_url}>
             {value}
@@ -232,71 +222,69 @@ class AboutPage extends React.Component<AboutPageProps, AboutPageState> {
         ),
       },
       {
-        dataIndex: 'stargazers_count',
+        key: 'stargazers_count',
         title: 'star数',
-        align: 'center',
-        width: 100,
-        ellipsis: true,
+        minWidth: 100,
+        headStyle: { textAlign: 'center' },
+        style: { textAlign: 'center' },
         sorter: (a, b) => a.stargazers_count - b.stargazers_count,
       },
       {
-        dataIndex: 'forks_count',
+        key: 'forks_count',
         title: 'fork数',
-        align: 'center',
-        width: 100,
-        ellipsis: true,
+        minWidth: 100,
+        headStyle: { textAlign: 'center' },
+        style: { textAlign: 'center' },
         sorter: (a, b) => a.forks_count - b.forks_count,
       },
       {
-        dataIndex: 'pushed_at',
+        key: 'pushed_at',
         title: '最新更新',
-        align: 'center',
-        defaultSortOrder: 'descend',
+        minWidth: 100,
+        headStyle: { textAlign: 'center' },
+        style: { textAlign: 'center' },
         sorter: (a, b) => new Date(a.pushed_at).getTime() - new Date(b.pushed_at).getTime(),
         render(text) {
           return moment(text).format('YYYY-MM-DD hh:mm:ss');
         },
-        width: 200,
-        ellipsis: true,
       },
       {
-        dataIndex: 'language',
+        key: 'language',
         title: '语言',
-        filters: Array.from(
-          new Set(this.state.repos.map((item) => item.language).filter((l) => l !== null)),
-        ).map((l) => ({ text: l, value: l })),
-        onFilter: (value, record) => record.language && record.language.includes(record.language),
-        align: 'center',
+        minWidth: 100,
+        headStyle: { textAlign: 'center' },
+        style: { textAlign: 'center' },
+        filter: {
+          filters: Array.from(
+            new Set(this.state.repos.map((item) => item.language).filter((l) => l !== null)),
+          ),
+          onFilter: (value, item) => item.language && value.indexOf(item.language) != -1,
+        },
         width: 150,
-        ellipsis: true,
       },
     ];
     return (
       <Table<GithubRepo>
-        rowKey={(record) => record.name}
-        dataSource={this.state.repos}
+        data={this.state.repos}
         columns={columns}
-        loading={this.state.loading}
-        scroll={{ x: true }}
-        expandable={{
-          expandedRowRender: (record) => (
-            <Descriptions bordered size="small">
-              <Descriptions.Item key="created_at" label="创建时间">
-                {record.created_at}
-              </Descriptions.Item>
-              <Descriptions.Item key="pushed_at" label="最近推送时间">
-                {record.pushed_at}
-              </Descriptions.Item>
-              <Descriptions.Item key="updated_at" label="数据更新时间">
-                {record.updated_at}
-              </Descriptions.Item>
-              <Descriptions.Item key="description" label="描述">
-                {record.description}
-              </Descriptions.Item>
-            </Descriptions>
-          ),
+        defaultOrder={{
+          sortKey: 'pushed_at',
+          ascending: true,
         }}
-        pagination={{ pageSize: 10 }}
+        pagination
+        loading={this.state.loading}
+        expand={(record) => (
+          <dl>
+            <dt>创建时间</dt>
+            <dd> {record.created_at}</dd>
+            <dt>最近推送时间</dt>
+            <dd> {record.pushed_at}</dd>
+            <dt>数据更新时间</dt>
+            <dd> {record.updated_at}</dd>
+            <dt>描述</dt>
+            <dd> {record.description}</dd>
+          </dl>
+        )}
       />
     );
   };
@@ -312,43 +300,36 @@ class AboutPage extends React.Component<AboutPageProps, AboutPageState> {
           )}
         </Context.Consumer>
 
-        <p style={{ textAlign: 'center' }}>
+        <Flex direction="TB" fullWidth style={{ textAlign: 'center' }}>
           <Context.Consumer>
             {(context) => <Avatar style={{ fontSize: 64, margin: 'auto' }} src={context.avatar} />}
           </Context.Consumer>
 
-          <br />
           <strong>{this.props.author}</strong>
-        </p>
 
-        <If condition={!!this.props.quote}>
-          <p style={{ textAlign: 'center' }}>
+          <If condition={!!this.props.quote}>
             <em dangerouslySetInnerHTML={{ __html: this.props.quote }}></em>
-          </p>
-        </If>
+          </If>
 
-        <If condition={!!this.props.description}>
-          <p style={{ textAlign: 'center' }}>
+          <If condition={!!this.props.description}>
             <div dangerouslySetInnerHTML={{ __html: this.props.description }}></div>
-          </p>
-        </If>
+          </If>
 
-        <p>{this.render_pay()}</p>
-        <p>{this.render_social()}</p>
-        <Collapse defaultActiveKey={['education', 'awards', 'projects']}>
-          <Collapse.Panel header="教育、工作经历" key="education">
-            {this.render_education()}
-          </Collapse.Panel>
-          <Collapse.Panel header="抱大腿奖项" key="awards">
-            {this.render_awards()}
-          </Collapse.Panel>
-          <Collapse.Panel
-            header="开源项目（需要访问 Github API，部分网络可能会出错）"
-            key="projects"
-          >
-            {this.render_projects()}
-          </Collapse.Panel>
-        </Collapse>
+          {this.render_pay()}
+          {this.render_social()}
+
+          <Flex.Item style={{ textAlign: 'initial' }}>
+            <Collapse title="教育、工作经历" defaultOpen>
+              {this.render_education()}
+            </Collapse>
+            <Collapse title="抱大腿奖项" defaultOpen>
+              {this.render_awards()}
+            </Collapse>
+            <Collapse title="开源项目（需要访问 Github API，部分网络可能会出错）" defaultOpen>
+              {this.render_projects()}
+            </Collapse>
+          </Flex.Item>
+        </Flex>
       </Card>
     );
   }
