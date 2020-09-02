@@ -265,7 +265,7 @@ export default function Table<T>(props: TableProps<T>) {
         />
       ) : null}
 
-      <Modal show={filterModal !== false} close={() => setFilterModal(false)}>
+      <Modal show={filterModal !== false} onClose={() => setFilterModal(false)}>
         {filterModal === false ? null : (
           <div>
             <Flex direction="TB" fullWidth>

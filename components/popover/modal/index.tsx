@@ -9,17 +9,15 @@ import Button from '@/components/button';
 
 import styles from './modal.less';
 
-export declare type ModalProps = ComponentProps<{ show?: boolean; close?: boolean | (() => void) }>;
+export declare type ModalProps = ComponentProps<{ show?: boolean; onClose?: () => void }>;
 
-const ModalContent = (
-  props: ModalProps & { update: (child: React.ReactNode) => void; remove: () => void },
-) => {
-  const { show = true, className, style, children, update, remove, close = true } = props;
+const ModalContent = (props: ModalProps) => {
+  const { onClose, className, style, children } = props;
   return (
-    <div style={{ visibility: show ? 'visible' : 'hidden' }}>
+    <div>
       <div className={concat(className, styles.modal)} style={style}>
         <Card style={{ background: 'var(--background)' }}>
-          {close ? (
+          {!!onClose ? (
             <Button
               icon={<Close />}
               style={{
@@ -29,38 +27,29 @@ const ModalContent = (
                 marginBottom: -15,
                 float: 'right',
               }}
-              onClick={remove}
+              onClick={() => onClose()}
             />
           ) : null}
-          <div style={{ clear: 'both' }}>
-            {typeof children === 'function' ? children({ update, remove }) : children}
-          </div>
+          <div style={{ clear: 'both' }}>{children}</div>
         </Card>
       </div>
-      <div className={styles.dimmed} onClick={remove}></div>
+      <div className={styles.dimmed} onClick={() => onClose()}></div>
     </div>
   );
 };
 
 const Modal = (props: ModalProps) => {
-  return (
+  const { show = true } = props;
+  return show ? (
     <Body>
-      {({ update, remove }) => (
-        <ModalContent
-          {...props}
-          close={!!props.close}
-          update={update}
-          remove={typeof props.close === 'function' ? props.close : () => {}}
-        />
-      )}
+      <ModalContent {...props} />
     </Body>
-  );
+  ) : null;
 };
 
 const info = (props: ModalProps) => {
-  console.log('info', props);
   const { update, remove } = Body.Insert(({ update, remove }) => (
-    <ModalContent {...props} update={update} remove={remove} />
+    <ModalContent {...props} onClose={remove} />
   ));
   return { update, remove };
 };
