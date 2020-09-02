@@ -5,10 +5,12 @@ import { NextPageContext } from 'next';
 import { withRouter } from 'next/router';
 import { WithRouterProps } from 'next/dist/client/with-router';
 
-import { Card, PageHeader, Typography, Result } from 'antd';
+import Card from '@/components/card';
 
 import { guessPath } from '@/utils/redirect';
 import { Context } from '@/utils/global';
+
+import textStyles from '@/styles/text.less';
 
 interface ErrorPageProps extends ComponentProps<'base'>, WithRouterProps {
   status: number;
@@ -52,7 +54,7 @@ class ErrorPage extends Component<ErrorPageProps, ErrorPageState> {
     };
 
     return (
-      <Card>
+      <Card neumorphism>
         <Context.Consumer>
           {(context) => (
             <Head>
@@ -60,17 +62,21 @@ class ErrorPage extends Component<ErrorPageProps, ErrorPageState> {
             </Head>
           )}
         </Context.Consumer>
-        <PageHeader
-          title={`发生一个${this.props.status}错误！`}
-          subTitle={errorMessage[this.props.status]}
-        />
+        <h1 className={textStyles.color} style={{ display: 'inline-block', marginRight: 10 }}>
+          {`发生一个${this.props.status}错误！`}
+        </h1>
+        <p className={textStyles.secondary} style={{ display: 'inline-block' }}>
+          {errorMessage[this.props.status]}
+        </p>
+
         {this.props.status == 404 && path !== '' ? (
-          <Typography.Paragraph strong>
+          <strong>
             当前您访问的页面是{this.props.router.asPath}，猜测得出你实际要访问得连接是
             <a href={path}>{path}</a>（纯粹猜测）
-          </Typography.Paragraph>
+          </strong>
         ) : null}
-        <Typography.Paragraph style={{ lineHeight: '2em' }}>
+
+        <p style={{ lineHeight: '2em' }}>
           一般而言，所有发生错误可能的情况如下：
           <ul>
             {Object.keys(errorMessage).map((status) => (
@@ -79,7 +85,7 @@ class ErrorPage extends Component<ErrorPageProps, ErrorPageState> {
               </li>
             ))}
           </ul>
-        </Typography.Paragraph>
+        </p>
       </Card>
     );
   }
