@@ -13,7 +13,7 @@ import { login } from '@/utils/api';
 import { Context } from '@/utils/global';
 import ShowNotification from '@/utils/notification';
 
-export default function Login(props: { callback?: (boolean) => void }) {
+export default function Login(props: { onClose?: () => void }) {
   const [loading, setLoading] = React.useState(false);
   const context = React.useContext(Context);
   //   const [getUsername, setGetUsername] = React.useState<() => string>(() => () => '');
@@ -31,13 +31,11 @@ export default function Login(props: { callback?: (boolean) => void }) {
       .then((r) => {
         if (ShowNotification(r)) {
           context.callback({ user: r.user });
-          if (!!props.callback) props.callback(true);
-        } else {
-          if (!!props.callback) props.callback(false);
+          if (!!props.onClose) props.onClose();
         }
       })
       .finally(() => setLoading(false));
-  }, [setLoading, props.callback, getUsername, getPassword]);
+  }, [setLoading, props.onClose, getUsername, getPassword]);
 
   return (
     <Flex direction="TB" mainSize="large" fullWidth style={{ minWidth: '50vw' }}>
@@ -58,7 +56,7 @@ export default function Login(props: { callback?: (boolean) => void }) {
       <QuickLogin />
       <Flex>
         <Link href="/register">
-          <Button neumorphism onClick={(e) => props.callback(true)}>
+          <Button neumorphism onClick={(e) => props.onClose()}>
             注册
           </Button>
         </Link>
@@ -70,10 +68,10 @@ export default function Login(props: { callback?: (boolean) => void }) {
   );
 }
 
-export function LoginModal(props: { show: boolean; onCancel: () => void; callback?: () => void }) {
+export function LoginModal(props: { show: boolean; onClose?: () => void }) {
   return (
-    <Modal show={props.show} onClose={props.onCancel}>
-      <Login callback={props.callback} />
+    <Modal show={props.show} onClose={props.onClose}>
+      <Login onClose={props.onClose} />
     </Modal>
   );
 }

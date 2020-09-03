@@ -131,13 +131,7 @@ export default function (props: {
           />
         </div>
       </Flex>
-      <LoginModal
-        show={loginModal}
-        onCancel={() => setLoginModal(false)}
-        callback={(success) => {
-          if (success) setLoginModal(false);
-        }}
-      />
+      <LoginModal show={loginModal} onClose={() => setLoginModal(false)} />
     </div>
   );
 }

@@ -21,7 +21,7 @@ import { PaginationConfig } from 'antd/lib/pagination';
 import { ColumnsType, TablePaginationConfig } from 'antd/lib/table/interface';
 import { UserOutlined, SolutionOutlined, CheckOutlined } from '@ant-design/icons';
 
-import  { Space, TextCenter } from '@/components/container';
+import { Space, TextCenter } from '@/components/container';
 import Steps from '@/components/steps';
 import { Context } from '@/utils/global';
 import { LoginModal } from '@/components/login';
@@ -160,7 +160,7 @@ class Queues extends React.Component<QueuesProps, QueuesState> {
             </TextCenter>
           </Steps.Step>
           <Steps.Step title="完善信息" icon={<SolutionOutlined />}>
-            <Space textCenter >
+            <Space textCenter>
               <Link href="/user/[username]" as={`/user/${this.context.user.username}`}>
                 <a target="_blank">
                   <Button type="primary">完善个人信息</Button>
@@ -332,10 +332,7 @@ class Queues extends React.Component<QueuesProps, QueuesState> {
         </Space>
         <LoginModal
           show={this.state.loginModal}
-          onCancel={() => this.setState({ loginModal: false })}
-          callback={(success) => {
-            if (success) this.setState({ loginModal: false });
-          }}
+          onClose={() => this.setState({ loginModal: false })}
         />
       </div>
     );

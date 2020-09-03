@@ -612,10 +612,7 @@ class QueueDetail extends React.Component<QueueDetailProps, QueueDetailState> {
         </Space>
         <LoginModal
           show={this.state.loginModal}
-          onCancel={() => this.setState({ loginModal: false })}
-          callback={(success) => {
-            if (success) this.setState({ loginModal: false });
-          }}
+          onClose={() => this.setState({ loginModal: false })}
         />
       </div>
     );
