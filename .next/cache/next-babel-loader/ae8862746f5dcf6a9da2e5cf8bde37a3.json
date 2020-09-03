@@ -1,1 +1,0 @@
-{"ast":null,"code":"import Input, { InputProps, Option } from './input';\nimport CheckBox, { CheckBoxProps } from './checkbox';\nexport default Input;\nexport { CheckBox };","map":null,"metadata":{},"sourceType":"module"}
