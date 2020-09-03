@@ -17,6 +17,8 @@ export declare type InputProps = ComponentProps<{
   prefix?: React.ReactNode;
   suffix?: React.ReactNode;
   disabled?: boolean;
+  onEnterPressed?: () => void;
+  hint?: React.ReactNode;
 
   // Input
   value?: string;
@@ -26,6 +28,7 @@ export declare type InputProps = ComponentProps<{
   onChange?: (value: string) => void;
   getValueCallback?: (callback: () => string) => void;
   setValueCallback?: (callback: (value: string) => void) => void;
+  type?: string;
 
   // Select
   selectTrigger?: ('click' | 'hover')[];
@@ -55,6 +58,9 @@ export default function Input(props: InputProps) {
     setValueCallback = () => {},
     getSelectShow = () => {},
     setSelectShow = () => {},
+    onEnterPressed = () => {},
+    hint,
+    type,
     style,
     className,
   } = props;
@@ -73,7 +79,7 @@ export default function Input(props: InputProps) {
 
   return (
     <div className={concat(styles.wrapper, className)} style={style}>
-      {!!label ? <span className={styles.label}>{label}</span> : null}
+      {!!label ? <div className={styles.label}>{label}</div> : null}
       <div className={concat(styles.inner, ...(disabled ? ['disabled'] : []))}>
         <div className={concat(styles.input, shadowStyles.neumorphism_inset, styles[size])}>
           {!!prefix ? <span className={styles.prefix}>{prefix}</span> : null}
@@ -83,6 +89,7 @@ export default function Input(props: InputProps) {
             value={value}
             onChange={(e) => onChange(e.target.value)}
             placeholder={placeholder}
+            type={type}
             style={{ paddingLeft: !!prefix ? '2em' : 0, paddingRight: !!suffix ? '2em' : 0 }}
             onClick={() => {
               if (click) setShow(true);
@@ -92,6 +99,9 @@ export default function Input(props: InputProps) {
             }}
             onMouseLeave={() => setShow(false)}
             readOnly={!editable}
+            onKeyUp={(e) => {
+              if (e.keyCode == 13 && !!onEnterPressed) onEnterPressed();
+            }}
           />
           {!!suffix ? <span className={styles.suffix}>{suffix}</span> : null}
         </div>
@@ -122,6 +132,7 @@ export default function Input(props: InputProps) {
           </div>
         ) : null}
       </div>
+      {!!hint ? <div className={styles.hint}>{hint}</div> : null}
     </div>
   );
 }
