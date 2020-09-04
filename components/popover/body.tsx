@@ -7,7 +7,6 @@ class Body extends React.Component<{}> {
   constructor(props) {
     super(props);
     if (typeof document !== 'undefined') {
-      console.log(document, document.getElementById('portals'));
       this.div = document.createElement('div');
       this.root = document.getElementById('portals');
     }
