@@ -3,10 +3,11 @@ import React from 'react';
 import Link from 'next/link';
 
 import Avatar from '@/components/avatar';
+import { Flex } from '@/components/container';
+import { Close } from '@/components/svg';
+import Button from '@/components/button';
 
 import { concat, ComponentProps } from '@/utils/component';
-import { Flex } from '@/components/container';
-
 import { reverseColor, isLight, parseColor, toHex, rgb2hsl, hsl2rgb } from '@/utils/color';
 
 import styles from './tag.less';
@@ -51,43 +52,64 @@ function getFrontColor(backgroundColor) {
 
 type TagProps = ComponentProps<{
   tag?: Blotter.Tag;
-  onClose?: (tag: Blotter.Tag) => void;
+  onClose?: () => void;
 }>;
 
 export default function Tag(props: TagProps) {
   const { tag, onClose, className, style } = props;
   return (
-    <Link href={'/tag/[tag]'} as={`/tag/${tag.short}`}>
-      <a>
-        <Flex
-          className={concat(
-            styles.tag,
-            className,
-            textStyles.color,
-            shadowStyles.neumorphism_light,
-            shadowStyles.clickable,
-          )}
-          mainAxis="space-around"
-          mainSize="small"
-          wrap={false}
-          style={{
-            ...(!!tag.color
-              ? {
-                  background: tag.color,
-                  color: getFrontColor(tag.color),
-                }
-              : {}),
-            ...style,
-          }}
-        >
-          {tag.icon ? (
-            <Avatar src={tag.icon} style={{ fontSize: '0.75em', background: 'white' }} />
-          ) : null}
-          {tag.name}
-          {!!onClose ? 'x' : null}
-        </Flex>
-      </a>
-    </Link>
+    <Flex
+      className={concat(
+        styles.tag,
+        className,
+        shadowStyles.neumorphism_light,
+        shadowStyles.clickable,
+        textStyles.color,
+      )}
+      style={{
+        ...(!!tag.color
+          ? {
+              background: tag.color,
+              color: getFrontColor(tag.color),
+            }
+          : {}),
+        ...style,
+      }}
+      mainAxis="space-around"
+      mainSize="small"
+      wrap={false}
+    >
+      <Link href={'/tag/[tag]'} as={`/tag/${tag.short}`}>
+        <a>
+          <Flex
+            className={concat(textStyles.color)}
+            wrap={false}
+            mainAxis="space-between"
+            mainSize="small"
+            style={{
+              ...(!!tag.color
+                ? {
+                    color: getFrontColor(tag.color),
+                  }
+                : {}),
+            }}
+          >
+            {tag.icon ? (
+              <Avatar src={tag.icon} style={{ fontSize: '0.75em', background: 'white' }} />
+            ) : null}
+            {tag.name}
+          </Flex>
+        </a>
+      </Link>
+      {!!onClose && (
+        <Button
+          size="small"
+          icon={<Close />}
+          onClick={onClose}
+          style={{ background: 'transparent', color: 'currentColor' }}
+        />
+      )}
+    </Flex>
   );
 }
 
