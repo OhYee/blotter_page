@@ -18,15 +18,6 @@
         box-shadow var(--transition-time);
       border-radius: 20px;
       position: relative;
-      &.small {
-        padding: 0px 10px;
-      }
-      &.middle {
-        padding: 5px 10px;
-      }
-      &.large {
-        padding: 10 10px;
-      }
       &:focus {
         border-color: #66afe9;
         outline: 0;
@@ -101,5 +92,23 @@
   }
   .hint {
     font-size: 0.75em;
+  }
+  &.small {
+    font-size: 0.75em;
+    .inner .input {
+      padding: 0px 10px;
+    }
+  }
+  &.middle {
+    font-size: 1em;
+    .inner .input {
+      padding: 5px 10px;
+    }
+  }
+  &.large {
+    font-size: 1.25em;
+    .inner .input {
+      padding: 10 10px;
+    }
   }
 }

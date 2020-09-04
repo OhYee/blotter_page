@@ -5,12 +5,12 @@ import { concat, ComponentProps } from '@/utils/component';
 import shadowStyles from '@/styles/shadow.less';
 import styles from './input.less';
 
-export declare type Option = {
+export declare type Option<T> = {
   key?: string;
-  value?: any;
+  value?: T;
 };
 
-export declare type InputProps = ComponentProps<{
+export declare type InputProps<SelectType> = ComponentProps<{
   label?: string;
   lablePlacement?: 'left' | 'top';
   size?: 'small' | 'middle' | 'large';
@@ -18,6 +18,7 @@ export declare type InputProps = ComponentProps<{
   suffix?: React.ReactNode;
   disabled?: boolean;
   onEnterPressed?: () => void;
+  onBlur?: () => void;
   hint?: React.ReactNode;
 
   // Input
@@ -29,16 +30,17 @@ export declare type InputProps = ComponentProps<{
   getValueCallback?: (callback: () => string) => void;
   setValueCallback?: (callback: (value: string) => void) => void;
   type?: string;
+  autoFocus?: boolean;
 
   // Select
   selectTrigger?: ('click' | 'hover')[];
-  options?: Option[];
-  onSelect?: (key: string, value: any) => void;
+  options?: Option<SelectType>[];
+  onSelect?: (key: string, value: SelectType) => void;
   getSelectShow?: (callback: () => boolean) => void;
   setSelectShow?: (callback: (show: boolean) => void) => void;
 }>;
 
-export default function Input(props: InputProps) {
+export default function Input<SelectType>(props: InputProps<SelectType>) {
   const {
     prefix,
     suffix,
@@ -47,6 +49,7 @@ export default function Input(props: InputProps) {
     placeholder = '',
     size = 'middle',
     label = '',
+    autoFocus = false,
     lablePlacement = 'left',
     options = [],
     selectTrigger = ['click'],
@@ -59,6 +62,7 @@ export default function Input(props: InputProps) {
     getSelectShow = () => {},
     setSelectShow = () => {},
     onEnterPressed = () => {},
+    onBlur,
     hint,
     type,
     style,
@@ -78,10 +82,10 @@ export default function Input(props: InputProps) {
   React.useEffect(() => getSelectShow(() => show), [getSelectShow, show]);
 
   return (
-    <div className={concat(styles.wrapper, className)} style={style}>
+    <div className={concat(styles.wrapper, className, styles[size])} style={style} onBlur={onBlur}>
       {!!label ? <div className={styles.label}>{label}</div> : null}
       <div className={concat(styles.inner, ...(disabled ? ['disabled'] : []))}>
-        <div className={concat(styles.input, shadowStyles.neumorphism_inset, styles[size])}>
+        <div className={concat(styles.input, shadowStyles.neumorphism_inset)}>
           {!!prefix ? <span className={styles.prefix}>{prefix}</span> : null}
           <input
             ref={ref}
@@ -102,6 +106,7 @@ export default function Input(props: InputProps) {
             onKeyUp={(e) => {
               if (e.keyCode == 13 && !!onEnterPressed) onEnterPressed();
             }}
+            autoFocus={autoFocus}
           />
           {!!suffix ? <span className={styles.suffix}>{suffix}</span> : null}
         </div>
@@ -119,6 +124,7 @@ export default function Input(props: InputProps) {
                 <li
                   key={idx}
                   onClick={() => {
+                    console.log(o, disabled);
                     if (!disabled) {
                       onSelect(o.key, o.value);
                       setShow(false);
