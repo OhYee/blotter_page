@@ -120,24 +120,19 @@ class Index extends React.Component<IndexProps, IndexState> {
       <TagSearch
         tags={this.state[name]}
         onAdd={(tag) => {
+          console.log(tag);
           this.setState((state) => {
             var tags = state[name];
-            tags = tags.filter((item) => item.id != tag.id);
+            tags = tags.filter((item) => item.id !== tag.id);
             tags.push(tag);
-
-            var ret = { page: 1 };
-            ret[name] = tags;
-            return ret;
+            return { ...state, page: 1, [name]: tags };
           }, this.getPosts);
         }}
         onDelete={(tag) => {
           this.setState((state) => {
             var tags = state[name];
-            tags = tags.filter((item) => item.id != tag.id);
-
-            var ret = { page: 1 };
-            ret[name] = tags;
-            return ret;
+            tags = tags.filter((item) => item.id !== tag.id);
+            return { ...state, page: 1, [name]: tags };
           }, this.getPosts);
         }}
       />
@@ -182,11 +177,13 @@ class Index extends React.Component<IndexProps, IndexState> {
             )),
           ]}
         </Flex>
-        <Flex mainAxis="flex-start">
-          <span>从这些标签里搜索：</span> {this.renderTagSearch('with_tags')}
+        <Flex mainAxis="flex-start" mainSize="small" subSize="small">
+          <span>从这些标签里搜索：</span>
+          {this.renderTagSearch('with_tags')}
         </Flex>
-        <Flex mainAxis="flex-start">
-          <span>从这些标签里排除：</span> {this.renderTagSearch('without_tags')}
+        <Flex mainAxis="flex-start" mainSize="small" subSize="small">
+          <span>从这些标签里排除：</span>
+          {this.renderTagSearch('without_tags')}
         </Flex>
 
         <Flex mainAxis="flex-start" subSize="middle">
