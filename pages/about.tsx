@@ -48,8 +48,6 @@ interface AboutPageState {
   loading: boolean;
 }
 
-
-
 class AboutPage extends React.Component<AboutPageProps, AboutPageState> {
   static defaultProps = {};
 
@@ -74,25 +72,26 @@ class AboutPage extends React.Component<AboutPageProps, AboutPageState> {
       this.setState({ repos, loading: false });
     }
   }
-    render_pay = () => {
-      const socialMedia: {
+  render_pay = () => {
+    const socialMedia: {
       name: string;
       icon: React.ReactNode;
     }[] = [
-          { name: 'wechat', icon: <Wechat /> },
-          { name: 'alipay', icon: <Alipay /> },
-        ]
-      return (
-        <Flex mainAxis="space-around">
-          {socialMedia.map((item) => (
-            <Button
-              size="large"
-              icon={item.icon}
-              onClick={() => showQR(item.name as 'wechat' | 'alipay')}
-            />
-          ))}
-        </Flex>
-      );
+      { name: 'wechat', icon: <Wechat /> },
+      { name: 'alipay', icon: <Alipay /> },
+    ];
+    return (
+      <Flex mainAxis="space-around">
+        {socialMedia.map((item) => (
+          <Button
+            key={item.name}
+            size="large"
+            icon={item.icon}
+            onClick={() => showQR(item.name as 'wechat' | 'alipay')}
+          />
+        ))}
+      </Flex>
+    );
   };
   render_social = () => {
     const socialMedia: {
@@ -130,11 +129,11 @@ class AboutPage extends React.Component<AboutPageProps, AboutPageState> {
     return (
       <Flex mainAxis="space-around">
         {socialMedia.map((item) => (
-          <a key={item.name} href={item.link} target="_blank">
-            <Tooltip title={item.name} style={{ fontSize: 25 }} className={textStyles.primary}>
+          <Tooltip key={item.name} title={item.name} style={{ fontSize: 25 }} className={textStyles.primary}>
+            <a  href={item.link} target="_blank">
               {item.icon()}
-            </Tooltip>
-          </a>
+            </a>
+          </Tooltip>
         ))}
       </Flex>
     );
