@@ -1,8 +1,9 @@
-import React, { ComponentProps } from 'react';
+import React from 'react';
 import { Row, Col, Space as S } from 'antd';
 import { Gutter } from 'antd/lib/grid/row';
 import { ObjectFilter } from '@/utils/object';
 import { Context } from '@/utils/global';
+import { concat, ComponentProps } from '@/utils/component';
 
 // interface ContainerProps extends ComponentProps<'base'> {
 //   xs?: number;
@@ -41,7 +42,7 @@ function Container(props: React.PropsWithChildren<{}>) {
   return <div>{props.children}</div>;
 }
 
-export interface SpaceProps extends ComponentProps<'base'> {
+export interface SpaceProps extends React.ComponentProps<'base'> {
   direction?: 'horizontal' | 'vertical';
   size?: number | 'small' | 'middle' | 'large';
   textCenter?: boolean;
@@ -116,7 +117,7 @@ function getSize(size: SizeProp): number {
     : size;
 }
 
-export declare type FlexProps = {
+export declare type FlexProps = ComponentProps<{
   direction?: 'LR' | 'TB' | 'row' | 'row-reverse' | 'column' | 'column-reverse';
   wrap?: true | false | 'nowrap' | 'wrap' | 'wrap-reverse';
   mainAxis?: 'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around';
@@ -124,10 +125,8 @@ export declare type FlexProps = {
   mainSize?: SizeProp;
   subSize?: SizeProp;
   fullWidth?: boolean;
-  style?: React.CSSProperties;
   itemStyle?: React.CSSProperties;
-  className?: string;
-};
+}>;
 const FlexComponent: React.FC<FlexProps> = (props) => {
   const {
     direction = 'LR',
@@ -141,6 +140,7 @@ const FlexComponent: React.FC<FlexProps> = (props) => {
     children,
     style,
     className,
+    id,
   } = props;
   const list = (Array.isArray(children) ? children : [children]).filter((s) => !!s);
   const dir = direction === 'LR' ? 'row' : direction === 'TB' ? 'column' : direction;
@@ -217,6 +217,7 @@ const FlexComponent: React.FC<FlexProps> = (props) => {
 
   return (
     <div
+      id={id}
       className={className}
       style={{ ...(fullWidth ? { width: '100%' } : {}), ...containerStyles, ...style }}
     >
@@ -236,10 +237,7 @@ const FlexComponent: React.FC<FlexProps> = (props) => {
   );
 };
 
-export declare type FlexItemProps = {
-  style?: React.CSSProperties;
-  className?: string;
-};
+export declare type FlexItemProps = ComponentProps<{}>;
 const FlexItem: React.FC<FlexItemProps> = (props) => {
   var { style = {}, className = '', children } = props;
   var child: any = children;
