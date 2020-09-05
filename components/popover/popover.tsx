@@ -83,7 +83,7 @@ export default function Popover(props: PopoverProps) {
   return (
     <div
       ref={ref}
-      className={className}
+      className={concat(styles.popover_origin,className)}
       style={style}
       onClick={() => {
         if (click) moveIn();
