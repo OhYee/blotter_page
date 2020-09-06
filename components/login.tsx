@@ -23,8 +23,6 @@ export default function Login(props: { onClose?: () => void }) {
 
   const loginOK = React.useCallback(() => {
     setLoading(true);
-    // var { username, password } = formRef.current.getFieldsValue(['username', 'password']);
-    console.log(getUsername, getPassword);
     const username = getUsername();
     const password = getPassword();
     login(username, password)
