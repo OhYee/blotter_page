@@ -124,7 +124,6 @@ export default function Input<SelectType>(props: InputProps<SelectType>) {
                 <li
                   key={idx}
                   onClick={() => {
-                    console.log(o, disabled);
                     if (!disabled) {
                       onSelect(o.key, o.value);
                       setShow(false);
