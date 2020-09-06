@@ -1,7 +1,7 @@
 import React, { ComponentProps } from 'react';
 import Head from 'next/head';
 
-import { Card } from 'antd';
+import Card from '@/components/card';
 
 import TravelMap from '@/components/travel_map';
 import { Context } from '@/utils/global';
@@ -27,7 +27,7 @@ class Travel extends React.Component<TravelProps, TravelState> {
 
   render() {
     return (
-      <Card>
+      <Card neumorphism>
         <Context.Consumer>
           {(context) => (
             <Head>
