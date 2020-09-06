@@ -120,7 +120,6 @@ class Index extends React.Component<IndexProps, IndexState> {
       <TagSearch
         tags={this.state[name]}
         onAdd={(tag) => {
-          console.log(tag);
           this.setState((state) => {
             var tags = state[name];
             tags = tags.filter((item) => item.id !== tag.id);
