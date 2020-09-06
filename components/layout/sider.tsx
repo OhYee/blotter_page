@@ -2,11 +2,8 @@ import React from 'react';
 
 import Link from 'next/link';
 
-import { Icon } from '@ant-design/compatible';
-
-import If from '@/components/if';
 import { Flex } from '@/components/container';
-import { Left, Bar, User } from '@/components/svg';
+import SVG, { Left, Bar, User, IconName } from '@/components/svg';
 import Button from '@/components/button';
 import Avatar from '@/components/avatar';
 import Popover, { Tooltip } from '@/components/popover';
@@ -143,7 +140,9 @@ function Menus(props: { menus: Blotter.Menu[]; theme: 'light' | 'dark'; pathname
       {menus.map((item: Blotter.Menu) => {
         const menuItem = (
           <div>
-            <span className={styles.prefix}>{item.icon ? <Icon type={item.icon} /> : null}</span>
+            <span className={styles.prefix}>
+              {item.icon ? <SVG icon={item.icon as IconName} /> : null}
+            </span>
             <span className={styles.text}>{item.name}</span>
           </div>
         );

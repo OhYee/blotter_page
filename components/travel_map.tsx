@@ -1,19 +1,22 @@
 import React, { ComponentProps, CSSProperties } from 'react';
 import Link from 'next/link';
 
-import { Spin, Timeline, Drawer, Button, Popover, List } from 'antd';
-import {
-  StarFilled,
-  MoreOutlined,
-  FullscreenExitOutlined,
-  FullscreenOutlined,
-} from '@ant-design/icons';
+import { Timeline, Drawer } from 'antd';
 
 import { Map, Marker } from 'react-amap';
-import moment from '@/utils/moment';
 
-import { Context } from '@/utils/global';
 import If from '@/components/if';
+import { Star, Dots, FullScreen, FullScreenExit } from '@/components/svg';
+import Button from '@/components/button';
+import Popover from '@/components/popover';
+import Loading from '@/components/loading';
+import Card from '@/components/card';
+import { Flex } from '@/components/container';
+
+import moment from '@/utils/moment';
+import { Context } from '@/utils/global';
+
+import shadowStyles from '@/styles/shadow.less';
 
 const key = '81533a71a4db0eb8107620d99b954d9d';
 
@@ -74,7 +77,7 @@ class TravelMap extends React.Component<TravelMapProps, TravelMapState> {
       >
         <Map
           amapkey={key}
-          loading={<Spin />}
+          loading={<Loading />}
           mapStyle={
             this.context.theme === 'default'
               ? 'amap://styles/f5818203233e77c81d9a6555be54758a'
@@ -91,15 +94,15 @@ class TravelMap extends React.Component<TravelMapProps, TravelMapState> {
           }}
         >
           <Button
-            icon={<MoreOutlined />}
-            type="primary"
-            shape="circle"
+            icon={<Dots />}
+            primary
+            circle
             style={{ position: 'absolute', left: '10px', top: '10px' }}
             onClick={() => this.setState((state) => ({ drawer: !state.drawer }))}
           />
           <Button
-            icon={this.state.full ? <FullscreenExitOutlined /> : <FullscreenOutlined />}
-            shape="circle"
+            icon={this.state.full ? <FullScreenExit /> : <FullScreen />}
+            circle
             style={{ position: 'absolute', right: '60px', bottom: '30px' }}
             onClick={() => this.setState((state) => ({ full: !state.full }))}
           />
@@ -145,26 +148,39 @@ class TravelMap extends React.Component<TravelMapProps, TravelMapState> {
           {this.props.cities.map((item) => (
             <Marker position={{ longitude: item.lng, latitude: item.lat }}>
               <Popover
-                title={`${item.name}`}
-                content={
-                  <List
-                    size="small"
-                    dataSource={item.travels.sort((a, b) => a.time - b.time)}
-                    renderItem={(item) => (
-                      <List.Item key={item.time}>
-                        {moment(item.time, 'X').format('YYYY-MM-DD')}
-                        <If condition={!!item.link}>
-                          {' '}
-                          <Link href="/post/[url]" as={`/post/${item.link}`}>
-                            <a>游记</a>
-                          </Link>
-                        </If>
-                      </List.Item>
-                    )}
-                  />
+                placement="top"
+                trigger={['click', 'hover']}
+                popoverClass={shadowStyles.shadow}
+                popoverStyle={
+                  {
+                    boxShadow: '5px 5px 30px var(--shadow)',
+                    ['--popover-backgroud']: 'var(--background)',
+                  } as React.CSSProperties
+                }
+                getOffset={() => ({ top: document.documentElement.scrollTop })}
+                component={
+                  <Card style={{ background: 'var(--background)', maxWidth: 200 }}>
+                    <Flex direction="TB" fullWidth>
+                      {[
+                        <strong key="name">{item.name}</strong>,
+                        ...item.travels
+                          .sort((a, b) => a.time - b.time)
+                          .map((c) => (
+                            <Flex key={c.time}>
+                              {moment(c.time, 'X').format('YYYY-MM-DD')}
+                              <If condition={!!c.link}>
+                                <Link href="/post/[url]" as={`/post/${c.link}`}>
+                                  <a>游记</a>
+                                </Link>
+                              </If>
+                            </Flex>
+                          )),
+                      ]}
+                    </Flex>
+                  </Card>
                 }
               >
-                <StarFilled
+                <Star
                   style={(() => {
                     const color = this.context.theme === 'default' ? 'red' : 'yellow';
                     const filter = `drop-shadow(0px 0px 10px ${color})`;

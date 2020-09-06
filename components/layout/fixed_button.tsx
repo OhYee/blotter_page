@@ -37,7 +37,6 @@ function Feedback() {
       icon={<Message />}
       neumorphism
       onClick={() => {
-        console.log(Modal.info);
         Modal.info({
           children: (
             <div>

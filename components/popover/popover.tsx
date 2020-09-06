@@ -38,6 +38,7 @@ export default function Popover(props: PopoverProps) {
   //   const [willClose, setWillClose] = React.useState(false);
   const getPosition = React.useCallback(() => {
     const { top = 0, left = 0 } = getOffset();
+    if (!ref.current || !childRef.current) return { top: -99999, left: -99999 };
     return {
       top:
         top +
@@ -57,22 +58,21 @@ export default function Popover(props: PopoverProps) {
             childRef.current.offsetWidth / 2 +
             ref.current.offsetWidth / 2),
     };
-  }, [ref]);
-  var classList = [styles.popover, styles[placement], popoverClass];
-  if (show) classList.push(styles.show);
+  }, [ref, childRef]);
+  const classList = React.useMemo(
+    () => [styles.popover, styles[placement], popoverClass, ...(show ? [styles.show] : [])],
+    [placement, popoverClass, show],
+  );
   const click = React.useMemo(() => trigger.indexOf('click') !== -1, [trigger]);
   const hover = React.useMemo(() => trigger.indexOf('hover') !== -1, [trigger]);
   var willClose = false;
   const moveIn = () => {
     if (!show) setPos(getPosition());
     setShow(true);
-    // setWillClose(false);
     willClose = false;
   };
   const moveOut = () => {
-    // setWillClose(true);
     willClose = true;
-
     setTimeout(() => {
       if (willClose) {
         setPos({});
@@ -83,7 +83,7 @@ export default function Popover(props: PopoverProps) {
   return (
     <div
       ref={ref}
-      className={concat(styles.popover_origin,className)}
+      className={concat(styles.popover_origin, className)}
       style={style}
       onClick={() => {
         if (click) moveIn();

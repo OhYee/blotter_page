@@ -4,20 +4,18 @@ import ReactDOM from 'react-dom';
 class Body extends React.Component<{}> {
   div: HTMLDivElement;
   root: HTMLElement;
-  constructor(props) {
-    super(props);
+
+  componentDidMount() {
     if (typeof document !== 'undefined') {
       this.div = document.createElement('div');
       this.root = document.getElementById('portals');
     }
-  }
-
-  componentDidMount() {
-    if (!!this.root) {
+    if (!!this.root && !!this.div) {
       this.root.appendChild(this.div);
     } else {
       console.warn('Portal initial error');
     }
+    this.forceUpdate();
   }
 
   componentWillUnmount() {
