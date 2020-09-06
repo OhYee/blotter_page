@@ -18,6 +18,7 @@ import getOffsetTop from '@/utils/offset';
 
 import shadowStyles from '@/styles/shadow.less';
 import textStyles from '@/styles/text.less';
+import styles from './comment.less';
 
 const adWarning = <b>广告评论，已被屏蔽</b>;
 const delWarning = <b>该评论已被删除</b>;
@@ -66,7 +67,7 @@ const Editor: React.FC<{ id: string; closeEditorCallback?: () => void }> = (prop
   };
 
   return (
-    <Flex subAxis="flex-start">
+    <Flex subAxis="flex-start" wrap={false}>
       <Flex.Item style={{ flex: '0 0 5em', display: 'flex', justifyContent: 'center' }}>
         <Avatar
           src={avatarURL ? avatarURL : defaultAvatar}
@@ -105,6 +106,7 @@ const Editor: React.FC<{ id: string; closeEditorCallback?: () => void }> = (prop
             <Popover
               trigger={['click', 'hover']}
               placement="bottom"
+              style={{ lineHeight: '100%' }}
               popoverClass={shadowStyles.shadow}
               popoverStyle={
                 {
@@ -172,6 +174,7 @@ const Comment: React.FC<{
         key="jump"
         className={concat(textStyles.secondary, textStyles.em75)}
         onClick={() => jumpParent(comment.id)}
+        style={{ lineHeight: '100%' }}
       >
         跳转到该评论
       </span>,
@@ -183,7 +186,7 @@ const Comment: React.FC<{
           key="cancel"
           className={concat(textStyles.secondary, textStyles.em75)}
           onClick={() => setReply(false)}
-          style={{ cursor: 'pointer' }}
+          style={{ cursor: 'pointer', lineHeight: '100%' }}
         >
           取消回复
           <Close />
@@ -193,12 +196,16 @@ const Comment: React.FC<{
           key="reply"
           className={concat(textStyles.secondary, textStyles.em75)}
           onClick={() => setReply(true)}
-          style={{ cursor: 'pointer' }}
+          style={{ cursor: 'pointer', lineHeight: '100%' }}
         >
           回复
         </span>
       ),
-      <span key="email" className={concat(textStyles.secondary, textStyles.em75)}>
+      <span
+        key="email"
+        className={concat(textStyles.secondary, textStyles.em75)}
+        style={{ lineHeight: '100%' }}
+      >
         {comment.recv ? (
           <Tooltip title="当你回复该评论，评论者会收到邮件提醒（但是他/她不一定会看邮件）">
             <Mail />
@@ -212,9 +219,10 @@ const Comment: React.FC<{
     ];
   }
   return (
-    <div id={quote ? '' : getCommentID(comment.id)} className="fullWidth">
+    <div id={quote ? '' : getCommentID(comment.id)} className={styles.comment}>
       <Flex
         subAxis="flex-start"
+        wrap={false}
         style={quote ? { borderLeft: '#ccc 5px solid', paddingLeft: 10 } : {}}
       >
         <Flex.Item style={{ flex: '0 0 5em', display: 'flex', justifyContent: 'center' }}>
@@ -250,6 +258,7 @@ const Comment: React.FC<{
             <Flex mainAxis="flex-start" subAxis="baseline">
               {actions}
             </Flex>
+            {!quote && <hr />}
             {!quote && depth < maxDepth ? childrenAndEditor() : null}
           </Flex>
         </Flex.Item>
@@ -307,7 +316,7 @@ export default function Comments(props: CommentsProps) {
 
   return (
     <CommentContext.Provider value={{ url, callback: initialComments }}>
-      <Flex direction="TB" id="blotter-comment" fullWidth>
+      <Flex direction="TB" id="blotter-comment" className={styles.comments} fullWidth>
         <Editor id="000000000000" />
         <CommentList comments={commentList} depth={1} total={total} loading={loading} />
       </Flex>
