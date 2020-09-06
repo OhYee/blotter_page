@@ -127,7 +127,6 @@ export default function Table<T>(props: TableProps<T>) {
 
   // 表格扩展
   const reducer = (state: { [key: number]: boolean }, action: number | 'init') => {
-    console.log(state, action);
     if (action === 'init') return {};
     return { ...state, [action]: !state[action] };
   };
