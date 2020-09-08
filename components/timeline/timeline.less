@@ -1,0 +1,31 @@
+.timeline {
+  display: grid;
+  grid-template-columns: 100px 25px 1px auto;
+  grid-row-gap: 20px;
+  justify-items: center;
+  align-items: center;
+
+  .circle {
+    border: 2px solid var(--primary);
+    transition: border var(--transition-time);
+    border-radius: 100%;
+    height: 10px;
+    width: 10px;
+    background: white;
+    z-index: 2;
+  }
+
+  .line {
+    border-right: 2px solid var(--primary);
+    transition: border var(--transition-time);
+    height: calc(100% + 20px);
+    position: relative;
+    left: -13px;
+  }
+  .time {
+    font-size: 13px;
+  }
+  .name {
+    font-size: 13px;
+  }
+}
