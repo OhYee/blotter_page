@@ -5,10 +5,21 @@ import { concat, ComponentProps } from '@/utils/component';
 import shadowStyles from '@/styles/shadow.less';
 import styles from './input.less';
 
-export declare type Option<T> = {
+export declare type Option<T = any> =
+  | {
+      key: string;
+      value: T | string;
+    }
+  | T;
+
+export declare type StrictOption<T = any> = {
   key?: string;
-  value?: T;
+  value?: T | string;
 };
+
+export function TransfromOptions<T = any>(options: Option<T>[]): StrictOption<T>[] {
+  return options.map((opt) => (typeof opt === 'string' ? { key: opt, value: opt } : opt));
+}
 
 export declare type InputProps<SelectType> = ComponentProps<{
   label?: string;
@@ -35,7 +46,7 @@ export declare type InputProps<SelectType> = ComponentProps<{
   // Select
   selectTrigger?: ('click' | 'hover')[];
   options?: Option<SelectType>[];
-  onSelect?: (key: string, value: SelectType) => void;
+  onSelect?: (key: string, value: SelectType | string) => void;
   getSelectShow?: (callback: () => boolean) => void;
   setSelectShow?: (callback: (show: boolean) => void) => void;
 }>;
@@ -69,6 +80,7 @@ export default function Input<SelectType>(props: InputProps<SelectType>) {
     className,
   } = props;
   const ref = React.useRef<HTMLInputElement>();
+  const opts = React.useMemo(() => TransfromOptions(options), [options]);
   React.useEffect(() => getValueCallback(() => ref.current.value), [ref, getValueCallback]);
   React.useEffect(() => setValueCallback((value: string) => (ref.current.value = value)), [
     ref,
@@ -120,7 +132,7 @@ export default function Input<SelectType>(props: InputProps<SelectType>) {
               onMouseEnter={() => setShow(true)}
               onMouseLeave={() => setShow(false)}
             >
-              {options.map((o, idx) => (
+              {opts.map((o, idx) => (
                 <li
                   key={idx}
                   onClick={() => {

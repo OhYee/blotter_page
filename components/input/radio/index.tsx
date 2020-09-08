@@ -2,41 +2,42 @@ import React from 'react';
 
 import { concat, ComponentProps } from '@/utils/component';
 import { Flex } from '@/components/container';
-import { Option } from '../';
+import { Option, TransfromOptions } from '../';
 
 import styles from './radio.less';
 
 export declare type RadioProps<T> = ComponentProps<{
   direction?: 'TB' | 'LR';
   options: Option<T>[];
-  defaultValue?: string;
-  value?: string;
-  onChange?: (key: string, value: any) => void;
-  setValueCallback?: (callback: (key: string) => void) => void;
-  getValueCallback?: (callback: () => Option<T>) => void;
+  defaultKey?: string;
+  selectedKey?: string;
+  onChange?: (key: string, value: T | string) => void;
+  setKeyCallback?: (callback: (key: string) => void) => void;
+  getKeyCallback?: (callback: () => Option<T>) => void;
 }>;
 
 export default function Radio<T>(props: RadioProps<T>) {
   const {
     direction = 'LR',
     options,
-    defaultValue = '',
-    value,
+    defaultKey = '',
+    selectedKey,
     onChange = () => {},
-    setValueCallback = () => {},
-    getValueCallback = () => {},
+    setKeyCallback = () => {},
+    getKeyCallback = () => {},
     className,
     style,
     id,
   } = props;
-  const [state, setState] = React.useState(defaultValue);
-  const nowValue = typeof value === 'undefined' ? state : value;
+  const opts = React.useMemo(() => TransfromOptions(options), [options]);
+  const [state, setState] = React.useState(defaultKey);
+  const nowKey = typeof selectedKey === 'undefined' ? state : selectedKey;
   React.useEffect(() => {
-    setValueCallback(setState);
-  }, [setValueCallback, setState]);
+    setKeyCallback(setState);
+  }, [setKeyCallback, setState]);
   React.useEffect(() => {
-    getValueCallback(() => options[nowValue]);
-  }, [getValueCallback, nowValue, options]);
+    getKeyCallback(() => options[nowKey]);
+  }, [getKeyCallback, nowKey, options]);
   return (
     <Flex
       direction={direction}
@@ -46,7 +47,7 @@ export default function Radio<T>(props: RadioProps<T>) {
       className={concat(className, styles.radio)}
       style={style}
     >
-      {options.map((option) => (
+      {opts.map((option) => (
         <div
           key={option.key}
           className={styles.option}
@@ -55,7 +56,7 @@ export default function Radio<T>(props: RadioProps<T>) {
             setState(option.key);
           }}
         >
-          <input type="radio" checked={option.key === nowValue} />
+          <input type="radio" checked={option.key === nowKey} />
           {option.key}
         </div>
       ))}
