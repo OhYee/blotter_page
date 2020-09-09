@@ -100,12 +100,12 @@ export default function Pagination(props: PaginationProps) {
   ));
   if (!!sizeSelect && sizeSelect.length > 1)
     items.push(
-      <Input
+      <Input<number>
         key="size"
         editable={false}
         value={`${size}个/页`}
         options={sizeSelect.map((s) => ({ key: `${s}个/页`, value: s }))}
-        onSelect={(_, v) => onChange(page, v)}
+        onSelect={(_, v: number) => onChange(page, v)}
       />,
     );
 
