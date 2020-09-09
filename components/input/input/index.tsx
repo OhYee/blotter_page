@@ -94,8 +94,12 @@ export default function Input<SelectType>(props: InputProps<SelectType>) {
   React.useEffect(() => getSelectShow(() => show), [getSelectShow, show]);
 
   return (
-    <div className={concat(styles.wrapper, className, styles[size])} style={style} onBlur={onBlur}>
-      {!!label ? <div className={styles.label}>{label}</div> : null}
+    <div
+      className={concat(styles.wrapper, className, styles[size], styles[lablePlacement])}
+      style={style}
+      onBlur={onBlur}
+    >
+      {!!label ? <div className={concat(styles.label)}>{label}</div> : null}
       <div className={concat(styles.inner, ...(disabled ? ['disabled'] : []))}>
         <div className={concat(styles.input, shadowStyles.neumorphism_inset)}>
           {!!prefix ? <span className={styles.prefix}>{prefix}</span> : null}
