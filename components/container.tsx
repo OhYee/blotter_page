@@ -139,8 +139,7 @@ const FlexComponent: React.FC<FlexProps> = (props) => {
     fullWidth = false,
     children,
     style,
-    className,
-    id,
+    ...restProps
   } = props;
   const list = (Array.isArray(children) ? children : [children]).filter((s) => !!s);
   const dir = direction === 'LR' ? 'row' : direction === 'TB' ? 'column' : direction;
@@ -217,9 +216,8 @@ const FlexComponent: React.FC<FlexProps> = (props) => {
 
   return (
     <div
-      id={id}
-      className={className}
       style={{ ...(fullWidth ? { width: '100%' } : {}), ...containerStyles, ...style }}
+      {...restProps}
     >
       {list.map((child, idx) => (
         <FlexItem
@@ -239,7 +237,7 @@ const FlexComponent: React.FC<FlexProps> = (props) => {
 
 export declare type FlexItemProps = ComponentProps<{}>;
 const FlexItem: React.FC<FlexItemProps> = (props) => {
-  var { style = {}, className = '', children } = props;
+  var { style = {}, className = '', children, ...restProps } = props;
   var child: any = children;
   if (!!!child) return null;
   const key = child.key;
@@ -250,14 +248,20 @@ const FlexItem: React.FC<FlexItemProps> = (props) => {
     !!child.type.name &&
     child.type.displayName === FlexItem.displayName
   ) {
-    const { style: style2, className: className2, children: child2 } = child.props;
+    const {
+      style: style2,
+      className: className2,
+      children: child2,
+      ...restProps2
+    } = child.props as FlexItemProps;
     style = { ...style, ...style2 };
     className = [className, className2].filter((s) => s != '').join(' ');
     child = child2;
+    restProps = { ...restProps, ...restProps2 };
   }
 
   return (
-    <div key={key} style={style} className={className}>
+    <div key={key} style={style} className={className} {...restProps}>
       {child}
     </div>
   );
