@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Right } from '@/components/svg';
+import { Success } from '@/components/svg';
 
 import { concat, ComponentProps } from '@/utils/component';
 
@@ -41,7 +41,7 @@ export default function CheckBox(props: CheckBoxProps) {
         )}
         onClick={() => onChange(!isChecked)}
       >
-        <div className={styles.icon}>{isChecked && !switchStyle ? <Right /> : null}</div>
+        <div className={styles.icon}>{isChecked && !switchStyle ? <Success /> : null}</div>
         <div className={styles.text}>
           {isChecked && !!checkText
             ? checkText
