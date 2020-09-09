@@ -41,7 +41,7 @@ export default function TextArea(props: TextAreaProps) {
     size = 'middle',
     label = '',
     autoFocus = false,
-    lablePlacement = 'left',
+    lablePlacement = 'top',
     rows,
 
     disabled = false,
@@ -62,7 +62,11 @@ export default function TextArea(props: TextAreaProps) {
   ]);
 
   return (
-    <div className={concat(styles.wrapper, className, styles[size])} style={style} onBlur={onBlur}>
+    <div
+      className={concat(styles.wrapper, className, styles[size], styles[lablePlacement])}
+      style={style}
+      onBlur={onBlur}
+    >
       {!!label ? <div className={styles.label}>{label}</div> : null}
       <div className={concat(styles.inner, ...(disabled ? ['disabled'] : []))}>
         <div className={concat(styles.textarea, shadowStyles.neumorphism_inset)}>
