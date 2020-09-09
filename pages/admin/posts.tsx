@@ -290,7 +290,6 @@ class AdminPostList extends React.Component<AdminPostListProps, AdminPostListSta
                 checked={this.state.search_fields.indexOf(item.key) !== -1}
                 onChange={(e) => {
                   const checked = e.target.checked;
-                  console.log(item, checked, this.state.search_fields);
                   this.setState((state) => {
                     var { search_fields } = state;
                     search_fields = search_fields.filter((it) => it != item.key);

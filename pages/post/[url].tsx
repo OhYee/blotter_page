@@ -5,10 +5,8 @@ import Head from 'next/head';
 import { withRouter } from 'next/router';
 import { WithRouterProps } from 'next/dist/client/with-router';
 
-import { message } from 'antd';
-
 import CommentPart from '@/components/comment';
-import  { Flex } from '@/components/container';
+import { Flex } from '@/components/container';
 import PostContent from '@/components/post_content';
 import { Qzone, QQ, Link } from '@/components/svg';
 import Card from '@/components/card';
@@ -19,7 +17,6 @@ import { post, view } from '@/utils/api';
 import { Context } from '@/utils/global';
 
 import './post.less';
-import If from '@/components/if';
 
 interface PostPageProps extends ComponentProps<'base'>, WithRouterProps {
   post: Blotter.Post;

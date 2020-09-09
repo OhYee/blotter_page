@@ -110,7 +110,6 @@ class QueueDetail extends React.Component<QueueDetailProps, QueueDetailState> {
     );
     this.ws.onmessage = (msg) => {
       const obj = JSON.parse(msg.data);
-      console.log(obj);
       if (typeof obj.data === 'object' && typeof obj.data.message === 'string') {
         H5Notification(obj.data.message);
         ShowNotification({ success: true, title: '排队通知', content: obj.data.message });
