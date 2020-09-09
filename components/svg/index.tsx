@@ -1,5 +1,6 @@
 import React from 'react';
 
+import { concat, ComponentProps } from '@/utils/component';
 import styles from './svg.less';
 
 const icons = {
@@ -41,7 +42,7 @@ const icons = {
     '<svg viewBox="0 0 1024 1024" fill="currentColor"><path d="M352 512l384-384c12.8-12.8 12.8-32 0-44.8-12.8-12.8-32-12.8-44.8 0L288 486.4C281.6 492.8 275.2 505.6 275.2 512c0 6.4 0 19.2 6.4 25.6l409.6 409.6c12.8 12.8 32 12.8 44.8 0s12.8-32 0-44.8L352 512z"></path></svg>',
   next:
     '<svg viewBox="0 0 1024 1024" fill="currentColor"><path d="M672 512l-384 384c-12.8 12.8-12.8 32 0 44.8 12.8 12.8 32 12.8 44.8 0l403.2-403.2c6.4-6.4 12.8-19.2 12.8-25.6 0-6.4 0-19.2-6.4-25.6L332.8 83.2C320 70.4 300.8 70.4 288 83.2S275.2 115.2 288 128L672 512z"></path></svg>',
-  right:
+  success:
     '<svg viewBox="0 0 1024 1024" fill="currentColor"><path d="M416.832 798.08C400.64 798.08 384.512 791.872 372.16 779.52L119.424 525.76C94.784 500.992 94.784 460.8 119.424 436.032 144.128 411.264 184.128 411.264 208.768 436.032L416.832 644.928 814.4 245.76C839.04 220.928 879.04 220.928 903.744 245.76 928.384 270.528 928.384 310.656 903.744 335.424L461.504 779.52C449.152 791.872 432.96 798.08 416.832 798.08Z"></path></svg>',
   search:
     '<svg viewBox="64 64 896 896" data-icon="search" fill="currentColor" aria-hidden="true"><path d="M909.6 854.5L649.9 594.8C690.2 542.7 712 479 712 412c0-80.2-31.3-155.4-87.9-212.1-56.6-56.7-132-87.9-212.1-87.9s-155.5 31.3-212.1 87.9C143.2 256.5 112 331.8 112 412c0 80.1 31.3 155.5 87.9 212.1C256.5 680.8 331.8 712 412 712c67 0 130.6-21.8 182.7-62l259.7 259.6a8.2 8.2 0 0011.6 0l43.6-43.5a8.2 8.2 0 000-11.6zM570.4 570.4C528 612.7 471.8 636 412 636s-116-23.3-158.4-65.6C211.3 528 188 471.8 188 412s23.3-116.1 65.6-158.4C296 211.3 352.2 188 412 188s116.1 23.2 158.4 65.6S636 352.2 636 412s-23.3 116.1-65.6 158.4z"></path></svg>',
@@ -87,24 +88,33 @@ const icons = {
     '<svg viewBox="64 64 896 896" focusable="false" data-icon="fullscreen-exit" fill="currentColor" aria-hidden="true"><path d="M391 240.9c-.8-6.6-8.9-9.4-13.6-4.7l-43.7 43.7L200 146.3a8.03 8.03 0 00-11.3 0l-42.4 42.3a8.03 8.03 0 000 11.3L280 333.6l-43.9 43.9a8.01 8.01 0 004.7 13.6L401 410c5.1.6 9.5-3.7 8.9-8.9L391 240.9zm10.1 373.2L240.8 633c-6.6.8-9.4 8.9-4.7 13.6l43.9 43.9L146.3 824a8.03 8.03 0 000 11.3l42.4 42.3c3.1 3.1 8.2 3.1 11.3 0L333.7 744l43.7 43.7A8.01 8.01 0 00391 783l18.9-160.1c.6-5.1-3.7-9.4-8.8-8.8zm221.8-204.2L783.2 391c6.6-.8 9.4-8.9 4.7-13.6L744 333.6 877.7 200c3.1-3.1 3.1-8.2 0-11.3l-42.4-42.3a8.03 8.03 0 00-11.3 0L690.3 279.9l-43.7-43.7a8.01 8.01 0 00-13.6 4.7L614.1 401c-.6 5.2 3.7 9.5 8.8 8.9zM744 690.4l43.9-43.9a8.01 8.01 0 00-4.7-13.6L623 614c-5.1-.6-9.5 3.7-8.9 8.9L633 783.1c.8 6.6 8.9 9.4 13.6 4.7l43.7-43.7L824 877.7c3.1 3.1 8.2 3.1 11.3 0l42.4-42.3c3.1-3.1 3.1-8.2 0-11.3L744 690.4z"></path></svg>',
   arrow:
     '<svg viewBox="64 64 896 896" data-icon="arrow" fill="currentColor" aria-hidden="true"><path d="M868 545.5L536.1 163a31.96 31.96 0 00-48.3 0L156 545.5a7.97 7.97 0 006 13.2h81c4.6 0 9-2 12.1-5.5L474 300.9V864c0 4.4 3.6 8 8 8h60c4.4 0 8-3.6 8-8V300.9l218.9 252.3c3 3.5 7.4 5.5 12.1 5.5h81c6.8 0 10.5-8 6-13.2z"></path></svg>',
+  plus:
+    '<svg viewBox="0 0 1024 1024" fill="currentColor"><path d="M512 85.333333q17.664 0 30.165333 12.501333t12.501333 30.165333l0 341.333333 341.333333 0q17.664 0 30.165333 12.501333t12.501333 30.165333-12.501333 30.165333-30.165333 12.501333l-341.333333 0 0 341.333333q0 17.664-12.501333 30.165333t-30.165333 12.501333-30.165333-12.501333-12.501333-30.165333l0-341.333333-341.333333 0q-17.664 0-30.165333-12.501333t-12.501333-30.165333 12.501333-30.165333 30.165333-12.501333l341.333333 0 0-341.333333q0-17.664 12.501333-30.165333t30.165333-12.501333z"></path></svg>',
+  minus:
+    '<svg viewBox="0 0 1024 1024" fill="currentColor"><path d="M128 469.333333l768 0q17.664 0 30.165333 12.501333t12.501333 30.165333-12.501333 30.165333-30.165333 12.501333l-768 0q-17.664 0-30.165333-12.501333t-12.501333-30.165333 12.501333-30.165333 30.165333-12.501333z"></path></svg>',
+  info:
+    '<svg viewBox="64 64 896 896" data-icon="info" fill="currentColor"><path d="M464 688a48 48 0 1096 0 48 48 0 10-96 0zm24-112h48c4.4 0 8-3.6 8-8V296c0-4.4-3.6-8-8-8h-48c-4.4 0-8 3.6-8 8v272c0 4.4 3.6 8 8 8z"></path></svg>',
+  warning:
+    '<svg viewBox="64 64 896 896" data-icon="warning" fill="currentColor"><path d="M464 688a48 48 0 1096 0 48 48 0 10-96 0zm24-112h48c4.4 0 8-3.6 8-8V296c0-4.4-3.6-8-8-8h-48c-4.4 0-8 3.6-8 8v272c0 4.4 3.6 8 8 8z"></path></svg>',
 };
 
 export declare type IconName = keyof typeof icons;
 
-export declare type SVGProps = {
+export declare type SVGProps = ComponentProps<{
   style?: React.CSSProperties;
   className?: string;
   icon?: IconName;
   children?: React.ReactNode;
-};
+}>;
 
 export default function SVG(props: SVGProps) {
-  const { style, className, icon, children } = props;
+  const { style, className, icon, children, ...restProps } = props;
 
   return (
     <div
-      className={[styles.svg, className].join(' ')}
-      style={{ ...style }}
+      {...restProps}
+      style={{ ...(!!props.onClick ? { cursor: 'pointer' } : {}), ...style }}
+      className={concat(styles.svg, className)}
       dangerouslySetInnerHTML={!!icon ? { __html: icons[icon] } : undefined}
     >
       {children}
@@ -131,7 +141,7 @@ export const Close = (props: SVGProps) => <SVG {...props} icon="close" />;
 export const Dots = (props: SVGProps) => <SVG {...props} icon="dots" />;
 export const Pre = (props: SVGProps) => <SVG {...props} icon="pre" />;
 export const Next = (props: SVGProps) => <SVG {...props} icon="next" />;
-export const Right = (props: SVGProps) => <SVG {...props} icon="right" />;
+export const Success = (props: SVGProps) => <SVG {...props} icon="success" />;
 export const Search = (props: SVGProps) => <SVG {...props} icon="search" />;
 export const Github = (props: SVGProps) => <SVG {...props} icon="github" />;
 export const Mail = (props: SVGProps) => <SVG {...props} icon="mail" />;
@@ -154,3 +164,7 @@ export const Star = (props: SVGProps) => <SVG {...props} icon="star" />;
 export const FullScreen = (props: SVGProps) => <SVG {...props} icon="fullscreen" />;
 export const FullScreenExit = (props: SVGProps) => <SVG {...props} icon="fullscreen_exit" />;
 export const Arrow = (props: SVGProps) => <SVG {...props} icon="arrow" />;
+export const Plus = (props: SVGProps) => <SVG {...props} icon="plus" />;
+export const Minus = (props: SVGProps) => <SVG {...props} icon="minus" />;
+export const Info = (props: SVGProps) => <SVG {...props} icon="info" />;
+export const Warning = (props: SVGProps) => <SVG {...props} icon="warning" />;
