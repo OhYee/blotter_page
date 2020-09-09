@@ -1,8 +1,6 @@
 import React, { ComponentProps, CSSProperties } from 'react';
 import Link from 'next/link';
 
-import { Timeline, Drawer } from 'antd';
-
 import { Map, Marker } from 'react-amap';
 
 import If from '@/components/if';
@@ -12,6 +10,8 @@ import Popover from '@/components/popover';
 import Loading from '@/components/loading';
 import Card from '@/components/card';
 import { Flex } from '@/components/container';
+import Timeline from '@/components/timeline';
+import Drawer from '@/components/drawer';
 
 import moment from '@/utils/moment';
 import { Context } from '@/utils/global';
@@ -71,6 +71,8 @@ class TravelMap extends React.Component<TravelMapProps, TravelMapState> {
                 width: '100%',
                 height: '80vh',
                 overflow: 'hidden',
+                zIndex: 1,
+                position: 'relative',
                 ...this.props.style,
               }
         }
@@ -107,43 +109,55 @@ class TravelMap extends React.Component<TravelMapProps, TravelMapState> {
             onClick={() => this.setState((state) => ({ full: !state.full }))}
           />
           <Drawer
-            getContainer={false}
-            closable={false}
             onClose={() => this.setState({ drawer: false })}
-            visible={this.state.drawer}
+            show={this.state.drawer}
             placement="left"
-            style={{ position: 'absolute' }}
+            containerStyle={{ position: 'absolute' }}
+            style={{ width: '250px' }}
           >
-            <Timeline mode={'left'}>
-              {this.props.cities
-                .map((item) => {
-                  var result: (typeof item & { time: number; link: string })[] = [];
-                  item.travels.map((i) => result.push({ ...item, ...i }));
-                  return result;
-                })
-                .reduce((a, b) => a.concat(b), [])
-                .sort((a, b) => a.time - b.time)
-                .map((item, idx) => (
-                  <Timeline.Item key={idx} label={moment(item.time, 'X').format('YYYY-MM-DD')}>
-                    <a
-                      onClick={() => {
-                        this.setState({
-                          drawer: false,
-                        });
-                        this.state.ins.setZoomAndCenter(item.zoom, [item.lng, item.lat]);
-                      }}
-                    >
-                      {item.name}
-                    </a>
-                    <If condition={!!item.link}>
-                      {'-'}
-                      <Link href="/post/[url]" as={`/post/${item.link}`}>
-                        <a>游记</a>
-                      </Link>
-                    </If>
-                  </Timeline.Item>
-                ))}
-            </Timeline>
+            <Card
+              shadow
+              style={{
+                background: 'var(--background)',
+                transition: 'background var(--transition-time)',
+                height: '100%',
+                overflow: 'auto',
+              }}
+            >
+              <Timeline
+                data={this.props.cities
+                  .map((item) => {
+                    var result: (typeof item & { time: number; link: string })[] = [];
+                    item.travels.map((i) => result.push({ ...item, ...i }));
+                    return result;
+                  })
+                  .reduce((a, b) => a.concat(b), [])
+                  .sort((a, b) => a.time - b.time)
+                  .map((item, idx) => ({
+                    time: moment(item.time, 'X').format('YYYY-MM-DD'),
+                    name: (
+                      <React.Fragment>
+                        <a
+                          onClick={() => {
+                            this.setState({
+                              drawer: false,
+                            });
+                            this.state.ins.setZoomAndCenter(item.zoom, [item.lng, item.lat]);
+                          }}
+                        >
+                          {item.name}
+                        </a>
+                        <If condition={!!item.link}>
+                          {' - '}
+                          <Link href="/post/[url]" as={`/post/${item.link}`}>
+                            <a>游记</a>
+                          </Link>
+                        </If>
+                      </React.Fragment>
+                    ),
+                  }))}
+              />
+            </Card>
           </Drawer>
           {this.props.cities.map((item) => (
             <Marker position={{ longitude: item.lng, latitude: item.lat }}>
