@@ -56,7 +56,7 @@ export default function Radio<T>(props: RadioProps<T>) {
             setState(option.key);
           }}
         >
-          <input type="radio" checked={option.key === nowKey} />
+          <input type="radio" checked={option.key === nowKey} onChange={() => {}} />
           {option.key}
         </div>
       ))}
