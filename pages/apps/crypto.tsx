@@ -1,38 +1,27 @@
-import React, { ComponentProps, Fragment } from 'react';
+import React, { ComponentProps } from 'react';
 import Head from 'next/head';
 
-import {
-  Card,
-  Alert,
-  Spin,
-  Result,
-  Tabs,
-  Form,
-  Input,
-  Button,
-  Typography,
-  Radio,
-  notification,
-  InputNumber,
-  Progress,
-  Divider,
-} from 'antd';
-import { ArrowDownOutlined, ArrowUpOutlined } from '@ant-design/icons';
+import { isNull } from 'util';
 
-import { Space, TextCenter } from '@/components/container';
+import Card from '@/components/card';
+import { Flex } from '@/components/container';
+import { Radio, TextArea, TextAreaProps, InputNumber } from '@/components/input';
+import Button from '@/components/button';
+import { Arrow, Info, Close } from '@/components/svg';
+import Tabs from '@/components/tabs';
+import Loading from '@/components/loading';
+import Timer from '@/components/timer';
+import Notification from '@/components/notification';
+
 import { Context } from '@/utils/global';
 import initialCrypto, { Crypto, HashType } from '@/utils/wasm_crypto';
-import { isNull } from 'util';
-import { InputProps, TextAreaProps } from 'antd/lib/input';
-import Countdown from 'antd/lib/statistic/Countdown';
-import Paragraph from 'antd/lib/skeleton/Paragraph';
-
 import Wasm from '@/utils/wasm_exec';
+import moment from '@/utils/moment';
 
 const CryptoContext = React.createContext({ crypto: undefined as Crypto });
 
 function showError(msg: any) {
-  notification.error({ message: '错误', description: `${msg}` });
+  Notification.message({ title: '错误', content: `${msg}`, alertType: 'error' });
 }
 
 function string2Bytes(input: string) {
@@ -72,7 +61,7 @@ function TextInput(
     closure?: (getter: () => string, setter: (v: string) => void) => void;
   },
 ) {
-  const { value: defaultValue = '', onChange, closure, ...restProps } = props;
+  const { value: defaultValue = '', onChange, closure, style, ...restProps } = props;
   const [value, setValue] = React.useState(defaultValue);
   if (!!closure)
     closure(
@@ -81,16 +70,15 @@ function TextInput(
     );
 
   return (
-    <Space>
-      <Input.TextArea
-        value={value}
-        onChange={(e) => {
-          setValue(e.target.value);
-          if (!!onChange) onChange(e);
-        }}
-        {...restProps}
-      />
-    </Space>
+    <TextArea
+      value={value}
+      onChange={(e) => {
+        setValue(value);
+        if (!!onChange) onChange(e);
+      }}
+      style={{ width: '100%', ...style }}
+      {...restProps}
+    />
   );
 }
 
@@ -100,24 +88,25 @@ function BytesInput(
     closure?: (getter: () => Uint8Array, setter: (v: Uint8Array) => void) => void;
   },
 ) {
-  const { value: defaultValue = new Uint8Array(), onChange, closure, ...restProps } = props;
+  type RadioType = 'Uint8Array' | 'Base64' | '16进制字符串' | 'UTF-8';
+  const { value: defaultValue = new Uint8Array(), onChange, closure, style, ...restProps } = props;
   const [inputValue, setInput] = React.useState(bytes2string(defaultValue));
   const [value, setValue] = React.useState(defaultValue);
-  const [r, setR] = React.useState(1 as 1 | 2 | 3 | 4);
+  const [r, setR] = React.useState('Uint8Array' as RadioType);
   const { crypto } = React.useContext(CryptoContext);
   const resetValue = () => {
     var ret = new Uint8Array();
-    if (r === 1) ret = string2Bytes(inputValue);
-    else if (r === 2) ret = crypto.exports.debase64(inputValue).return;
-    else if (r === 3) ret = hex2Bytes(inputValue);
+    if (r === 'Uint8Array') ret = string2Bytes(inputValue);
+    else if (r === 'Base64') ret = crypto.exports.debase64(inputValue).return;
+    else if (r === '16进制字符串') ret = hex2Bytes(inputValue);
     else ret = new TextEncoder().encode(inputValue);
     setValue(ret);
     return ret;
   };
-  const resetInput = (r: 1 | 2 | 3 | 4, v: Uint8Array) => {
-    if (r == 1) setInput(bytes2string(v));
-    else if (r == 2) setInput(crypto.exports.base64(v).return);
-    else if (r == 3) setInput(bytes2hex(v));
+  const resetInput = (r: RadioType, v: Uint8Array) => {
+    if (r === 'Uint8Array') setInput(bytes2string(v));
+    else if (r === 'Base64') setInput(crypto.exports.base64(v).return);
+    else if (r === '16进制字符串') setInput(bytes2hex(v));
     else setInput(new TextDecoder().decode(v));
   };
   if (!!closure)
@@ -130,29 +119,25 @@ function BytesInput(
     );
 
   return (
-    <Space>
-      <Input.TextArea
+    <Flex direction="TB" fullWidth>
+      <TextArea
         value={inputValue}
-        onChange={(e) => {
-          setInput(e.target.value);
-          if (!!onChange) onChange(e);
+        onChange={(value) => {
+          setInput(value);
+          if (!!onChange) onChange(value);
         }}
+        style={{ width: '100%', ...style }}
         {...restProps}
       />
-      <Radio.Group
-        value={r}
-        onChange={(e) => {
-          const v = e.target.value;
+      <Radio<RadioType>
+        options={['Uint8Array', 'Base64', '16进制字符串', 'UTF-8']}
+        selectedKey={r}
+        onChange={(k, v: RadioType) => {
           resetInput(v, resetValue());
           setR(v);
         }}
-      >
-        <Radio value={1}>Uint8Array</Radio>
-        <Radio value={2}>Base64</Radio>
-        <Radio value={3}>16进制字符串</Radio>
-        <Radio value={4}>UTF-8</Radio>
-      </Radio.Group>
-    </Space>
+      />
+    </Flex>
   );
 }
 
@@ -222,11 +207,11 @@ function Tab<
   var codeSetter: (v: C) => void = (v: C) => {};
 
   return (
-    <Space>
+    <Flex direction="TB" fullWidth>
       {description}
 
       {keyEnable ? (
-        <Fragment>
+        <React.Fragment>
           {keyString ? (
             <TextInput
               label={keyLabel}
@@ -242,8 +227,7 @@ function Tab<
               closure={(g, s) => ((keyGetter = g as any), (keySetter = s as any))}
             />
           )}
-          <Divider />
-        </Fragment>
+        </React.Fragment>
       ) : null}
 
       {ordinaryString ? (
@@ -262,9 +246,10 @@ function Tab<
         />
       )}
 
-      <Space flexCenter direction="horizontal">
+      <Flex mainAxis="space-around">
         <Button
-          icon={<ArrowDownOutlined />}
+          neumorphism
+          prefix={<Arrow style={{ transform: 'rotate(180deg)' }} />}
           disabled={!encode}
           onClick={() => {
             try {
@@ -279,7 +264,8 @@ function Tab<
           {encodeLabel}
         </Button>
         <Button
-          icon={<ArrowUpOutlined />}
+          neumorphism
+          prefix={<Arrow />}
           disabled={!decode}
           onClick={() => {
             try {
@@ -293,7 +279,7 @@ function Tab<
         >
           {decodeLabel}
         </Button>
-      </Space>
+      </Flex>
 
       {codeString ? (
         <TextInput
@@ -310,7 +296,7 @@ function Tab<
           closure={(g, s) => ((codeGetter = g as any), (codeSetter = s as any))}
         />
       )}
-    </Space>
+    </Flex>
   );
 }
 
@@ -318,11 +304,11 @@ function BytesTab(props: React.PropsWithChildren<{}>): JSX.Element {
   return (
     <Tab<never, Uint8Array, string>
       description={
-        <Typography.Paragraph>
+        <p>
           比特数组是可视文本在计算机内部的存储形式(UTF-8)
           <br />
           由于这里使用的输入输出大多都是二进制数组(Uint8Array)，因此要在输入框输入输出，通常都需要在这里将文本转换为可以识别的二进制数组
-        </Typography.Paragraph>
+        </p>
       }
       keyEnable={false}
       ordinaryString={false}
@@ -339,13 +325,13 @@ function Base64Tab(props: React.PropsWithChildren<{}>): JSX.Element {
   return (
     <Tab<string, Uint8Array, string>
       description={
-        <Typography.Paragraph>
+        <p>
           Base64
           是一种编码算法，将二进制内容编码为可视的字符内容，使用该应用可以同时设置不同于默认的
           Base64 可用字符集(长度必须是64)。
           这里由于所有的密码学内容都使用二进制输入输出(Uint8Array)，因此也可以使用 Base64
           来将其转换为更容易展示的形式
-        </Typography.Paragraph>
+        </p>
       }
       keyLabel="Base64 可用字符"
       keyDefault={crypto.exports.defaultBase64Key}
@@ -379,17 +365,16 @@ function ReplaceTab(props: React.PropsWithChildren<{}>): JSX.Element {
   return (
     <Tab<string, string, string>
       description={
-        <Typography.Paragraph>
+        <p>
           代换密码，按照某种特定的规则（密钥）将字符替换成其他的字符（二进制下为字节的替换）
           <br />
           在这里，使用字符串来作为密钥的输入（只支持字母和数字），按照
-          <Typography.Text code>A-Z</Typography.Text>、<Typography.Text code>a-z</Typography.Text>、
-          <Typography.Text code>0-9</Typography.Text>
+          <code>A-Z</code>、<code>a-z</code>、<code>0-9</code>
           的顺序来输入其替换的密钥
           <br />
           如传统凯撒密码（+3替换）的密钥为
-          <Typography.Text code>{crypto.exports.caesar}</Typography.Text>
-        </Typography.Paragraph>
+          <code>{crypto.exports.caesar}</code>
+        </p>
       }
       keyLabel="替换密钥"
       keyDefault={crypto.exports.caesar}
@@ -421,20 +406,19 @@ function HashTab(props: React.PropsWithChildren<{}>): JSX.Element {
   const [value, setValue] = React.useState('sha1' as HashType);
   const { crypto } = React.useContext(CryptoContext);
   return (
-    <Space>
-      <Radio.Group onChange={(v) => setValue(v.target.value as HashType)} value={value}>
-        <Radio value={'sha1'}>SHA1</Radio>
-        <Radio value={'sha224'}>SHA224</Radio>
-        <Radio value={'sha256'}>SHA256</Radio>
-        <Radio value={'sha384'}>SHA384</Radio>
-        <Radio value={'sha512'}>SHA512</Radio>
-      </Radio.Group>
+    <Flex direction="TB" fullWidth>
+      <Radio
+        options={['sha1', 'sha224', 'sha256', 'sha384', 'sha512']}
+        onChange={(v) => setValue(v as HashType)}
+        selectedKey={value}
+      />
+
       <Tab<Uint8Array, Uint8Array, Uint8Array>
         description={
-          <Typography.Paragraph>
+          <p>
             哈希（散列）算法是一种不可逆的映射函数，在这里输入输出都是比特数组(Uint8Array)。通常应该结合“比特数组转换”和“Base64
             编码”使用
-          </Typography.Paragraph>
+          </p>
         }
         keyEnable={false}
         codeLabel="哈希结果"
@@ -452,7 +436,7 @@ function HashTab(props: React.PropsWithChildren<{}>): JSX.Element {
           }
         }}
       />
-    </Space>
+    </Flex>
   );
 }
 
@@ -460,19 +444,17 @@ function HmacTab(props: React.PropsWithChildren<{}>): JSX.Element {
   const [value, setValue] = React.useState('sha1' as HashType);
   const { crypto } = React.useContext(CryptoContext);
   return (
-    <Space>
-      <Radio.Group onChange={(v) => setValue(v.target.value as HashType)} value={value}>
-        <Radio value={'sha1'}>SHA1</Radio>
-        <Radio value={'sha224'}>SHA224</Radio>
-        <Radio value={'sha256'}>SHA256</Radio>
-        <Radio value={'sha384'}>SHA384</Radio>
-        <Radio value={'sha512'}>SHA512</Radio>
-      </Radio.Group>
+    <Flex direction="TB" fullWidth>
+      <Radio<HashType>
+        options={['sha1', 'sha224', 'sha256', 'sha384', 'sha512']}
+        onChange={(k, v) => setValue(k as HashType)}
+        selectedKey={value}
+      />
       <Tab<Uint8Array, Uint8Array, Uint8Array>
         description={
-          <Typography.Paragraph>
+          <p>
             哈希消息认证码是一种带有密钥的哈希算法，除去哈希算法提供的完整性，还增加了身份验证的功能
-          </Typography.Paragraph>
+          </p>
         }
         codeLabel="哈希消息验证码"
         keyString={false}
@@ -491,7 +473,7 @@ function HmacTab(props: React.PropsWithChildren<{}>): JSX.Element {
           }
         }}
       />
-    </Space>
+    </Flex>
   );
 }
 
@@ -500,12 +482,12 @@ function DESTab(props: React.PropsWithChildren<{}>): JSX.Element {
   return (
     <Tab<Uint8Array, Uint8Array, Uint8Array>
       description={
-        <Typography.Paragraph>
+        <p>
           DES 是一种分组加密算法，在这里是原本的 DES
           实现，未考虑分组加密工作方式，因此要求输入、输出、密钥长度必须是 64 bit
           <br />
           每一轮的输出将会输出到开发者工具(DevTools)
-        </Typography.Paragraph>
+        </p>
       }
       keyLabel="DES 密钥"
       keyString={false}
@@ -559,34 +541,44 @@ function TotpTab(props: React.PropsWithChildren<{}>): JSX.Element {
     }
   };
   return (
-    <Space>
-      <Typography.Paragraph>
+    <Flex direction="TB" fullWidth>
+      <p>
         基于时间的一次一密算法(TOTP)是一个根据密钥以及时间生成密码的算法，广泛用于各种安全令、二步验证的场景
-      </Typography.Paragraph>
-      <TextCenter>
-        <Countdown
-          title={
-            <span>
-              密码 <strong>{code.toString().padStart(digit, '0')}</strong> 失效时间
-            </span>
-          }
-          value={left}
-          format="ss.SSS 秒"
-          onFinish={calc}
+      </p>
+      <Timer
+        style={{ margin: 'auto' }}
+        title={<span>密码 {code.toString().padStart(digit, '0')}</span>}
+        target={left}
+        format={(now, target) =>
+          `${moment
+            .duration(target - now)
+            .asSeconds()
+            .toFixed(3)} 秒后失效`
+        }
+        onFinished={calc}
+      />
+
+      <Flex>
+        <InputNumber
+          label="位数"
+          value={digit}
+          min={1}
+          max={10}
+          onChange={(v) => setDigit(parseInt(v.toString()))}
         />
-      </TextCenter>
-      <Space direction="horizontal">
-        <strong>位数</strong>
-        <InputNumber value={digit} min={1} onChange={(v) => setDigit(parseInt(v.toString()))} />
-        <strong>时间周期</strong>
-        <InputNumber value={diff} min={1} onChange={(v) => setDiff(parseInt(v.toString()))} />
-        <Button onClick={(e) => calc()}>刷新</Button>
-      </Space>
-      <Space>
-        <strong>密钥</strong>
-        <BytesInput closure={(g, s) => ((keyGetter = g), (keySetter = s))} />
-      </Space>
-    </Space>
+        <InputNumber
+          label="时间周期"
+          value={diff}
+          min={1}
+          max={7200}
+          onChange={(v) => setDiff(parseInt(v.toString()))}
+        />
+        <Button neumorphism onClick={(e) => calc()}>
+          刷新
+        </Button>
+      </Flex>
+      <BytesInput label="密钥" closure={(g, s) => ((keyGetter = g), (keySetter = s))} />
+    </Flex>
   );
 }
 interface CryptoAppProps extends ComponentProps<'base'> {}
@@ -633,21 +625,18 @@ class CryptoApp extends React.Component<CryptoAppProps, CryptoAppState> {
     ];
 
     return (
-      <Tabs defaultActiveKey="0">
+      <Tabs defaultSelected="比特数组转换" keepInDOM>
         {tabs.map((item, idx) => (
-          <Tabs.TabPane tab={item.title} key={`${idx}`} disabled={isNull(item.child)}>
+          <Tabs.Item name={item.title} key={`${idx}`} disabled={isNull(item.child)}>
             {item.child}
-          </Tabs.TabPane>
+          </Tabs.Item>
         ))}
       </Tabs>
     );
   };
   render() {
-    var getter = () => {
-      return new Uint8Array();
-    };
     return (
-      <Card>
+      <Card neumorphism>
         <Context.Consumer>
           {(context) => (
             <Head>
@@ -655,35 +644,47 @@ class CryptoApp extends React.Component<CryptoAppProps, CryptoAppState> {
             </Head>
           )}
         </Context.Consumer>
-        <Space>
-          <Alert
-            showIcon
-            message="提示"
-            description={
-              <Typography.Paragraph>
+        <Flex direction="TB" fullWidth>
+          <Notification
+            alertType="info"
+            icon={<Info style={{ border: '2px solid', borderRadius: '100%' }} />}
+            title="提示"
+            content={
+              <p>
                 本应用用于实验 WASM 相关技术，加密算法使用 Go WebAssembly
                 实现，可能无法在较老的浏览器运行
                 <br />
                 （看上去这是个前端，其实使用后端写的，但是实际上最花时间的还是前端）
-              </Typography.Paragraph>
+              </p>
             }
           />
 
           {!!this.state.error ? (
-            <Result
-              status="error"
-              title="WebAssembly 加载错误"
-              subTitle="或许你需要尝试使用更现代的浏览器"
-              extra={`${this.state.error}`}
-            ></Result>
+            <Flex direction="TB" fullWidth style={{ textAlign: 'center' }}>
+              <h3>WebAssembly 加载错误</h3>
+              <p>或许你需要尝试使用更现代的浏览器</p>
+              <i>{`${this.state.error}`}</i>
+              <Close
+                style={{
+                  color: 'var(--error-color)',
+                  fontSize: '2.5em',
+                  border: '2px solid',
+                  borderRadius: '100%',
+                  transition: 'color var(--transition-time),border var(--transition-time)',
+                }}
+              />
+            </Flex>
           ) : this.state.loading ? (
-            <Result icon={<Spin size="large" />} title="正在加载 WebAssembly 模块" />
+            <Flex direction="TB" fullWidth style={{ textAlign: 'center' }}>
+              <h3>正在加载 WebAssembly 模块"</h3>
+              <Loading />
+            </Flex>
           ) : (
             <CryptoContext.Provider value={{ crypto: this.crypto }}>
               {this.renderTabs()}
             </CryptoContext.Provider>
           )}
-        </Space>
+        </Flex>
       </Card>
     );
   }
