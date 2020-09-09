@@ -87,11 +87,13 @@ export default function Input<SelectType>(props: InputProps<SelectType>) {
     style,
     className,
   } = props;
-  const ref = React.useRef<HTMLInputElement>();
+  const [state, setState] = React.useState(!!defaultValue ? defaultValue : '');
+  const nowValue = typeof value === 'undefined' ? state : value;
+
   const opts = React.useMemo(() => TransfromOptions(options), [options]);
-  React.useEffect(() => getValueCallback(() => ref.current.value), [ref, getValueCallback]);
-  React.useEffect(() => setValueCallback((value: string) => (ref.current.value = value)), [
-    ref,
+  React.useEffect(() => getValueCallback(() => nowValue), [nowValue, getValueCallback]);
+  React.useEffect(() => setValueCallback((value: string) => setState(value)), [
+    setState,
     setValueCallback,
   ]);
 
@@ -112,10 +114,12 @@ export default function Input<SelectType>(props: InputProps<SelectType>) {
         <div className={concat(styles.input, shadowStyles.neumorphism_inset)}>
           {!!prefix ? <span className={styles.prefix}>{prefix}</span> : null}
           <input
-            ref={ref}
-            defaultValue={!!value ? undefined : defaultValue}
-            value={value}
-            onChange={(e) => onChange(e.target.value)}
+            value={nowValue}
+            onChange={(e) => {
+              const value = e.target.value;
+              setState(value);
+              onChange(value);
+            }}
             placeholder={placeholder}
             type={type}
             style={{ paddingLeft: !!prefix ? '2em' : 0, paddingRight: !!suffix ? '2em' : 0 }}
