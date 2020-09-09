@@ -1,0 +1,20 @@
+.tabs {
+  .nav {
+    overflow-x: auto;
+    font-weight: bold;
+    box-sizing: border-box;
+    padding-bottom: 10px;
+    .nav_item {
+      padding: 10px;
+      color: var(--color);
+      transition: color var(--transition-time), border-color var(--transition-time),
+        font-weight var(--transition-time);
+      cursor: pointer;
+      flex: 0 0 auto;
+      &.selected {
+        color: var(--primary);
+        border-bottom: 3px solid var(--primary);
+      }
+    }
+  }
+}
