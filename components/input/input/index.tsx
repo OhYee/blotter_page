@@ -21,7 +21,7 @@ export function TransfromOptions<T = any>(options: Option<T>[]): StrictOption<T>
   return options.map((opt) => (typeof opt === 'string' ? { key: opt, value: opt } : opt));
 }
 
-export declare type InputProps<SelectType> = ComponentProps<{
+export declare type BasePartProps = {
   label?: string;
   lablePlacement?: 'left' | 'top';
   size?: 'small' | 'middle' | 'large';
@@ -31,7 +31,9 @@ export declare type InputProps<SelectType> = ComponentProps<{
   onEnterPressed?: () => void;
   onBlur?: () => void;
   hint?: React.ReactNode;
+};
 
+export declare type InputPartProps = {
   // Input
   value?: string;
   defaultValue?: string;
@@ -42,14 +44,20 @@ export declare type InputProps<SelectType> = ComponentProps<{
   setValueCallback?: (callback: (value: string) => void) => void;
   type?: string;
   autoFocus?: boolean;
+};
 
+export declare type SelectPartProps<SelectType = any> = {
   // Select
   selectTrigger?: ('click' | 'hover')[];
   options?: Option<SelectType>[];
   onSelect?: (key: string, value: SelectType | string) => void;
   getSelectShow?: (callback: () => boolean) => void;
   setSelectShow?: (callback: (show: boolean) => void) => void;
-}>;
+};
+
+export declare type InputProps<SelectType = any> = ComponentProps<
+  BasePartProps & InputPartProps & SelectPartProps<SelectType>
+>;
 
 export default function Input<SelectType>(props: InputProps<SelectType>) {
   const {
