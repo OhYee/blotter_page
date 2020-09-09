@@ -1,0 +1,119 @@
+.avatar___FhI1z {
+  width: 2em;
+  height: 2em;
+  border-radius: 100%;
+  overflow: hidden;
+  color: var(--color);
+  transition: color var(--transition-time);
+  position: relative;
+}
+.avatar___FhI1z img {
+  width: 100%;
+  height: 100%;
+}
+.avatar___FhI1z > :first-child {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+.tag___CfNDX {
+  height: 2em;
+  overflow: hidden;
+  color: var(--color);
+  background: var(--background);
+  transition: color var(--transition-time), background var(--transition-time), box-shadow var(--transition-time) !important;
+  width: fit-content;
+}
+
+.image-container {
+  display: block;
+}
+.image-container .image {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+@keyframes image-show___2Q2aL {
+  from {
+    max-width: 0vw;
+    max-height: 0vh;
+  }
+  to {
+    max-width: 80vw;
+    max-height: 80vh;
+  }
+}
+@keyframes lightbox-background___1kP16 {
+  from {
+    background: rgba(0, 0, 0, 0);
+  }
+  to {
+    background: rgba(0, 0, 0, 0.5);
+  }
+}
+@keyframes lightbox-title___2JHg4 {
+  from {
+    color: transparent;
+    text-shadow: transparent 0px 0px 0px;
+  }
+  to {
+    color: white;
+    text-shadow: black 2.5px 2.5px 7.5px;
+  }
+}
+.image-lightbox {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  animation: lightbox-background___1kP16 1s;
+  background: rgba(0, 0, 0, 0.5);
+  color: white;
+  font-size: 1.25em;
+  font-weight: bold;
+}
+.image-lightbox span {
+  position: absolute;
+  z-index: 1001;
+  text-shadow: black 2.5px 2.5px 7.5px;
+  animation: lightbox-title___2JHg4 1s;
+}
+.image-lightbox span.close {
+  top: 10px;
+  right: 10px;
+  font-size: 2em;
+  cursor: pointer;
+}
+.image-lightbox span.hint {
+  top: 10px;
+  font-size: 16px;
+}
+.image-lightbox p {
+  position: absolute;
+  bottom: 50px;
+  z-index: 1001;
+  text-shadow: black 2.5px 2.5px 7.5px;
+  animation: lightbox-title___2JHg4 1s;
+}
+.image-lightbox img {
+  position: absolute;
+  max-width: 80vw;
+  max-height: 80vh;
+  z-index: 1000;
+  box-shadow: 2.5px 2.5px 2.5px black;
+  cursor: grab;
+  animation: image-show___2Q2aL 1s;
+}
+

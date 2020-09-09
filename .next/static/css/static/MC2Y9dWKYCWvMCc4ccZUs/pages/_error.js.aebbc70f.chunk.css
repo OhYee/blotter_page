@@ -1,0 +1,39 @@
+.color___2WBY8 {
+  transition: color var(--transition-time);
+  color: var(--color);
+}
+.color___2WBY8:hover {
+  color: var(--color);
+}
+.color___2WBY8:active {
+  color: var(--color);
+}
+.primary___a0AGn {
+  transition: color var(--transition-time);
+  color: var(--primary);
+}
+.primary___a0AGn:hover {
+  color: var(--primary);
+}
+.primary___a0AGn:active {
+  color: var(--primary);
+}
+.secondary___3qQjV {
+  transition: color var(--transition-time);
+  color: var(--secondary);
+}
+.secondary___3qQjV:hover {
+  color: var(--secondary);
+}
+.secondary___3qQjV:active {
+  color: var(--secondary);
+}
+.ellipsis___IDoKh {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.em75___3rJF8 {
+  font-size: 0.75em;
+}
+
