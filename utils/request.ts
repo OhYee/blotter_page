@@ -1,4 +1,4 @@
-import { notification } from 'antd';
+import { message } from '@/components/notification';
 import axios from 'axios';
 
 function parseURL(url: string): string {
@@ -27,9 +27,9 @@ export const requestCallback = (
     url: parseURL(url),
     params: data,
   })
-    .then(data => data.data)
-    .then(data => callback(data))
-    .catch(err => console.log(err));
+    .then((data) => data.data)
+    .then((data) => callback(data))
+    .catch((err) => console.log(err));
 };
 
 export const request = async <T>(
@@ -48,7 +48,7 @@ export const request = async <T>(
   } catch (e) {
     console.log(e);
     if (typeof document !== 'undefined') {
-      notification.error({ message: '请求发生错误', description: `${e}` });
+      message({ title: '请求发生错误', content: `${e}`, alertType: 'error' });
     }
     throw e;
   }

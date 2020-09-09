@@ -1,10 +1,10 @@
-import { notification } from 'antd';
+import { message } from '@/components/notification';
 
 export default function ShowNotification(res: Blotter.APIResponse) {
   if (res.success) {
-    notification.success({ message: res.title, description: res.content });
+    message({ title: res.title, content: res.content, alertType: 'success' });
   } else {
-    notification.error({ message: res.title, description: res.content });
+    message({ title: res.title, content: res.content, alertType: 'error' });
   }
   return res.success;
 }
