@@ -27,6 +27,21 @@
   }
 }
 
+.danger {
+  color: var(--error-color);
+  background: var(--error-background);
+  &:hover {
+    color: var(--error-color);
+  }
+  &.primary {
+    color: var(--error-background);
+    background: var(--error-color);
+    &:hover {
+      color: var(--error-background);
+    }
+  }
+}
+
 .primary {
   color: white;
   background: var(--primary);

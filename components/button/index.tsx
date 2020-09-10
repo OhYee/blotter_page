@@ -15,6 +15,7 @@ export declare type ButtonProps = ComponentProps<{
   primary?: boolean;
   shadow?: boolean;
   neumorphism?: boolean;
+  danger?: boolean;
   className?: string;
   disabled?: boolean;
   loading?: boolean;
@@ -40,23 +41,42 @@ function parseProps(props: ButtonProps) {
     style = {},
     className,
     children,
+    danger=false,
   } = props;
-  var classList = [styles.button, className];
-  if (typeof size === 'string') {
-    classList.push(styles[size]);
-  } else {
-    style.fontSize = `${size}em`;
-    style.width = `${size + 1}em`;
-    style.height = `${size + 1}em`;
-  }
-  if (!!icon) classList.push(styles.icon);
-  if (circle) classList.push(styles.circle);
-  if (primary) classList.push(styles.primary);
-  if (shadow) classList.push(shadowStyles.shadow);
-  if (neumorphism && !clicked) classList.push(shadowStyles.neumorphism);
-  if (neumorphism && clicked) classList.push(shadowStyles.neumorphism_inset);
-  if (loading || disabled) classList.push('disabled');
-  if ((shadow || neumorphism) && !disabled) classList.push(shadowStyles.clickable);
+  const classList = React.useMemo(() => {
+    var classList = [styles.button, className];
+    if (typeof size === 'string') {
+      classList.push(styles[size]);
+    } else {
+      style.fontSize = `${size}em`;
+      style.width = `${size + 1}em`;
+      style.height = `${size + 1}em`;
+    }
+    if (!!icon) classList.push(styles.icon);
+    if (circle) classList.push(styles.circle);
+    if (primary) classList.push(styles.primary);
+    if (shadow) classList.push(shadowStyles.shadow);
+    if (neumorphism && !clicked) classList.push(shadowStyles.neumorphism);
+    if (neumorphism && clicked) classList.push(shadowStyles.neumorphism_inset);
+    if (loading || disabled) classList.push('disabled');
+    if ((shadow || neumorphism) && !disabled) classList.push(shadowStyles.clickable);
+    if (danger) classList.push(styles.danger);
+    return classList;
+  }, [
+    className,
+    size,
+    icon,
+    circle,
+    primary,
+    shadow,
+    neumorphism,
+    clicked,
+    loading,
+    disabled,
+    shadow,
+    danger,
+  ]);
+
   return {
     classList,
     style,
