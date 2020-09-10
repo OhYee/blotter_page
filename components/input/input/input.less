@@ -6,7 +6,7 @@
     flex-direction: column;
     .label {
       margin-left: 15px;
-      margin-bottom:5px;
+      margin-bottom: 5px;
     }
   }
   &.left {
@@ -70,31 +70,7 @@
         }
       }
     }
-    .select {
-      position: relative;
-      z-index: 2;
-      ul {
-        position: absolute;
-        list-style: none;
-        width: 100%;
-        margin: 0;
-        padding: 0;
-        color: var(--color);
-        background: var(--background);
-        transition: color var(--transition-time), background var(--transition-time),
-          box-shadow var(--transition-time), opacity var(--transition-time),
-          visibility var(--transition-time);
 
-        li {
-          cursor: pointer;
-          padding: 10px;
-          &:hover {
-            color: var(--background);
-            background: var(--secondary);
-          }
-        }
-      }
-    }
     &:global(.disabled) {
       opacity: 0.5;
       .select {
@@ -125,6 +101,46 @@
     font-size: 1.25em;
     .inner .input {
       padding: 10 10px;
+    }
+  }
+  .transform {
+    display: flex;
+    justify-content: space-between;
+    overflow: hidden;
+    cursor: pointer;
+    .transform_value {
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .transform_icon {
+      margin-left: 5px;
+    }
+  }
+}
+
+.select {
+  //   position: relative;
+  z-index: 2;
+  min-width: 10em;
+  ul {
+    // position: absolute;
+    list-style: none;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    color: var(--color);
+    background: var(--background);
+    transition: color var(--transition-time), background var(--transition-time),
+      box-shadow var(--transition-time), opacity var(--transition-time),
+      visibility var(--transition-time);
+
+    li {
+      cursor: pointer;
+      padding: 10px;
+      &:hover {
+        color: var(--background);
+        background: var(--secondary);
+      }
     }
   }
 }

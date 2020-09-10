@@ -1,5 +1,8 @@
 import React from 'react';
 
+import { Edit } from '@/components/svg';
+import Popover from '@/components/popover';
+
 import { concat, ComponentProps } from '@/utils/component';
 
 import shadowStyles from '@/styles/shadow.less';
@@ -55,8 +58,12 @@ export declare type SelectPartProps<SelectType = any> = {
   setSelectShow?: (callback: (show: boolean) => void) => void;
 };
 
+export declare type TransformPartProps = {
+  transform?: boolean;
+};
+
 export declare type InputProps<SelectType = any> = ComponentProps<
-  BasePartProps & InputPartProps & SelectPartProps<SelectType>
+  BasePartProps & InputPartProps & SelectPartProps<SelectType> & TransformPartProps
 >;
 
 export default function Input<SelectType>(props: InputProps<SelectType>) {
@@ -86,6 +93,7 @@ export default function Input<SelectType>(props: InputProps<SelectType>) {
     type,
     style,
     className,
+    transform = false,
   } = props;
   const [state, setState] = React.useState(!!defaultValue ? defaultValue : '');
   const nowValue = typeof value === 'undefined' ? state : value;
@@ -97,75 +105,103 @@ export default function Input<SelectType>(props: InputProps<SelectType>) {
     setValueCallback,
   ]);
 
-  const [show, setShow] = React.useState(false);
-  const click = React.useMemo(() => selectTrigger.indexOf('click') !== -1, [selectTrigger]);
-  const hover = React.useMemo(() => selectTrigger.indexOf('hover') !== -1, [selectTrigger]);
-  React.useEffect(() => setSelectShow(setShow), [setSelectShow, setShow]);
-  React.useEffect(() => getSelectShow(() => show), [getSelectShow, show]);
+  //   const [show, setShow] = React.useState(false);
+  //   const click = React.useMemo(() => selectTrigger.indexOf('click') !== -1, [selectTrigger]);
+  //   const hover = React.useMemo(() => selectTrigger.indexOf('hover') !== -1, [selectTrigger]);
+  //   React.useEffect(() => setSelectShow(setShow), [setSelectShow, setShow]);
+  //   React.useEffect(() => getSelectShow(() => show), [getSelectShow, show]);
+
+  const [showInput, setShowInput] = React.useState(false);
 
   return (
     <div
       className={concat(styles.wrapper, className, styles[size], styles[lablePlacement])}
       style={style}
-      onBlur={onBlur}
+      onBlur={() => {
+        if (transform) setShowInput(false);
+        if (!!onBlur) onBlur();
+      }}
+      onClick={() => {
+        if (transform) setShowInput(true);
+      }}
     >
-      {!!label ? <div className={concat(styles.label)}>{label}</div> : null}
-      <div className={concat(styles.inner, ...(disabled ? ['disabled'] : []))}>
-        <div className={concat(styles.input, shadowStyles.neumorphism_inset)}>
-          {!!prefix ? <span className={styles.prefix}>{prefix}</span> : null}
-          <input
-            value={nowValue}
-            onChange={(e) => {
-              const value = e.target.value;
-              setState(value);
-              onChange(value);
-            }}
-            placeholder={placeholder}
-            type={type}
-            style={{ paddingLeft: !!prefix ? '2em' : 0, paddingRight: !!suffix ? '2em' : 0 }}
-            onClick={() => {
-              if (click) setShow(true);
-            }}
-            onMouseEnter={() => {
-              if (hover) setShow(true);
-            }}
-            onMouseLeave={() => setShow(false)}
-            readOnly={!editable}
-            onKeyUp={(e) => {
-              if (e.keyCode == 13 && !!onEnterPressed) onEnterPressed();
-            }}
-            autoFocus={autoFocus}
-          />
-          {!!suffix ? <span className={styles.suffix}>{suffix}</span> : null}
-        </div>
-        {options.length > 0 ? (
-          <div className={styles.select}>
-            <ul
-              className={shadowStyles.neumorphism}
-              style={
-                show ? { opacity: 1, visibility: 'visible' } : { opacity: 0, visibility: 'hidden' }
-              }
-              onMouseEnter={() => setShow(true)}
-              onMouseLeave={() => setShow(false)}
-            >
-              {opts.map((o, idx) => (
-                <li
-                  key={idx}
-                  onClick={() => {
-                    if (!disabled) {
-                      onSelect(o.key, o.value);
-                      setShow(false);
-                    }
+      {!transform || (transform && showInput) ? (
+        <React.Fragment>
+          {!!label ? <div className={concat(styles.label)}>{label}</div> : null}
+          <div className={concat(styles.inner, ...(disabled ? ['disabled'] : []))}>
+            <div className={concat(styles.input, shadowStyles.neumorphism_inset)}>
+              {!!prefix ? <span className={styles.prefix}>{prefix}</span> : null}
+              <Popover
+                card
+                arrow={false}
+                placement="bottom"
+                trigger={selectTrigger}
+                component={
+                  <div className={styles.select}>
+                    <ul
+                      className={shadowStyles.neumorphism}
+                      //   style={
+                      //     show
+                      //       ? { opacity: 1, visibility: 'visible' }
+                      //       : { opacity: 0, visibility: 'hidden' }
+                      //   }
+                      //   onMouseEnter={() => setShow(true)}
+                      //   onMouseLeave={() => setShow(false)}
+                    >
+                      {opts.map((o, idx) => (
+                        <li
+                          key={idx}
+                          onClick={() => {
+                            if (!disabled) {
+                              onSelect(o.key, o.value);
+                              //   setShow(false);
+                            }
+                          }}
+                        >
+                          {o.key}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                }
+              >
+                <input
+                  value={nowValue}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    setState(value);
+                    onChange(value);
                   }}
-                >
-                  {o.key}
-                </li>
-              ))}
-            </ul>
+                  placeholder={placeholder}
+                  type={type}
+                  style={{ paddingLeft: !!prefix ? '2em' : 0, paddingRight: !!suffix ? '2em' : 0 }}
+                  //   onClick={() => {
+                  //     if (click) setShow(true);
+                  //   }}
+                  //   onMouseEnter={() => {
+                  //     if (hover) setShow(true);
+                  //   }}
+                  //   onMouseLeave={() => setShow(false)}
+                  readOnly={!editable}
+                  onKeyUp={(e) => {
+                    if (e.keyCode == 13 && !!onEnterPressed) onEnterPressed();
+                  }}
+                  autoFocus={autoFocus || transform}
+                />
+              </Popover>
+              {!!suffix ? <span className={styles.suffix}>{suffix}</span> : null}
+            </div>
           </div>
-        ) : null}
-      </div>
-      {!!hint ? <div className={styles.hint}>{hint}</div> : null}
+          {!!hint ? <div className={styles.hint}>{hint}</div> : null}
+        </React.Fragment>
+      ) : (
+        <div className={styles.transform}>
+          <span className={styles.transform_value}>{value}</span>
+          <span className={styles.transform_icon}>
+            <Edit />
+          </span>
+        </div>
+      )}
     </div>
   );
 }
