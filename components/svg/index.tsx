@@ -96,6 +96,10 @@ const icons = {
     '<svg viewBox="64 64 896 896" data-icon="info" fill="currentColor"><path d="M464 688a48 48 0 1096 0 48 48 0 10-96 0zm24-112h48c4.4 0 8-3.6 8-8V296c0-4.4-3.6-8-8-8h-48c-4.4 0-8 3.6-8 8v272c0 4.4 3.6 8 8 8z"></path></svg>',
   warning:
     '<svg viewBox="64 64 896 896" data-icon="warning" fill="currentColor"><path d="M464 688a48 48 0 1096 0 48 48 0 10-96 0zm24-112h48c4.4 0 8-3.6 8-8V296c0-4.4-3.6-8-8-8h-48c-4.4 0-8 3.6-8 8v272c0 4.4 3.6 8 8 8z"></path></svg>',
+  delete:
+    '<svg viewBox="64 64 896 896" data-icon="delete" fill="currentColor" aria-hidden="true"><path d="M360 184h-8c4.4 0 8-3.6 8-8v8h304v-8c0 4.4 3.6 8 8 8h-8v72h72v-80c0-35.3-28.7-64-64-64H352c-35.3 0-64 28.7-64 64v80h72v-72zm504 72H160c-17.7 0-32 14.3-32 32v32c0 4.4 3.6 8 8 8h60.4l24.7 523c1.6 34.1 29.8 61 63.9 61h454c34.2 0 62.3-26.8 63.9-61l24.7-523H888c4.4 0 8-3.6 8-8v-32c0-17.7-14.3-32-32-32zM731.3 840H292.7l-24.2-512h487l-24.2 512z"></path></svg>',
+  image:
+    '<svg viewBox="64 64 896 896" data-icon="file-image" fill="currentColor" aria-hidden="true"><path d="M553.1 509.1l-77.8 99.2-41.1-52.4a8 8 0 00-12.6 0l-99.8 127.2a7.98 7.98 0 006.3 12.9H696c6.7 0 10.4-7.7 6.3-12.9l-136.5-174a8.1 8.1 0 00-12.7 0zM360 442a40 40 0 1080 0 40 40 0 10-80 0zm494.6-153.4L639.4 73.4c-6-6-14.1-9.4-22.6-9.4H192c-17.7 0-32 14.3-32 32v832c0 17.7 14.3 32 32 32h640c17.7 0 32-14.3 32-32V311.3c0-8.5-3.4-16.7-9.4-22.7zM790.2 326H602V137.8L790.2 326zm1.8 562H232V136h302v216a42 42 0 0042 42h216v494z"></path></svg>',
 };
 
 export declare type IconName = keyof typeof icons;
@@ -149,7 +153,7 @@ export const Zhihu = (props: SVGProps) => <SVG {...props} icon="zhihu" />;
 export const Alipay = (props: SVGProps) => <SVG {...props} icon="alipay" />;
 export const Wechat = (props: SVGProps) => <SVG {...props} icon="wechat" />;
 export const Triangle = (props: SVGProps) => <SVG {...props} icon="triangle" />;
-export const Filter = (props: SVGProps) => <SVG {...props} icon="qq" />;
+export const Filter = (props: SVGProps) => <SVG {...props} icon="filter" />;
 export const Loading = (props: SVGProps) => <SVG {...props} icon="loading" />;
 export const Lock = (props: SVGProps) => <SVG {...props} icon="lock" />;
 export const Question = (props: SVGProps) => <SVG {...props} icon="question" />;
@@ -168,3 +172,5 @@ export const Plus = (props: SVGProps) => <SVG {...props} icon="plus" />;
 export const Minus = (props: SVGProps) => <SVG {...props} icon="minus" />;
 export const Info = (props: SVGProps) => <SVG {...props} icon="info" />;
 export const Warning = (props: SVGProps) => <SVG {...props} icon="warning" />;
+export const Delete = (props: SVGProps) => <SVG {...props} icon="delete" />;
+export const Image = (props: SVGProps) => <SVG {...props} icon="image" />;
