@@ -7,6 +7,7 @@ import { concat, ComponentProps } from '@/utils/component';
 import { getOffsetTop, getOffsetLeft } from '@/utils/offset';
 
 import styles from './popover.less';
+import shadowStyles from '@/styles/shadow.less';
 
 export declare type PopoverProps = ComponentProps<{
   component?: React.ReactNode;
@@ -15,6 +16,9 @@ export declare type PopoverProps = ComponentProps<{
   popoverClass?: string;
   popoverStyle?: React.CSSProperties;
   closeDelay?: number;
+  arrow?: boolean;
+  card?: boolean;
+  shadow?: boolean;
   getOffset?: () => { top?: number; left?: number };
 }>;
 
@@ -30,6 +34,9 @@ export default function Popover(props: PopoverProps) {
     children,
     closeDelay = 200,
     getOffset = () => ({ top: 0, left: 0 }),
+    arrow = true,
+    card = false,
+    shadow = false,
   } = props;
   const ref = React.useRef<HTMLDivElement>();
   const childRef = React.useRef<HTMLDivElement>();
@@ -60,8 +67,16 @@ export default function Popover(props: PopoverProps) {
     };
   }, [ref, childRef]);
   const classList = React.useMemo(
-    () => [styles.popover, styles[placement], popoverClass, ...(show ? [styles.show] : [])],
-    [placement, popoverClass, show],
+    () => [
+      styles.popover,
+      arrow ? styles.arrow : '',
+      styles[placement],
+      popoverClass,
+      show ? styles.show : '',
+      card ? styles.card : '',
+      shadow ? shadowStyles.shadow : '',
+    ],
+    [placement, popoverClass, show, arrow, card, shadow],
   );
   const click = React.useMemo(() => trigger.indexOf('click') !== -1, [trigger]);
   const hover = React.useMemo(() => trigger.indexOf('hover') !== -1, [trigger]);
