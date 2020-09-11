@@ -62,7 +62,7 @@ export default function TextArea(props: TextAreaProps) {
     if (!!ref.current && !!value) ref.current.value = value;
   }, [value, showInput]);
   const onInputChange = React.useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
+    (e: React.ChangeEvent<HTMLTextAreaElement>) => {
       const value = e.target.value;
       const cb = () => {
         // setState(value);
