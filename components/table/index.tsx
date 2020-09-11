@@ -1,5 +1,8 @@
 import React from 'react';
 
+import { DndProvider } from 'react-dnd';
+import { HTML5Backend } from 'react-dnd-html5-backend';
+
 import { Triangle, Filter } from '@/components/svg';
 import Button from '@/components/button';
 import Input, { Option, CheckBox } from '@/components/input';
@@ -7,8 +10,11 @@ import { Modal } from '@/components/popover';
 import { Flex } from '@/components/container';
 import { Left, Loading } from '@/components/svg';
 import Pagination, { PaginationProps } from '@/components/pagination';
+import { Tooltip } from '@/components/popover';
+import DragableRow from './row';
 
 import { concat, ComponentProps } from '@/utils/component';
+import randomString from '@/utils/random';
 
 import styles from './table.less';
 import textStyles from '@/styles/text.less';
@@ -30,6 +36,7 @@ export declare type Column<T extends { [key: string]: any }> = {
     onFilter: (filters: any[], item: T, idx: number) => boolean;
   };
   ellipsis?: boolean;
+  tooltip?: boolean | string | ((value: any, item: T, idx: number, data: T[]) => string);
 };
 
 export declare type TableProps<T> = ComponentProps<{
@@ -50,6 +57,7 @@ export declare type TableProps<T> = ComponentProps<{
     ascending: boolean,
     filter: { [key: string]: any[] },
   ) => void;
+  onMove?: (i: number, j: number) => void;
 }>;
 
 type TableState = {
@@ -132,6 +140,7 @@ export default function Table<T>(props: TableProps<T>) {
     loading = false,
     expand,
     onChange,
+    onMove,
   } = props;
   // 将简写的列拓展为标准的 Column 类型
   const cols = React.useMemo(
@@ -141,6 +150,8 @@ export default function Table<T>(props: TableProps<T>) {
   const columnObject: {
     [key: string]: Column<T>;
   } = React.useMemo(() => Object.assign({}, ...cols.map((col) => ({ [col.key]: col }))), [cols]);
+
+  const dragKey = React.useMemo(() => randomString(), []);
 
   const [state, setState] = React.useReducer(stateReducer, {
     ...defaultState,
@@ -230,135 +241,156 @@ export default function Table<T>(props: TableProps<T>) {
         <div className={styles.loading}>{loading === true ? <Loading /> : loading}</div>
       )}
       <div className={concat(styles.wrapper, !!loading ? styles.onloading : '')}>
-        <table>
-          {showHeader ? (
-            <thead style={{ visibility: showHeader ? 'visible' : 'hidden' }}>
-              <tr>
-                {!!expand ? <td></td> : null}
-                {cols.map((col) => (
-                  <th key={col.key} style={col.headStyle}>
-                    <div className={styles.title}>
-                      {!col.title
-                        ? col.key
-                        : typeof col.title === 'function'
-                        ? col.title(col.key)
-                        : col.title}
-                      {!!col.sorter ? (
-                        <span className={styles.sorter}>
-                          <Button
-                            className={styles.sorter_icon}
-                            icon={<Triangle />}
-                            size="small"
-                            style={{
-                              opacity: sortKey === col.key && sortAscending ? 1 : 0.25,
-                            }}
-                            onClick={() => {
-                              onTableChange(
-                                1,
-                                size,
-                                sortKey === col.key && sortAscending ? '' : col.key,
-                                true,
-                                Object.assign(
-                                  {},
-                                  ...filterKey.map((key) => ({ key: filterValue[key] })),
-                                ),
-                              );
-                            }}
-                          />
-                          <Button
-                            className={styles.sorter_icon}
-                            icon={<Triangle style={{ transform: 'rotate(180deg)' }} />}
-                            size="small"
-                            style={{
-                              opacity: sortKey === col.key && !sortAscending ? 1 : 0.25,
-                            }}
-                            onClick={() => {
-                              onTableChange(
-                                1,
-                                size,
-                                sortKey === col.key && sortAscending ? '' : col.key,
-                                false,
-                                Object.assign(
-                                  {},
-                                  ...filterKey.map((key) => ({ key: filterValue[key] })),
-                                ),
-                              );
-                            }}
-                          />
-                        </span>
-                      ) : null}
-                      {!!col.filter ? (
-                        <span className={styles.filter}>
-                          <Button
-                            className={styles.sorter_icon}
-                            icon={<Filter />}
-                            size="small"
-                            style={{
-                              opacity: !!filterKey[col.key] ? 1 : 0.25,
-                            }}
-                            onClick={() => {
-                              setFilterModal(col);
-                            }}
-                          />
-                        </span>
-                      ) : null}
-                    </div>
-                  </th>
-                ))}
-              </tr>
-            </thead>
-          ) : null}
-
-          <tbody>
-            {showData.map((item, idx) => [
-              <tr key={idx}>
-                {!!expand ? (
-                  <td onClick={() => setState({ name: 'expand', index: idx })}>
-                    <Left className={concat(styles.prefix, !expanded[idx] ? styles.close : '')} />
-                  </td>
-                ) : null}
-                {cols.map((col) => (
-                  <td
-                    key={col.key}
-                    className={col.ellipsis !== false ? textStyles.ellipsis : ''}
-                    style={{
-                      ...(idx === 0
-                        ? { width: col.width, minWidth: col.minWidth, maxWidth: col.maxWidth }
-                        : {}),
-
-                      ...col.style,
-                    }}
-                  >
-                    {!!col.render ? col.render(item[col.key], item, idx, data) : item[col.key]}
-                  </td>
-                ))}
-              </tr>,
-              !!expand && !!expanded[idx] ? (
-                <tr key={`${idx}-expand`}>
-                  <td></td>
-                  <td {...{ colspan: cols.length }}>{expand(item, idx)}</td>
+        <DndProvider backend={HTML5Backend}>
+          <table>
+            {showHeader ? (
+              <thead style={{ visibility: showHeader ? 'visible' : 'hidden' }}>
+                <tr>
+                  {!!expand ? <td></td> : null}
+                  {cols.map((col) => (
+                    <th key={col.key} style={col.headStyle}>
+                      <div className={styles.title}>
+                        {!col.title
+                          ? col.key
+                          : typeof col.title === 'function'
+                          ? col.title(col.key)
+                          : col.title}
+                        {!!col.sorter ? (
+                          <span className={styles.sorter}>
+                            <Button
+                              className={styles.sorter_icon}
+                              icon={<Triangle />}
+                              size="small"
+                              style={{
+                                opacity: sortKey === col.key && sortAscending ? 1 : 0.25,
+                              }}
+                              onClick={() => {
+                                onTableChange(
+                                  1,
+                                  size,
+                                  sortKey === col.key && sortAscending ? '' : col.key,
+                                  true,
+                                  Object.assign(
+                                    {},
+                                    ...filterKey.map((key) => ({ key: filterValue[key] })),
+                                  ),
+                                );
+                              }}
+                            />
+                            <Button
+                              className={styles.sorter_icon}
+                              icon={<Triangle style={{ transform: 'rotate(180deg)' }} />}
+                              size="small"
+                              style={{
+                                opacity: sortKey === col.key && !sortAscending ? 1 : 0.25,
+                              }}
+                              onClick={() => {
+                                onTableChange(
+                                  1,
+                                  size,
+                                  sortKey === col.key && sortAscending ? '' : col.key,
+                                  false,
+                                  Object.assign(
+                                    {},
+                                    ...filterKey.map((key) => ({ key: filterValue[key] })),
+                                  ),
+                                );
+                              }}
+                            />
+                          </span>
+                        ) : null}
+                        {!!col.filter ? (
+                          <span className={styles.filter}>
+                            <Button
+                              className={styles.sorter_icon}
+                              icon={<Filter />}
+                              size="small"
+                              style={{
+                                opacity: !!filterKey[col.key] ? 1 : 0.25,
+                              }}
+                              onClick={() => {
+                                setFilterModal(col);
+                              }}
+                            />
+                          </span>
+                        ) : null}
+                      </div>
+                    </th>
+                  ))}
                 </tr>
-              ) : null,
-            ])}
-          </tbody>
+              </thead>
+            ) : null}
 
-          {cols.filter((col) => !!col.footer).length > 0 ? (
-            <tfoot>
-              <tr>
-                {!!expand ? <td></td> : null}
-                {cols.map((col) => (
-                  <td key={col.key} style={col.footStyle}>
-                    {!col.footer
-                      ? null
-                      : typeof col.footer === 'function'
-                      ? col.footer(col.key)
-                      : col.footer}
-                  </td>
-                ))}
-              </tr>
-            </tfoot>
-          ) : null}
-        </table>
+            <tbody>
+              {showData.map((item, idx) => [
+                <DragableRow key={idx} index={idx} dragKey={dragKey} onMove={onMove}>
+                  {!!expand ? (
+                    <td onClick={() => setState({ name: 'expand', index: idx })}>
+                      <Left className={concat(styles.prefix, !expanded[idx] ? styles.close : '')} />
+                    </td>
+                  ) : null}
+                  {cols.map((col) => {
+                    const content = !!col.render
+                      ? col.render(item[col.key], item, idx, data)
+                      : item[col.key];
+                    return (
+                      <td
+                        key={col.key}
+                        className={col.ellipsis !== false ? textStyles.ellipsis : ''}
+                        style={{
+                          ...(idx === 0
+                            ? { width: col.width, minWidth: col.minWidth, maxWidth: col.maxWidth }
+                            : {}),
+
+                          ...col.style,
+                        }}
+                      >
+                        {!!col.tooltip ? (
+                          <Tooltip
+                            title={
+                              col.tooltip === true
+                                ? content
+                                : typeof col.tooltip === 'function'
+                                ? col.tooltip(item[col.key], item, idx, data)
+                                : col.tooltip
+                            }
+                          >
+                            {content}
+                          </Tooltip>
+                        ) : (
+                          content
+                        )}
+                      </td>
+                    );
+                  })}
+                </DragableRow>,
+                !!expand && !!expanded[idx] ? (
+                  <tr key={`${idx}-expand`}>
+                    <td></td>
+                    <td colSpan={cols.length}>{expand(item, idx)}</td>
+                  </tr>
+                ) : null,
+              ])}
+            </tbody>
+
+            {cols.filter((col) => !!col.footer).length > 0 ? (
+              <tfoot>
+                <tr>
+                  {!!expand ? <td></td> : null}
+                  {cols.map((col) => (
+                    <td key={col.key} style={col.footStyle}>
+                      {!col.footer
+                        ? null
+                        : typeof col.footer === 'function'
+                        ? col.footer(col.key)
+                        : col.footer}
+                    </td>
+                  ))}
+                </tr>
+              </tfoot>
+            ) : null}
+          </table>
+        </DndProvider>
       </div>
       {pagination !== false ? (
         <Pagination
