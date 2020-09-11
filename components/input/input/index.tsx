@@ -96,10 +96,20 @@ export default function Input<SelectType>(props: InputProps<SelectType>) {
     debounce = 200,
   } = props;
   const ref = React.useRef<HTMLInputElement>();
-  //   const [state, setState] = React.useState(!!defaultValue ? defaultValue : '');
-  //   const nowValue = typeof value === 'undefined' ? state : value;
   const key = React.useMemo(() => randomString(), []);
 
+  const opts = React.useMemo(() => TransfromOptions(options), [options]);
+  React.useEffect(() => getValueCallback(() => ref.current.value), [ref, getValueCallback]);
+  React.useEffect(() => setValueCallback((value: string) => (ref.current.value = value)), [
+    ref,
+    setValueCallback,
+  ]);
+
+  const [showInput, setShowInput] = React.useState(false);
+
+  React.useEffect(() => {
+    if (!!ref.current && !!value) ref.current.value = value;
+  }, [value, showInput]);
   const onInputChange = React.useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const value = e.target.value;
@@ -113,18 +123,6 @@ export default function Input<SelectType>(props: InputProps<SelectType>) {
     [debounce, onChange],
   );
 
-  const opts = React.useMemo(() => TransfromOptions(options), [options]);
-  React.useEffect(() => getValueCallback(() => ref.current.value), [ref, getValueCallback]);
-  React.useEffect(() => setValueCallback((value: string) => (ref.current.value = value)), [
-    ref,
-    setValueCallback,
-  ]);
-
-  const [showInput, setShowInput] = React.useState(false);
-  React.useEffect(() => {
-    if (!!ref.current && !!value) ref.current.value = value;
-  }, [value, showInput]);
-    
   return (
     <div
       className={concat(styles.wrapper, className, styles[size], styles[lablePlacement])}

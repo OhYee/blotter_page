@@ -3,6 +3,8 @@ import React from 'react';
 import { Edit } from '@/components/svg';
 
 import { concat, ComponentProps } from '@/utils/component';
+import { waitUntil } from '@/utils/debounce';
+import randomString from '@/utils/random';
 
 import { BasePartProps, InputPartProps, TransformPartProps } from '../input';
 
@@ -32,6 +34,7 @@ export default function TextArea(props: TextAreaProps) {
     autoFocus = false,
     lablePlacement = 'top',
     rows,
+    debounce = 200,
 
     disabled = false,
     editable = true,
@@ -45,13 +48,32 @@ export default function TextArea(props: TextAreaProps) {
     transform = false,
   } = props;
   const ref = React.useRef<HTMLTextAreaElement>();
+  const key = React.useMemo(() => randomString(), []);
+
   React.useEffect(() => getValueCallback(() => ref.current.value), [ref, getValueCallback]);
   React.useEffect(() => setValueCallback((value: string) => (ref.current.value = value)), [
     ref,
     setValueCallback,
   ]);
 
-  const [showInput, setShowInput] = React.useState(false);
+    const [showInput, setShowInput] = React.useState(false);
+    
+  React.useEffect(() => {
+    if (!!ref.current && !!value) ref.current.value = value;
+  }, [value, showInput]);
+  const onInputChange = React.useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const value = e.target.value;
+      const cb = () => {
+        // setState(value);
+        onChange(value);
+      };
+      if (debounce > 0) waitUntil(key, cb, debounce);
+      else cb();
+    },
+    [debounce, onChange],
+  );
+
   return (
     <div
       className={concat(styles.wrapper, className, styles[size], styles[lablePlacement])}
@@ -71,9 +93,8 @@ export default function TextArea(props: TextAreaProps) {
             <div className={concat(styles.textarea, shadowStyles.neumorphism_inset)}>
               <textarea
                 ref={ref}
-                defaultValue={!!value ? undefined : defaultValue}
-                value={value}
-                onChange={(e) => onChange(e.target.value)}
+                defaultValue={defaultValue}
+                onChange={onInputChange}
                 placeholder={placeholder}
                 readOnly={!editable}
                 autoFocus={autoFocus}
