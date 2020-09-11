@@ -8,7 +8,7 @@ import TagPart from '@/components/tag';
 import Qiniu from '@/components/upload';
 import Table, { Column } from '@/components/table';
 import Button from '@/components/button';
-import Input from '@/components/input';
+import Input, { TextArea } from '@/components/input';
 import Popover from '@/components/popover';
 import Card from '@/components/card';
 
@@ -78,75 +78,77 @@ class AdminTagList extends React.Component<AdminTagListProps, AdminTagListState>
   };
 
   renderEditableCell = (idx: number, key: string, textarea = false) => {
-    const width = textarea ? '100%' : this.columns.find((item) => item.key == key).width;
-    const padding = 16;
-    var style = { width: undefined };
-    if (typeof width === 'number') {
-      style.width = width - padding * 2;
-    } else {
-      style.width = `calc(width - ${padding * 2}px)`;
-    }
-    return (
-      <div style={style}>
-        <Input
-          transform
-          value={this.state.data[idx][key]}
-          onChange={(value) => {
-            this.setState((state) => {
-              var { data } = state;
-              data[idx][key] = value;
-              return { data };
-            });
-          }}
-        />
-      </div>
-    );
+    const props = {
+      transform: true,
+      value: this.state.data[idx][key],
+      onChange: (value) => {
+        this.setState((state) => {
+          var { data } = state;
+          data[idx][key] = value;
+          return { data };
+        });
+      },
+    };
+    return textarea ? <TextArea {...props} /> : <Input {...props} />;
   };
 
   columns: Column<T>[] = [
     {
       title: '名称',
       key: 'name',
+      tooltip: (text) => text,
       sorter: true,
-      minWidth: 150,
+      minWidth: '5em',
+      maxWidth: '10em',
       render: (_, __, idx) => this.renderEditableCell(idx, 'name'),
     },
     {
       title: '链接',
       key: 'short',
+      tooltip: (text) => text,
       sorter: true,
-      minWidth: 150,
+      minWidth: '5em',
+      maxWidth: '10em',
       render: (_, __, idx) => this.renderEditableCell(idx, 'short'),
     },
     {
       title: '图标',
       key: 'icon',
+      tooltip: (text) => text,
       sorter: true,
-      minWidth: 200,
+      minWidth: '5em',
+      maxWidth: '10em',
       render: (_, __, idx) => this.renderEditableCell(idx, 'icon'),
     },
     {
       title: '颜色',
       key: 'color',
+      tooltip: (text) => text,
       sorter: true,
-      minWidth: 150,
+      minWidth: '5em',
+      maxWidth: '10em',
       render: (_, __, idx) => this.renderEditableCell(idx, 'color'),
     },
     {
       title: '预览',
       key: 'view',
-      minWidth: 100,
+      minWidth: '5em',
+      maxWidth: '15em',
       render: (_, record, __) => <TagPart tag={record} />,
     },
     {
       title: '文章个数',
       key: 'count',
-      minWidth: 120,
+      tooltip: true,
+      minWidth: '6em',
+      maxWidth: '12em',
     },
     {
       title: '操作',
       key: 'op',
-      minWidth: 200,
+      minWidth: '12em',
+      maxWidth: '15em',
+      headStyle: { textAlign: 'center' },
       render: (_, record, idx) => (
         <Flex mainAxis="space-around">
           <Button size="small" onClick={() => this.onEdit(idx)} neumorphism prefix={<Edit />}>
@@ -155,6 +157,7 @@ class AdminTagList extends React.Component<AdminTagListProps, AdminTagListState>
           <Popover
             shadow
             card
+            trigger={['click']}
             component={
               <Card>
                 <span>真的要删除么？</span>
@@ -162,6 +165,7 @@ class AdminTagList extends React.Component<AdminTagListProps, AdminTagListState>
                   onClick={() => {
                     this.onDelete(record.id);
                   }}
+                  size="small"
                   danger
                   neumorphism
                   primary
