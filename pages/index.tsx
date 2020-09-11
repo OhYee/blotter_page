@@ -8,6 +8,7 @@ import { Flex } from '@/components/container';
 import PostList from '@/components/post_list';
 import Input, { CheckBox } from '@/components/input';
 import { Search } from '@/components/svg';
+import PostSearch from '@/components/post_search';
 
 import { Context } from '@/utils/global';
 
@@ -115,84 +116,6 @@ class Index extends React.Component<IndexProps, IndexState> {
     }
   };
 
-  renderTagSearch = (name: 'with_tags' | 'without_tags') => {
-    return (
-      <TagSearch
-        tags={this.state[name]}
-        onAdd={(tag) => {
-          this.setState((state) => {
-            var tags = state[name];
-            tags = tags.filter((item) => item.id !== tag.id);
-            tags.push(tag);
-            return { ...state, page: 1, [name]: tags };
-          }, this.getPosts);
-        }}
-        onDelete={(tag) => {
-          this.setState((state) => {
-            var tags = state[name];
-            tags = tags.filter((item) => item.id !== tag.id);
-            return { ...state, page: 1, [name]: tags };
-          }, this.getPosts);
-        }}
-      />
-    );
-  };
-
-  renderSearch = () => {
-    const checkboxs: { key: 'title' | 'abstract' | 'raw'; name: string }[] = [
-      { key: 'title', name: '标题' },
-      { key: 'abstract', name: '摘要' },
-      { key: 'raw', name: '内容' },
-    ];
-    return (
-      <Flex direction="TB" fullWidth subAxis="flex-start">
-        <Input
-          style={{ width: '100%' }}
-          placeholder="搜索文章"
-          onChange={this.onChange}
-          prefix={<Search />}
-          size="large"
-        />
-        <Flex mainAxis="flex-start">
-          {[
-            '搜索范围',
-            ...checkboxs.map((item) => (
-              <CheckBox
-                key={item.key}
-                value={this.state.search_fields.indexOf(item.key) !== -1}
-                onChange={(checked) => {
-                  this.setState((state) => {
-                    var { search_fields } = state;
-                    search_fields = search_fields.filter((it) => it != item.key);
-                    if (checked) {
-                      search_fields.push(item.key);
-                    }
-                    return { search_fields };
-                  }, this.getPosts);
-                }}
-              >
-                {item.name}
-              </CheckBox>
-            )),
-          ]}
-        </Flex>
-        <Flex mainAxis="flex-start" mainSize="small" subSize="small">
-          <span>从这些标签里搜索：</span>
-          {this.renderTagSearch('with_tags')}
-        </Flex>
-        <Flex mainAxis="flex-start" mainSize="small" subSize="small">
-          <span>从这些标签里排除：</span>
-          {this.renderTagSearch('without_tags')}
-        </Flex>
-
-        <Flex mainAxis="flex-start" subSize="middle">
-          {this.state.tags.map((tag) => (
-            <TagPart tag={tag} key={tag.short} />
-          ))}
-        </Flex>
-      </Flex>
-    );
-  };
   render() {
     return (
       <div>
@@ -205,7 +128,21 @@ class Index extends React.Component<IndexProps, IndexState> {
         </Context.Consumer>
         <Flex direction="TB" fullWidth>
           <Card neumorphism style={{ lineHeight: '2em' }}>
-            {this.renderSearch()}
+            <PostSearch
+              searchWord={this.state.search}
+              onSearchChange={this.onChange}
+              checkedKeys={this.state.search_fields}
+              onCheckChange={(search_fields) => this.setState({ search_fields })}
+              withTags={this.state.with_tags}
+              withoutTags={this.state.without_tags}
+              onTagChange={(type, tags) =>
+                this.setState((state) => ({
+                  ...state,
+                  ...{ [type === 'with' ? 'with_tags' : 'without_tags']: tags },
+                }))
+              }
+              tags={this.state.tags}
+            />
           </Card>
 
           <PostList
