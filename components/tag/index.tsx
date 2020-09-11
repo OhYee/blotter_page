@@ -102,47 +102,8 @@ export default function Tag(props: TagProps) {
         </a>
       </Link>
       {!!onClose && (
-        <Button
-          size="small"
-          icon={<Close />}
-          onClick={onClose}
-          style={{ background: 'transparent', color: 'currentColor' }}
-        />
+        <Close onClick={onClose} style={{ background: 'transparent', color: 'currentColor' }} />
       )}
     </Flex>
   );
 }
-
-// class TagPart extends React.Component<TagProps, {}> {
-//   static defaultProps: TagProps = {
-//     closable: false,
-//     onClose: () => {},
-//   };
-//   constructor(props: TagProps) {
-//     super(props);
-//   }
-
-//   render() {
-//     return typeof this.props.tag === 'undefined' ? null : (
-//       <Tag
-//         className={styles.tag}
-//         color={this.props.tag.color}
-//         closable={this.props.closable}
-//         onClose={() => {
-//           this.props.onClose!(this.props.tag!);
-//         }}
-//       >
-//         <Link href={'/tag/[tag]'} as={`/tag/${this.props.tag.short}`}>
-//           <a>
-//             {this.props.tag.icon ? (
-//               <Avatar size={15} shape="circle" src={this.props.tag.icon} />
-//             ) : null}
-//             {this.props.tag.name}
-//           </a>
-//         </Link>
-//       </Tag>
-//     );
-//   }
-// }
-
-// export default TagPart;
