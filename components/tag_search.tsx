@@ -79,6 +79,7 @@ class TagSearch extends React.Component<TagSearchProps, TagSearchState> {
       />
     ) : (
       <Button
+        size="small"
         onClick={this.onClick}
         style={{ border: '1px dashed var(--primary)', transition: 'border var(--primary)' }}
       >
