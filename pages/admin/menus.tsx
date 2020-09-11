@@ -2,11 +2,13 @@ import React, { ComponentProps } from 'react';
 
 import Head from 'next/head';
 
-import { Card, Button, Typography, Popconfirm } from 'antd';
-import { Icon } from '@ant-design/compatible';
-import { ColumnsType } from 'antd/lib/table/interface';
-
-import DragableTable from '@/components/dragable_table';
+import Card from '@/components/card';
+import Button from '@/components/button';
+import Popover from '@/components/popover';
+import Table, { Column } from '@/components/table';
+import Input from '@/components/input';
+import SVG, { Delete, Plus, Save } from '@/components/svg';
+import { Flex } from '@/components/container';
 
 import { Context } from '@/utils/global';
 import { menus, menusSet } from '@/utils/api';
@@ -46,61 +48,46 @@ class AdminMenus extends React.Component<AdminMenusProps, AdminMenusState> {
   };
 
   renderEditableCell = (idx: number, key: string) => {
-    const width = this.columns.find((item) => item.key == key).width;
-    const padding = 16;
-    var style = { width: undefined };
-    if (typeof width === 'number') {
-      style.width = width - padding * 2;
-    } else {
-      style.width = `calc(width - ${padding * 2}px)`;
-    }
     return (
-      <div style={style}>
-        <Typography.Text
-          style={{ width: '100%' }}
-          ellipsis={true}
-          editable={{
-            onChange: (value) => {
-              this.setState((state) => {
-                var { data } = state;
-                data[idx][key] = value;
-                return { data };
-              });
-            },
-          }}
-        >
-          {this.state.data[idx][key]}
-        </Typography.Text>
-      </div>
+      <Input
+        transform
+        value={this.state.data[idx][key]}
+        onChange={(value) => {
+          this.setState((state) => {
+            var { data } = state;
+            data[idx][key] = value;
+            return { data };
+          });
+        }}
+      />
     );
   };
 
-  columns: ColumnsType<Blotter.Menu> = [
+  columns: Column<Blotter.Menu>[] = [
     {
-      dataIndex: 'name',
       key: 'name',
       title: '名称',
-      width: 250,
-      ellipsis: true,
+      tooltip: (t) => t,
+      minWidth: '5em',
       render: (_, __, idx) => {
         return this.renderEditableCell(idx, 'name');
       },
     },
     {
-      dataIndex: 'link',
       key: 'link',
       title: '链接',
-      width: 400,
-      ellipsis: true,
+      tooltip: (t) => t,
+      minWidth: '5em',
       render: (_, __, idx) => {
         return this.renderEditableCell(idx, 'link');
       },
     },
     {
-      dataIndex: 'icon',
       key: 'icon',
       title: '图标',
-      width: 250,
+      tooltip: (t) => t,
+      minWidth: '5em',
+      maxWidth: '15em',
       ellipsis: true,
       render: (_, __, idx) => {
         return this.renderEditableCell(idx, 'icon');
@@ -109,41 +96,53 @@ class AdminMenus extends React.Component<AdminMenusProps, AdminMenusState> {
     {
       key: 'preview',
       title: '预览',
-      width: 100,
+      minWidth: '5em',
+      maxWidth: '10em',
       ellipsis: true,
-      render(value, record) {
-        return <Icon type={record.icon} />;
-      },
+      render: (value, record) => <SVG icon={record.icon as any} />,
     },
     {
       key: 'op',
       title: '操作',
       render: (_, record, idx) => (
-        <Popconfirm
-          title="真的要删除么？"
-          onConfirm={() => {
-            this.setState((state) => {
-              var data = state.data;
-              data = data.filter((item) => item.name !== record.name);
-              data.map((d) => d);
-              return { data };
-            });
-          }}
-          okText="删除！"
-          cancelText="算了"
+        <Popover
+          shadow
+          card
+          trigger={['click']}
+          component={
+            <Card>
+              <span>真的要删除么？</span>
+              <Button
+                onClick={() => {
+                  this.setState((state) => {
+                    var data = state.data;
+                    data = data.filter((item) => item.name !== record.name);
+                    data.map((d) => d);
+                    return { data };
+                  });
+                }}
+                size="small"
+                danger
+                neumorphism
+                primary
+              >
+                删除！
+              </Button>
+            </Card>
+          }
         >
-          <Button size="small" danger>
-            <Icon type="delete" />
+          <Button size="small" danger neumorphism prefix={<Delete />}>
             删除
           </Button>
-        </Popconfirm>
+        </Popover>
       ),
     },
   ];
 
   renderTableHead = () => (
-    <div style={{ textAlign: 'right' }}>
+    <Flex mainAxis="flex-end">
       <Button
+        neumorphism
         onClick={() => {
           this.setState((state) => {
             var { data } = state;
@@ -156,12 +155,13 @@ class AdminMenus extends React.Component<AdminMenusProps, AdminMenusState> {
             return { data };
           });
         }}
+        prefix={<Plus />}
       >
-        <Icon type="plus" />
         新建
-      </Button>{' '}
+      </Button>
       <Button
-        type="primary"
+        neumorphism
+        primary
         loading={this.state.submitLoading}
         onClick={async () => {
           this.setState({ submitLoading: true });
@@ -169,11 +169,11 @@ class AdminMenus extends React.Component<AdminMenusProps, AdminMenusState> {
           ShowNotification(r);
           this.setState({ submitLoading: false });
         }}
+        prefix={<Save />}
       >
-        <Icon type="save" />
         保存修改
       </Button>
-    </div>
+    </Flex>
   );
 
   render() {
@@ -186,16 +186,13 @@ class AdminMenus extends React.Component<AdminMenusProps, AdminMenusState> {
             </Head>
           )}
         </Context.Consumer>
-        <DragableTable<T>
+        {this.renderTableHead()}
+        <Table<T>
           columns={this.columns}
-          dataSource={this.state.data}
+          data={this.state.data}
           loading={this.state.loading}
           pagination={false}
-          title={() => this.renderTableHead()}
-          rowKey={(col, idx) => `${col.name}_${idx}`}
-          dragKey="root"
-          scroll={{ x: true }}
-          moveRow={(i, j) => {
+          onMove={(i, j) => {
             this.setState((state) => {
               var { data } = state;
               var temp = data[i];
@@ -205,7 +202,6 @@ class AdminMenus extends React.Component<AdminMenusProps, AdminMenusState> {
               return { data };
             });
           }}
-          size="large"
         />
       </Card>
     );
