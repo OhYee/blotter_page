@@ -4,6 +4,8 @@ import { Edit } from '@/components/svg';
 import Popover from '@/components/popover';
 
 import { concat, ComponentProps } from '@/utils/component';
+import { waitUntil } from '@/utils/debounce';
+import randomString from '@/utils/random';
 
 import shadowStyles from '@/styles/shadow.less';
 import styles from './input.less';
@@ -34,6 +36,7 @@ export declare type BasePartProps = {
   onEnterPressed?: () => void;
   onBlur?: () => void;
   hint?: React.ReactNode;
+  debounce?: number;
 };
 
 export declare type InputPartProps = {
@@ -54,8 +57,6 @@ export declare type SelectPartProps<SelectType = any> = {
   selectTrigger?: ('click' | 'hover')[];
   options?: Option<SelectType>[];
   onSelect?: (key: string, value: SelectType | string) => void;
-  getSelectShow?: (callback: () => boolean) => void;
-  setSelectShow?: (callback: (show: boolean) => void) => void;
 };
 
 export declare type TransformPartProps = {
@@ -85,8 +86,6 @@ export default function Input<SelectType>(props: InputProps<SelectType>) {
     onSelect = () => {},
     getValueCallback = () => {},
     setValueCallback = () => {},
-    getSelectShow = () => {},
-    setSelectShow = () => {},
     onEnterPressed = () => {},
     onBlur,
     hint,
@@ -94,25 +93,38 @@ export default function Input<SelectType>(props: InputProps<SelectType>) {
     style,
     className,
     transform = false,
+    debounce = 200,
   } = props;
-  const [state, setState] = React.useState(!!defaultValue ? defaultValue : '');
-  const nowValue = typeof value === 'undefined' ? state : value;
+  const ref = React.useRef<HTMLInputElement>();
+  //   const [state, setState] = React.useState(!!defaultValue ? defaultValue : '');
+  //   const nowValue = typeof value === 'undefined' ? state : value;
+  const key = React.useMemo(() => randomString(), []);
+
+  const onInputChange = React.useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const value = e.target.value;
+      const cb = () => {
+        // setState(value);
+        onChange(value);
+      };
+      if (debounce > 0) waitUntil(key, cb, debounce);
+      else cb();
+    },
+    [debounce, onChange],
+  );
 
   const opts = React.useMemo(() => TransfromOptions(options), [options]);
-  React.useEffect(() => getValueCallback(() => nowValue), [nowValue, getValueCallback]);
-  React.useEffect(() => setValueCallback((value: string) => setState(value)), [
-    setState,
+  React.useEffect(() => getValueCallback(() => ref.current.value), [ref, getValueCallback]);
+  React.useEffect(() => setValueCallback((value: string) => (ref.current.value = value)), [
+    ref,
     setValueCallback,
   ]);
 
-  //   const [show, setShow] = React.useState(false);
-  //   const click = React.useMemo(() => selectTrigger.indexOf('click') !== -1, [selectTrigger]);
-  //   const hover = React.useMemo(() => selectTrigger.indexOf('hover') !== -1, [selectTrigger]);
-  //   React.useEffect(() => setSelectShow(setShow), [setSelectShow, setShow]);
-  //   React.useEffect(() => getSelectShow(() => show), [getSelectShow, show]);
-
   const [showInput, setShowInput] = React.useState(false);
-
+  React.useEffect(() => {
+    if (!!ref.current && !!value) ref.current.value = value;
+  }, [value, showInput]);
+    
   return (
     <div
       className={concat(styles.wrapper, className, styles[size], styles[lablePlacement])}
@@ -138,23 +150,13 @@ export default function Input<SelectType>(props: InputProps<SelectType>) {
                 trigger={selectTrigger}
                 component={
                   <div className={styles.select}>
-                    <ul
-                      className={shadowStyles.neumorphism}
-                      //   style={
-                      //     show
-                      //       ? { opacity: 1, visibility: 'visible' }
-                      //       : { opacity: 0, visibility: 'hidden' }
-                      //   }
-                      //   onMouseEnter={() => setShow(true)}
-                      //   onMouseLeave={() => setShow(false)}
-                    >
+                    <ul className={shadowStyles.neumorphism}>
                       {opts.map((o, idx) => (
                         <li
                           key={idx}
                           onClick={() => {
                             if (!disabled) {
                               onSelect(o.key, o.value);
-                              //   setShow(false);
                             }
                           }}
                         >
@@ -166,22 +168,12 @@ export default function Input<SelectType>(props: InputProps<SelectType>) {
                 }
               >
                 <input
-                  value={nowValue}
-                  onChange={(e) => {
-                    const value = e.target.value;
-                    setState(value);
-                    onChange(value);
-                  }}
+                  ref={ref}
+                  defaultValue={defaultValue}
+                  onChange={onInputChange}
                   placeholder={placeholder}
                   type={type}
                   style={{ paddingLeft: !!prefix ? '2em' : 0, paddingRight: !!suffix ? '2em' : 0 }}
-                  //   onClick={() => {
-                  //     if (click) setShow(true);
-                  //   }}
-                  //   onMouseEnter={() => {
-                  //     if (hover) setShow(true);
-                  //   }}
-                  //   onMouseLeave={() => setShow(false)}
                   readOnly={!editable}
                   onKeyUp={(e) => {
                     if (e.keyCode == 13 && !!onEnterPressed) onEnterPressed();
