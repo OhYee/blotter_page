@@ -9,7 +9,9 @@
 
   z-index: 10;
 
-  transition: opacity 0.25s ease-in-out 0.1s, visibility 0.25s ease-in-out 0.1s;
+  transition: opacity var(--transition-time), visibility var(--transition-time),
+    color var(--transition-time), background var(--transition-time),
+    box-shadow var(--transition-time) !important;
   opacity: 0;
   visibility: hidden;
 
@@ -23,6 +25,7 @@
     border: 5px solid transparent;
     position: absolute;
     z-index: 99;
+    transition: border var(--transition-time);
   }
 
   &.arrow.top::after {
@@ -48,12 +51,11 @@
     top: -10px;
     left: calc(50% - 5px);
   }
-  
+
   &.card {
     --popover-backgroud: var(--background);
     background: var(--background);
     color: var(--color);
-    transition: color var(--transition-time) background var(--transition-time);
   }
 }
 
