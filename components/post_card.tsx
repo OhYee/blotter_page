@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { Skeleton } from 'antd';
 import Link from 'next/link';
 import Router from 'next/router';
 
@@ -10,6 +9,7 @@ import Card from '@/components/card';
 import { Flex } from '@/components/container';
 import { Eye, Calendar, Tag, Edit } from '@/components/svg';
 import { A } from '@/components/button';
+import Loading from '@/components/loading'
 
 import { Context } from '@/utils/global';
 import { concat } from '@/utils/component';
@@ -93,10 +93,9 @@ export default function PostCard(props: PostCardProps) {
           />
         ) : null
       }
-    >
-      <Skeleton loading={loading} active>
-        {loading ? null : <CardContent post={post} />}
-      </Skeleton>
+      >
+          {loading?<Loading/>: <CardContent post={post} />}}
+     
     </Card>
   );
 }
