@@ -100,6 +100,7 @@ class AdminTagList extends React.Component<AdminTagListProps, AdminTagListState>
       sorter: true,
       minWidth: '5em',
       maxWidth: '10em',
+      ellipsis: true,
       render: (_, __, idx) => this.renderEditableCell(idx, 'name'),
     },
     {
@@ -109,6 +110,7 @@ class AdminTagList extends React.Component<AdminTagListProps, AdminTagListState>
       sorter: true,
       minWidth: '5em',
       maxWidth: '10em',
+      ellipsis: true,
       render: (_, __, idx) => this.renderEditableCell(idx, 'short'),
     },
     {
@@ -118,6 +120,7 @@ class AdminTagList extends React.Component<AdminTagListProps, AdminTagListState>
       sorter: true,
       minWidth: '5em',
       maxWidth: '10em',
+      ellipsis: true,
       render: (_, __, idx) => this.renderEditableCell(idx, 'icon'),
     },
     {
@@ -127,13 +130,14 @@ class AdminTagList extends React.Component<AdminTagListProps, AdminTagListState>
       sorter: true,
       minWidth: '5em',
       maxWidth: '10em',
+      ellipsis: true,
       render: (_, __, idx) => this.renderEditableCell(idx, 'color'),
     },
     {
       title: '预览',
       key: 'view',
-      minWidth: '5em',
-      maxWidth: '15em',
+      minWidth: '10em',
+      maxWidth: '20em',
       render: (_, record, __) => <TagPart tag={record} />,
     },
     {
@@ -142,6 +146,7 @@ class AdminTagList extends React.Component<AdminTagListProps, AdminTagListState>
       tooltip: true,
       minWidth: '6em',
       maxWidth: '12em',
+      ellipsis: true,
     },
     {
       title: '操作',

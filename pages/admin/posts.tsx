@@ -100,14 +100,10 @@ class AdminPostList extends React.Component<AdminPostListProps, AdminPostListSta
       minWidth: '5em',
       maxWidth: '15em',
       tooltip: (text) => text,
+      ellipsis: true,
       render: (text, record, index) => (
         <Link href={'/post/[url]'} as={`/post/${record.url}`}>
-          <a
-            className={textStyle.ellipsis}
-            style={{ display: 'inline-block', minWidth: '5em', maxWidth: '15em' }}
-          >
-            {record.title}
-          </a>
+          <a>{record.title}</a>
         </Link>
       ),
     },
@@ -117,6 +113,7 @@ class AdminPostList extends React.Component<AdminPostListProps, AdminPostListSta
       tooltip: true,
       minWidth: '5em',
       maxWidth: '15em',
+      ellipsis: true,
     },
     {
       title: '发布时间',
@@ -125,6 +122,7 @@ class AdminPostList extends React.Component<AdminPostListProps, AdminPostListSta
       sorter: true,
       minWidth: '10em',
       maxWidth: '15em',
+      ellipsis: true,
     },
     {
       title: '编辑时间',
@@ -133,6 +131,7 @@ class AdminPostList extends React.Component<AdminPostListProps, AdminPostListSta
       sorter: true,
       minWidth: '10em',
       maxWidth: '15em',
+      ellipsis: true,
     },
     {
       title: '阅读量',
@@ -141,6 +140,7 @@ class AdminPostList extends React.Component<AdminPostListProps, AdminPostListSta
       sorter: true,
       minWidth: '6em',
       maxWidth: '15em',
+      ellipsis: true,
     },
     {
       title: '已发布',
@@ -154,8 +154,8 @@ class AdminPostList extends React.Component<AdminPostListProps, AdminPostListSta
     {
       title: '标签',
       key: 'tags',
-      minWidth: '5em',
-      maxWidth: '15em',
+      minWidth: '10em',
+      maxWidth: '20em',
       render: (text, record, index) => (
         <Flex mainSize="small" subSize="small" mainAxis="flex-start">
           {record.tags.map((tag) => (

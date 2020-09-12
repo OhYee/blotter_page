@@ -69,6 +69,7 @@ class AdminMenus extends React.Component<AdminMenusProps, AdminMenusState> {
       title: '名称',
       tooltip: (t) => t,
       minWidth: '5em',
+      ellipsis: true,
       render: (_, __, idx) => {
         return this.renderEditableCell(idx, 'name');
       },
@@ -78,6 +79,7 @@ class AdminMenus extends React.Component<AdminMenusProps, AdminMenusState> {
       title: '链接',
       tooltip: (t) => t,
       minWidth: '5em',
+      ellipsis: true,
       render: (_, __, idx) => {
         return this.renderEditableCell(idx, 'link');
       },
@@ -98,7 +100,6 @@ class AdminMenus extends React.Component<AdminMenusProps, AdminMenusState> {
       title: '预览',
       minWidth: '5em',
       maxWidth: '10em',
-      ellipsis: true,
       render: (value, record) => <SVG icon={record.icon as any} />,
     },
     {
