@@ -2,11 +2,13 @@ import React, { ComponentProps } from 'react';
 
 import Head from 'next/head';
 
-import { Card, Table, Button, Typography, Popconfirm, Checkbox, DatePicker } from 'antd';
-import { ColumnProps } from 'antd/lib/table';
-import { Icon } from '@ant-design/compatible';
-
-import DragableTable from '@/components/dragable_table';
+import { Flex } from '@/components/container';
+import Table, { Column } from '@/components/table';
+import Card from '@/components/card';
+import Button from '@/components/button';
+import Popover from '@/components/popover';
+import Input, { CheckBox, DatePicker } from '@/components/input';
+import { Delete, Plus, Save } from '@/components/svg';
 
 import { Context } from '@/utils/global';
 import { friends, friendsSet } from '@/utils/api';
@@ -52,83 +54,69 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
   };
 
   renderEditableCell = (idx: number, key: string) => {
-    const width = this.columns.find((item) => item.key == key).width;
-    const padding = 16;
-    var style = { width: undefined };
-    if (typeof width === 'number') {
-      style.width = width - padding * 2;
-    } else {
-      style.width = `calc(width - ${padding * 2}px)`;
-    }
     return (
-      <div style={style}>
-        <Typography.Text
-          style={{ width: '100%' }}
-          ellipsis={true}
-          editable={{
-            onChange: (value) => {
-              this.setState((state) => {
-                var { data } = state;
-                data[idx][key] = value;
-                data.map((d) => {
-                  d.posts = d.posts.map((dd) => dd);
-                  return d;
-                });
-                return { data };
-              });
-            },
-          }}
-        >
-          {this.state.data[idx][key]}
-        </Typography.Text>
-      </div>
+      <Input
+        transform
+        value={this.state.data[idx][key]}
+        onChange={(value) => {
+          this.setState((state) => {
+            var { data } = state;
+            data[idx][key] = value;
+            data.map((d) => {
+              d.posts = d.posts.map((dd) => dd);
+              return d;
+            });
+            return { data };
+          });
+        }}
+      />
     );
   };
 
-  columns: ColumnProps<T>[] = [
+  columns: Column<T>[] = [
     {
       title: '名称',
       key: 'name',
-      dataIndex: 'name',
-      width: 150,
+      tooltip: (v) => v,
+      minWidth: '10em',
+      maxWidth: '15em',
       ellipsis: true,
       render: (_, __, idx) => this.renderEditableCell(idx, 'name'),
     },
     {
       title: '简介',
       key: 'description',
-      dataIndex: 'description',
-      width: 200,
+      tooltip: (v) => v,
+      minWidth: '10em',
+      maxWidth: '15em',
       ellipsis: true,
       render: (_, __, idx) => this.renderEditableCell(idx, 'description'),
     },
     {
       title: '链接',
       key: 'link',
-      dataIndex: 'link',
-      width: 200,
+      tooltip: (v) => v,
+      maxWidth: '10em',
       ellipsis: true,
       render: (_, __, idx) => this.renderEditableCell(idx, 'link'),
     },
     {
       title: 'RSS',
       key: 'rss',
-      dataIndex: 'rss',
-      width: 200,
+      tooltip: (v) => v,
+      maxWidth: '10em',
       ellipsis: true,
       render: (_, __, idx) => this.renderEditableCell(idx, 'rss'),
     },
     {
       title: '出错',
       key: 'error',
-      dataIndex: 'error',
-      width: 50,
-      ellipsis: true,
+      minWidth: '5em',
+      maxWidth: '10em',
       render: (_, __, idx) => (
-        <Checkbox
-          checked={!!this.state.data[idx].error}
-          onChange={(v) => {
-            const e = v.target.checked;
+        <CheckBox
+          value={!!this.state.data[idx].error}
+          onChange={(e) => {
             this.setState((state) => {
               var { data } = state;
               data[idx].error = e;
@@ -145,16 +133,14 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
     {
       title: '图片',
       key: 'image',
-      dataIndex: 'image',
-      width: 200,
+      tooltip: (v) => v,
+      maxWidth: '10em',
       ellipsis: true,
       render: (_, __, idx) => this.renderEditableCell(idx, 'image'),
     },
     {
       title: '图片预览',
       key: 'image_preview',
-      width: 100,
-      ellipsis: true,
       render: (_, __, idx) => (
         <img
           width={'50px'}
@@ -166,27 +152,42 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
     {
       title: '操作',
       key: 'op',
+      minWidth: '5em',
+      maxWidth: '10em',
       render: (text, record, index) => (
-        <Popconfirm
-          title="真的要删除么？"
-          onConfirm={() => {
-            this.setState((state) => {
-              var data = state.data.filter((item) => item.name !== record.name);
-              data.map((d) => {
-                d.posts = d.posts.map((dd) => dd);
-                return d;
-              });
-              return { data };
-            });
-          }}
-          okText="删除！"
-          cancelText="算了"
+        <Popover
+          trigger={['click']}
+          card
+          shadow
+          component={
+            <Card>
+              <Flex>
+                真的要删除么?
+                <Button
+                  size="small"
+                  danger
+                  primary
+                  onClick={() => {
+                    this.setState((state) => {
+                      var data = state.data.filter((item) => item.name !== record.name);
+                      data.map((d) => {
+                        d.posts = d.posts.map((dd) => dd);
+                        return d;
+                      });
+                      return { data };
+                    });
+                  }}
+                >
+                  删除
+                </Button>
+              </Flex>
+            </Card>
+          }
         >
-          <Button size="small" danger>
-            <Icon type="delete" />
+          <Button size="small" danger neumorphism prefix={<Delete />}>
             删除
           </Button>
-        </Popconfirm>
+        </Popover>
       ),
     },
   ];
@@ -194,7 +195,8 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
   renderSubTableHead = (index: number) => (
     <div style={{ textAlign: 'right' }}>
       <Button
-        type="primary"
+        neumorphism
+        primary
         onClick={() => {
           this.setState((state) => {
             var { data } = state;
@@ -206,16 +208,17 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
             return { data };
           });
         }}
+        prefix={<Plus />}
       >
-        <Icon type="plus" />
         新建文章
       </Button>
     </div>
   );
 
   renderTableHead = () => (
-    <div style={{ textAlign: 'right' }}>
+    <Flex mainAxis="flex-end">
       <Button
+        neumorphism
         onClick={() => {
           this.setState((state) => {
             var { data } = state;
@@ -236,11 +239,11 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
           });
         }}
       >
-        <Icon type="plus" />
         新建订阅
-      </Button>{' '}
+      </Button>
       <Button
-        type="primary"
+        neumorphism
+        primary
         loading={this.state.submitLoading}
         onClick={async () => {
           this.setState({ submitLoading: true });
@@ -248,42 +251,46 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
           ShowNotification(r);
           this.setState({ submitLoading: false });
         }}
+        prefix={<Save />}
       >
-        <Icon type="save" />
         保存修改
       </Button>
-    </div>
+    </Flex>
   );
 
-  renderExpand = (record: T, index: number, indent: number, expanded: boolean) => {
-    const columns: ColumnProps<T2>[] = [
+  renderExpand = (record: T, index: number) => {
+    const columns: Column<T2>[] = [
       {
         key: 'title',
         title: '标题',
-        dataIndex: 'title',
-        width: 400,
+        minWidth: '10em',
+        maxWidth: '20em',
+        tooltip: (v) => v,
+        ellipsis: true,
         render: (_, __, idx) => renderSubEditableCell(index, idx, 'title'),
       },
       {
         key: 'link',
         title: '链接',
-        dataIndex: 'link',
-        width: 400,
+        minWidth: '10em',
+        maxWidth: '20em',
+        tooltip: (v) => v,
+        ellipsis: true,
         render: (_, __, idx) => renderSubEditableCell(index, idx, 'link'),
       },
       {
         key: 'time',
         title: '日期',
-        dataIndex: 'time',
-        width: 400,
+        ellipsis: true,
+        minWidth: '5em',
+        maxWidth: '20em',
         render: (_, __, idx) => (
           <DatePicker
-            showTime
-            value={moment(this.state.data[index].posts[idx].time, 'X')}
+            defaultValue={Date.now()}
             onChange={(e) => {
               this.setState((state) => {
                 var { data } = state;
-                data[index].posts[idx].time = e.unix();
+                data[index].posts[idx].time = e;
                 data.map((d) => {
                   d.posts = d.posts.map((dd) => dd);
                   return d;
@@ -295,94 +302,95 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
         ),
       },
       {
+        key: 'op',
         title: '操作',
-        dataIndex: 'op',
+        minWidth: '5em',
+        maxWidth: '10em',
         render: (_, record, idx) => (
-          <Popconfirm
-            title="真的要删除么？"
-            onConfirm={() => {
-              this.setState((state) => {
-                var data = state.data;
-                data[index].posts = data[index].posts.filter((item) => item.title !== record.title);
-                data.map((d) => {
-                  d.posts = d.posts.map((dd) => dd);
-                  return d;
-                });
-                return { data };
-              });
-            }}
-            okText="删除！"
-            cancelText="算了"
+          <Popover
+            card
+            shadow
+            trigger={['click']}
+            component={
+              <Card>
+                <Flex>
+                  真的要删除么？
+                  <Button
+                    neumorphism
+                    primary
+                    danger
+                    size="small"
+                    onClick={() => {
+                      this.setState((state) => {
+                        var data = state.data;
+                        data[index].posts = data[index].posts.filter(
+                          (item) => item.title !== record.title,
+                        );
+                        data.map((d) => {
+                          d.posts = d.posts.map((dd) => dd);
+                          return d;
+                        });
+                        return { data };
+                      });
+                    }}
+                  >
+                    删除
+                  </Button>
+                </Flex>
+              </Card>
+            }
           >
-            <Button size="small" danger>
-              <Icon type="delete" />
+            <Button size="small" neumorphism danger prefix={<Delete />}>
               删除
             </Button>
-          </Popconfirm>
+          </Popover>
         ),
       },
     ];
     const renderSubEditableCell = (index: number, idx: number, key: string) => {
-      const width = columns.find((item) => item.key == key).width;
-      const padding = 16;
-      var style = { width: undefined };
-      if (typeof width === 'number') {
-        style.width = width - padding * 2;
-      } else {
-        style.width = `calc(width - ${padding * 2}px)`;
-      }
       return (
-        <div style={style}>
-          <Typography.Text
-            style={{ width: '100%' }}
-            ellipsis={true}
-            editable={{
-              onChange: (value) => {
-                this.setState((state) => {
-                  var { data } = state;
-                  data[index].posts[idx][key] = value;
-                  data.map((d) => {
-                    d.posts = d.posts.map((dd) => dd);
-                    return d;
-                  });
-                  return { data };
-                });
-              },
-            }}
-          >
-            {this.state.data[index].posts[idx][key]}
-          </Typography.Text>
-        </div>
+        <Input
+          transform
+          value={this.state.data[index].posts[idx][key]}
+          onChange={(value) => {
+            this.setState((state) => {
+              var { data } = state;
+              data[index].posts[idx][key] = value;
+              data.map((d) => {
+                d.posts = d.posts.map((dd) => dd);
+                return d;
+              });
+              return { data };
+            });
+          }}
+        />
       );
     };
     return (
-      <DragableTable<T2>
-        rowKey={(record, idx) => `${record.title}_${record.link}_${idx}`}
-        columns={columns}
-        dataSource={record.posts}
-        pagination={false}
-        showHeader={false}
-        scroll={{ x: true }}
-        title={() => this.renderSubTableHead(index)}
-        size="small"
-        dragKey={`${index}`}
-        moveRow={(i, j) => {
-          this.setState((state) => {
-            var data = state.data;
+      <Flex direction="TB" fullWidth>
+        {this.renderSubTableHead(index)}
+        <Table<T2>
+          columns={columns}
+          data={record.posts}
+          pagination={false}
+          showHeader={false}
+          onMove={(i, j) => {
+            this.setState((state) => {
+              var data = state.data;
 
-            var temp = data[index].posts[i];
-            data[index].posts[i] = data[index].posts[j];
-            data[index].posts[j] = temp;
+              var temp = data[index].posts[i];
+              data[index].posts[i] = data[index].posts[j];
+              data[index].posts[j] = temp;
 
-            data.map((d) => {
-              d.posts = d.posts.map((dd) => dd);
-              return d;
+              data.map((d) => {
+                d.posts = d.posts.map((dd) => dd);
+                return d;
+              });
+              return { data };
             });
-            return { data };
-          });
-        }}
-        style={{ background: 'transparent' }}
-      />
+          }}
+        />
+      </Flex>
     );
   };
 
@@ -396,31 +404,29 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
             </Head>
           )}
         </Context.Consumer>
-        <DragableTable<T>
-          columns={this.columns}
-          dataSource={this.state.data}
-          loading={this.state.loading}
-          pagination={false}
-          expandedRowRender={this.renderExpand}
-          title={() => this.renderTableHead()}
-          rowKey={(col, idx) => `${col.name}_${idx}`}
-          dragKey="root"
-          scroll={{ x: true }}
-          moveRow={(i, j) => {
-            this.setState((state) => {
-              var { data } = state;
-              var temp = data[i];
-              data[i] = data[j];
-              data[j] = temp;
-              data.map((d) => {
-                d.posts = d.posts.map((dd) => dd);
-                return d;
+        <Flex direction="TB" fullWidth>
+          {this.renderTableHead()}
+          <Table<T>
+            columns={this.columns}
+            data={this.state.data}
+            loading={this.state.loading}
+            pagination={false}
+            expand={this.renderExpand}
+            onMove={(i, j) => {
+              this.setState((state) => {
+                var { data } = state;
+                var temp = data[i];
+                data[i] = data[j];
+                data[j] = temp;
+                data.map((d) => {
+                  d.posts = d.posts.map((dd) => dd);
+                  return d;
+                });
+                return { data };
               });
-              return { data };
-            });
-          }}
-          size="small"
-        />
+            }}
+          />
+        </Flex>
       </Card>
     );
   }
