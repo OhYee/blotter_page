@@ -1,32 +1,32 @@
 .wrapper {
   min-width: 10em;
-  display: flex;
-  align-items: center;
-  &.top {
-    flex-direction: column;
-    .label {
-      margin-left: 15px;
-      margin-bottom: 5px;
-    }
-  }
-  &.left {
-    flex-direction: row;
-    .label {
-      margin-right: 5px;
-    }
-  }
-  .label {
-    flex: 0 0 auto;
-    color: var(--color);
-    background: var(--background);
-    transition: color var(--transition-time), background var(--transition-time),
-      box-shadow var(--transition-time);
-  }
   .inner {
-    display: inline-grid;
-    flex: 1 1 auto;
-    width: 100%;
+    display: flex;
+    align-items: center;
+
+    &.top {
+      flex-direction: column;
+      .label {
+        margin-left: 15px;
+        margin-bottom: 5px;
+      }
+    }
+    &.left {
+      flex-direction: row;
+      .label {
+        margin-right: 5px;
+      }
+    }
+    .label {
+      flex: 0 0 auto;
+      color: var(--color);
+      background: var(--background);
+      transition: color var(--transition-time), background var(--transition-time),
+        box-shadow var(--transition-time);
+    }
     .input {
+      flex: 1 1 auto;
+      width: 100%;
       width: 100%;
       color: var(--color);
       background: var(--background);

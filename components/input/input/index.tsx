@@ -125,7 +125,7 @@ export default function Input<SelectType>(props: InputProps<SelectType>) {
 
   return (
     <div
-      className={concat(styles.wrapper, className, styles[size], styles[lablePlacement])}
+      className={concat(styles.wrapper, className, styles[size])}
       style={style}
       onBlur={() => {
         if (transform) setShowInput(false);
@@ -137,8 +137,14 @@ export default function Input<SelectType>(props: InputProps<SelectType>) {
     >
       {!transform || (transform && showInput) ? (
         <React.Fragment>
-          {!!label ? <div className={concat(styles.label)}>{label}</div> : null}
-          <div className={concat(styles.inner, ...(disabled ? ['disabled'] : []))}>
+          <div
+            className={concat(
+              styles.inner,
+              styles[lablePlacement],
+              ...(disabled ? ['disabled'] : []),
+            )}
+          >
+            {!!label ? <div className={concat(styles.label)}>{label}</div> : null}
             <div className={concat(styles.input, shadowStyles.neumorphism_inset)}>
               {!!prefix ? <span className={styles.prefix}>{prefix}</span> : null}
               <Popover
