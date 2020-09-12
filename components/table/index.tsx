@@ -6,11 +6,10 @@ import { HTML5Backend } from 'react-dnd-html5-backend';
 import { Triangle, Filter } from '@/components/svg';
 import Button from '@/components/button';
 import Input, { Option, CheckBox } from '@/components/input';
-import { Modal } from '@/components/popover';
 import { Flex } from '@/components/container';
 import { Left, Loading } from '@/components/svg';
 import Pagination, { PaginationProps } from '@/components/pagination';
-import { Tooltip } from '@/components/popover';
+import { Tooltip, Modal } from '@/components/popover';
 import DragableRow from './row';
 
 import { concat, ComponentProps } from '@/utils/component';
@@ -325,36 +324,35 @@ export default function Table<T>(props: TableProps<T>) {
               {showData.map((item, idx) => [
                 <DragableRow key={idx} index={idx} dragKey={dragKey} onMove={onMove}>
                   {!!expand ? (
-                    <td onClick={() => setState({ name: 'expand', index: idx })}>
-                      <Left className={concat(styles.prefix, !expanded[idx] ? styles.close : '')} />
+                    <td>
+                      <Left
+                        className={concat(styles.prefix, !expanded[idx] ? styles.close : '')}
+                        onClick={() => setState({ name: 'expand', index: idx })}
+                      />
                     </td>
                   ) : null}
                   {cols.map((col) => {
-                    const content = !!col.render
+                    const content: React.ReactNode = !!col.render
                       ? col.render(item[col.key], item, idx, data)
                       : item[col.key];
+                    const tooltip = !!col.tooltip
+                      ? col.tooltip === true
+                        ? content.toString()
+                        : typeof col.tooltip === 'function'
+                        ? col.tooltip(item[col.key], item, idx, data)
+                        : col.tooltip
+                      : undefined;
                     return (
                       <td
                         key={col.key}
-                        className={col.ellipsis !== false ? textStyles.ellipsis : ''}
+                        className={!!col.ellipsis ? textStyles.ellipsis : ''}
                         style={{
-                          ...(idx === 0
-                            ? { width: col.width, minWidth: col.minWidth, maxWidth: col.maxWidth }
-                            : {}),
-
+                          ...{ width: col.width, minWidth: col.minWidth, maxWidth: col.maxWidth },
                           ...col.style,
                         }}
                       >
-                        {!!col.tooltip ? (
-                          <Tooltip
-                            title={
-                              col.tooltip === true
-                                ? content
-                                : typeof col.tooltip === 'function'
-                                ? col.tooltip(item[col.key], item, idx, data)
-                                : col.tooltip
-                            }
-                          >
+                        {!!tooltip ? (
+                          <Tooltip title={tooltip} style={{ display: 'inline' }}>
                             {content}
                           </Tooltip>
                         ) : (

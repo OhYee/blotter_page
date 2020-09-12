@@ -43,6 +43,16 @@
         tr {
           border-top: 1px solid var(--secondary);
           transition: border var(--transition-time);
+          td {
+            .td {
+              display: inline-block;
+              &.ellipsis {
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+              }
+            }
+          }
         }
       }
 
