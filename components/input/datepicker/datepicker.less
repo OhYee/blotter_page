@@ -1,0 +1,92 @@
+.datepicker {
+}
+
+.date_select {
+  .body {
+    display: grid;
+    grid-template-columns: repeat(7, 2em);
+    grid-gap: 0.25em;
+    text-align: center;
+    vertical-align: center;
+
+    & > div {
+      box-sizing: border-box;
+      line-height: 2em;
+      width: 2em;
+      height: 2em;
+      transition: color var(--transition-time), background color var(--transition-time),
+        border color var(--transition-time);
+      cursor: pointer;
+      &.disabled {
+        opacity: 0.5;
+        pointer-events: none;
+        cursor: not-allowed;
+      }
+      &:hover {
+        line-height: calc(2em - 2px);
+        border: 1px solid var(--color);
+      }
+      &.active {
+        color: white;
+        background: var(--primary);
+      }
+      &.today {
+        line-height: calc(2em - 2px);
+        border: 1px solid var(--primary);
+      }
+    }
+  }
+}
+
+.month_select {
+  display: grid;
+  grid-template-columns: repeat(3, 3em);
+  grid-gap: 0.25em;
+  text-align: center;
+  vertical-align: center;
+
+  & > div {
+    box-sizing: border-box;
+    line-height: 3em;
+    width: 3em;
+    height: 3em;
+    transition: color var(--transition-time), background color var(--transition-time),
+      border color var(--transition-time);
+    cursor: pointer;
+    &:hover {
+      line-height: calc(3em - 2px);
+      border: 1px solid var(--color);
+    }
+    &.active {
+      color: white;
+      background: var(--primary);
+    }
+  }
+}
+
+.year_select {
+  .body {
+    display: grid;
+    grid-template-columns: repeat(5, 4em);
+    grid-gap: 0.25em;
+    text-align: center;
+    vertical-align: center;
+    & > div {
+      box-sizing: border-box;
+      line-height: 2em;
+      width: 4em;
+      height: 2em;
+      transition: color var(--transition-time), background color var(--transition-time),
+        border color var(--transition-time);
+      cursor: pointer;
+      &:hover {
+        line-height: calc(2em - 1px);
+        border: 1px solid var(--color);
+      }
+      &.active {
+        color: white;
+        background: var(--primary);
+      }
+    }
+  }
+}
