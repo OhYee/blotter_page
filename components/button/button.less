@@ -33,10 +33,20 @@
   &:hover {
     color: var(--error-color);
   }
+  &.icon,
+  &.icon:hover,
+  &.icon:active {
+    color: var(--error-color);
+  }
   &.primary {
     color: var(--error-background);
     background: var(--error-color);
     &:hover {
+      color: var(--error-background);
+    }
+    &.icon,
+    &.icon:hover,
+    &.icon:active {
       color: var(--error-background);
     }
   }
