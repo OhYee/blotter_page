@@ -1,13 +1,19 @@
 import React, { ComponentProps } from 'react';
 
-import { Row, Col, List, Input, InputNumber, Button, Dropdown, Menu, Checkbox } from 'antd';
-import { PlusCircleOutlined, CloseCircleOutlined } from '@ant-design/icons';
-
 import { useDrag, useDrop } from 'react-dnd';
+
+import Button from '@/components/button';
+import Card from '@/components/card';
+import { Save, Plus, Close } from '@/components/svg';
+import Input, { InputNumber, CheckBox, TextArea } from '@/components/input';
+import { Flex } from '@/components/container';
+import Popover from '@/components/popover';
 
 import randomString from '@/utils/random';
 import { waitUntil } from '@/utils/debounce';
 import hash from '@/utils/hash';
+
+import styles from './dynamic.less'
 
 const stringLength = 20;
 
@@ -33,15 +39,15 @@ const DragItem = (
   return <div ref={ref}>{props.children}</div>;
 };
 
-const addMenus = (callback: (newValue: any) => void) => (
-  <Menu>
-    <Menu.Item onClick={() => callback(randomString())}>文本框</Menu.Item>
-    <Menu.Item onClick={() => callback(randomString(stringLength))}>多行文本框</Menu.Item>
-    <Menu.Item onClick={() => callback(false)}>多选框</Menu.Item>
-    <Menu.Item onClick={() => callback(0)}>数字框</Menu.Item>
-    <Menu.Item onClick={() => callback([])}>列表</Menu.Item>
-    <Menu.Item onClick={() => callback({})}>对象</Menu.Item>
-  </Menu>
+const Menu = (callback: (newValue: any) => void) => (
+  <ul className={styles.menus}>
+    <li onClick={() => callback(randomString())}>文本框</li>
+    <li onClick={() => callback(randomString(stringLength))}>多行文本框</li>
+    <li onClick={() => callback(false)}>多选框</li>
+    <li onClick={() => callback(0)}>数字框</li>
+    <li onClick={() => callback([])}>列表</li>
+    <li onClick={() => callback({})}>对象</li>
+  </ul>
 );
 
 const InputField = (
@@ -51,10 +57,10 @@ const InputField = (
   return (
     <Input
       defaultValue={props.value}
-      onChange={(e) => {
-        const value = e.target.value;
+      onChange={(value) => {
         waitUntil(id, () => props.callback(value), 1000);
       }}
+      style={{ width: '100%' }}
     />
   );
 };
@@ -64,10 +70,9 @@ const CheckField = (
 ) => {
   const id = randomString();
   return (
-    <Checkbox
-      checked={props.value}
-      onChange={(e) => {
-        const value = e.target.checked;
+    <CheckBox
+      value={props.value}
+      onChange={(value) => {
         waitUntil(id, () => props.callback(value), 1000);
       }}
     />
@@ -79,10 +84,9 @@ const AreaField = (
 ) => {
   const id = randomString();
   return (
-    <Input.TextArea
+    <TextArea
       defaultValue={props.value}
-      onChange={(e) => {
-        const value = e.target.value;
+      onChange={(value) => {
         waitUntil(id, () => props.callback(value), 1000);
       }}
     />
@@ -96,8 +100,7 @@ const NumberField = (
   return (
     <InputNumber
       defaultValue={props.value}
-      onChange={(e) => {
-        const value = e;
+      onChange={(value) => {
         waitUntil(id, () => props.callback(value), 1000);
       }}
     />
@@ -112,14 +115,11 @@ const ArrayField = (
 ) => {
   const id = randomString();
   return (
-    <List
-      grid={{ column: 1, gutter: 5 }}
-      bordered={true}
-      size="small"
-      dataSource={props.value}
-      renderItem={(item, idx) => (
-        <List.Item key={hash(item)}>
+    <Flex fullWidth direction="TB" subAxis="flex-end">
+      <Flex fullWidth direction="TB">
+        {props.value.map((item, idx) => (
           <DragItem
+            key={hash(item)}
             id={id}
             index={idx}
             swap={(i, j) => {
@@ -130,8 +130,8 @@ const ArrayField = (
               props.callback(v);
             }}
           >
-            <Row>
-              <Col span={22}>
+            <Flex>
+              <Flex.Item style={{ flex: '1 1 auto' }}>
                 <DynamicForm
                   key={hash(item)}
                   value={item}
@@ -141,36 +141,39 @@ const ArrayField = (
                     props.callback(v);
                   }}
                 />
-              </Col>
-              <Col span={2} style={{ textAlign: 'center' }}>
+              </Flex.Item>
+              <Flex.Item style={{ flex: '0 0 auto' }}>
                 <Button
-                  shape="circle"
-                  icon={<CloseCircleOutlined />}
+                  danger
+                  neumorphism
+                  circle
+                  icon={<Close />}
                   onClick={() => {
                     var v = props.value.filter((_, i) => i !== idx);
                     props.callback(v);
                   }}
                 />
-              </Col>
-            </Row>
+              </Flex.Item>
+            </Flex>
           </DragItem>
-        </List.Item>
-      )}
-      header="列表"
-      footer={
-        <p style={{ textAlign: 'right' }}>
-          <Dropdown
-            overlay={addMenus((newValue) => {
-              var v = props.value;
-              v.push(newValue);
-              props.callback(v);
-            })}
-          >
-            <Button icon={<PlusCircleOutlined />}>新建一项元素</Button>
-          </Dropdown>
-        </p>
-      }
-    />
+        ))}
+      </Flex>
+      <Flex.Item style={{ width: 'unset' }}>
+        <Popover
+          card
+          shadow
+          component={Menu((newValue) => {
+            var v = props.value;
+            v.push(newValue);
+            props.callback(v);
+          })}
+        >
+          <Button neumorphism prefix={<Plus />}>
+            新建一项元素
+          </Button>
+        </Popover>
+      </Flex.Item>
+    </Flex>
   );
 };
 
@@ -183,15 +186,11 @@ const ObjectField = (
   const id = randomString();
   const slice = Object.keys(props.value).map((key) => ({ key: key, value: props.value[key] }));
   return (
-    <List
-      grid={{ column: 1, gutter: 5 }}
-      size="small"
-      dataSource={slice}
-      bordered={true}
-      renderItem={(item) => (
-        <List.Item key={item.key}>
-          <Row>
-            <Col span={4} style={{ padding: '0 20px' }}>
+    <Flex fullWidth direction="TB" subAxis="flex-end">
+      <Flex fullWidth direction="TB">
+        {slice.map((item) => (
+          <Flex subAxis="flex-start">
+            <Flex.Item style={{ flex: '0 0 30%' }}>
               <DynamicForm
                 value={item.key}
                 callback={(value) => {
@@ -206,8 +205,8 @@ const ObjectField = (
                   props.callback(obj);
                 }}
               />
-            </Col>
-            <Col span={18}>
+            </Flex.Item>
+            <Flex.Item style={{ flex: '1 1 auto' }}>
               <DynamicForm
                 value={item.value}
                 callback={(value) => {
@@ -216,36 +215,40 @@ const ObjectField = (
                   props.callback(v);
                 }}
               />
-            </Col>
-            <Col span={2} style={{ textAlign: 'center' }}>
+            </Flex.Item>
+            <Flex.Item style={{ flex: '0 0 auto' }}>
               <Button
-                shape="circle"
-                icon={<CloseCircleOutlined />}
+                neumorphism
+                danger
+                circle
+                icon={<Close />}
                 onClick={() => {
                   var v = props.value;
                   delete v[item.key];
                   props.callback(v);
                 }}
               />
-            </Col>
-          </Row>
-        </List.Item>
-      )}
-      header="对象"
-      footer={
-        <p style={{ textAlign: 'right' }}>
-          <Dropdown
-            overlay={addMenus((newValue) => {
-              var v = props.value;
-              v[randomString()] = newValue;
-              props.callback(v);
-            })}
-          >
-            <Button icon={<PlusCircleOutlined />}>新建一条属性</Button>
-          </Dropdown>
-        </p>
-      }
-    />
+            </Flex.Item>
+          </Flex>
+        ))}
+      </Flex>
+
+      <Flex.Item style={{ width: 'unset' }}>
+        <Popover
+          card
+          shadow
+          component={Menu((newValue) => {
+            var v = props.value;
+            v[randomString()] = newValue;
+            props.callback(v);
+          })}
+        >
+          <Button neumorphism prefix={<Plus />}>
+            新建一条属性
+          </Button>
+        </Popover>
+      </Flex.Item>
+    </Flex>
   );
 };
 
