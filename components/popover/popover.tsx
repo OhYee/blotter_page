@@ -20,6 +20,7 @@ export declare type PopoverProps = ComponentProps<{
   card?: boolean;
   shadow?: boolean;
   getOffset?: () => { top?: number; left?: number };
+  debug?: boolean;
 }>;
 
 export default function Popover(props: PopoverProps) {
@@ -37,6 +38,7 @@ export default function Popover(props: PopoverProps) {
     arrow = true,
     card = false,
     shadow = false,
+    debug = false,
   } = props;
   const ref = React.useRef<HTMLDivElement>();
   const childRef = React.useRef<HTMLDivElement>();
@@ -87,6 +89,7 @@ export default function Popover(props: PopoverProps) {
     willClose = false;
   };
   const moveOut = () => {
+    if (debug) return;
     willClose = true;
     setTimeout(() => {
       if (willClose) {
