@@ -4,7 +4,7 @@ import Body from './body';
 
 import { concat, ComponentProps } from '@/utils/component';
 
-import { getOffsetTop, getOffsetLeft } from '@/utils/offset';
+import { getOffsetTop, getOffsetLeft, getInlineWidth } from '@/utils/offset';
 
 import styles from './popover.less';
 import shadowStyles from '@/styles/shadow.less';
@@ -58,12 +58,12 @@ export default function Popover(props: PopoverProps) {
       left:
         left +
         (placement === 'left'
-          ? getOffsetLeft(ref.current) - childRef.current.offsetWidth - 10
+          ? getOffsetLeft(ref.current) - getInlineWidth(ref.current) - 10
           : placement === 'right'
-          ? getOffsetLeft(ref.current) + ref.current.offsetWidth + 10
+          ? getOffsetLeft(ref.current) + getInlineWidth(ref.current) + 10
           : getOffsetLeft(ref.current) -
-            childRef.current.offsetWidth / 2 +
-            ref.current.offsetWidth / 2),
+            getInlineWidth(childRef.current) / 2 +
+            getInlineWidth(ref.current) / 2),
     };
   }, [ref, childRef]);
   const classList = React.useMemo(
