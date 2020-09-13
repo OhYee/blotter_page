@@ -99,24 +99,27 @@ export default function Input<SelectType>(props: InputProps<SelectType>) {
   const key = React.useMemo(() => randomString(), []);
 
   const opts = React.useMemo(() => TransfromOptions(options), [options]);
-  React.useEffect(() => getValueCallback(() => ref.current.value), [ref, getValueCallback]);
-  React.useEffect(() => setValueCallback((value: string) => (ref.current.value = value)), [
+  React.useEffect(() => getValueCallback(() => (!!ref ? ref.current.value : '')), [
     ref,
-    setValueCallback,
+    getValueCallback,
   ]);
+  React.useEffect(
+    () =>
+      setValueCallback((value: string) => {
+        if (!!ref && typeof value === 'string') ref.current.value = value;
+      }),
+    [ref, setValueCallback],
+  );
 
   const [showInput, setShowInput] = React.useState(false);
 
   React.useEffect(() => {
-    if (!!ref.current && !!value) ref.current.value = value;
-  }, [value, showInput]);
+    if (!!ref && typeof value === 'string') ref.current.value = value;
+  }, [ref, value, showInput]);
   const onInputChange = React.useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       const value = e.target.value;
-      const cb = () => {
-        // setState(value);
-        onChange(value);
-      };
+      const cb = () => onChange(value);
       if (debounce > 0) waitUntil(key, cb, debounce);
       else cb();
     },

@@ -50,24 +50,31 @@ export default function TextArea(props: TextAreaProps) {
   const ref = React.useRef<HTMLTextAreaElement>();
   const key = React.useMemo(() => randomString(), []);
 
-  React.useEffect(() => getValueCallback(() => ref.current.value), [ref, getValueCallback]);
-  React.useEffect(() => setValueCallback((value: string) => (ref.current.value = value)), [
+  React.useEffect(() => getValueCallback(() => (!!ref ? ref.current.value : '')), [
     ref,
-    setValueCallback,
+    getValueCallback,
   ]);
+  /*
+     TODO: 尽管原则上 setValueCallback 不需要判断
+     但是在 ctypto.tsx 页面切换 UInt8Array 输入框的单选框时，在成功 setValue 后会奇怪地调用一次 setValue(undefined)，导致出错
+     因此这里按道理应该进行一次判断，但是目前还未曾得知为什么会有一次错误的调用
+     */ React.useEffect(
+    () =>
+      setValueCallback((value: string) => {
+        if (!!ref && typeof value === 'string') ref.current.value = value;
+      }),
+    [ref, setValueCallback],
+  );
 
-    const [showInput, setShowInput] = React.useState(false);
-    
+  const [showInput, setShowInput] = React.useState(false);
   React.useEffect(() => {
-    if (!!ref.current && !!value) ref.current.value = value;
-  }, [value, showInput]);
+    if (!!ref && typeof value === 'string') ref.current.value = value;
+  }, [ref, value, showInput]);
+
   const onInputChange = React.useCallback(
     (e: React.ChangeEvent<HTMLTextAreaElement>) => {
       const value = e.target.value;
-      const cb = () => {
-        // setState(value);
-        onChange(value);
-      };
+      const cb = () => onChange(value);
       if (debounce > 0) waitUntil(key, cb, debounce);
       else cb();
     },
