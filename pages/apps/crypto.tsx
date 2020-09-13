@@ -62,21 +62,26 @@ function TextInput(
   },
 ) {
   const { value: defaultValue = '', onChange, closure, style, ...restProps } = props;
-  const [value, setValue] = React.useState(defaultValue);
-  if (!!closure)
-    closure(
-      () => value,
-      (v: string) => setValue(v),
-    );
+  var getter = () => '';
+  var setter = (v: string) => {};
+  React.useEffect(() => {
+    if (!!closure)
+      closure(
+        getter, //() => value,
+        setter, //(v: string) => setValue(v),
+      );
+  }, [closure, getter, setter]);
 
   return (
     <TextArea
-      value={value}
+      //   value={value}
+      defaultValue={defaultValue}
       onChange={(e) => {
-        setValue(value);
         if (!!onChange) onChange(e);
       }}
       style={{ width: '100%', ...style }}
+      getValueCallback={(g) => (getter = g)}
+      setValueCallback={(s) => (setter = s)}
       {...restProps}
     />
   );
@@ -89,51 +94,67 @@ function BytesInput(
   },
 ) {
   type RadioType = 'Uint8Array' | 'Base64' | '16进制字符串' | 'UTF-8';
-  const { value: defaultValue = new Uint8Array(), onChange, closure, style, ...restProps } = props;
-  const [inputValue, setInput] = React.useState(bytes2string(defaultValue));
-  const [value, setValue] = React.useState(defaultValue);
-  const [r, setR] = React.useState('Uint8Array' as RadioType);
+  const { value = new Uint8Array(), onChange, closure, style, ...restProps } = props;
+  const defaultValue = React.useMemo(() => bytes2string(value), [value]);
+  //   const [value, setValue] = React.useState(defaultValue);
+  const [r, setR] = React.useState<RadioType>('Uint8Array');
   const { crypto } = React.useContext(CryptoContext);
-  const resetValue = () => {
-    var ret = new Uint8Array();
-    if (r === 'Uint8Array') ret = string2Bytes(inputValue);
-    else if (r === 'Base64') ret = crypto.exports.debase64(inputValue).return;
-    else if (r === '16进制字符串') ret = hex2Bytes(inputValue);
-    else ret = new TextEncoder().encode(inputValue);
-    setValue(ret);
-    return ret;
-  };
-  const resetInput = (r: RadioType, v: Uint8Array) => {
-    if (r === 'Uint8Array') setInput(bytes2string(v));
-    else if (r === 'Base64') setInput(crypto.exports.base64(v).return);
-    else if (r === '16进制字符串') setInput(bytes2hex(v));
-    else setInput(new TextDecoder().decode(v));
-  };
-  if (!!closure)
-    closure(
-      () => resetValue(),
-      (v: Uint8Array) => {
-        setValue(v);
-        resetInput(r, v);
-      },
-    );
+
+  var getter = () => '';
+  var setter = (v: string) => {};
+
+  // 获取当前输入框内容，并根据选择的类型进行转换
+  const getValue = React.useCallback(
+    (r: RadioType) => {
+      var ret = new Uint8Array();
+      var value = getter();
+      if (r === 'Uint8Array') ret = string2Bytes(value);
+      else if (r === 'Base64') ret = crypto.exports.debase64(value).return;
+      else if (r === '16进制字符串') ret = hex2Bytes(value);
+      else ret = new TextEncoder().encode(value);
+      return ret;
+    },
+    [getter],
+  );
+
+  // 重置输入框显示的内容
+  const setValue = React.useCallback(
+    (r: RadioType, v: Uint8Array) => {
+      var ret = '';
+      if (r === 'Uint8Array') ret = bytes2string(v);
+      else if (r === 'Base64') ret = crypto.exports.base64(v).return;
+      else if (r === '16进制字符串') ret = bytes2hex(v);
+      else ret = new TextDecoder().decode(v);
+      setter(ret);
+    },
+    [setter],
+  );
+
+  React.useEffect(() => {
+    if (!!closure)
+      closure(
+        () => getValue(r),
+        (v: Uint8Array) => setValue(r, v),
+      );
+  }, [closure, getValue, setValue, r]);
 
   return (
     <Flex direction="TB" fullWidth>
       <TextArea
-        value={inputValue}
+        defaultValue={defaultValue}
         onChange={(value) => {
-          setInput(value);
           if (!!onChange) onChange(value);
         }}
         style={{ width: '100%', ...style }}
+        getValueCallback={(g) => (getter = g)}
+        setValueCallback={(s) => (setter = s)}
         {...restProps}
       />
       <Radio<RadioType>
         options={['Uint8Array', 'Base64', '16进制字符串', 'UTF-8']}
         selectedKey={r}
         onChange={(k, v: RadioType) => {
-          resetInput(v, resetValue());
+          setValue(v, getValue(r));
           setR(v);
         }}
       />
