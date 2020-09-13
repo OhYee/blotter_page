@@ -38,7 +38,7 @@ function Tabs(props: TabsProps) {
 
   return (
     <Flex {...restProps} direction="TB" fullWidth className={concat(styles.tabs, className)}>
-      <Flex className={styles.nav} wrap={false} mainAxis="space-around">
+      <Flex className={styles.nav} wrap={false} mainAxis="space-between">
         {itemProps.map((item) => (
           <Flex.Item
             key={item.name}
@@ -59,7 +59,9 @@ function Tabs(props: TabsProps) {
 
       {keepInDOM
         ? childList.map((item: any) => (
-            <div key={item.key} style={item.props.name === nowSelected ? {} : { display: 'none' }}>{item}</div>
+            <div key={item.key} style={item.props.name === nowSelected ? {} : { display: 'none' }}>
+              {item}
+            </div>
           ))
         : nowChildren.length > 0
         ? nowChildren[0]
