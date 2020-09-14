@@ -1,14 +1,24 @@
-import React, { ComponentProps } from 'react';
+import React from 'react';
 
 import Head from 'next/head';
 
-import { Card, List, Comment, Tooltip, Avatar, Checkbox, Button } from 'antd';
+import Card from '@/components/card';
+import { Tooltip } from '@/components/popover';
+import Avatar from '@/components/avatar';
+import { CheckBox } from '@/components/input';
+import Button from '@/components/button';
+import Pagination from '@/components/pagination';
+import { Flex } from '@/components/container';
+import Loading from '@/components/loading';
 
 import { Context } from '@/utils/global';
 import { commentsAdmin, commentSet } from '@/utils/api';
 import moment from '@/utils/moment';
-import { CheckboxChangeEvent } from 'antd/lib/checkbox';
 import ShowNotification from '@/utils/notification';
+
+import { concat, ComponentProps } from '@/utils/component';
+
+import textStyles from '@/styles/text.less';
 
 const defaultAvatar = 'https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png';
 
@@ -16,7 +26,7 @@ type CommentBooleanKey = {
   [K in keyof Blotter.Comment]: Blotter.Comment[K] extends boolean ? K : never;
 }[keyof Blotter.Comment];
 
-interface AdminCommentsProps extends ComponentProps<'base'> {}
+interface AdminCommentsProps extends React.ComponentProps<'base'> {}
 
 interface AdminCommentsState {
   loading: boolean;
@@ -30,6 +40,40 @@ interface AdminCommentsState {
   size: number;
 }
 
+function Comment(
+  props: ComponentProps<{ comment: Blotter.Comment & { reply_comment?: Blotter.Comment } }>,
+) {
+  const { comment, ...restProps } = props;
+  const time = moment(comment.time);
+  return (
+    <Flex {...restProps} subAxis="flex-start" wrap={false}>
+      <Flex.Item style={{ flex: '0 0 2em', display: 'flex', justifyContent: 'center' }}>
+        <Avatar
+          src={comment.avatar ? comment.avatar : defaultAvatar}
+          style={{ width: '1.5em', height: '1.5em' }}
+        />
+      </Flex.Item>
+      <Flex.Item style={{ flex: '1 1 auto' }}>
+        <Flex mainSize="small" direction="TB" fullWidth>
+          <Flex mainAxis="flex-start">
+            {comment.email}
+            <Tooltip title={time.format('YYYY-MM-DD HH:mm:ss')}>
+              <span className={concat(textStyles.secondary, textStyles.em75)}>
+                {time.fromNow()}
+              </span>
+            </Tooltip>
+          </Flex>
+          {!!comment.reply_comment && comment.reply_comment.id !== '000000000000000000000000' ? (
+            <div style={{ borderLeft: '#ccc 5px solid', paddingLeft: 10 }}>
+              <Comment comment={comment.reply_comment} />
+            </div>
+          ) : null}
+          <div dangerouslySetInnerHTML={{ __html: comment.content }}></div>
+        </Flex>
+      </Flex.Item>
+    </Flex>
+  );
+}
 class AdminComments extends React.Component<AdminCommentsProps, AdminCommentsState> {
   static defaultProps = {};
 
@@ -56,12 +100,10 @@ class AdminComments extends React.Component<AdminCommentsProps, AdminCommentsSta
   };
 
   onChange = (page: number, size?: number) => {
-    if (typeof size === 'undefined') size = this.state.size;
     this.setState({ page, size }, this.getData);
   };
 
-  checkboxChange = (e: CheckboxChangeEvent, id: string, key: CommentBooleanKey) => {
-    const checked = e.target.checked;
+  checkboxChange = (checked: boolean, id: string, key: CommentBooleanKey) => {
     this.setState((state) => {
       var { data } = state;
       data.map((item) => {
@@ -74,103 +116,83 @@ class AdminComments extends React.Component<AdminCommentsProps, AdminCommentsSta
     });
   };
 
-  renderComment = (
-    comment: Blotter.Comment & { reply_comment?: Blotter.Comment },
-    notReply: boolean,
-  ) => {
+  render() {
     const items: { key: CommentBooleanKey; value: string }[] = [
       { key: 'show', value: '显示' },
       { key: 'ad', value: '广告' },
       { key: 'recv', value: '接收提醒' },
     ];
     return (
-      <Comment
-        style={notReply ? {} : { borderLeft: '#ccc 5px solid', paddingLeft: 10 }}
-        actions={
-          notReply
-            ? items.map((item) => (
-                <Checkbox
-                  key={item.key}
-                  checked={comment[item.key]}
-                  onChange={(e) => this.checkboxChange(e, comment.id, item.key)}
-                >
-                  {item.value}
-                </Checkbox>
-              ))
-            : []
-        }
-        author={comment.email}
-        avatar={<Avatar src={comment.avatar ? comment.avatar : defaultAvatar} />}
-        datetime={
-          <Tooltip title={moment(comment.time).format('YYYY-MM-DD HH:mm:ss')}>
-            <span>{moment(comment.time).fromNow()}</span>
-          </Tooltip>
-        }
-        content={
-          <div>
-            {notReply && comment.reply_comment.id !== '000000000000000000000000'
-              ? this.renderComment(comment.reply_comment, false)
-              : null}
-            <div dangerouslySetInnerHTML={{ __html: comment.content }}></div>
-          </div>
-        }
-      />
-    );
-  };
-
-  render() {
-    var pagination = {
-      showSizeChanger: true,
-      current: this.state.page,
-      pageSize: this.state.size,
-      total: this.state.total,
-      onChange: this.onChange,
-      onShowSizeChange: this.onChange,
-    };
-    return (
-      <Card>
+      <Card neumorphism>
         <Context.Consumer>
           {(context) => (
-            <Head>
-              <title>{`评论列表|后台|${context.blog_name}`}</title>
-            </Head>
+            <React.Fragment>
+              <Head>
+                <title>{`评论列表|后台|${context.blog_name}`}</title>
+              </Head>
+
+              <Flex fullWidth direction="TB">
+                <p>共 {this.state.total} 条评论</p>
+                <Loading loading={this.state.loading}>
+                  {this.state.data.map((comment, idx) => (
+                    <Flex key={comment.id} mainAxis="space-between" wrap={!context.big_screen}>
+                      <Flex.Item style={{ flex: '1 1 auto' }}>
+                        <Comment comment={comment} />
+                      </Flex.Item>
+                      <Flex.Item style={{ flex: '0 0 auto' }}>
+                        <Flex direction="TB" subAxis="flex-end">
+                          <a href={comment.url} target="_blank">
+                            《{comment.title !== '' ? comment.title : '评论区'}》
+                          </a>
+                          <Flex>
+                            {items.map((item) => (
+                              <CheckBox
+                                value={comment[item.key]}
+                                onChange={(c) =>
+                                  this.setState((state) => {
+                                    var { data } = state;
+                                    data[idx][item.key] = c;
+                                    return {
+                                      data: [...data],
+                                    };
+                                  })
+                                }
+                              >
+                                {item.value}
+                              </CheckBox>
+                            ))}
+                          </Flex>
+                          <Button
+                            neumorphism
+                            onClick={async (e) => {
+                              const r = await commentSet(
+                                comment.id,
+                                comment.ad,
+                                comment.recv,
+                                comment.show,
+                              );
+                              ShowNotification(r);
+                            }}
+                          >
+                            保存
+                          </Button>
+                        </Flex>
+                      </Flex.Item>
+                    </Flex>
+                  ))}
+                </Loading>
+                <Pagination
+                  disabled={this.state.loading}
+                  sizeSelect={[5, 10, 20, 50, 100]}
+                  page={this.state.page}
+                  size={this.state.size}
+                  total={this.state.total}
+                  onChange={this.onChange}
+                />
+              </Flex>
+            </React.Fragment>
           )}
         </Context.Consumer>
-        <List
-          className="comment-list"
-          header={`共 ${this.state.total} 条评论`}
-          itemLayout="horizontal"
-          loading={this.state.loading}
-          dataSource={this.state.data}
-          renderItem={(comment, idx) => (
-            <List.Item key={comment.id}>
-              {this.renderComment(comment, true)}
-              <div style={{ textAlign: 'right' }}>
-                <p>
-                  <a href={comment.url} target="_blank">
-                    《{comment.title !== '' ? comment.title : '评论区'}》
-                  </a>
-                </p>
-                <p>
-                  <Button
-                    onClick={async (e) => {
-                      const r = await commentSet(
-                        comment.id,
-                        comment.ad,
-                        comment.recv,
-                        comment.show,
-                      );
-                      ShowNotification(r);
-                    }}
-                  >
-                    保存
-                  </Button>
-                </p>
-              </div>
-            </List.Item>
-          )}
-          pagination={pagination}
-        />
       </Card>
     );
   }
