@@ -13,13 +13,14 @@ function defaultRender(
   size: number,
   page: number,
   onChange: (page: number, size: number) => void,
+  disabled: boolean,
 ) {
   switch (page) {
     case -2: {
       return (
         <Button
           neumorphism
-          disabled={current - 1 < 1}
+          disabled={disabled || current - 1 < 1}
           onClick={() => onChange(current - 1, size)}
           icon={<Pre />}
         />
@@ -29,7 +30,7 @@ function defaultRender(
       return (
         <Button
           neumorphism
-          disabled={current + 1 > pageNumber}
+          disabled={disabled || current + 1 > pageNumber}
           onClick={() => onChange(current + 1, size)}
           icon={<Next />}
         />
@@ -42,7 +43,7 @@ function defaultRender(
       return (
         <Button
           neumorphism
-          disabled={current === page}
+          disabled={disabled || current === page}
           clicked={current === page}
           onClick={() => onChange(page, size)}
         >
@@ -52,6 +53,16 @@ function defaultRender(
     }
   }
 }
+
+export declare type PaginationPropsRenderFunction = (
+    current: number,
+    pageNumber: number,
+    size: number,
+    page: number,
+    onChange: (page: number, size: number) => void,
+    disabled: boolean,
+) => React.ReactNode; // -2 prepage -3 next page -1 dots
+  
 export declare type PaginationProps = ComponentProps<{
   page?: number;
   size?: number;
@@ -59,13 +70,8 @@ export declare type PaginationProps = ComponentProps<{
   range?: number;
   sizeSelect?: number[];
   onChange?: (page: number, size: number) => void;
-  render?: (
-    current: number,
-    pageNumber: number,
-    size: number,
-    page: number,
-    onChange: (page: number, size: number) => void,
-  ) => React.ReactNode; // -2 prepage -3 next page -1 dots
+  render?: PaginationPropsRenderFunction;
+  disabled?: boolean;
 }>;
 
 export default function Pagination(props: PaginationProps) {
@@ -79,6 +85,7 @@ export default function Pagination(props: PaginationProps) {
     onChange = () => {},
     className,
     style,
+    disabled = false,
   } = props;
   const pageNumber = React.useMemo(() => Math.ceil(total / size), [total, size]);
 
@@ -96,7 +103,7 @@ export default function Pagination(props: PaginationProps) {
   pages.push(-3);
 
   var items = pages.map((p) => (
-    <Flex.Item key={p}>{render(page, pageNumber, size, p, onChange)}</Flex.Item>
+    <Flex.Item key={p}>{render(page, pageNumber, size, p, onChange, disabled)}</Flex.Item>
   ));
   if (!!sizeSelect && sizeSelect.length > 1)
     items.push(

@@ -1,6 +1,6 @@
 import React, { ComponentProps } from 'react';
 
-import Pagination from '@/components/pagination';
+import Pagination, { PaginationPropsRenderFunction } from '@/components/pagination';
 import PostCard from '@/components/post_card';
 import { Flex } from '@/components/container';
 
@@ -16,13 +16,7 @@ type PostListProps = {
   total?: number;
   callback?: (page: number, size?: number) => void;
   header?: string;
-  pageRender?: (
-    current: number,
-    pageNumber: number,
-    size: number,
-    page: number,
-    onChange: (page: number, size: number) => void,
-  ) => React.ReactNode;
+  pageRender?: PaginationPropsRenderFunction;
 };
 
 type PostListState = {};

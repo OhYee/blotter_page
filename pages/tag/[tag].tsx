@@ -72,6 +72,7 @@ class TagDetail extends React.Component<TagDetailProps, TagDetailState> {
     size: number,
     page: number,
     onChange: (page: number, size: number) => void,
+    disabled: boolean,
   ) => {
     switch (page) {
       case -2: {
@@ -83,7 +84,7 @@ class TagDetail extends React.Component<TagDetailProps, TagDetailState> {
           >
             <A
               neumorphism
-              disabled={current - 1 < 1}
+              disabled={disabled || current - 1 < 1}
               onClick={() => onChange(current - 1, size)}
               icon={<Pre />}
             />
@@ -99,7 +100,7 @@ class TagDetail extends React.Component<TagDetailProps, TagDetailState> {
           >
             <A
               neumorphism
-              disabled={current + 1 > pageNumber}
+              disabled={disabled || current + 1 > pageNumber}
               onClick={() => onChange(current + 1, size)}
               icon={<Next />}
             />
@@ -118,7 +119,7 @@ class TagDetail extends React.Component<TagDetailProps, TagDetailState> {
           >
             <A
               neumorphism
-              disabled={current === page}
+              disabled={disabled || current === page}
               clicked={current === page}
               onClick={() => onChange(page, size)}
             >
