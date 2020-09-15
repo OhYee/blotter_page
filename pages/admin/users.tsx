@@ -3,16 +3,15 @@ import React, { ComponentProps } from 'react';
 import Head from 'next/head';
 import Link from 'next/link';
 
-import { Card, Table, Button, Input, Avatar, Popconfirm, notification } from 'antd';
-import { ColumnProps } from 'antd/lib/table';
-import { Icon } from '@ant-design/compatible';
-import { PaginationConfig } from 'antd/lib/pagination';
-import {
-  SorterResult,
-  TableCurrentDataSource,
-  TablePaginationConfig,
-} from 'antd/lib/table/interface';
-import { CheckOutlined, CloseOutlined } from '@ant-design/icons';
+import Card from '@/components/card';
+import Table, { Column } from '@/components/table';
+import Button from '@/components/button';
+import Input from '@/components/input';
+import Avatar from '@/components/avatar';
+import Popover from '@/components/popover';
+import Notification from '@/components/notification';
+import { Search, Close, Success } from '@/components/svg';
+import { Flex } from '@/components/container';
 
 import { Space } from '@/components/container';
 
@@ -30,7 +29,6 @@ interface AdminUsersState {
   search: string;
   search_fields: ('title' | 'abstract' | 'raw')[];
   loading: boolean;
-  pagination: PaginationConfig;
   data: Blotter.User[];
   total: number;
   size: number;
@@ -50,7 +48,6 @@ class AdminUsers extends React.Component<AdminUsersProps, AdminUsersState> {
       search: '',
       search_fields: ['title'],
       loading: false,
-      pagination: {},
       data: [],
       total: 0,
       size: 10,
@@ -66,8 +63,7 @@ class AdminUsers extends React.Component<AdminUsersProps, AdminUsersState> {
     this.getData();
   }
 
-  onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    var value = e.target.value;
+  onChange = (value: string) => {
     waitUntil(
       'users_search',
       () => {
@@ -95,40 +91,26 @@ class AdminUsers extends React.Component<AdminUsersProps, AdminUsersState> {
     this.setState((state) => ({ data: state.data.filter((post) => post.id != id) }));
   };
 
-  onTableChange = (
-    pagination: TablePaginationConfig,
-    filters: Record<string, React.ReactText[] | null>,
-    sorter: SorterResult<Blotter.User>,
-    extra: TableCurrentDataSource<Blotter.User>,
-  ) => {
-    const { current, pageSize } = pagination;
-    const { field, order } = sorter;
-
-    var s = {} as any;
-    if (!!current) s.page = current;
-    if (!!pageSize) s.size = pageSize;
-    if (typeof order !== 'undefined') {
-      s.field = field;
-      s.up = order === 'ascend';
-    }
-
-    this.setState(s, this.getData);
+  onTableChange = (page: number, size: number, name: string, ascending: boolean) => {
+    this.setState({ page, size, field: name, up: ascending }, this.getData);
   };
 
   render() {
-    const columns: ColumnProps<Blotter.User>[] = [
+    const columns: Column<Blotter.User>[] = [
       {
         title: '头像',
         key: 'avatar',
-        dataIndex: 'avatar',
-        width: 50,
+        minWidth: 50,
+        maxWidth: 100,
         render: (value) => <Avatar src={value} />,
       },
       {
         title: '名称',
         key: 'username',
-        dataIndex: 'username',
+        minWidth: 50,
+        maxWidth: 100,
         ellipsis: true,
+        tooltip: (v) => v,
         render: (value) => (
           <Link href="/user/[username]" as={`/user/${value}`}>
             {value}
@@ -139,59 +121,80 @@ class AdminUsers extends React.Component<AdminUsersProps, AdminUsersState> {
       {
         title: 'QQ',
         key: 'qq',
-        dataIndex: 'qq',
+        minWidth: 50,
+        maxWidth: 100,
         ellipsis: true,
+        tooltip: (v) => v,
       },
       {
         title: '邮箱',
         key: 'email',
-        dataIndex: 'email',
+        minWidth: 50,
+        maxWidth: 100,
         ellipsis: true,
+        tooltip: (v) => v,
       },
       {
         title: '绑定 QQ',
         key: 'qq_union_id',
-        dataIndex: 'qq_union_id',
+        minWidth: 50,
+        maxWidth: 100,
         render: (value) =>
           value === '' ? (
-            <CloseOutlined style={{ color: 'red' }} />
+            <Close style={{ color: 'red' }} />
           ) : (
-            <CheckOutlined style={{ color: 'green' }} />
+            <Success style={{ color: 'green' }} />
           ),
       },
       {
         title: '绑定 Github',
         key: 'github_id',
-        dataIndex: 'github_id',
+        minWidth: 50,
+        maxWidth: 100,
         render: (value) =>
-          value === 0 ? (
-            <CloseOutlined style={{ color: 'red' }} />
-          ) : (
-            <CheckOutlined style={{ color: 'green' }} />
-          ),
+          value === 0 ? <Close style={{ color: 'red' }} /> : <Success style={{ color: 'green' }} />,
       },
       {
         title: '操作',
         key: 'op',
+        minWidth: 50,
+        maxWidth: 100,
         render: (_, record) => (
-          <Popconfirm
-            title="确定要重置密码？"
-            onConfirm={async (e) => {
-              const r = await reset_password(record.id);
-              notification.success({
-                message: '修改成功',
-                description: `新密码：${r.password}`,
-                duration: null,
-              });
-            }}
+          <Popover
+            card
+            shadow
+            component={
+              <Flex>
+                <span>确定要重置密码？</span>
+                <Button
+                  danger
+                  primary
+                  neumorphism
+                  size="small"
+                  onClick={async () => {
+                    const r = await reset_password(record.id);
+                    Notification.message({
+                      alertType: 'success',
+                      title: '修改成功',
+                      content: `新密码：${r.password}`,
+                      autoClose: 0,
+                    });
+                  }}
+                >
+                  重置
+                </Button>
+              </Flex>
+            }
           >
-            <Button danger>重置密码</Button>
-          </Popconfirm>
+            <Button danger size="small" neumorphism>
+              重置密码
+            </Button>
+          </Popover>
         ),
       },
     ];
     return (
-      <Card>
+      <Card neumorphism>
         <Context.Consumer>
           {(context) => (
             <Head>
@@ -199,29 +202,21 @@ class AdminUsers extends React.Component<AdminUsersProps, AdminUsersState> {
             </Head>
           )}
         </Context.Consumer>
-        <Space>
-          <Input
-            placeholder="搜索用户"
-            onChange={this.onChange}
-            allowClear
-            prefix={<Icon type="search" />}
-            size="large"
-          />
+        <Flex direction="TB" fullWidth>
+          <Input placeholder="搜索用户" onChange={this.onChange} prefix={<Search />} size="large" />
           <Table<Blotter.User>
-            rowKey={(record) => record.id}
             columns={columns}
-            scroll={{ x: true }}
-            dataSource={this.state.data}
+            data={this.state.data}
             loading={this.state.loading}
-            onChange={(a, b, c, d) => this.onTableChange(a, b, Array.isArray(c) ? c[0] : c, d)}
+            onChange={this.onTableChange}
             pagination={{
-              current: this.state.page,
+              page: this.state.page,
               total: this.state.total,
-              pageSize: this.state.size,
-              showSizeChanger: true,
+              size: this.state.size,
+              sizeSelect: [5, 10, 20, 50, 100],
             }}
           />
-        </Space>
+        </Flex>
       </Card>
     );
   }
