@@ -51,45 +51,52 @@ export default function DatePicker(props: DatePickerProps) {
     S: defaultDatetime.getSeconds(),
   });
 
-  React.useEffect(() => {
-    if (typeof value === 'undefined') return;
+  const { _date, _time } = React.useMemo(() => {
+    if (typeof value === 'undefined') return { _date: date, _time: time };
     const datetime = new Date(value);
-    setDate({
-      Y: datetime.getFullYear(),
-      M: datetime.getMonth() + 1,
-      D: datetime.getDate(),
-    });
-    setTime({
-      H: datetime.getHours(),
-      M: datetime.getMinutes(),
-      S: datetime.getSeconds(),
-    });
-  }, [value]);
+    return {
+      _date: {
+        Y: datetime.getFullYear(),
+        M: datetime.getMonth() + 1,
+        D: datetime.getDate(),
+      },
+      _time: {
+        H: datetime.getHours(),
+        M: datetime.getMinutes(),
+        S: datetime.getSeconds(),
+      },
+    };
+  }, [value, date, time]);
 
-  React.useEffect(() => {
-    if (!!onChange) {
-      switch (type) {
-        case 'datetime':
-          onChange(new Date(date.Y, date.M - 1, date.D, time.H, time.M, time.S).getTime());
-        case 'date':
-          onChange(new Date(date.Y, date.M - 1).getTime());
-        case 'time':
-          onChange(time.H * 3600 + time.M * 60 + time.S);
+  const callback = React.useCallback(
+    (date: DateObject, time: TimeObject) => {
+      if (!!onChange) {
+        switch (type) {
+          case 'datetime':
+            return onChange(new Date(date.Y, date.M - 1, date.D, time.H, time.M, time.S).getTime());
+
+          case 'date':
+            return onChange(new Date(date.Y, date.M - 1, date.D).getTime());
+          case 'time':
+            return onChange(time.H * 3600 + time.M * 60 + time.S);
+        }
       }
-    }
-  }, [date, time]);
+    },
+    [onChange],
+  );
 
   const dateFormat = React.useMemo(
-    () => `${date.Y}-${date.M.toString().padStart(2, '0')}-${date.D.toString().padStart(2, '0')}`,
-    [date],
+    () =>
+      `${_date.Y}-${_date.M.toString().padStart(2, '0')}-${_date.D.toString().padStart(2, '0')}`,
+    [_date],
   );
   const timeFormat = React.useMemo(
     () =>
-      `${time.H.toString().padStart(2, '0')}:${time.M.toString().padStart(
+      `${_time.H.toString().padStart(2, '0')}:${_time.M.toString().padStart(
         2,
         '0',
-      )}:${time.S.toString().padStart(2, '0')}`,
-    [time],
+      )}:${_time.S.toString().padStart(2, '0')}`,
+    [_time],
   );
 
   const format = React.useMemo(
@@ -99,7 +106,7 @@ export default function DatePicker(props: DatePickerProps) {
         : type === 'date'
         ? dateFormat
         : timeFormat,
-    [date, time, type],
+    [dateFormat, timeFormat, type],
   );
 
   return (
@@ -112,10 +119,22 @@ export default function DatePicker(props: DatePickerProps) {
           <Card>
             <Flex direction="TB" wrap={false}>
               {(type === 'datetime' || type === 'date') && (
-                <DatePart date={date} onChange={(d) => setDate(d)} />
+                <DatePart
+                  date={_date}
+                  onChange={(d) => {
+                    callback(d, _time);
+                    setDate(d);
+                  }}
+                />
               )}
               {(type === 'datetime' || type === 'time') && (
-                <TimePart time={time} onChange={(t) => setTime(t)} />
+                <TimePart
+                  time={_time}
+                  onChange={(t) => {
+                    callback(_date, t);
+                    setTime(t);
+                  }}
+                />
               )}
             </Flex>
           </Card>
