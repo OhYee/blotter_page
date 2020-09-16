@@ -16,9 +16,9 @@ export default function Timeline(
   const subDirection = direction == 'TB' ? 'LR' : 'TB';
   return (
     <div id={id} className={concat(styles.timeline, className)} style={style}>
-      {data.map((item) => (
+      {data.map((item, index) => (
         // <div >
-        <React.Fragment key={item.time.toString()}>
+        <React.Fragment key={index}>
           <div className={styles.time}>{item.time}</div>
           <div className={styles.circle}></div>
           <div className={styles.line}></div>

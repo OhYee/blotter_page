@@ -159,8 +159,8 @@ class TravelMap extends React.Component<TravelMapProps, TravelMapState> {
               />
             </Card>
           </Drawer>
-          {this.props.cities.map((item) => (
-            <Marker position={{ longitude: item.lng, latitude: item.lat }}>
+          {this.props.cities.map((item, idx) => (
+            <Marker key={idx} position={{ longitude: item.lng, latitude: item.lat }}>
               <Popover
                 placement="top"
                 trigger={['click', 'hover']}
