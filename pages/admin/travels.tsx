@@ -3,14 +3,18 @@ import Head from 'next/head';
 
 import moment from '@/utils/moment';
 
-import { Card, List, Form, Input, Button, DatePicker, Row, Col, Popconfirm, Select } from 'antd';
-import { FormInstance } from 'antd/lib/form';
+import Card from '@/components/card';
+import Input, { DatePicker } from '@/components/input';
+import Popover from '@/components/popover';
 
+import { Plus, Delete, Save } from '@/components/svg';
 import TravelMap from '@/components/travel_map';
-import  { Space } from '@/components/container';
 import { Context } from '@/utils/global';
 import { posts, tagsSearch, travels_set, travels_get } from '@/utils/api';
 import ShowNotification from '@/utils/notification';
+import { Flex } from '@/components/container';
+import Button from '@/components/button';
+import Loading from '@/components/loading';
 
 type setStateCallback<T> = (pre: T) => Partial<T>;
 
@@ -88,12 +92,11 @@ class Travel extends React.Component<TravelProps, TravelState> {
     const { index, name, label } = props;
     return (
       <div>
-        <strong>{label}：</strong>
         <Input
+          label={label}
           placeholder={label}
-          value={this.state.cities[index][name]}
-          onChange={(e) => {
-            const value = e.target.value;
+          value={this.state.cities[index][name].toString()}
+          onChange={(value) => {
             this.setCity(index, (pre) => ({
               ...pre,
               [name]: name === 'name' ? value : parseFloat(value),
@@ -132,135 +135,129 @@ class Travel extends React.Component<TravelProps, TravelState> {
       this.setState({ search: r.posts });
     };
     return (
-      <List.Item key={index}>
-        <Row gutter={[5, 5]}>
-          <Col flex={1}>
-            <CityInput index={index} name="name" label="地点" />
-          </Col>
-          <Col flex={1}>
-            <CityInput index={index} name="lat" label="经度" />
-          </Col>
-          <Col flex={1}>
-            <CityInput index={index} name="lng" label="纬度" />
-          </Col>
-          <Col flex={1}>
-            <CityInput index={index} name="zoom" label="缩放倍数" />
-          </Col>
-        </Row>
-        <Row gutter={[5, 5]} justify="end">
-          <Col>
-            <Button
-              onClick={() => {
-                const name = this.state.cities[index].name;
-                this.getPosition(name, (lat, lng) => {
-                  this.setCity(index, (pre) => ({ lat, lng }));
-                });
-              }}
-            >
-              搜索坐标
-            </Button>
-          </Col>
-          <Col>
-            <Popconfirm
-              title="确认删除？"
-              onConfirm={() => {
-                this.setState((state) => ({
-                  cities: state.cities.filter((_, idx) => idx != index),
-                }));
-              }}
-            >
-              <Button danger>删除</Button>
-            </Popconfirm>
-          </Col>
-          <Col>
-            <Button
-              type="primary"
-              onClick={() => {
-                this.setCity(index, (pre) => ({
-                  travels: pre.travels
-                    .concat({ time: 0, link: '' })
-                    .sort((a, b) => a.time - b.time),
-                }));
-              }}
-            >
-              新建
-            </Button>
-          </Col>
-        </Row>
-        <List
-          itemLayout="vertical"
-          style={{ marginLeft: 50 }}
-          dataSource={city.travels}
-          renderItem={(item, index2) => (
-            <List.Item>
-              <Row gutter={[5, 5]} justify="end">
-                <Col flex={1}>
-                  <Row justify="space-between">
-                    <Col>
-                      <strong>日期： </strong>
-                    </Col>
-                    <Col flex="1 1 auto">
-                      <DatePicker
-                        value={moment(item.time, 'X')}
-                        style={{ width: '100%' }}
-                        onChange={(e) => {
-                          const time = !!e ? e.unix() : 0;
-                          this.setTravel(index, index2, (pre) => ({ ...pre, time }));
-                        }}
-                      />
-                    </Col>
-                  </Row>
-                </Col>
-                <Col flex={1}>
-                  <Row justify="space-between">
-                    <Col>
-                      <strong>文章： </strong>
-                    </Col>
-                    <Col flex="1 1 auto">
-                      <Select
-                        showSearch
-                        autoFocus={true}
-                        placeholder="搜索游记文章"
-                        value={item.link}
-                        style={{ width: '100%' }}
-                        defaultActiveFirstOption={false}
-                        showArrow={false}
-                        filterOption={false}
-                        onSearch={onSearch}
-                        onChange={(e) =>
-                          this.setTravel(index, index2, (pre) => ({
-                            ...pre,
-                            link: e.toString(),
-                          }))
-                        }
-                        notFoundContent={null}
-                      >
-                        {this.state.search.map((post) => (
-                          <Select.Option key={post.url} value={post.url}>
-                            {post.title}
-                          </Select.Option>
-                        ))}
-                      </Select>
-                    </Col>
-                  </Row>
-                </Col>
-                <Col>
-                  <Popconfirm
-                    title="确认删除？"
-                    onConfirm={() => {
-                      this.setCity(index, (pre) => ({
-                        travels: pre.travels.filter((_, idx) => idx != index2),
+      <Flex key={index} direction="TB" fullWidth>
+        <Flex>
+          <CityInput index={index} name="name" label="地点" />
+          <CityInput index={index} name="lat" label="经度" />
+          <CityInput index={index} name="lng" label="纬度" />
+          <CityInput index={index} name="zoom" label="缩放倍数" />
+
+          <Button
+            neumorphism
+            size="small"
+            onClick={() => {
+              const name = this.state.cities[index].name;
+              this.getPosition(name, (lat, lng) => {
+                this.setCity(index, (pre) => ({ lat, lng }));
+              });
+            }}
+          >
+            搜索坐标
+          </Button>
+
+          <Popover
+            card
+            shadow
+            trigger={['click']}
+            component={
+              <Card>
+                <Flex>
+                  确认删除？
+                  <Button
+                    danger
+                    primary
+                    neumorphism
+                    size="small"
+                    onClick={() => {
+                      this.setState((state) => ({
+                        cities: state.cities.filter((_, idx) => idx != index),
                       }));
                     }}
                   >
-                    <Button danger>删除</Button>
-                  </Popconfirm>
-                </Col>
-              </Row>
-            </List.Item>
-          )}
-        />
-      </List.Item>
+                    删除
+                  </Button>
+                </Flex>
+              </Card>
+            }
+          >
+            <Button danger neumorphism size="small" prefix={<Delete />}>
+              删除
+            </Button>
+          </Popover>
+          <Button
+            neumorphism
+            size="small"
+            prefix={<Plus />}
+            onClick={() => {
+              this.setCity(index, (pre) => ({
+                travels: pre.travels.concat({ time: 0, link: '' }).sort((a, b) => a.time - b.time),
+              }));
+            }}
+          >
+            新建
+          </Button>
+        </Flex>
+        <Flex direction="TB" fullWidth>
+          {city.travels.map((item, index2) => (
+            <Flex key={index2} style={{ marginLeft: 50 }}>
+              <DatePicker
+                label="日期"
+                value={item.time * 1000}
+                style={{ width: '100%' }}
+                onChange={(time) => {
+                  this.setTravel(index, index2, (pre) => ({ ...pre, time: time / 1000 }));
+                }}
+                type="date"
+              />
+
+              <Input<string>
+                label="文章"
+                placeholder="搜索游记文章"
+                value={item.link}
+                style={{ width: '100%' }}
+                onChange={onSearch}
+                onSelect={(key, value) =>
+                  this.setTravel(index, index2, (pre) => ({
+                    ...pre,
+                    link: value,
+                  }))
+                }
+                options={this.state.search.map((item) => ({ key: item.title, value: item.url }))}
+              />
+
+              <Popover
+                card
+                shadow
+                trigger={['click']}
+                component={
+                  <Card>
+                    <Flex>
+                      确认删除？
+                      <Button
+                        danger
+                        primary
+                        neumorphism
+                        size="small"
+                        onClick={() => {
+                          this.setCity(index, (pre) => ({
+                            travels: pre.travels.filter((_, idx) => idx != index2),
+                          }));
+                        }}
+                      >
+                        删除
+                      </Button>
+                    </Flex>
+                  </Card>
+                }
+              >
+                <Button danger neumorphism size="small">
+                  删除
+                </Button>
+              </Popover>
+            </Flex>
+          ))}
+        </Flex>
+      </Flex>
     );
   };
 
@@ -274,51 +271,44 @@ class Travel extends React.Component<TravelProps, TravelState> {
             </Head>
           )}
         </Context.Consumer>
-        <Space>
+        <Flex direction="TB" fullWidth mainAxis="flex-end">
           <TravelMap cities={this.state.cities} onCreate={(ins) => this.setState({ ins })} />
-          <Row justify="end">
-            <Col>
-              <Row gutter={[10, 10]}>
-                <Col>
-                  <Button
-                    type="primary"
-                    loading={this.state.loading}
-                    onClick={async () => {
-                      this.setState({ loading: true });
-                      travels_set(this.state.cities)
-                        .then(ShowNotification)
-                        .catch(console.error)
-                        .finally(() => this.setState({ loading: false }));
-                    }}
-                  >
-                    保存
-                  </Button>
-                </Col>
-                <Col>
-                  <Button
-                    type="primary"
-                    onClick={() =>
-                      this.setState((state) => ({
-                        cities: [
-                          { name: '', lng: 0, lat: 0, zoom: 15, travels: [] },
-                          ...state.cities,
-                        ],
-                      }))
-                    }
-                  >
-                    新建城市
-                  </Button>
-                </Col>
-              </Row>
-            </Col>
-          </Row>
-          <List
-            renderItem={this.renderCity}
-            dataSource={this.state.cities}
-            itemLayout="vertical"
-            loading={this.state.loading}
-          />
-        </Space>
+          <Flex mainAxis="space-around">
+            <Button
+              neumorphism
+              loading={this.state.loading}
+              onClick={async () => {
+                this.setState({ loading: true });
+                travels_set(this.state.cities)
+                  .then(ShowNotification)
+                  .catch(console.error)
+                  .finally(() => this.setState({ loading: false }));
+              }}
+              prefix={<Save />}
+            >
+              保存
+            </Button>
+
+            <Button
+              primary
+              neumorphism
+              onClick={() =>
+                this.setState((state) => ({
+                  cities: [{ name: '', lng: 0, lat: 0, zoom: 15, travels: [] }, ...state.cities],
+                }))
+              }
+              prefix={<Plus />}
+            >
+              新建城市
+            </Button>
+          </Flex>
+
+          <Loading loading={this.state.loading}>
+            <Flex direction="TB" fullWidth>
+              {this.state.cities.map(this.renderCity)}
+            </Flex>
+          </Loading>
+        </Flex>
       </Card>
     );
   }
