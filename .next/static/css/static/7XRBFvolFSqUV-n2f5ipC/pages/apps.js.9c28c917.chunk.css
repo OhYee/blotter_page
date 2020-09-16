@@ -1,0 +1,112 @@
+.avatar___FhI1z {
+  width: 2em;
+  height: 2em;
+  border-radius: 100%;
+  overflow: hidden;
+  color: var(--color);
+  transition: color var(--transition-time);
+  position: relative;
+}
+.avatar___FhI1z img {
+  width: 100%;
+  height: 100%;
+}
+.avatar___FhI1z > :first-child {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+.svg___3XNb- {
+  width: 1em;
+  height: 1em;
+  line-height: 100%;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.button___lgX0P {
+  display: inline-block;
+  border: 0px;
+  color: var(--primary);
+  background: var(--background);
+  outline: none;
+  line-height: 1em;
+  cursor: pointer;
+  transition: color var(--transition-time), background var(--transition-time), box-shadow var(--transition-time) !important;
+}
+.button___lgX0P:hover {
+  color: var(--primary);
+}
+.button___lgX0P:active {
+  color: var(--primary);
+}
+.button___lgX0P.disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+.button___lgX0P .prefix___4rdfh {
+  margin-right: 5px;
+}
+.button___lgX0P .suffix___205Uy {
+  margin-left: 5px;
+}
+.danger___2X_ZL {
+  color: var(--error-color);
+  background: var(--error-background);
+}
+.danger___2X_ZL:hover {
+  color: var(--error-color);
+}
+.danger___2X_ZL.icon___2SEON,
+.danger___2X_ZL.icon___2SEON:hover,
+.danger___2X_ZL.icon___2SEON:active {
+  color: var(--error-color);
+}
+.danger___2X_ZL.primary___35G1w {
+  color: var(--error-background);
+  background: var(--error-color);
+}
+.danger___2X_ZL.primary___35G1w:hover {
+  color: var(--error-background);
+}
+.danger___2X_ZL.primary___35G1w.icon___2SEON,
+.danger___2X_ZL.primary___35G1w.icon___2SEON:hover,
+.danger___2X_ZL.primary___35G1w.icon___2SEON:active {
+  color: var(--error-background);
+}
+.primary___35G1w {
+  color: white;
+  background: var(--primary);
+}
+.primary___35G1w.icon___2SEON {
+  color: white;
+}
+.primary___35G1w:hover {
+  color: white;
+}
+.primary___35G1w:active {
+  color: white;
+}
+.icon___2SEON {
+  color: var(--primary);
+}
+.small___2NKVT {
+  font-size: 0.75em;
+  padding: 5px;
+}
+.middle___1Wbbx {
+  font-size: 1em;
+  padding: 7.5px;
+}
+.large___1jRjJ {
+  font-size: 1.25em;
+  padding: 10px;
+}
+.circle___2bbJ5 {
+  border-radius: 100%;
+}
+
