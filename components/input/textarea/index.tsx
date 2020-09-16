@@ -61,14 +61,14 @@ export default function TextArea(props: TextAreaProps) {
      */ React.useEffect(
     () =>
       setValueCallback((value: string) => {
-        if (!!ref && typeof value === 'string') ref.current.value = value;
+        if (!!ref && !!ref.current && typeof value === 'string') ref.current.value = value;
       }),
     [ref, setValueCallback],
   );
 
   const [showInput, setShowInput] = React.useState(false);
   React.useEffect(() => {
-    if (!!ref && typeof value === 'string') ref.current.value = value;
+    if (!!ref && !!ref.current && typeof value === 'string') ref.current.value = value;
   }, [ref, value, showInput]);
 
   const onInputChange = React.useCallback(

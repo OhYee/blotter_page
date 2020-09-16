@@ -106,7 +106,7 @@ export default function Input<SelectType>(props: InputProps<SelectType>) {
   React.useEffect(
     () =>
       setValueCallback((value: string) => {
-        if (!!ref && typeof value === 'string') ref.current.value = value;
+        if (!!ref && !!ref.current && typeof value === 'string') ref.current.value = value;
       }),
     [ref, setValueCallback],
   );
@@ -114,7 +114,7 @@ export default function Input<SelectType>(props: InputProps<SelectType>) {
   const [showInput, setShowInput] = React.useState(false);
 
   React.useEffect(() => {
-    if (!!ref && typeof value === 'string') ref.current.value = value;
+    if (!!ref && !!ref.current && typeof value === 'string') ref.current.value = value;
   }, [ref, value, showInput]);
   const onInputChange = React.useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
