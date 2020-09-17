@@ -1,21 +1,17 @@
 import React from 'react';
 
-import {
-  Select,
-  Button,
-  Upload as U,
-  Tabs,
-  Card,
-  Typography,
-  Popconfirm,
-  notification,
-} from 'antd';
-import { SyncOutlined, SaveOutlined, DeleteOutlined } from '@ant-design/icons';
-
 import * as qiniu from 'qiniu-js';
 
+import Card from '@/components/card';
+import { Flex } from '@/components/container';
+import Tabs from '@/components/tabs';
+import Popover, { Modal, ModalProps } from '@/components/popover';
+import { message } from '@/components/notification';
 import { Space } from '@/components/container';
 import Image from '@/components/image';
+import { Loading, Save, Delete, Sync } from '@/components/svg';
+import Button from '@/components/button';
+import Input, { Option, Upload as U } from '@/components/input';
 
 import {
   qiniu_get_buckets,
@@ -43,7 +39,7 @@ function BucketSelector(props: {
   imgRef?: React.MutableRefObject<ImageListRef>;
 }) {
   const { bucket, prefix, onChange = () => {}, imgRef } = props;
-  const [prefixList, setPrefixList] = React.useState([]);
+  const [prefixList, setPrefixList] = React.useState<Option<string>[]>([]);
   const [loading, setLoading] = React.useState(false);
   const [buckets, setBuckets] = React.useState([]);
 
@@ -52,7 +48,9 @@ function BucketSelector(props: {
     qiniu_get_buckets()
       .then((r) => {
         setBuckets(r.buckets);
-        setPrefixList(Array.from(new Set([''].concat(r.prefix))));
+        setPrefixList(
+          Array.from(new Set([{ key: '无前缀', value: '' } as Option<string>].concat(r.prefix))),
+        );
         if (bucket == '' && r.buckets.length != 0) onChange(r.buckets[0], '');
       })
       .catch(console.error)
@@ -62,22 +60,17 @@ function BucketSelector(props: {
 
   return (
     <Space direction="horizontal">
-      <strong>存储空间：</strong>
-      <Select value={bucket} onChange={(b) => onChange(b, prefix)} loading={loading}>
-        {buckets.map((b) => (
-          <Select.Option key={b} value={b}>
-            {b}
-          </Select.Option>
-        ))}
-      </Select>
-      <Button onClick={initial} icon={<SyncOutlined spin={loading} />} />
-      <Select
-        style={{ minWidth: 100 }}
+      <Input<string>
+        label="存储空间"
+        value={bucket}
+        onSelect={(k, v) => onChange(v, prefix)}
+        options={buckets}
+      />
+
+      <Button onClick={initial} icon={loading ? <Loading /> : <Sync />} />
+      <Input<string>
         value={prefix}
-        onChange={(p) => onChange(bucket, p)}
-        showSearch
-        clearIcon
-        onSearch={(p) => {
+        onChange={(p) => {
           waitUntil(
             'image_prefix',
             () => {
@@ -86,16 +79,13 @@ function BucketSelector(props: {
             500,
           );
         }}
-        loading={loading}
-        notFoundContent={null}
-      >
-        {prefixList.map((p) => (
-          <Select.Option key={p} value={p}>
-            {p}
-          </Select.Option>
-        ))}
-      </Select>
+        onSelect={(k, v) => onChange(bucket, v)}
+        suffix={loading ? <Loading /> : undefined}
+        options={prefixList}
+      />
+
       <Button
+        neumorphism
         onClick={() => {
           if (!!imgRef && !!imgRef.current) imgRef.current.refresh();
         }}
@@ -118,26 +108,19 @@ function Upload(props: { bucket: string; prefix: string }) {
         console.log(res);
       },
       error(err) {
-        notification.error({ message: `上传发生错误`, description: `${filename}\n${err}` });
+        message({ alertType: 'error', title: `上传发生错误`, content: `${filename}\n${err}` });
         console.error(err);
       },
       complete(res) {
-        notification.success({ message: `上传成功`, description: `${filename}` });
+        message({ alertType: 'success', title: `上传成功`, content: `${filename}` });
       },
     });
   };
 
   return (
-    <U.Dragger
-      name={'file'}
-      multiple={true}
-      customRequest={(opts) => upload(opts.file)}
-      showUploadList={false}
-    >
-      <div style={{ height: 100, width: '100%' }}>
-        <p>将文件拖拽到此处上传</p>
-      </div>
-    </U.Dragger>
+    <U onUpload={(files) => Object.values(files).map(upload)}>
+      <p>点击或将文件拖拽到此处上传</p>
+    </U>
   );
 }
 
@@ -201,6 +184,7 @@ function imageList(
 
   const getData = React.useCallback(
     (b, p, m) => {
+      if (!b) return;
       setLoading(true);
       var thisID = id + 1;
       setID(thisID);
@@ -237,66 +221,88 @@ function imageList(
   }, [bucket, prefix]);
 
   return (
-    <div className={styles.wrapper}>
-      <div className={styles.inner}>
+    <Flex direction="TB" fullWidth>
+      <Flex mainAxis="flex-start">
         {images.map((image, idx) => {
           return (
-            <Card
-              key={image.new_key}
-              className={styles.card}
-              size="small"
-              cover={
+            <Card key={image.new_key} style={{ width: 150 }}>
+              <Flex direction="TB" fullWidth>
                 <Image
                   src={image.link}
                   thumbnail={generateThumbnail(image.link)}
                   title={image.link}
-                  height="128px"
-                  width="128px"
                   clickable
+                  width="100%"
+                  height="100px"
                 />
-              }
-              actions={[
-                <SaveOutlined
-                  onClick={async () => {
-                    if (
-                      ShowNotification(await qiniu_rename_image(bucket, image.key, image.new_key))
-                    )
-                      initial();
-                  }}
-                />,
-                <Popconfirm
-                  title="确定删除？"
-                  onConfirm={async () => {
-                    if (ShowNotification(await qiniu_delete_image(bucket, image.key))) initial();
-                  }}
-                >
-                  <DeleteOutlined style={{ color: 'red' }} />
-                </Popconfirm>,
-              ]}
-            >
-              <Typography.Text
-                ellipsis
-                copyable={{ text: image.link }}
-                editable={{
-                  onChange: (v) => {
+                <Input
+                  value={image.new_key}
+                  transform
+                  onChange={(v) => {
                     setImages({ method: 'update', index: idx, key: v });
-                  },
-                }}
-              >
-                {image.new_key}
-              </Typography.Text>
+                  }}
+                  style={{ minWidth: '100%' }}
+                />
+                <Flex>
+                  <Button
+                    icon={<Save />}
+                    onClick={async () => {
+                      if (
+                        ShowNotification(await qiniu_rename_image(bucket, image.key, image.new_key))
+                      )
+                        initial();
+                    }}
+                  />
+
+                  <Popover
+                    trigger={['click']}
+                    card
+                    shadow
+                    component={
+                      <Card>
+                        <Flex>
+                          确定删除？
+                          <Button
+                            danger
+                            primary
+                            neumorphism
+                            size="small"
+                            onClick={async () => {
+                              if (ShowNotification(await qiniu_delete_image(bucket, image.key)))
+                                initial();
+                            }}
+                          >
+                            删除
+                          </Button>
+                        </Flex>
+                      </Card>
+                    }
+                  >
+                    <Button danger style={{ background: 'transparent' }} icon={<Delete />} />
+                  </Popover>
+                </Flex>
+              </Flex>
             </Card>
           );
         })}
-      </div>
-      <Button onClick={() => getData(bucket, prefix, marker)} disabled={!hasNext} loading={loading}>
-        获取更多
-      </Button>
-    </div>
+      </Flex>
+      <Flex.Item style={{ width: 'auto' }}>
+        <Button
+          neumorphism
+          onClick={() => getData(bucket, prefix, marker)}
+          disabled={!hasNext}
+          loading={loading}
+        >
+          获取更多
+        </Button>
+      </Flex.Item>
+    </Flex>
   );
 }
 
-function Qiniu(props: { defaultTab?: 'upload' | 'list'; group_number?: number }) {
+export declare type QiniuProps = { defaultTab?: 'upload' | 'list'; group_number?: number };
+
+function Qiniu(props: QiniuProps) {
   const { defaultTab = 'upload', group_number = 10 } = props;
   const [bucket, setBucket] = React.useState('');
   const [prefix, setPrefix] = React.useState('');
@@ -309,17 +315,28 @@ function Qiniu(props: { defaultTab?: 'upload' | 'list'; group_number?: number })
     [bucket, prefix],
   );
   return (
-    <Space direction="vertical">
+    <Flex direction="TB" fullWidth>
       <BucketSelector bucket={bucket} prefix={prefix} onChange={setState} imgRef={ref} />
-      <Tabs defaultValue={defaultTab} tabPosition="left">
-        <Tabs.TabPane tab="上传图片" key="upload">
+      <Tabs defaultSelected={defaultTab === 'list' ? '图片列表' : '上传图片'} keepInDOM>
+        <Tabs.Item name="上传图片">
           <Upload bucket={bucket} prefix={prefix} />
-        </Tabs.TabPane>
-        <Tabs.TabPane tab="图片列表" key="list">
+        </Tabs.Item>
+        <Tabs.Item name="图片列表">
           <ImageList ref={ref} bucket={bucket} prefix={prefix} group_number={group_number} />
-        </Tabs.TabPane>
+        </Tabs.Item>
       </Tabs>
-    </Space>
+    </Flex>
+  );
+}
+
+export function QiniuModal(props: QiniuProps & ModalProps) {
+  const { show, onClose, ...restProps } = props;
+  return (
+    <Modal show={show} onClose={onClose}>
+      <Card>
+        <Qiniu {...restProps} />
+      </Card>
+    </Modal>
   );
 }
 
