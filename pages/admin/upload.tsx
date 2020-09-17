@@ -2,10 +2,9 @@ import React, { ComponentProps } from 'react';
 
 import Head from 'next/head';
 
-import { Card, List, Typography, Select, Button, Tabs } from 'antd';
+import Card from '@/components/card'
 
-import { Space } from '@/components/container';
-import Qiniu, { Upload, BucketSelector, ImageList } from '@/components/upload';
+import Qiniu from '@/components/upload';
 
 import { Context } from '@/utils/global';
 
@@ -28,7 +27,7 @@ class AdminImages extends React.Component<AdminImagesProps, AdminImagesState> {
 
   render() {
     return (
-      <Card>
+      <Card neumorphism>
         <Context.Consumer>
           {(context) => (
             <Head>
