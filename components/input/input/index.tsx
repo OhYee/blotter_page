@@ -15,7 +15,7 @@ export declare type Option<T = any> =
       key: string;
       value: T | string;
     }
-  | T;
+  | string;
 
 export declare type StrictOption<T = any> = {
   key?: string;
