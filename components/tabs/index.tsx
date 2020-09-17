@@ -38,7 +38,7 @@ function Tabs(props: TabsProps) {
 
   return (
     <Flex {...restProps} direction="TB" fullWidth className={concat(styles.tabs, className)}>
-      <Flex className={styles.nav} wrap={false} mainAxis="space-between">
+      <Flex className={styles.nav} wrap={false} mainAxis="flex-start">
         {itemProps.map((item) => (
           <Flex.Item
             key={item.name}
