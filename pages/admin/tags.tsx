@@ -5,7 +5,7 @@ import Head from 'next/head';
 import { Flex } from '@/components/container';
 import { Edit, Plus, Delete, Image } from '@/components/svg';
 import TagPart from '@/components/tag';
-import Qiniu from '@/components/upload';
+import { QiniuModal } from '@/components/upload';
 import Table, { Column } from '@/components/table';
 import Button from '@/components/button';
 import Input, { TextArea } from '@/components/input';
@@ -236,7 +236,12 @@ class AdminTagList extends React.Component<AdminTagListProps, AdminTagListState>
 
   renderImages = () => {
     return (
-      <div>
+      <React.Fragment>
+        <QiniuModal
+          show={this.state.upload}
+          onClose={() => this.setState({ upload: false })}
+          defaultTab="upload"
+        />
         <Button
           circle
           size="large"
@@ -247,19 +252,7 @@ class AdminTagList extends React.Component<AdminTagListProps, AdminTagListState>
           onClick={() => this.setState((state) => ({ upload: !state.upload }))}
           icon={<Image />}
         />
-        <div
-          className={['upload', 'shadow'].join(' ')}
-          style={{
-            right: 120,
-            top: 50,
-            ...(this.state.upload
-              ? { opacity: 1, visibility: 'visible' }
-              : { opacity: 0, visibility: 'hidden' }),
-          }}
-        >
-          <Qiniu defaultTab="upload" />
-        </div>
-      </div>
+      </React.Fragment>
     );
   };
 
