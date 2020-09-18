@@ -90,7 +90,7 @@ class TagSearch extends React.Component<TagSearchProps, TagSearchState> {
 
   render() {
     return (
-      <Flex mainSize="small" subSize="small" mainAxis="space-around">
+      <Flex mainSize="small" subSize="small" mainAxis="flex-start">
         {[
           ...this.props.tags.map((tag) => (
             <TagPart key={tag.short} tag={tag} onClose={() => this.props.onDelete(tag)} />
