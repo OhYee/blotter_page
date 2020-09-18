@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { DOMAttributes } from 'react';
 
 import { Loading } from '@/components/svg';
 import { concat, ComponentProps } from '@/utils/component';
@@ -6,23 +6,26 @@ import { concat, ComponentProps } from '@/utils/component';
 import styles from './button.less';
 import shadowStyles from '@/styles/shadow.less';
 
-export declare type ButtonProps = ComponentProps<{
-  size?: 'small' | 'middle' | 'large' | number;
-  prefix?: React.ReactNode;
-  suffix?: React.ReactNode;
-  icon?: React.ReactNode;
-  circle?: boolean;
-  primary?: boolean;
-  shadow?: boolean;
-  neumorphism?: boolean;
-  danger?: boolean;
-  className?: string;
-  disabled?: boolean;
-  loading?: boolean;
-  clicked?: boolean;
-  style?: React.CSSProperties;
-  onClick?: (e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement, MouseEvent>) => void;
-}>;
+export declare type ButtonProps = Combine<
+  ComponentProps<{
+    size?: 'small' | 'middle' | 'large' | number;
+    prefix?: React.ReactNode;
+    suffix?: React.ReactNode;
+    icon?: React.ReactNode;
+    circle?: boolean;
+    primary?: boolean;
+    shadow?: boolean;
+    neumorphism?: boolean;
+    danger?: boolean;
+    className?: string;
+    disabled?: boolean;
+    loading?: boolean;
+    clicked?: boolean;
+    style?: React.CSSProperties;
+    onClick?: (e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement, MouseEvent>) => void;
+  }>,
+  DOMAttributes<HTMLButtonElement | HTMLAnchorElement>
+>;
 
 function parseProps(props: ButtonProps) {
   const {
@@ -41,7 +44,8 @@ function parseProps(props: ButtonProps) {
     style = {},
     className,
     children,
-    danger=false,
+    danger = false,
+    ...restProps
   } = props;
   const classList = React.useMemo(() => {
     var classList = [styles.button, className];
@@ -86,13 +90,30 @@ function parseProps(props: ButtonProps) {
     suffix: loading && !icon ? <Loading /> : suffix,
     children,
     disabled: loading || disabled,
+    ...restProps,
   };
 }
 
 function Button(props: ButtonProps, ref) {
-  const { classList, style, onClick, icon, children, disabled, prefix, suffix } = parseProps(props);
+  const {
+    classList,
+    style,
+    onClick,
+    icon,
+    children,
+    disabled,
+    prefix,
+    suffix,
+    ...restProps
+  } = parseProps(props);
   return (
-    <button className={concat(...classList)} style={style} onClick={onClick} disabled={disabled}>
+    <button
+      {...restProps}
+      className={concat(...classList)}
+      style={style}
+      onClick={onClick}
+      disabled={disabled}
+    >
       {!!prefix ? <span className={styles.prefix}>{prefix}</span> : null}
       {!!icon ? icon : children}
       {!!suffix ? <span className={styles.suffix}>{suffix}</span> : null}
@@ -107,10 +128,21 @@ export declare type ALinkProps = ButtonProps & {
   linkType?: string;
 };
 function ALink(props: ALinkProps, ref: React.LegacyRef<HTMLAnchorElement>) {
-  const { classList, style, onClick, icon, children, disabled, prefix, suffix } = parseProps(props);
+  const {
+    classList,
+    style,
+    onClick,
+    icon,
+    children,
+    disabled,
+    prefix,
+    suffix,
+    ...restProps
+  } = parseProps(props);
   const { href, target, rel, linkType } = props;
   return (
     <a
+      {...restProps}
       ref={ref}
       className={concat(...classList)}
       style={{ ...style, ...(disabled ? { pointerEvents: 'none', opacity: 0.5 } : {}) }}
