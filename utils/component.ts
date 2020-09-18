@@ -8,9 +8,8 @@ type DefaultProps = {
   onClick?: () => void;
 };
 
-export declare type ComponentProps<T> = Omit<DefaultProps, keyof T> & T;
+export declare type ComponentProps<T> = Combine<T, DefaultProps>;
 
 export function concat(...classList: string[]) {
   return classList.filter((s) => !!s).join(' ');
 }
-

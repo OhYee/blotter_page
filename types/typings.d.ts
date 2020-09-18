@@ -15,6 +15,8 @@ declare type TypeTReplaceByU<T, U extends TypeUHasKeyOfT<T, U>> = {
   [K in keyof T]: { K: T[K] } extends U[K] ? T[K] : U[K];
 };
 
+declare type Combine<T, U> = Omit<U, keyof T> & T;
+
 declare namespace Blotter {
   interface User {
     id: string;
