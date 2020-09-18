@@ -157,6 +157,7 @@ export default function Input<SelectType>(props: InputProps<SelectType>) {
                 arrow={false}
                 placement="bottom"
                 trigger={selectTrigger}
+                style={{ width: '100%' }}
                 component={
                   <div className={styles.select}>
                     <ul className={shadowStyles.neumorphism}>
@@ -183,7 +184,6 @@ export default function Input<SelectType>(props: InputProps<SelectType>) {
                   onChange={onInputChange}
                   placeholder={placeholder}
                   type={type}
-                  style={{ paddingLeft: !!prefix ? '2em' : 0, paddingRight: !!suffix ? '2em' : 0 }}
                   readOnly={!editable}
                   onKeyUp={(e) => {
                     if (e.keyCode == 13 && !!onEnterPressed) onEnterPressed();
