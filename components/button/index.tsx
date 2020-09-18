@@ -1,4 +1,4 @@
-import React, { DOMAttributes } from 'react';
+import React from 'react';
 
 import { Loading } from '@/components/svg';
 import { concat, ComponentProps } from '@/utils/component';
@@ -24,7 +24,7 @@ export declare type ButtonProps = Combine<
     style?: React.CSSProperties;
     onClick?: (e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement, MouseEvent>) => void;
   }>,
-  DOMAttributes<HTMLButtonElement | HTMLAnchorElement>
+  React.DOMAttributes<HTMLButtonElement | HTMLAnchorElement>
 >;
 
 function parseProps(props: ButtonProps) {
