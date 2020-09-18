@@ -1,14 +1,12 @@
 import React from 'react';
-// import { Avatar, Tag } from 'antd';
 import Link from 'next/link';
 
 import Avatar from '@/components/avatar';
 import { Flex } from '@/components/container';
 import { Close } from '@/components/svg';
-import Button from '@/components/button';
 
 import { concat, ComponentProps } from '@/utils/component';
-import { reverseColor, isLight, parseColor, toHex, rgb2hsl, hsl2rgb } from '@/utils/color';
+import { parseColor, toHex, rgb2hsl, hsl2rgb } from '@/utils/color';
 
 import styles from './tag.less';
 import textStyles from '@/styles/text.less';

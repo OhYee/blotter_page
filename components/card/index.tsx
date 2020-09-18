@@ -6,7 +6,6 @@ import { concat } from '@/utils/component';
 
 import styles from './card.less';
 import shadowStyles from '@/styles/shadow.less';
-import { CardProps } from 'antd/lib/card';
 
 export default function Card(
   props: React.PropsWithChildren<{

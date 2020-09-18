@@ -1,41 +1,8 @@
 import React from 'react';
 import { Row, Col, Space as S } from 'antd';
-import { Gutter } from 'antd/lib/grid/row';
 import { ObjectFilter } from '@/utils/object';
 import { Context } from '@/utils/global';
 import { concat, ComponentProps } from '@/utils/component';
-
-// interface ContainerProps extends ComponentProps<'base'> {
-//   xs?: number;
-//   sm?: number;
-//   md?: number;
-//   lg?: number;
-//   xl?: number;
-//   xxl?: number;
-//   gutter_h?: number;
-//   gutter_v?: number;
-// }
-
-// interface ContainerState {}
-
-// class Container extends React.Component<ContainerProps, ContainerState> {
-//   static defaultProps: ContainerProps = {
-//     xs: 24,
-//     sm: 20,
-//     md: 18,
-//     lg: 16,
-//     xl: undefined,
-//     xxl: undefined,
-//     gutter_h: 20,
-//     gutter_v: 40,
-//   };
-//   constructor(props: ContainerProps) {
-//     super(props);
-//   }
-//   render() {
-//     return <div style={{}}>{this.props.children}</div>;
-//   }
-// }
 
 function Container(props: React.PropsWithChildren<{}>) {
   const context = React.useContext(Context);
