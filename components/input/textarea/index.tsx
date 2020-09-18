@@ -16,12 +16,18 @@ export declare type Option<T> = {
   value?: T;
 };
 
-export declare type TextAreaProps = ComponentProps<
-  {
-    rows?: number;
-  } & BasePartProps &
-    InputPartProps &
-    TransformPartProps
+export declare type TextAreaProps = Omit<
+  Combine<
+    ComponentProps<
+      {
+        rows?: number;
+      } & BasePartProps &
+        InputPartProps &
+        TransformPartProps
+    >,
+    React.HTMLAttributes<HTMLTextAreaElement>
+  >,
+  'prefix' | 'suffix'
 >;
 
 export default function TextArea(props: TextAreaProps) {
@@ -46,6 +52,8 @@ export default function TextArea(props: TextAreaProps) {
     style,
     className,
     transform = false,
+
+    ...restProps
   } = props;
   const ref = React.useRef<HTMLTextAreaElement>();
   const key = React.useMemo(() => randomString(), []);
@@ -99,6 +107,7 @@ export default function TextArea(props: TextAreaProps) {
           <div className={concat(styles.inner, ...(disabled ? ['disabled'] : []))}>
             <div className={concat(styles.textarea, shadowStyles.neumorphism_inset)}>
               <textarea
+                {...restProps}
                 ref={ref}
                 defaultValue={defaultValue}
                 onChange={onInputChange}

@@ -63,8 +63,9 @@ export declare type TransformPartProps = {
   transform?: boolean;
 };
 
-export declare type InputProps<SelectType = any> = ComponentProps<
-  BasePartProps & InputPartProps & SelectPartProps<SelectType> & TransformPartProps
+export declare type InputProps<SelectType = any> = Combine<
+  ComponentProps<BasePartProps & InputPartProps & SelectPartProps<SelectType> & TransformPartProps>,
+  React.HTMLAttributes<HTMLInputElement>
 >;
 
 export default function Input<SelectType>(props: InputProps<SelectType>) {
@@ -94,6 +95,7 @@ export default function Input<SelectType>(props: InputProps<SelectType>) {
     className,
     transform = false,
     debounce = 200,
+    ...restProps
   } = props;
   const ref = React.useRef<HTMLInputElement>();
   const key = React.useMemo(() => randomString(), []);
@@ -175,6 +177,7 @@ export default function Input<SelectType>(props: InputProps<SelectType>) {
                 }
               >
                 <input
+                  {...restProps}
                   ref={ref}
                   defaultValue={defaultValue}
                   onChange={onInputChange}
