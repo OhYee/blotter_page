@@ -18,6 +18,7 @@ export declare type DatePickerProps = ComponentProps<{
   type?: 'date' | 'time' | 'datetime';
   label?: string;
   lablePlacement?: 'left' | 'top';
+  placeholder?: string;
 }>;
 
 export default function DatePicker(props: DatePickerProps) {
@@ -28,6 +29,7 @@ export default function DatePicker(props: DatePickerProps) {
     type = 'datetime',
     label,
     lablePlacement,
+    placeholder,
     ...restProps
   } = props;
   const defaultDatetime = React.useMemo(
@@ -140,7 +142,13 @@ export default function DatePicker(props: DatePickerProps) {
           </Card>
         }
       >
-        <Input label={label} lablePlacement={lablePlacement} editable={false} value={format} />
+        <Input
+          label={label}
+          lablePlacement={lablePlacement}
+          placeholder={placeholder}
+          editable={false}
+          value={format}
+        />
       </Popover>
     </div>
   );
