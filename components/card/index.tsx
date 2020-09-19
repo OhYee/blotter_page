@@ -7,16 +7,16 @@ import { concat } from '@/utils/component';
 import styles from './card.less';
 import shadowStyles from '@/styles/shadow.less';
 
-export default function Card(
-  props: React.PropsWithChildren<{
-    shadow?: boolean;
-    neumorphism?: boolean;
-    neumorphismInset?: boolean;
-    cover?: React.ReactNode;
-    className?: string;
-    style?: React.CSSProperties;
-  }>,
-) {
+export declare type CardProps = React.PropsWithChildren<{
+  shadow?: boolean;
+  neumorphism?: boolean;
+  neumorphismInset?: boolean;
+  cover?: React.ReactNode;
+  className?: string;
+  style?: React.CSSProperties;
+}>;
+
+function Card(props: CardProps, ref?: React.LegacyRef<HTMLDivElement>) {
   const {
     shadow = false,
     neumorphism = false,
@@ -32,7 +32,7 @@ export default function Card(
   if (neumorphismInset) classList.push(shadowStyles.neumorphism_inset);
 
   return (
-    <div className={concat(...classList)} style={style}>
+    <div ref={ref} className={concat(...classList)} style={style}>
       <Flex direction="TB" fullWidth>
         {cover}
         <div className={styles.main}>{children}</div>
@@ -40,3 +40,5 @@ export default function Card(
     </div>
   );
 }
+
+export default React.forwardRef<HTMLDivElement, CardProps>(Card);
