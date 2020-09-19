@@ -76,13 +76,8 @@ export default function (props: {
             <Popover
               placement="right"
               trigger={['click', 'hover']}
-              popoverClass={shadowStyles.shadow}
-              popoverStyle={
-                {
-                  boxShadow: '5px 5px 30px var(--shadow)',
-                  ['--popover-backgroud']: 'var(--background)',
-                } as React.CSSProperties
-              }
+              card
+              shadow
               getOffset={() => ({ top: document.documentElement.scrollTop })}
               component={
                 <Card style={{ background: 'var(--background)', maxWidth: 200 }}>
@@ -103,15 +98,13 @@ export default function (props: {
                 </Card>
               }
             >
-              <span style={{ cursor: 'pointer' }}>
-                {user.avatar ? (
-                  <Avatar src={user.avatar} />
-                ) : (
-                  <Avatar>
-                    <User />
-                  </Avatar>
-                )}
-              </span>
+              {user.avatar ? (
+                <Avatar src={user.avatar} />
+              ) : (
+                <Avatar>
+                  <User />
+                </Avatar>
+              )}
             </Popover>
           )}
           <Flex.Item style={{ width: '100%' }}>
