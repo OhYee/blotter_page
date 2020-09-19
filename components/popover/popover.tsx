@@ -46,26 +46,25 @@ export default function Popover(props: PopoverProps) {
   const [show, setShow] = React.useState(false);
   //   const [willClose, setWillClose] = React.useState(false);
   const getPosition = React.useCallback(() => {
-    const { top = 0, left = 0 } = getOffset();
     if (!ref.current || !childRef.current) return { top: -99999, left: -99999 };
+    const { top = 0, left = 0 } = getOffset();
+    const origin = ref.current.getBoundingClientRect();
+    const child = childRef.current.getBoundingClientRect();
     return {
       top:
         top +
         (placement === 'top'
-          ? getOffsetTop(ref.current) - childRef.current.offsetHeight - 10
+          ? origin.top - child.height - 10
           : placement === 'bottom'
-          ? getOffsetTop(ref.current) + ref.current.offsetHeight + 10
-          : getOffsetTop(ref.current) -
-            (childRef.current.offsetHeight - ref.current.offsetHeight) / 2),
+          ? origin.top + origin.height + 10
+          : origin.top - (child.height - origin.height) / 2),
       left:
         left +
         (placement === 'left'
-          ? getOffsetLeft(ref.current) - getInlineWidth(ref.current) - 10
+          ? origin.left - child.width - 10
           : placement === 'right'
-          ? getOffsetLeft(ref.current) + getInlineWidth(ref.current) + 10
-          : getOffsetLeft(ref.current) -
-            getInlineWidth(childRef.current) / 2 +
-            getInlineWidth(ref.current) / 2),
+          ? origin.left + origin.width + 10
+          : origin.left - (child.width - origin.width) / 2),
     };
   }, [ref, childRef]);
   const classList = React.useMemo(
