@@ -7,7 +7,6 @@ import { Flex } from '@/components/container';
 import Tabs from '@/components/tabs';
 import Popover, { Modal, ModalProps } from '@/components/popover';
 import { message } from '@/components/notification';
-import { Space } from '@/components/container';
 import Image from '@/components/image';
 import { Loading, Save, Delete, Sync } from '@/components/svg';
 import Button from '@/components/button';
@@ -37,8 +36,9 @@ function BucketSelector(props: {
   prefix: string;
   onChange?: (bucket: string, prefix: string) => void;
   imgRef?: React.MutableRefObject<ImageListRef>;
+  inModal?: boolean;
 }) {
-  const { bucket, prefix, onChange = () => {}, imgRef } = props;
+  const { bucket, prefix, onChange = () => {}, imgRef, inModal = false } = props;
   const [prefixList, setPrefixList] = React.useState<Option<string>[]>([]);
   const [loading, setLoading] = React.useState(false);
   const [buckets, setBuckets] = React.useState([]);
@@ -59,12 +59,17 @@ function BucketSelector(props: {
   React.useEffect(initial, []);
 
   return (
-    <Space direction="horizontal">
+    <Flex>
       <Input<string>
         label="存储空间"
         value={bucket}
         onSelect={(k, v) => onChange(v, prefix)}
         options={buckets}
+        getOffset={() =>
+          inModal
+            ? { left: document.documentElement.scrollLeft, top: document.documentElement.scrollTop }
+            : { left: 0, top: 0 }
+        }
       />
 
       <Button onClick={initial} icon={loading ? <Loading /> : <Sync />} />
@@ -82,6 +87,11 @@ function BucketSelector(props: {
         onSelect={(k, v) => onChange(bucket, v)}
         suffix={loading ? <Loading /> : undefined}
         options={prefixList}
+        getOffset={() =>
+          inModal
+            ? { left: document.documentElement.scrollLeft, top: document.documentElement.scrollTop }
+            : { left: 0, top: 0 }
+        }
       />
 
       <Button
@@ -92,7 +102,7 @@ function BucketSelector(props: {
       >
         刷新图片
       </Button>
-    </Space>
+    </Flex>
   );
 }
 
@@ -300,10 +310,14 @@ function imageList(
   );
 }
 
-export declare type QiniuProps = { defaultTab?: 'upload' | 'list'; group_number?: number };
+export declare type QiniuProps = {
+  defaultTab?: 'upload' | 'list';
+  group_number?: number;
+  inModal?: boolean;
+};
 
 function Qiniu(props: QiniuProps) {
-  const { defaultTab = 'upload', group_number = 10 } = props;
+  const { defaultTab = 'upload', group_number = 10, inModal } = props;
   const [bucket, setBucket] = React.useState('');
   const [prefix, setPrefix] = React.useState('');
   const ref = React.useRef<ImageListRef>();
@@ -316,7 +330,13 @@ function Qiniu(props: QiniuProps) {
   );
   return (
     <Flex direction="TB" fullWidth>
-      <BucketSelector bucket={bucket} prefix={prefix} onChange={setState} imgRef={ref} />
+      <BucketSelector
+        bucket={bucket}
+        prefix={prefix}
+        onChange={setState}
+        imgRef={ref}
+        inModal={inModal}
+      />
       <Tabs defaultSelected={defaultTab === 'list' ? '图片列表' : '上传图片'} keepInDOM>
         <Tabs.Item name="上传图片">
           <Upload bucket={bucket} prefix={prefix} />
@@ -334,7 +354,7 @@ export function QiniuModal(props: QiniuProps & ModalProps) {
   return (
     <Modal show={show} onClose={onClose}>
       <Card>
-        <Qiniu {...restProps} />
+        <Qiniu {...restProps} inModal />
       </Card>
     </Modal>
   );
