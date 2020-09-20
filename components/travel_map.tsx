@@ -171,7 +171,6 @@ class TravelMap extends React.Component<TravelMapProps, TravelMapState> {
                     ['--popover-backgroud']: 'var(--background)',
                   } as React.CSSProperties
                 }
-                getOffset={() => ({ top: document.documentElement.scrollTop })}
                 component={
                   <Card style={{ background: 'var(--background)', maxWidth: 200 }}>
                     <Flex direction="TB" fullWidth>

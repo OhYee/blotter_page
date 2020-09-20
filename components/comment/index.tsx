@@ -14,7 +14,6 @@ import { concat, ComponentProps } from '@/utils/component';
 import { comments, avatar, addComment } from '@/utils/api';
 import { Context } from '@/utils/global';
 import ShowNotification from '@/utils/notification';
-import getOffsetTop from '@/utils/offset';
 
 import shadowStyles from '@/styles/shadow.less';
 import textStyles from '@/styles/text.less';
@@ -31,9 +30,9 @@ function getCommentID(id: string) {
 
 function jumpParent(id: string) {
   const target = document.getElementById(getCommentID(id));
-  const top = getOffsetTop(target);
+  const top = target.getBoundingClientRect().top + window.pageYOffset;
   if (!!target && top > 0) {
-    scrollTo(0, top + 10);
+    scrollTo(0, top - 10);
   }
 }
 
@@ -174,7 +173,7 @@ const Comment: React.FC<{
         key="jump"
         className={concat(textStyles.secondary, textStyles.em75)}
         onClick={() => jumpParent(comment.id)}
-        style={{ lineHeight: '100%' }}
+        style={{ lineHeight: '100%', cursor: 'pointer' }}
       >
         跳转到该评论
       </span>,

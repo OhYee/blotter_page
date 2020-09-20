@@ -4,8 +4,6 @@ import Body from './body';
 
 import { concat, ComponentProps } from '@/utils/component';
 
-import { getOffsetTop, getOffsetLeft, getInlineWidth } from '@/utils/offset';
-
 import styles from './popover.less';
 import shadowStyles from '@/styles/shadow.less';
 
@@ -19,7 +17,6 @@ export declare type PopoverProps = ComponentProps<{
   arrow?: boolean;
   card?: boolean;
   shadow?: boolean;
-  getOffset?: () => { top?: number; left?: number };
   debug?: boolean;
 }>;
 
@@ -34,7 +31,6 @@ export default function Popover(props: PopoverProps) {
     popoverStyle,
     children,
     closeDelay = 200,
-    getOffset = () => ({ top: 0, left: 0 }),
     arrow = true,
     card = false,
     shadow = false,
@@ -47,24 +43,21 @@ export default function Popover(props: PopoverProps) {
   //   const [willClose, setWillClose] = React.useState(false);
   const getPosition = React.useCallback(() => {
     if (!ref.current || !childRef.current) return { top: -99999, left: -99999 };
-    const { top = 0, left = 0 } = getOffset();
     const origin = ref.current.getBoundingClientRect();
     const child = childRef.current.getBoundingClientRect();
     return {
       top:
-        top +
-        (placement === 'top'
-          ? origin.top - child.height - 10
+        placement === 'top'
+          ? origin.top + window.pageYOffset - child.height - 10
           : placement === 'bottom'
-          ? origin.top + origin.height + 10
-          : origin.top - (child.height - origin.height) / 2),
+          ? origin.top + window.pageYOffset + origin.height + 10
+          : origin.top + window.pageYOffset - (child.height - origin.height) / 2,
       left:
-        left +
-        (placement === 'left'
-          ? origin.left - child.width - 10
+        placement === 'left'
+          ? origin.left + window.pageXOffset - child.width - 10
           : placement === 'right'
-          ? origin.left + origin.width + 10
-          : origin.left - (child.width - origin.width) / 2),
+          ? origin.left + window.pageXOffset + origin.width + 10
+          : origin.left + window.pageXOffset - (child.width - origin.width) / 2,
     };
   }, [ref, childRef]);
   const classList = React.useMemo(

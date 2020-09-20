@@ -57,7 +57,6 @@ export declare type SelectPartProps<SelectType = any> = {
   selectTrigger?: ('click' | 'hover')[];
   options?: Option<SelectType>[];
   onSelect?: (key: string, value: SelectType | string) => void;
-  getOffset?: () => { top: number; left: number };
 };
 
 export declare type TransformPartProps = {
@@ -96,7 +95,6 @@ export default function Input<SelectType>(props: InputProps<SelectType>) {
     className,
     transform = false,
     debounce = 200,
-    getOffset,
     ...restProps
   } = props;
   const ref = React.useRef<HTMLInputElement>();
@@ -155,7 +153,6 @@ export default function Input<SelectType>(props: InputProps<SelectType>) {
             <div className={concat(styles.input, shadowStyles.neumorphism_inset)}>
               {!!prefix ? <span className={styles.prefix}>{prefix}</span> : null}
               <Popover
-                getOffset={getOffset}
                 card
                 arrow={false}
                 placement="bottom"

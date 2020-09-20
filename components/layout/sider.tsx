@@ -78,7 +78,6 @@ export default function (props: {
               trigger={['click', 'hover']}
               card
               shadow
-              getOffset={() => ({ top: document.documentElement.scrollTop })}
               component={
                 <Card style={{ background: 'var(--background)', maxWidth: 200 }}>
                   <Flex direction="TB" fullWidth>
@@ -144,7 +143,6 @@ function Menus(props: { menus: Blotter.Menu[]; theme: 'light' | 'dark'; pathname
             <Tooltip
               placement="right"
               title={item.name}
-              getOffset={() => ({ top: document.documentElement.scrollTop })}
             >
               {item.link.length > 0 && item.link[0] !== '/' ? (
                 <a target="_blank" href={item.link}>
