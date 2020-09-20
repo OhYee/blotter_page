@@ -1,7 +1,6 @@
 import React from 'react';
 
 import Link from 'next/link';
-import Router from 'next/router';
 
 import Image from '@/components/image';
 import TagPart from '@/components/tag';
@@ -13,6 +12,7 @@ import Loading from '@/components/loading';
 
 import { Context } from '@/utils/global';
 import { concat } from '@/utils/component';
+import moment, { formatSecond } from '@/utils/time';
 
 import textStyles from '@/styles/text.less';
 
@@ -32,6 +32,8 @@ export function CardContent(props: { post: Blotter.PostCard; inPost?: boolean })
       {post.abstract}
     </p>,
   ];
+  const publishTime = formatSecond(post.publish_time);
+  const editTime = formatSecond(post.publish_time);
   return (
     <Flex direction="TB" fullWidth>
       {!inPost ? (
@@ -49,12 +51,12 @@ export function CardContent(props: { post: Blotter.PostCard; inPost?: boolean })
         </Flex>
         <Flex mainAxis="flex-start" mainSize="small">
           <Calendar />
-          {post.publish_time}
+          <time dateTime={publishTime.replace(' ', 'T') + 'T+08'}>{publishTime}</time>
         </Flex>
         {post.publish_time == post.edit_time ? null : (
           <Flex mainAxis="flex-start" mainSize="small">
             <Edit />
-            {post.edit_time}
+            <time dateTime={editTime.replace(' ', 'T') + 'T+08'}>{editTime}</time>
           </Flex>
         )}
         {inPost && (context.user.permission & 1) == 1 ? (

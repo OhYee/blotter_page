@@ -2,13 +2,7 @@ import React, { Component } from 'react';
 import Link from 'next/link';
 
 import { Anchor, Skeleton } from 'antd';
-import {
- 
-
-
-  RightOutlined,
-  LeftOutlined,
-} from '@ant-design/icons';
+import { RightOutlined, LeftOutlined } from '@ant-design/icons';
 
 import moment from '@/utils/moment';
 
@@ -16,7 +10,6 @@ import Image, { setImageLightbox, setSVGLightbox } from '@/components/image';
 
 import { CardContent } from '@/components/post_card';
 import Card from '@/components/card';
-
 
 import { Context } from '@/utils/global';
 import { travels_get_url } from '@/utils/api';
@@ -112,18 +105,7 @@ function AnchorsPart(props: { content: string; container?: HTMLElement }) {
 }
 
 interface PostContentProps {
-  post: {
-    url: string;
-    content: string;
-    abstract: string;
-    head_image: string;
-    title: string;
-    view: number;
-    publish_time: string;
-    edit_time: string;
-    tags: Blotter.Tag[];
-    images: string[];
-  };
+  post: Blotter.Post;
   container?: HTMLElement;
 }
 
