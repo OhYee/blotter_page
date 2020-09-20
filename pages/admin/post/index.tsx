@@ -319,57 +319,58 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
           wrap={false}
           style={{ maxHeight: '50vh', overflow: 'auto' }}
         >
-          {this.state.images.map((image, idx) => (
-            <Flex key={idx} wrap={false}>
-              <Flex.Item style={{ flex: '0 0 3em' }}>
-                <strong>{idx}</strong>
-              </Flex.Item>
-              <Flex.Item style={{ flex: '0 0 auto' }}>
-                <Popover
-                  card
-                  shadow
-                  trigger={['click']}
-                  component={
-                    <Card>
-                      <Flex>
-                        确认删除？
-                        <Button
-                          primary
-                          neumorphism
-                          onClick={() =>
-                            this.setState((state) => ({
-                              images: state.images.filter((_, idx2) => idx != idx2),
-                            }))
-                          }
-                        >
-                          删除
-                        </Button>
-                      </Flex>
-                    </Card>
-                  }
-                >
-                  <Button danger neumorphism>
-                    删除
-                  </Button>
-                </Popover>
-              </Flex.Item>
-              <Flex.Item style={{ flex: '1 1 auto' }}>
-                <Input
-                  value={image}
-                  onChange={(value) => {
-                    this.setState((state) => {
-                      var { images } = state;
-                      images[idx] = value;
-                      return { images };
-                    });
-                  }}
-                />
-              </Flex.Item>
-              <Flex.Item style={{ flex: '0 0 auto' }}>
-                <img src={image} style={{ maxHeight: '100px' }} />
-              </Flex.Item>
-            </Flex>
-          ))}
+          {!!this.state.images &&
+            this.state.images.map((image, idx) => (
+              <Flex key={idx} wrap={false}>
+                <Flex.Item style={{ flex: '0 0 3em' }}>
+                  <strong>{idx}</strong>
+                </Flex.Item>
+                <Flex.Item style={{ flex: '0 0 auto' }}>
+                  <Popover
+                    card
+                    shadow
+                    trigger={['click']}
+                    component={
+                      <Card>
+                        <Flex>
+                          确认删除？
+                          <Button
+                            primary
+                            neumorphism
+                            onClick={() =>
+                              this.setState((state) => ({
+                                images: state.images.filter((_, idx2) => idx != idx2),
+                              }))
+                            }
+                          >
+                            删除
+                          </Button>
+                        </Flex>
+                      </Card>
+                    }
+                  >
+                    <Button danger neumorphism>
+                      删除
+                    </Button>
+                  </Popover>
+                </Flex.Item>
+                <Flex.Item style={{ flex: '1 1 auto' }}>
+                  <Input
+                    value={image}
+                    onChange={(value) => {
+                      this.setState((state) => {
+                        var { images } = state;
+                        images[idx] = value;
+                        return { images };
+                      });
+                    }}
+                  />
+                </Flex.Item>
+                <Flex.Item style={{ flex: '0 0 auto' }}>
+                  <img src={image} style={{ maxHeight: '100px' }} />
+                </Flex.Item>
+              </Flex>
+            ))}
         </Flex>
         <Flex.Item style={{ textAlign: 'right' }}>
           <Button
