@@ -154,11 +154,11 @@ class Index extends React.Component<IndexProps, IndexState> {
             total={this.state.total}
             callback={this.state.callback}
           />
-          <div className="textCenter">
+          <Flex.Item className="textCenter" style={{ textAlign: "center" }}>
             <Link href="/archives?page=2&size=10">
               <Button neumorphism>查看更多</Button>
             </Link>
-          </div>
+          </Flex.Item>
         </Flex>
       </div>
     );
