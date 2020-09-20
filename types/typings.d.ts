@@ -66,8 +66,8 @@ declare namespace Blotter {
     abstract: string;
     view: number;
     url: string;
-    publish_time: string;
-    edit_time: string;
+    publish_time: number;
+    edit_time: number;
     tags: Tag[];
     head_image: string;
   }
