@@ -1,18 +1,17 @@
 import React from 'react';
 import { Context } from '@/utils/global';
-import { ControlledEditor } from '@monaco-editor/react/lib/';
+import MonacoEditor from '@monaco-editor/react/lib/';
 
 export function Editor(props) {
   const { onChange, getRef, ...restProps } = props;
-  const handleEditorChange = (ev, value) => {
-    return onChange(value);
-  };
-
   return (
-    <ControlledEditor
-      onChange={handleEditorChange}
+    <MonacoEditor
+      //   onChange={handleEditorChange}
       {...restProps}
-      editorDidMount={(_, editor) => getRef(editor)}
+      editorDidMount={(_, editor) => {
+        getRef(editor);
+        if (onChange) editor.onDidChangeModelContent(onChange);
+      }}
     />
   );
 }
