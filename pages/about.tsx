@@ -268,7 +268,7 @@ class AboutPage extends React.Component<AboutPageProps, AboutPageState> {
         columns={columns}
         defaultOrder={{
           sortKey: 'pushed_at',
-          ascending: true,
+          ascending: false,
         }}
         pagination
         loading={this.state.loading}
