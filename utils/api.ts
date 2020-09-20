@@ -185,10 +185,18 @@ export const postExist = async (url: string, callback?: RequestCallback<{ existe
 };
 
 export const postEdit = async (
-  args: Blotter.PostAll,
+  post: TypeTReplaceByU<
+    Omit<Blotter.PostAll, 'content'>,
+    { publish_time: number; edit_time: number }
+  >,
   callback?: RequestCallback<Blotter.APIResponse>,
 ) => {
-  return await request('post', '/api/admin/post/edit', args, callback);
+  return await request(
+    'post',
+    '/api/admin/post/edit',
+    { ...post, tags: post.tags.map((tag) => tag.id) },
+    callback,
+  );
 };
 
 export const postDelete = async (id: string, callback?: RequestCallback<Blotter.APIResponse>) => {
