@@ -76,32 +76,18 @@ code {
 
 :global(.dark) {
   code {
-    background: #6a0f13;
+    background: #ff502c;
+    color: #fff5f5;
   }
   pre {
     background-color: #0a0806 !important;
   }
 }
 
-:global(.fullWidth) {
-  width: 100%;
-}
-:global(.textLeft) {
-  text-align: left;
-}
-:global(.textCenter) {
-  text-align: center;
-}
-:global(.textRight) {
-  text-align: right;
-}
-:global(.flexCenter) {
-  display: flex;
-  justify-content: center;
-}
 :global(#blotter-comment) {
   width: 100%;
 }
+
 :global(a.link) {
   color: unset;
   &:hover {
@@ -109,16 +95,6 @@ code {
   }
   &:visited {
     color: unset;
-  }
-}
-
-:global(.ant-picker-input) > input {
-  border: 0 !important;
-}
-
-:global(#blotter-comment) {
-  :global(.ant-avatar) {
-    background: unset;
   }
 }
 
@@ -131,11 +107,6 @@ details {
   font-family: 'Times New Roman';
   font-style: italic;
   line-height: 1.25em;
-}
-
-:global(.ant-tag) a,
-:global(.ant-tag) a:hover {
-  color: currentColor !important;
 }
 
 :global(.upload) {
