@@ -220,7 +220,7 @@ class PostContent extends Component<PostContentProps, PostContentState> {
               images={this.props.post.images}
               height={'500px'}
               maxHeight={'50vh'}
-              autoplay
+              autoplay={5000}
             />
           ) : null}
 
