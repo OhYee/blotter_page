@@ -93,7 +93,8 @@ export declare type FlexProps = ComponentProps<{
   subSize?: SizeProp;
   fullWidth?: boolean;
   itemStyle?: React.CSSProperties;
-}>;
+}> &
+  React.HTMLAttributes<HTMLDivElement>;
 const FlexComponent: React.FC<FlexProps> = (props) => {
   const {
     direction = 'LR',
