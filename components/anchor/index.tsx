@@ -14,24 +14,24 @@ export declare type AnchorType = {
   name: string;
   id: string;
   level: number;
-  children: AnchorType[];
 };
 
 export declare type AnchorProps = ComponentProps<{
   content: string;
   indent?: number;
   width?: number;
+  suffixAnchors?: AnchorType[];
 }>;
 
 export default function Anchor(props: AnchorProps) {
-  const { content, className, indent = 10, width = 275, ...restProps } = props;
+  const { content, className, indent = 10, width = 275, suffixAnchors: suffixAnchor = [], ...restProps } = props;
 
   const context = React.useContext(Context);
-  const anchors = React.useMemo(() => findAnchors(content), [content]);
+  const anchors = React.useMemo(() => findAnchors(content).concat(suffixAnchor), [
+    content,
+    suffixAnchor,
+  ]);
   const [show, setShow] = React.useState(context.big_screen);
-  const [top, setTop] = React.useState(50);
-
-  //   if (!!container) container.onscroll = () => setTop(container.scrollTop + 50);
 
   return (
     <div {...restProps} className={concat(styles.anchor, show ? styles.show : '', className)}>
@@ -74,31 +74,9 @@ export function findAnchors(html: string): AnchorType[] {
         id: `#${result[2]}`,
         name: result[3],
         level: parseInt(result[1]),
-        children: [],
       });
     }
   } while (result);
-
-  //   var anchors: AnchorType[] = [];
-
-  //   var insert = (lst: AnchorType[], value: AnchorType) => {
-  //     if (lst.length > 0 && lst[lst.length - 1].level < value.level) {
-  //       insert(lst[lst.length - 1].children, value);
-  //     } else {
-  //       lst.push(value);
-  //     }
-  //   };
-
-  //   result_list.map((anchor: AnchorType) => {
-  //     insert(anchors, anchor);
-  //   });
-
-  //   anchors.push({
-  //     id: '#blotter-comment',
-  //     name: '评论区',
-  //     level: 1,
-  //     children: [],
-  //   });
 
   return result_list;
 }
