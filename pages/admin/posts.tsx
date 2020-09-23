@@ -17,6 +17,7 @@ import { Context } from '@/utils/global';
 import ShowNotification from '@/utils/notification';
 import { waitUntil } from '@/utils/debounce';
 import TagSearch from '@/components/tag_search';
+import { formatSecond } from '@/utils/time';
 
 import textStyle from '@/styles/text.less';
 
@@ -118,20 +119,22 @@ class AdminPostList extends React.Component<AdminPostListProps, AdminPostListSta
     {
       title: '发布时间',
       key: 'publish_time',
-      tooltip: true,
+      tooltip: (text) => formatSecond(text),
       sorter: true,
       minWidth: '10em',
       maxWidth: '15em',
       ellipsis: true,
+      render: (text) => formatSecond(text),
     },
     {
       title: '编辑时间',
       key: 'edit_time',
-      tooltip: true,
+      tooltip: (text) => formatSecond(text),
       sorter: true,
       minWidth: '10em',
       maxWidth: '15em',
       ellipsis: true,
+      render: (text) => formatSecond(text),
     },
     {
       title: '阅读量',
