@@ -41,7 +41,6 @@ type PostEditState = {
 class PostEdit extends React.Component<PostEditProps, PostEditState> {
   static defaultProps = {};
   previewRef = React.createRef<HTMLDivElement>();
-  now = moment(new Date());
   editor: any;
 
   constructor(props: any) {
@@ -166,8 +165,8 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
       view: this.state.view,
       head_image: this.state.head_image,
       tags: this.state.tags,
-      publish_time: this.state.publish_time / 1000,
-      edit_time: this.state.edit_time / 1000,
+      publish_time: parseInt(`${this.state.publish_time / 1000}`),
+      edit_time: parseInt(`${this.state.edit_time / 1000}`),
       raw: this.state.raw,
       images: this.state.images,
       content: this.state.content,
