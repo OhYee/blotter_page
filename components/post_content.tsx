@@ -52,14 +52,24 @@ class PostContent extends Component<PostContentProps, PostContentState> {
       }
     }
   }
+
+  resetTable() {
+    const tables = document.getElementsByTagName('table');
+    for (var i = 0; i < tables.length; i++) {
+      tables[i].outerHTML = `<div class="${styles.table_wrapper}">${tables[i].outerHTML}</div>`;
+      console.log(tables[i]);
+    }
+  }
   componentDidMount() {
     this.resetImage();
+    this.resetTable();
     if (this.isTravel()) {
       this.getTravelData();
     }
   }
   componentDidUpdate() {
     this.resetImage();
+    this.resetTable();
   }
 
   isTravel = () => {
