@@ -450,9 +450,7 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
               </Card>
             </Flex.Item>
             {this.state.preview === 2 ? (
-              <Flex.Item style={{ flex: '1', display: 'contents' }}>
-                {this.renderPreview()}
-              </Flex.Item>
+              <Flex.Item style={{ flex: '1', width: '50%' }}>{this.renderPreview()}</Flex.Item>
             ) : null}
           </Flex>
         </Flex>
