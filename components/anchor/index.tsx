@@ -21,20 +21,49 @@ export declare type AnchorProps = ComponentProps<{
   indent?: number;
   width?: number;
   suffixAnchors?: AnchorType[];
+  container?: HTMLElement;
 }>;
 
 export default function Anchor(props: AnchorProps) {
-  const { content, className, indent = 10, width = 275, suffixAnchors: suffixAnchor = [], ...restProps } = props;
-
+  const {
+    content,
+    className,
+    indent = 10,
+    width = 275,
+    suffixAnchors: suffixAnchor = [],
+    container = document,
+    ...restProps
+  } = props;
+  const ref = React.useRef<HTMLDivElement>();
   const context = React.useContext(Context);
   const anchors = React.useMemo(() => findAnchors(content).concat(suffixAnchor), [
     content,
     suffixAnchor,
   ]);
   const [show, setShow] = React.useState(context.big_screen);
+  const syncScroll = React.useCallback(
+    (e: Event) => {
+      const target = e.target === document ? document.documentElement : (e.target as HTMLElement);
+      if (!!ref.current) ref.current.style.top = `${target.scrollTop + 100}px`;
+    },
+    [ref],
+  );
+  React.useEffect(() => {
+    if (!!container) {
+      container.addEventListener('scroll', syncScroll);
+      return () => container.removeEventListener('scroll', syncScroll);
+    } else if (!!ref.current) {
+      ref.current.style.position = 'fixed';
+      return () => (ref.current.style.position = '');
+    }
+  }, [container, ref, syncScroll]);
 
   return (
-    <div {...restProps} className={concat(styles.anchor, show ? styles.show : '', className)}>
+    <div
+      ref={ref}
+      {...restProps}
+      className={concat(styles.anchor, show ? styles.show : '', className)}
+    >
       <Button
         neumorphism
         className={concat(styles.button)}

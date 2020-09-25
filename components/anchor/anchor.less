@@ -1,5 +1,5 @@
 .anchor {
-  position: fixed;
+  position: absolute;
 
   display: flex;
   flex-direction: row;
@@ -9,7 +9,7 @@
   padding-right: 20px;
   top: 100px;
   width: fit-content;
-  transition: opacity var(--transition-time), transform var(--transition-time);
+  transition: opacity var(--transition-time), transform var(--transition-time), top 0.1s;
 
   transform: translatex(100%);
 
