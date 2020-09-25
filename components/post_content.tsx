@@ -156,6 +156,7 @@ class PostContent extends Component<PostContentProps, PostContentState> {
           />
         </Flex>
         <Anchor
+          container={this.props.container}
           content={this.props.post.content}
           suffixAnchors={[
             {
