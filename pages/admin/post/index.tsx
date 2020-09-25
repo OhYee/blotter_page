@@ -85,7 +85,7 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
       .then((r) => {
         const post = {
           ...r,
-          edit_time: r.edit_time * 1000,
+          edit_time: (new Date()).getTime(),
           publish_time: r.publish_time * 1000,
         };
         this.setState(
