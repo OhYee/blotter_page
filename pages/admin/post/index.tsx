@@ -309,7 +309,7 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
 
         <TagSearch onAdd={this.tagOnAdd} onDelete={this.tagOnDelete} tags={this.state.tags} />
 
-        <TextArea label="文章摘要" rows={5} spellCheck="false" placeholder="文章摘要" />
+        <TextArea label="文章摘要" rows={5} spellCheck="false" placeholder="文章摘要" value={this.state.abstract} onChange={(abstract) => this.setState({ abstract })}/>
 
         <Flex
           direction="TB"
