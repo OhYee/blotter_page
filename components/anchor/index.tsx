@@ -6,6 +6,7 @@ import Button from '@/components/button';
 
 import { concat, ComponentProps } from '@/utils/component';
 import { Context } from '@/utils/global';
+import { scrollAnimation } from '@/utils/scroll';
 
 import styles from './anchor.less';
 import shadowStyles from '@/styles/shadow.less';
@@ -44,7 +45,44 @@ export default function Anchor(props: AnchorProps) {
   const syncScroll = React.useCallback(
     (e: Event) => {
       const target = e.target === document ? document.documentElement : (e.target as HTMLElement);
+
+      // 同步浮框位置
       if (!!ref.current) ref.current.style.top = `${target.scrollTop + 100}px`;
+
+      // 获取当前阅读进度
+      const scrollTop = target.scrollTop;
+      for (var i = 0; i < anchors.length; i++) {
+        const el = document.getElementById(anchors[i].id);
+        if (
+          !!el &&
+          el.getBoundingClientRect().top + document.documentElement.scrollTop > scrollTop
+        ) {
+          // 清除老的状态
+          const lastActive = ref.current.getElementsByClassName(styles.active);
+          for (var j = 0; j < lastActive.length; j++) {
+            if (lastActive[j].id !== `anchor-${anchors[i].id}`) {
+              lastActive[j].classList.remove(styles.active);
+            }
+          }
+
+          // 设置新的状态
+          const anchorsEls = ref.current.getElementsByTagName('a');
+          const nowEl = anchorsEls[i];
+          nowEl.classList.add(styles.active);
+
+          // 将对应的连接移入视窗中
+          const linksEls = ref.current.getElementsByClassName(styles.links);
+          const linkEl = linksEls.length > 0 ? linksEls[0] : undefined;
+          if (!linkEl) break;
+          const nowTop = nowEl.offsetTop;
+          const nowHeight = nowEl.offsetHeight;
+          if (nowTop < linkEl.scrollTop) scrollAnimation(linkEl, nowTop);
+          else if (nowTop + nowHeight > linkEl.scrollTop + linkEl.clientHeight)
+            scrollAnimation(linkEl, nowTop - linkEl.clientHeight + nowHeight);
+
+          break;
+        }
+      }
     },
     [ref],
   );
@@ -82,6 +120,14 @@ export default function Anchor(props: AnchorProps) {
             href={`#${item.id}`}
             style={{ paddingLeft: (item.level - 1) * indent }}
             title={item.name}
+            onClick={() => {
+              const el = document.getElementById(item.id);
+              if (!!el)
+                scrollAnimation(
+                  !!container ? container : document.documentElement,
+                  el.getBoundingClientRect().top + window.pageYOffset,
+                );
+            }}
           >
             {item.name}
           </a>

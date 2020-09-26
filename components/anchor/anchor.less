@@ -12,9 +12,10 @@
   transition: opacity var(--transition-time), transform var(--transition-time), top 0.1s;
 
   transform: translatex(100%);
+  z-index: 2;
 
   &.show {
-    opacity: 0.5;
+    opacity: 0.75;
     &:hover {
       opacity: 1;
     }
@@ -59,7 +60,11 @@
     a:hover,
     a:active {
       color: var(--color);
-      transition: color var(--transition-time);
+      transition: color var(--transition-time), font-weight var(--transition-time);
+      &.active {
+        color: var(--primary);
+        font-weight: bold;
+      }
     }
   }
 }
