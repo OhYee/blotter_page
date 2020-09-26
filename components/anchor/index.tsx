@@ -31,7 +31,7 @@ export default function Anchor(props: AnchorProps) {
     indent = 10,
     width = 275,
     suffixAnchors: suffixAnchor = [],
-    container = document,
+    container,
     ...restProps
   } = props;
   const ref = React.useRef<HTMLDivElement>();
@@ -49,14 +49,12 @@ export default function Anchor(props: AnchorProps) {
     [ref],
   );
   React.useEffect(() => {
-    if (!!container) {
-      container.addEventListener('scroll', syncScroll);
-      return () => container.removeEventListener('scroll', syncScroll);
-    } else if (!!ref.current) {
-      ref.current.style.position = 'fixed';
-      return () => (ref.current.style.position = '');
+    const c = !!container ? container : document;
+    if (!!c) {
+      c.addEventListener('scroll', syncScroll);
+      return () => c.removeEventListener('scroll', syncScroll);
     }
-  }, [container, ref, syncScroll]);
+  }, [container, syncScroll]);
 
   return (
     <div
