@@ -8,25 +8,19 @@ import Button from '@/components/button';
 import { Modal } from '@/components/popover';
 
 import { Context } from '@/utils/global';
+import { scrollAnimation } from '@/utils/scroll';
 
 import styles from './fixed_button.less';
 
-function scrollTopAnimation(_currentY?: number) {
-  const currentY = !!_currentY
-    ? _currentY
-    : document.documentElement.scrollTop || document.body.scrollTop;
-  const dist = Math.max(10, currentY / 20);
-  const newY = Math.max(0, currentY - dist);
-  window.scrollTo(0, newY);
-  if (newY > 0) {
-    setTimeout(() => {
-      scrollTopAnimation(newY);
-    }, 1);
-  }
-}
-
 function BackToTop() {
-  return <Button circle neumorphism icon={<Rocket />} onClick={() => scrollTopAnimation()} />;
+  return (
+    <Button
+      circle
+      neumorphism
+      icon={<Rocket />}
+      onClick={() => scrollAnimation(document.documentElement, 0)}
+    />
+  );
 }
 
 function Feedback() {
