@@ -160,7 +160,7 @@ class PostContent extends Component<PostContentProps, PostContentState> {
           content={this.props.post.content}
           suffixAnchors={[
             {
-              id: '#blotter-comment',
+              id: 'blotter-comment',
               name: '评论区',
               level: 1,
             },

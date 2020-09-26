@@ -78,7 +78,8 @@ export default function Anchor(props: AnchorProps) {
         {anchors.map((item) => (
           <a
             key={item.id}
-            href={item.id}
+            id={`anchor-${item.id}`}
+            href={`#${item.id}`}
             style={{ paddingLeft: (item.level - 1) * indent }}
             title={item.name}
           >
@@ -98,7 +99,7 @@ export function findAnchors(html: string): AnchorType[] {
     var result = re.exec(html);
     if (result !== null) {
       result_list.push({
-        id: `#${result[2]}`,
+        id: `${result[2]}`,
         name: result[3],
         level: parseInt(result[1]),
       });
