@@ -104,7 +104,7 @@ function Messages(props: { messages: MessagePropsWithID[] }) {
   return (
     <Flex
       direction="TB"
-      style={{ position: 'fixed', top: 20, right: 20, width: '300px' }}
+      style={{ position: 'fixed', top: 20, right: 20, width: '300px', zIndex: 2 }}
       itemStyle={{ width: '100%' }}
     >
       {messages.map((p, i) => {
