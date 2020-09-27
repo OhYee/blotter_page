@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-
+import styles from './body.less';
 class Body extends React.Component<{}> {
   div: HTMLDivElement;
   root: HTMLElement;
@@ -34,11 +34,11 @@ function Insert(
   }) => React.ReactElement,
 ) {
   /* 
-        TODO:
-        在 Chrome 调试时，宽屏切换窄屏可能会导致这些用于插入元素的 div 占据空间，导致 body 宽度溢出
-        通常避免占位的解决办法应该是设置绝对定位，并定位至一个很大的负值，但是这会影响 Popover 的位置计算
-        该问题目前只有在调试工具切换屏幕大小时重现成功，暂时降低解决优先级
-    */
+          TODO:
+          在 Chrome 调试时，宽屏切换窄屏可能会导致这些用于插入元素的 div 占据空间，导致 body 宽度溢出
+          通常避免占位的解决办法应该是设置绝对定位，并定位至一个很大的负值，但是这会影响 Popover 的位置计算
+          该问题目前只有在调试工具切换屏幕大小时重现成功，暂时降低解决优先级
+      */
   const bodyWrapper = document.createElement('div');
   const root = document.getElementById('portals');
   root.appendChild(bodyWrapper);
