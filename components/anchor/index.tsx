@@ -23,6 +23,7 @@ export declare type AnchorProps = ComponentProps<{
   width?: number;
   suffixAnchors?: AnchorType[];
   container?: HTMLElement;
+  emptyText?: React.ReactNode;
 }>;
 
 export default function Anchor(props: AnchorProps) {
@@ -33,6 +34,7 @@ export default function Anchor(props: AnchorProps) {
     width = 275,
     suffixAnchors: suffixAnchor = [],
     container,
+    emptyText = '没有标题',
     ...restProps
   } = props;
   const ref = React.useRef<HTMLDivElement>();
@@ -110,27 +112,29 @@ export default function Anchor(props: AnchorProps) {
         wrap={false}
         className={concat(styles.links, shadowStyles.neumorphism)}
       >
-        {anchors.map((item) => (
-          <a
-            key={item.id}
-            id={`anchor-${item.id}`}
-            href={`#${item.id}`}
-            style={{ paddingLeft: (item.level - 1) * indent }}
-            title={item.name}
-            onClick={(e) => {
-              const el = document.getElementById(item.id);
-              if (!!el)
-                scrollAnimation(
-                  !!container ? container : document.documentElement,
-                  el.getBoundingClientRect().top + window.pageYOffset,
-                );
-              e.preventDefault();
-              return false;
-            }}
-          >
-            {item.name}
-          </a>
-        ))}
+        {!!anchors && anchors.length > 0
+          ? anchors.map((item) => (
+              <a
+                key={item.id}
+                id={`anchor-${item.id}`}
+                href={`#${item.id}`}
+                style={{ paddingLeft: (item.level - 1) * indent }}
+                title={item.name}
+                onClick={(e) => {
+                  const el = document.getElementById(item.id);
+                  if (!!el)
+                    scrollAnimation(
+                      !!container ? container : document.documentElement,
+                      el.getBoundingClientRect().top + window.pageYOffset,
+                    );
+                  e.preventDefault();
+                  return false;
+                }}
+              >
+                {item.name}
+              </a>
+            ))
+          : emptyText}
       </Flex>
     </div>
   );
