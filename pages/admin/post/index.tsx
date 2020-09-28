@@ -209,18 +209,18 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
   renderPreview = () => {
     const post = this.getPostAll();
     return (
-      <div style={{ position: 'relative' }}>
+      <Card neumorphism ref={this.previewRef} style={{ position: 'relative', overflow: 'hidden' }}>
         <Anchor
           style={{ position: 'absolute' }}
           container={this.previewRef.current}
           content={post.content}
         />
-        <Card neumorphism ref={this.previewRef} className={styles.preview}>
+        <div className={styles.preview}>
           {this.state.loading ? <Loading /> : <Success />}
           <PostContent post={post} />
           {this.state.preview === 2 ? <div style={{ height: 'calc(100vh - 20px)' }}></div> : null}
-        </Card>
-      </div>
+        </div>
+      </Card>
     );
   };
 
@@ -439,7 +439,7 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
           {this.state.preview === 1 ? this.renderPreview() : null}
 
           <Flex wrap={false}>
-            <Flex.Item style={{ flex: '1', width: this.state.preview === 2 ? '50%' : '100%' }}>
+            <Flex.Item style={{ flex: '1', width: this.state.preview === 2 ? '0%' : '100%' }}>
               <Card neumorphism id="editor">
                 <RenderEditor
                   raw={this.state.raw}
@@ -465,7 +465,9 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
               </Card>
             </Flex.Item>
             {this.state.preview === 2 ? (
-              <Flex.Item style={{ flex: '1', width: '50%' }}>{this.renderPreview()}</Flex.Item>
+              <Flex.Item style={{ flex: '1', width: '0%' }}>
+                {this.renderPreview()}
+              </Flex.Item>
             ) : null}
           </Flex>
         </Flex>
