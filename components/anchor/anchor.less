@@ -1,15 +1,15 @@
 .anchor {
-  position: absolute;
-
   display: flex;
   flex-direction: row;
   align-items: flex-start;
 
+  position: fixed;
   right: 0;
-  padding-right: 20px;
+  padding-right: 25px;
   top: 100px;
+
   width: fit-content;
-  transition: opacity var(--transition-time), transform var(--transition-time), top 0.1s;
+  transition: opacity var(--transition-time), transform var(--transition-time); //, top 0.1s;
 
   transform: translatex(100%);
   z-index: 2;

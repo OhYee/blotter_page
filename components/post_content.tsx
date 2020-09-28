@@ -22,7 +22,6 @@ import styles from '@/pages/post/post.less';
 
 interface PostContentProps {
   post: Blotter.Post;
-  container?: HTMLElement;
 }
 
 interface PostContentState {
@@ -154,17 +153,6 @@ class PostContent extends Component<PostContentProps, PostContentState> {
             dangerouslySetInnerHTML={{ __html: this.props.post.content }}
           />
         </Flex>
-        <Anchor
-          container={this.props.container}
-          content={this.props.post.content}
-          suffixAnchors={[
-            {
-              id: 'blotter-comment',
-              name: '评论区',
-              level: 1,
-            },
-          ]}
-        />
       </article>
     );
   }

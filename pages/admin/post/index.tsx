@@ -13,6 +13,7 @@ import Popover from '@/components/popover';
 import { Loading, Success, Plus } from '@/components/svg';
 import TagSearch from '@/components/tag_search';
 import PostContent from '@/components/post_content';
+import Anchor from '@/components/anchor';
 
 import importImages from './images';
 import RenderEditor from './editor';
@@ -85,7 +86,7 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
       .then((r) => {
         const post = {
           ...r,
-          edit_time: (new Date()).getTime(),
+          edit_time: new Date().getTime(),
           publish_time: r.publish_time * 1000,
         };
         this.setState(
@@ -208,11 +209,18 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
   renderPreview = () => {
     const post = this.getPostAll();
     return (
-      <Card neumorphism ref={this.previewRef} className={styles.preview}>
-        {this.state.loading ? <Loading /> : <Success />}
-        <PostContent post={post} container={this.previewRef.current} />
-        {this.state.preview === 2 ? <div style={{ height: 'calc(100vh - 20px)' }}></div> : null}
-      </Card>
+      <div style={{ position: 'relative' }}>
+        <Anchor
+          style={{ position: 'absolute' }}
+          container={this.previewRef.current}
+          content={post.content}
+        />
+        <Card neumorphism ref={this.previewRef} className={styles.preview}>
+          {this.state.loading ? <Loading /> : <Success />}
+          <PostContent post={post} />
+          {this.state.preview === 2 ? <div style={{ height: 'calc(100vh - 20px)' }}></div> : null}
+        </Card>
+      </div>
     );
   };
 
@@ -309,7 +317,14 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
 
         <TagSearch onAdd={this.tagOnAdd} onDelete={this.tagOnDelete} tags={this.state.tags} />
 
-        <TextArea label="文章摘要" rows={5} spellCheck="false" placeholder="文章摘要" value={this.state.abstract} onChange={(abstract) => this.setState({ abstract })}/>
+        <TextArea
+          label="文章摘要"
+          rows={5}
+          spellCheck="false"
+          placeholder="文章摘要"
+          value={this.state.abstract}
+          onChange={(abstract) => this.setState({ abstract })}
+        />
 
         <Flex
           direction="TB"

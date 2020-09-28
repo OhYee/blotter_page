@@ -47,7 +47,7 @@ export default function Anchor(props: AnchorProps) {
       const target = e.target === document ? document.documentElement : (e.target as HTMLElement);
 
       // 同步浮框位置
-      if (!!ref.current) ref.current.style.top = `${target.scrollTop + 100}px`;
+      //   if (!!ref.current) ref.current.style.top = `${target.scrollTop + 100}px`;
 
       // 获取当前阅读进度
       const scrollTop = target.scrollTop;

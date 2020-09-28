@@ -12,6 +12,7 @@ import { Qzone, QQ, Link } from '@/components/svg';
 import Card from '@/components/card';
 import Avatar from '@/components/avatar';
 import Button, { A } from '@/components/button';
+import Anchor from '@/components/anchor';
 
 import { post, view } from '@/utils/api';
 import { Context } from '@/utils/global';
@@ -107,7 +108,7 @@ class PostPage extends React.Component<PostPageProps, PostPageState> {
 
   render() {
     return typeof this.props.post === 'undefined' ? null : (
-      <div>
+      <React.Fragment>
         <Context.Consumer>
           {(context) => (
             <Head>
@@ -132,7 +133,8 @@ class PostPage extends React.Component<PostPageProps, PostPageState> {
             <CommentPart url={`/post/${this.props.router.query.url as string}`} />
           </Card>
         </Flex>
-      </div>
+        <Anchor style={{ position: 'fixed' }} content={this.props.post.content} />
+      </React.Fragment>
     );
   }
 }
