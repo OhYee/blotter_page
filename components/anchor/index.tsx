@@ -53,10 +53,7 @@ export default function Anchor(props: AnchorProps) {
       const scrollTop = target.scrollTop;
       for (var i = 0; i < anchors.length; i++) {
         const el = document.getElementById(anchors[i].id);
-        if (
-          !!el &&
-          el.getBoundingClientRect().top + document.documentElement.scrollTop > scrollTop
-        ) {
+        if (!!el && el.offsetTop > scrollTop) {
           // 清除老的状态
           const lastActive = ref.current.getElementsByClassName(styles.active);
           for (var j = 0; j < lastActive.length; j++) {
