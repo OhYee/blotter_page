@@ -117,13 +117,15 @@ export default function Anchor(props: AnchorProps) {
             href={`#${item.id}`}
             style={{ paddingLeft: (item.level - 1) * indent }}
             title={item.name}
-            onClick={() => {
+            onClick={(e) => {
               const el = document.getElementById(item.id);
               if (!!el)
                 scrollAnimation(
                   !!container ? container : document.documentElement,
                   el.getBoundingClientRect().top + window.pageYOffset,
                 );
+              e.preventDefault();
+              return false;
             }}
           >
             {item.name}
