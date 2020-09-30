@@ -1,0 +1,82 @@
+.card___9K4fD .main___37CiN {
+  padding: 20px;
+}
+
+.shadow___3qnRW {
+  transition: box-shadow var(--transition-time);
+  box-shadow: 5px 5px 10px var(--shadow);
+}
+.shadow___3qnRW.clickable___DBXT1:hover {
+  box-shadow: 2.5px 2.5px 5px var(--shadow);
+}
+.shadow___3qnRW.clickable___DBXT1:active {
+  box-shadow: 1px 1px 1px var(--shadow);
+}
+.neumorphism___399j1 {
+  transition: box-shadow var(--transition-time);
+  box-shadow: 5px 5px 10px var(--shadow), -5px -5px 10px var(--shadow-white);
+}
+.neumorphism___399j1.clickable___DBXT1:hover {
+  box-shadow: 1px 1px 2px var(--shadow), -1px -1px 2px var(--shadow-white);
+}
+.neumorphism___399j1.clickable___DBXT1:active {
+  box-shadow: inset 5px 5px 10px var(--shadow), inset -5px -5px 10px var(--shadow-white);
+}
+.shadow_light___2dzAI {
+  transition: box-shadow var(--transition-time);
+  box-shadow: 2.5px 2.5px 5px var(--shadow);
+}
+.shadow_light___2dzAI.clickable___DBXT1:active {
+  box-shadow: 1px 1px 1px var(--shadow);
+}
+.neumorphism_light___2FuXU {
+  transition: box-shadow var(--transition-time);
+  box-shadow: 1px 1px 2px var(--shadow), -1px -1px 2px var(--shadow-white);
+}
+.neumorphism_light___2FuXU.clickable___DBXT1:active {
+  box-shadow: inset 5px 5px 10px var(--shadow), inset -5px -5px 10px var(--shadow-white);
+}
+.neumorphism_inset___zugSb {
+  transition: box-shadow var(--transition-time);
+  box-shadow: inset 5px 5px 10px var(--shadow), inset -5px -5px 10px var(--shadow-white);
+}
+
+.color___2WBY8 {
+  transition: color var(--transition-time);
+  color: var(--color);
+}
+.color___2WBY8:hover {
+  color: var(--color);
+}
+.color___2WBY8:active {
+  color: var(--color);
+}
+.primary___a0AGn {
+  transition: color var(--transition-time);
+  color: var(--primary);
+}
+.primary___a0AGn:hover {
+  color: var(--primary);
+}
+.primary___a0AGn:active {
+  color: var(--primary);
+}
+.secondary___3qQjV {
+  transition: color var(--transition-time);
+  color: var(--secondary);
+}
+.secondary___3qQjV:hover {
+  color: var(--secondary);
+}
+.secondary___3qQjV:active {
+  color: var(--secondary);
+}
+.ellipsis___IDoKh {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.em75___3rJF8 {
+  font-size: 0.75em;
+}
+

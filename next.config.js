@@ -4,18 +4,13 @@ const prod = process.env.NODE_ENV === 'production';
 module.exports = {
 =======
 const withLess = require('@zeit/next-less');
-const withSass = require('@zeit/next-sass');
 const withCss = require('@zeit/next-css');
 const withPlugins = require('next-compose-plugins');
 const path = require('path');
-const withTM = require('next-transpile-modules');
-const cssLoaderGetLocalIdent = require('css-loader/lib/getLocalIdent.js');
-// const generateTheme = require('next-dynamic-antd-theme/plugin');
-
-
 
 const prod = process.env.NODE_ENV === 'production';
 
+<<<<<<< HEAD
 // const withAntdTheme = generateTheme({
 //   antDir: path.join(__dirname, './node_modules/antd'),
 //   stylesDir: path.join(__dirname, './theme'),
@@ -71,6 +66,9 @@ module.exports = withPlugins([withAntd, withTM, withLess, withCss, withSass, wit
 =======
 module.exports = withPlugins([withAntd, withTM, withLess, withCss, withSass], {
 >>>>>>> Update gh-pages to output generated at 9d66009
+=======
+module.exports = withPlugins([withLess, withCss], {
+>>>>>>> Update gh-pages to output generated at a4a5ace
   serverRuntimeConfig: {
     //这里的配置项只能在服务端获取到，在浏览器端是获取不到的
   },
@@ -82,17 +80,18 @@ module.exports = withPlugins([withAntd, withTM, withLess, withCss, withSass], {
 };
 =======
   },
+  lessLoaderOptions: {
+    javascriptEnabled: true,
+  },
+  cssModules: true,
+  cssLoaderOptions: {
+    camelCase: true,
+    localIdentName: '[local]___[hash:base64:5]',
+  },
   webpack: (config, options) => {
     // TODO: Remove after next.js update
     // https://github.com/zeit/next.js/issues/7779
     config.resolve.alias['@'] = path.resolve(__dirname, '.');
-
-    // TypeScript check
-    // config.plugins.push(
-    //   new ForkTsCheckerWebpackPlugin({
-    //     tsconfig: './tsconfig.json',
-    //   }),
-    // );
 
     return config;
   },

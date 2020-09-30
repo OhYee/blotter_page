@@ -7,6 +7,7 @@
     },
     "dependencies": {
 <<<<<<< HEAD
+<<<<<<< HEAD
         "@monaco-editor/react": "^3.4.1",
         "@zombie110year/markdown-it-katex": "^2.1.0",
         "markdown-it": "^12.0.2",
@@ -33,10 +34,11 @@
         "typescript": "^4.1.2"
 =======
         "@ant-design/compatible": "^1.0.2",
+=======
+>>>>>>> Update gh-pages to output generated at a4a5ace
         "@monaco-editor/react": "^3.4.1",
-        "antd": "^4.3.1",
+        "moment": "^2.29.0",
         "next": "^9.4.4",
-        "next-dynamic-antd-theme": "^0.0.13",
         "qiniu-js": "^3.0.3",
         "react": "^16.13.1",
         "react-amap": "^1.2.8",
@@ -44,26 +46,20 @@
         "react-dnd-html5-backend": "^11.0.0"
     },
     "devDependencies": {
-        "@types/antd": "^1.0.0",
         "@types/node": "^14.0.5",
         "@types/react": "^16.9.35",
         "@zeit/next-css": "^1.0.1",
         "@zeit/next-less": "^1.0.1",
-        "@zeit/next-sass": "^1.0.1",
-        "@zeit/next-typescript": "^1.1.1",
         "axios": "^0.19.2",
         "babel-plugin-import": "^1.13.0",
         "css": "^2.2.4",
-        "fork-ts-checker-webpack-plugin": "^4.0.3",
         "immutability-helper": "^3.0.1",
         "less": "^3.10.3",
         "next-compose-plugins": "^2.2.0",
-        "next-transpile-modules": "^3.0.2",
         "null-loader": "^4.0.0",
         "react-dom": "^16.12.0",
         "react-responsive": "^8.0.3",
         "react-router": "^5.1.2",
-        "sass": "^1.25.0",
         "tsconfig-paths-webpack-plugin": "^3.2.0",
 <<<<<<< HEAD
         "typescript": "^3.7.5"
