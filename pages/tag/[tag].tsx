@@ -7,7 +7,6 @@ import { NextPageContext } from 'next';
 import Link from 'next/link';
 
 import PostList from '@/components/post_list';
-import { Space } from '@/components/container';
 import { Pre, Next, Dots } from '@/components/svg';
 import { A } from '@/components/button';
 import Card from '@/components/card';

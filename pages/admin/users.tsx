@@ -13,8 +13,6 @@ import Notification from '@/components/notification';
 import { Search, Close, Success } from '@/components/svg';
 import { Flex } from '@/components/container';
 
-import { Space } from '@/components/container';
-
 import { postDelete, users, reset_password } from '@/utils/api';
 import { Context } from '@/utils/global';
 import ShowNotification from '@/utils/notification';

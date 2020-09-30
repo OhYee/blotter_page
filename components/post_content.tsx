@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
-import Link from 'next/link';
 import Head from 'next/head';
-
-// import { Anchor, Skeleton } from 'antd';
-// import { RightOutlined, LeftOutlined } from '@ant-design/icons';
 
 import moment from '@/utils/moment';
 

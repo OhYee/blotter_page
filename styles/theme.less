@@ -1,25 +1,28 @@
 :global {
   .default {
-    --color: black;
-    --color-dark: #333;
-    --color-white: #ddd;
-    --background: #f1f2f6;
-    --background-1: #fdfdfd;
-    --primary: #5a7da5;
-    --primary-light1: #e6f7ff;
-    --secondary: #555;
-    --shadow: rgba(100, 100, 100, 0.5);
-    --shadow-white: white;
-    --transition-time: 0.25s ease-in-out 0.1s;
-    --transition: all var(--transition-time);
-    --info-color: #2173db;
-    --info-background: #e6f7ff;
-    --success-color: #55a319;
-    --success-background: #f6ffed;
-    --warning-color: #9a8339;
-    --warning-background: #fffbe6;
-    --error-color: #d35246;
-    --error-background: #fff2f0;
+    --color: black; // 页面前景色（文字颜色）
+    --primary: #3f81ba; // 主题色，用于按钮等位置
+    --primary-background: #e6f7ff; // 略浅的主题色（侧边栏选中背景色）
+    --secondary: #555; // 页面次要颜色，略淡的文字（提示、副标题）
+    --link: #6699CC; // 超链接颜色
+    --link-hover: #99CCFF; // 超链接悬浮颜色
+    --background: #f1f2f6; // 页面背景色（背景颜色）
+    --background-1: #fdfdfd; // 次要背景色（用于区分区域）
+
+    --shadow: rgba(100, 100, 100, 0.5); // 阴影颜色
+    --shadow-white: white; // 白色阴影
+
+    --info-color: #2173db; // 提醒（信息）颜色
+    --info-background: #e6f7ff; // 提醒（信息）背景
+    --success-color: #55a319; // 提醒（成功）颜色
+    --success-background: #f6ffed; // 提醒（成功）背景
+    --warning-color: #9a8339; // 提醒（警告）颜色
+    --warning-background: #fffbe6; // 提醒（警告）背景
+    --error-color: #d35246; // 提醒（错误）颜色
+    --error-background: #fff2f0; // 提醒（错误）背景
+
+    --transition-time: 0.25s ease-in-out 0.1s; // 动画时间
+    --transition: all var(--transition-time); // 动画配置
 
     transition: var(--transition);
     color: var(--color);
@@ -29,7 +32,7 @@
       --color: #f1f2f6;
       --background: #333;
       --background-1: #151515;
-      --primary-light1: #1b4153;
+      --primary-background: #1b4153;
       --secondary: #aaa;
       --shadow: rgba(0, 0, 0, 0.5);
       --shadow-white: rgba(100, 100, 100, 0.5);

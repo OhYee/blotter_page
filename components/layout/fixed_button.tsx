@@ -1,9 +1,7 @@
 import React from 'react';
 
-import { Icon } from '@ant-design/compatible';
-
 import { Flex } from '@/components/container';
-import { Light, Dark, Message, Rocket } from '@/components/svg';
+import { Light, Dark, Message, Rocket, Mail, QQ, Comments } from '@/components/svg';
 import Button from '@/components/button';
 import { Modal } from '@/components/popover';
 
@@ -52,7 +50,7 @@ function Feedback() {
                 直接使用
                 <a href={`mailto:${context.email}`} target="__blank">
                   {' '}
-                  <Icon type="mail" /> 邮件
+                  <Mail /> 邮件
                 </a>{' '}
                 反馈bug
               </p>
@@ -63,7 +61,7 @@ function Feedback() {
                   target="__blank"
                 >
                   {' '}
-                  <Icon type="qq" /> QQ
+                  <QQ /> QQ
                 </a>{' '}
                 反馈bug
               </p>
@@ -71,7 +69,7 @@ function Feedback() {
                 直接在评论区
                 <a href="/comment" target="__blank">
                   {' '}
-                  <Icon type="comment" /> 评论区
+                  <Comments /> 评论区
                 </a>{' '}
                 反馈bug
               </p>

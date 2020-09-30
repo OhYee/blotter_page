@@ -1,74 +1,7 @@
 import React from 'react';
-import { Row, Col, Space as S } from 'antd';
 import { ObjectFilter } from '@/utils/object';
 import { Context } from '@/utils/global';
 import { concat, ComponentProps } from '@/utils/component';
-
-function Container(props: React.PropsWithChildren<{}>) {
-  const context = React.useContext(Context);
-  return <div>{props.children}</div>;
-}
-
-export interface SpaceProps extends React.ComponentProps<'base'> {
-  direction?: 'horizontal' | 'vertical';
-  size?: number | 'small' | 'middle' | 'large';
-  textCenter?: boolean;
-  flexCenter?: boolean;
-  flex?:
-    | 'baseline'
-    | 'flex-start'
-    | 'flex-end'
-    | 'start'
-    | 'center'
-    | 'end'
-    | 'left'
-    | 'right'
-    | 'space-around'
-    | 'space-between'
-    | 'space-evenly'
-    | 'stretch';
-}
-
-const Space: React.FC<SpaceProps> = (props) => {
-  const {
-    direction = 'vertical',
-    size,
-    textCenter = false,
-    flexCenter = false,
-    className,
-    children,
-    style,
-    flex,
-  } = props;
-
-  var flexStyle = {};
-  if (!!flex) flexStyle = { flex: 'auto', justifyContent: flex };
-
-  var classNames: string[] = [className, 'fullWidth'];
-  if (flexCenter) classNames.push('flexCenter');
-  if (textCenter) classNames.push('textCenter');
-  return (
-    <S
-      className={classNames.join(' ')}
-      direction={direction}
-      size={size}
-      style={{ ...flexStyle, ...style }}
-    >
-      {children}
-    </S>
-  );
-};
-
-const TextCenter: React.FC = (props) => {
-  return <div className="textCenter">{props.children}</div>;
-};
-
-const FlexCenter: React.FC = (props) => {
-  return <div className="flexCenter">{props.children}</div>;
-};
-
-export default Container;
-export { Space, TextCenter, FlexCenter };
 
 export declare type SizeProp = number | 'none' | 'small' | 'middle' | 'large';
 
