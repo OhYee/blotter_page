@@ -35,7 +35,7 @@ import {
 
 import { Space, TextCenter } from '@/components/container';
 import { Context, defaultContext } from '@/utils/global';
-import Steps from '@/components/steps';
+import Steps from '@/remove/components/steps';
 import { LoginModal } from '@/components/login';
 
 import { Queue, Member } from '@/extensions/queue/types';

@@ -35,11 +35,11 @@ class Apps extends React.Component<AppsProps, AppsState> {
   static async getInitialProps() {
     return {
       apps: [
-        {
-          name: '动森候机大厅',
-          link: '/apps/queue',
-          img: 'https://static.oyohyee.com/apps/queue.png',
-        },
+        // {
+        //   name: '动森候机大厅',
+        //   link: '/apps/queue',
+        //   img: 'https://static.oyohyee.com/apps/queue.png',
+        // },
         {
           name: '在线密码学',
           link: '/apps/crypto',

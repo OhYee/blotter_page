@@ -22,7 +22,7 @@ import { ColumnsType, TablePaginationConfig } from 'antd/lib/table/interface';
 import { UserOutlined, SolutionOutlined, CheckOutlined } from '@ant-design/icons';
 
 import { Space, TextCenter } from '@/components/container';
-import Steps from '@/components/steps';
+import Steps from '@/remove/components/steps';
 import { Context } from '@/utils/global';
 import { LoginModal } from '@/components/login';
 
