@@ -13,18 +13,20 @@
   text-align: center;
 }
 
-:global {
-  #editor {
-    section > div {
-      height: calc(100vh - 60px) !important;
-    }
+.editor {
+  :global {
+    #editor {
+      section > div {
+        height: calc(100vh - 60px) !important;
+      }
 
-    .monaco-editor,
-    .monaco-editor .margin,
-    .monaco-editor-background,
-    .monaco-editor .inputarea.ime-input {
-      background: var(--background) !important;
-      transition: background var(--transition-time);
+      .monaco-editor,
+      .monaco-editor .margin,
+      .monaco-editor-background,
+      .monaco-editor .inputarea.ime-input {
+        background: var(--background) !important;
+        transition: background var(--transition-time);
+      }
     }
   }
 }

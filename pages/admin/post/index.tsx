@@ -440,7 +440,7 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
 
           <Flex wrap={false}>
             <Flex.Item style={{ flex: '1', width: this.state.preview === 2 ? '0%' : '100%' }}>
-              <Card neumorphism id="editor">
+              <Card neumorphism className={styles.editor} id="editor">
                 <RenderEditor
                   raw={this.state.raw}
                   fontSize={this.state.fontSize}
@@ -465,9 +465,7 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
               </Card>
             </Flex.Item>
             {this.state.preview === 2 ? (
-              <Flex.Item style={{ flex: '1', width: '0%' }}>
-                {this.renderPreview()}
-              </Flex.Item>
+              <Flex.Item style={{ flex: '1', width: '0%' }}>{this.renderPreview()}</Flex.Item>
             ) : null}
           </Flex>
         </Flex>
