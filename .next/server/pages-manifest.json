@@ -138,6 +138,9 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> Update gh-pages to output generated at c905054
 {
   "/404": "pages/404.js",
   "/_app": "pages/_app.js",
@@ -169,6 +172,7 @@
   "/register": "pages/register.js",
   "/tag/[tag]": "pages/tag/[tag].js",
   "/tags": "pages/tags.js",
+<<<<<<< HEAD
   "/user/[username]": "pages/user/[username].js",
   "/version": "pages/version.js"
 }
@@ -592,3 +596,7 @@
 =======
 {"/_app":"static/geTYVhjOSNFCAy71QgcpC/pages/_app.js","/_document":"static/geTYVhjOSNFCAy71QgcpC/pages/_document.js","/_error":"static/geTYVhjOSNFCAy71QgcpC/pages/_error.js","/about":"static/geTYVhjOSNFCAy71QgcpC/pages/about.js","/admin":"static/geTYVhjOSNFCAy71QgcpC/pages/admin.js","/admin/comments":"static/geTYVhjOSNFCAy71QgcpC/pages/admin/comments.js","/admin/friends":"static/geTYVhjOSNFCAy71QgcpC/pages/admin/friends.js","/admin/menus":"static/geTYVhjOSNFCAy71QgcpC/pages/admin/menus.js","/admin/post":"static/geTYVhjOSNFCAy71QgcpC/pages/admin/post.js","/admin/post/buttons":"static/geTYVhjOSNFCAy71QgcpC/pages/admin/post/buttons.js","/admin/post/editor":"static/geTYVhjOSNFCAy71QgcpC/pages/admin/post/editor.js","/admin/post/images":"static/geTYVhjOSNFCAy71QgcpC/pages/admin/post/images.js","/admin/posts":"static/geTYVhjOSNFCAy71QgcpC/pages/admin/posts.js","/admin/tags":"static/geTYVhjOSNFCAy71QgcpC/pages/admin/tags.js","/admin/travels":"static/geTYVhjOSNFCAy71QgcpC/pages/admin/travels.js","/admin/upload":"static/geTYVhjOSNFCAy71QgcpC/pages/admin/upload.js","/admin/users":"static/geTYVhjOSNFCAy71QgcpC/pages/admin/users.js","/admin/variables":"static/geTYVhjOSNFCAy71QgcpC/pages/admin/variables.js","/apps":"static/geTYVhjOSNFCAy71QgcpC/pages/apps.js","/apps/crypto":"static/geTYVhjOSNFCAy71QgcpC/pages/apps/crypto.js","/apps/travels":"static/geTYVhjOSNFCAy71QgcpC/pages/apps/travels.js","/archives":"static/geTYVhjOSNFCAy71QgcpC/pages/archives.js","/comment":"static/geTYVhjOSNFCAy71QgcpC/pages/comment.js","/friends":"static/geTYVhjOSNFCAy71QgcpC/pages/friends.js","/index":"static/geTYVhjOSNFCAy71QgcpC/pages/index.js","/post/[url]":"static/geTYVhjOSNFCAy71QgcpC/pages/post/[url].js","/register":"static/geTYVhjOSNFCAy71QgcpC/pages/register.js","/tag/[tag]":"static/geTYVhjOSNFCAy71QgcpC/pages/tag/[tag].js","/tags":"static/geTYVhjOSNFCAy71QgcpC/pages/tags.js","/user/[username]":"static/geTYVhjOSNFCAy71QgcpC/pages/user/[username].js","/":"static/geTYVhjOSNFCAy71QgcpC/pages/index.js"}
 >>>>>>> Update gh-pages to output generated at a4a5ace
+=======
+  "/user/[username]": "pages/user/[username].js"
+}
+>>>>>>> Update gh-pages to output generated at c905054

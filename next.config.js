@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 const prod = process.env.NODE_ENV === 'production';
 
 module.exports = {
@@ -69,6 +70,11 @@ module.exports = withPlugins([withAntd, withTM, withLess, withCss, withSass], {
 =======
 module.exports = withPlugins([withLess, withCss], {
 >>>>>>> Update gh-pages to output generated at a4a5ace
+=======
+const prod = process.env.NODE_ENV === 'production';
+
+module.exports = {
+>>>>>>> Update gh-pages to output generated at c905054
   serverRuntimeConfig: {
     //这里的配置项只能在服务端获取到，在浏览器端是获取不到的
   },
@@ -80,6 +86,7 @@ module.exports = withPlugins([withLess, withCss], {
 };
 =======
   },
+<<<<<<< HEAD
   lessLoaderOptions: {
     javascriptEnabled: true,
   },
@@ -97,3 +104,6 @@ module.exports = withPlugins([withLess, withCss], {
   },
 });
 >>>>>>> Update gh-pages to output generated at dac18c8
+=======
+};
+>>>>>>> Update gh-pages to output generated at c905054
