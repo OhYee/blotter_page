@@ -7,7 +7,7 @@ import Card from '@/components/card';
 import { Close } from '@/components/svg';
 import Button from '@/components/button';
 
-import styles from './modal.less';
+import styles from './modal.module.scss';
 
 export declare type ModalProps = ComponentProps<{ show?: boolean; onClose?: () => void }>;
 

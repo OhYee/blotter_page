@@ -9,7 +9,7 @@ import { Close, Left } from '@/components/svg';
 
 import { concat, ComponentProps } from '@/utils/component';
 
-import styles from './datepicker.less';
+import styles from './datepicker.module.scss';
 
 export declare type DatePickerProps = ComponentProps<{
   value?: number;

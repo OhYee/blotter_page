@@ -10,7 +10,7 @@ import Card from '@/components/card';
 import { guessPath } from '@/utils/redirect';
 import { Context } from '@/utils/global';
 
-import textStyles from '@/styles/text.less';
+import textStyles from '@/styles/text.module.scss';
 
 interface ErrorPageProps extends ComponentProps<'base'>, WithRouterProps {
   status: number;

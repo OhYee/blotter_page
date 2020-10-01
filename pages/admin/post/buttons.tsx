@@ -6,7 +6,7 @@ import { Minus, Plus, Save, Image, Edit, Fold, Unfold } from '@/components/svg';
 
 import { QiniuModal } from '@/components/upload';
 
-import styles from './post.less';
+import styles from './post.module.scss';
 
 function Press(
   props: ButtonProps & {

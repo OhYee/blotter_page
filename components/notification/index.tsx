@@ -6,8 +6,8 @@ import { Close } from '@/components/svg';
 
 import { concat, ComponentProps } from '@/utils/component';
 
-import styles from './notification.less';
-import shadowStyles from '@/styles/shadow.less';
+import styles from './notification.module.scss';
+import shadowStyles from '@/styles/shadow.module.scss';
 
 export declare type NotificationProps = ComponentProps<{
   alertType?: 'info' | 'error' | 'warning' | 'success';

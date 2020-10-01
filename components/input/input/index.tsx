@@ -7,8 +7,8 @@ import { concat, ComponentProps } from '@/utils/component';
 import { waitUntil } from '@/utils/debounce';
 import randomString from '@/utils/random';
 
-import shadowStyles from '@/styles/shadow.less';
-import styles from './input.less';
+import shadowStyles from '@/styles/shadow.module.scss';
+import styles from './input.module.scss';
 
 export declare type Option<T = any> =
   | {

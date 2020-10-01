@@ -2,7 +2,7 @@ import React from 'react';
 
 import { concat, ComponentProps } from '@/utils/component';
 
-import styles from './drawer.less';
+import styles from './drawer.module.scss';
 
 export declare type DrawerProps = ComponentProps<{
   //   getContainer: () => HTMLElement;

@@ -3,8 +3,8 @@ import React from 'react';
 import { Loading } from '@/components/svg';
 import { concat, ComponentProps } from '@/utils/component';
 
-import styles from './button.less';
-import shadowStyles from '@/styles/shadow.less';
+import styles from './button.module.scss';
+import shadowStyles from '@/styles/shadow.module.scss';
 
 export declare type ButtonProps = Combine<
   ComponentProps<{

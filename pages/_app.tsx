@@ -12,6 +12,10 @@ import ErrorPage from '@/pages/_error';
 
 import { view, info } from '@/utils/api';
 
+import '@/styles/global.scss';
+import '@/styles/theme.scss';
+import '@/components/image/image.scss';
+
 interface MyAppProps extends AppProps {
   globalProps: GlobalProps;
   status: number;

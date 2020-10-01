@@ -8,13 +8,12 @@ import { WithRouterProps } from 'next/dist/client/with-router';
 import { layout } from '@/utils/api';
 import { Context } from '@/utils/global';
 
-import styles from '@/components/layout/layout.less';
+import styles from '@/components/layout/layout.module.scss';
 import SiderRenderer from '@/components/layout/sider';
 import FooterRenderer from '@/components/layout/footer';
 import FixedButton from '@/components/layout/fixed_button';
 import { Flex } from '@/components/container';
 
-import '@/styles/theme.less';
 import { concat } from '@/utils/component';
 
 interface BasicLayoutProps extends ComponentProps<'base'>, WithRouterProps {}

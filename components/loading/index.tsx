@@ -1,6 +1,6 @@
 import { concat, ComponentProps } from '@/utils/component';
 
-import styles from './loading.less';
+import styles from './loading.module.scss';
 
 export default function Loading(props: ComponentProps<{ count?: number; loading?: boolean }>) {
   const { count = 5, loading = true, className, children, ...restProps } = props;

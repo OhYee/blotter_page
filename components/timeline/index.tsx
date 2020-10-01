@@ -4,7 +4,7 @@ import { Flex } from '@/components/container';
 
 import { concat, ComponentProps } from '@/utils/component';
 
-import styles from './timeline.less';
+import styles from './timeline.module.scss';
 
 export default function Timeline(
   props: ComponentProps<{

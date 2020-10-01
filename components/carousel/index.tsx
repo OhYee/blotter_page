@@ -6,7 +6,7 @@ import { Flex } from '@/components/container';
 
 import { concat } from '@/utils/component';
 
-import styles from './carousel.less';
+import styles from './carousel.module.scss';
 
 type CarouselProps = {
   images: string[];

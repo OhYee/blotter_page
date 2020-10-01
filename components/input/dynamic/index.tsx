@@ -13,7 +13,7 @@ import randomString from '@/utils/random';
 import { waitUntil } from '@/utils/debounce';
 import hash from '@/utils/hash';
 
-import styles from './dynamic.less'
+import styles from './dynamic.module.scss'
 
 const stringLength = 20;
 

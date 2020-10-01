@@ -4,7 +4,7 @@ import { concat, ComponentProps } from '@/utils/component';
 import { Flex } from '@/components/container';
 import { Option, TransfromOptions } from '../';
 
-import styles from './radio.less';
+import styles from './radio.module.scss';
 
 export declare type RadioProps<T> = ComponentProps<{
   direction?: 'TB' | 'LR';

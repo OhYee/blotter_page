@@ -4,7 +4,7 @@ import { Flex } from '@/components/container';
 
 import { concat, ComponentProps } from '@/utils/component';
 
-import styles from './tabs.less';
+import styles from './tabs.module.scss';
 
 export declare type TabsProps = ComponentProps<{
   defaultSelected?: string;

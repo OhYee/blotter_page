@@ -22,7 +22,6 @@ import {
 import { waitUntil } from '@/utils/debounce';
 import ShowNotification from '@/utils/notification';
 
-import styles from './upload.less';
 
 const img_file_type = ['psd', 'jpg', 'jpeg', 'png', 'gif', 'webp', 'tiff', 'bmp'];
 function generateThumbnail(img: string) {

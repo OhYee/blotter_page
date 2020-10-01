@@ -15,9 +15,9 @@ import { comments, avatar, addComment } from '@/utils/api';
 import { Context } from '@/utils/global';
 import ShowNotification from '@/utils/notification';
 
-import shadowStyles from '@/styles/shadow.less';
-import textStyles from '@/styles/text.less';
-import styles from './comment.less';
+import shadowStyles from '@/styles/shadow.module.scss';
+import textStyles from '@/styles/text.module.scss';
+import styles from './comment.module.scss';
 
 const adWarning = <b>广告评论，已被屏蔽</b>;
 const delWarning = <b>该评论已被删除</b>;

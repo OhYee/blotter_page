@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import styles from './body.less';
+import styles from './body.module.scss';
 class Body extends React.Component<{}> {
   div: HTMLDivElement;
   root: HTMLElement;

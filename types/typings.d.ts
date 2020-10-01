@@ -2,6 +2,8 @@ declare module '*.css';
 declare module '*.png';
 declare module '*.svg';
 declare module '*.less';
+declare module '*.sass';
+declare module '*.scss';
 
 declare type TypeUInT<T, U> = {
   [K in keyof T]: T[K] extends U ? K : never;

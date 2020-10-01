@@ -4,8 +4,8 @@ import Body from './body';
 
 import { concat, ComponentProps } from '@/utils/component';
 
-import styles from './popover.less';
-import shadowStyles from '@/styles/shadow.less';
+import styles from './popover.module.scss';
+import shadowStyles from '@/styles/shadow.module.scss';
 
 export declare type PopoverProps = ComponentProps<{
   component?: React.ReactNode;

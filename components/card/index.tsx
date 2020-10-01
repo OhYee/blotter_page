@@ -4,8 +4,8 @@ import { Flex } from '@/components/container';
 
 import { concat, ComponentProps } from '@/utils/component';
 
-import styles from './card.less';
-import shadowStyles from '@/styles/shadow.less';
+import styles from './card.module.scss';
+import shadowStyles from '@/styles/shadow.module.scss';
 
 export declare type CardProps = ComponentProps<{
   shadow?: boolean;

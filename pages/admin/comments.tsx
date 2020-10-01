@@ -18,7 +18,7 @@ import ShowNotification from '@/utils/notification';
 
 import { concat, ComponentProps } from '@/utils/component';
 
-import textStyles from '@/styles/text.less';
+import textStyles from '@/styles/text.module.scss';
 
 const defaultAvatar = 'https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png';
 

@@ -7,7 +7,7 @@ import Card from '@/components/card';
 import { Context } from '@/utils/global';
 import Link from 'next/link';
 
-import styles from './index.less';
+import styles from './index.module.scss';
 
 const data = [
   { title: '标签管理', url: '/admin/tags' },

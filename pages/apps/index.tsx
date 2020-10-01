@@ -8,7 +8,7 @@ import Button, { A } from '@/components/button';
 import Link from 'next/link';
 import { Flex } from '@/components/container';
 
-import styles from './apps.less';
+import styles from './apps.module.scss';
 import { Context } from '@/utils/global';
 
 const imageSuffix = ['jpg', 'gif', 'jpeg', 'png', 'svg', 'bmp'];

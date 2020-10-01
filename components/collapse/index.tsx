@@ -4,7 +4,7 @@ import { Left } from '@/components/svg';
 
 import { concat, ComponentProps } from '@/utils/component';
 
-import styles from './collapse.less';
+import styles from './collapse.module.scss';
 
 export declare type CollapseProps = ComponentProps<{
   title?: string;

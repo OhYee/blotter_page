@@ -1,16 +1,4 @@
-.root {
-  min-height: 100%;
-  background: var(--background);
-  transition: background var(--transition-time);
-}
-
-@keyframes dimmed-change {
-  100% {
-    background: rgba(0, 0, 0, 0.5);
-  }
-}
-
-#root {
+:root {
   font-size: 15px;
 }
 
@@ -46,7 +34,7 @@ pre {
   overflow: auto;
 }
 
-:global(.dark) {
+.dark {
   code {
     background: #ff502c;
     color: #fff5f5;
@@ -60,13 +48,13 @@ details {
   padding: 0 10px;
 }
 
-:global(.english) {
+.english {
   font-family: 'Times New Roman';
   font-style: italic;
   line-height: 1.25em;
 }
 
-:global(.goldmark-python-error) {
+.goldmark-python-error {
   white-space: pre;
   color: red;
   line-height: 1.2em;

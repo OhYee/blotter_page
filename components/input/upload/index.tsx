@@ -3,7 +3,7 @@ import React from 'react';
 import { Flex } from '@/components/container';
 import { concat, ComponentProps } from '@/utils/component';
 
-import styles from './upload.less';
+import styles from './upload.module.scss';
 
 export declare type UploadProps = ComponentProps<{
   onUpload?: (files: FileList) => void;

@@ -1,6 +1,6 @@
 import { concat, ComponentProps } from '@/utils/component';
 
-import styles from './hint.less';
+import styles from './hint.module.scss';
 
 export default function Hint(
   props: ComponentProps<{ info?: boolean; success?: boolean; warning?: boolean; error?: boolean }>,

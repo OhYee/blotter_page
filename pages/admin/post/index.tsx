@@ -26,7 +26,7 @@ import { waitUntil } from '@/utils/debounce';
 import { markdown, adminPost, postExist, postEdit } from '@/utils/api';
 import { setLocalStorage, getLocalStorage, removeLocalStorage } from '@/utils/storage';
 
-import styles from './post.less';
+import styles from './post.module.scss';
 
 interface PostEditProps extends React.ComponentProps<'base'>, WithRouterProps {}
 

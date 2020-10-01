@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './avatar.less';
+import styles from './avatar.module.scss';
 
 export default function Avatar(
   props: React.PropsWithChildren<{

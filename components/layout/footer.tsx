@@ -4,7 +4,7 @@ import { Flex } from '@/components/container';
 import If from '@/components/if';
 import { RSS } from '@/components/svg';
 
-export default function (props: {
+export default function Footer(props: {
   beian: string;
   from: string;
   view: number;

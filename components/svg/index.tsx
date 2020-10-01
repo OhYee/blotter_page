@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { concat, ComponentProps } from '@/utils/component';
-import styles from './svg.less';
+import styles from './svg.module.scss';
 
 const icons = {
   rss:

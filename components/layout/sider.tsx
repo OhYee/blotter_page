@@ -13,12 +13,12 @@ import ShowNotification from '@/utils/notification';
 import { setCookie } from '@/utils/storage';
 import { GlobalProps, defaultContext } from '@/utils/global';
 
-import styles from './sider.less';
-import shadowStyles from '@/styles/shadow.less';
+import styles from './sider.module.scss';
+import shadowStyles from '@/styles/shadow.module.scss';
 import { LoginModal } from '../login';
 import Card from '../card';
 
-export default function (props: {
+export default function Sider(props: {
   user: Blotter.User;
   avatar: string;
   big_screen: boolean;
@@ -140,10 +140,7 @@ function Menus(props: { menus: Blotter.Menu[]; theme: 'light' | 'dark'; pathname
         );
         return (
           <li key={item.link} className={item.link === pathname ? styles.active : ''}>
-            <Tooltip
-              placement="right"
-              title={item.name}
-            >
+            <Tooltip placement="right" title={item.name}>
               {item.link.length > 0 && item.link[0] !== '/' ? (
                 <a target="_blank" href={item.link}>
                   {menuItem}

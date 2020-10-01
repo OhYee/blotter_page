@@ -4,7 +4,7 @@ import { Success } from '@/components/svg';
 
 import { concat, ComponentProps } from '@/utils/component';
 
-import styles from './checkbox.less';
+import styles from './checkbox.module.scss';
 
 export declare type CheckBoxProps = ComponentProps<{
   value?: boolean;

@@ -17,7 +17,7 @@ import Anchor from '@/components/anchor';
 import { post, view } from '@/utils/api';
 import { Context } from '@/utils/global';
 
-import './post.less';
+import './post.module.scss';
 
 interface PostPageProps extends ComponentProps<'base'>, WithRouterProps {
   post: Blotter.Post;

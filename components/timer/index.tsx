@@ -3,7 +3,7 @@ import React from 'react';
 import moment from '@/utils/moment';
 import { concat, ComponentProps } from '@/utils/component';
 
-import styles from './timer.less';
+import styles from './timer.module.scss';
 
 export declare type TimerProps = ComponentProps<{
   target?: number;

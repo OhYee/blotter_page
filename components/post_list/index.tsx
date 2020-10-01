@@ -6,7 +6,7 @@ import { Flex } from '@/components/container';
 
 import { Context } from '@/utils/global';
 
-import styles from './post_list.less';
+import styles from './post_list.module.scss';
 
 type PostListProps = {
   posts: (Blotter.PostCard | undefined)[];

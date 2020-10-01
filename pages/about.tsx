@@ -19,7 +19,7 @@ import { GithubRepo } from '@/types/github';
 
 import moment from '@/utils/moment';
 
-import textStyles from '@/styles/text.less';
+import textStyles from '@/styles/text.module.scss';
 
 interface Education {
   name: string;

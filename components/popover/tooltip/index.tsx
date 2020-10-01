@@ -4,8 +4,8 @@ import { concat, ComponentProps } from '@/utils/component';
 
 import Popover, { PopoverProps } from '../popover';
 
-import styles from './tooltip.less';
-import textStyles from '@/styles/text.less';
+import styles from './tooltip.module.scss';
+import textStyles from '@/styles/text.module.scss';
 
 export declare type TooltipProps = ComponentProps<{
   title?: string;

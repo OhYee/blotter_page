@@ -8,7 +8,7 @@ import { Modal } from '@/components/popover';
 import { Context } from '@/utils/global';
 import { scrollAnimation } from '@/utils/scroll';
 
-import styles from './fixed_button.less';
+import styles from './fixed_button.module.scss';
 
 function BackToTop() {
   return (

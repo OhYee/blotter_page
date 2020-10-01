@@ -19,7 +19,7 @@ import { waitUntil } from '@/utils/debounce';
 import TagSearch from '@/components/tag_search';
 import { formatSecond } from '@/utils/time';
 
-import textStyle from '@/styles/text.less';
+import textStyle from '@/styles/text.module.scss';
 
 const defaultSort = 'publish_time';
 const defaultUp = false;

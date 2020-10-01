@@ -14,7 +14,7 @@ import { Context } from '@/utils/global';
 import { concat } from '@/utils/component';
 import moment, { formatSecond } from '@/utils/time';
 
-import textStyles from '@/styles/text.less';
+import textStyles from '@/styles/text.module.scss';
 
 type PostCardProps = {
   post: Blotter.PostCard | undefined;

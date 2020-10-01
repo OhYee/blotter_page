@@ -8,9 +8,9 @@ import { Close } from '@/components/svg';
 import { concat, ComponentProps } from '@/utils/component';
 import { parseColor, toHex, rgb2hsl, hsl2rgb } from '@/utils/color';
 
-import styles from './tag.less';
-import textStyles from '@/styles/text.less';
-import shadowStyles from '@/styles/shadow.less';
+import styles from './tag.module.scss';
+import textStyles from '@/styles/text.module.scss';
+import shadowStyles from '@/styles/shadow.module.scss';
 
 // function getFrontColor(backgroundColor) {
 //   /*

@@ -8,8 +8,8 @@ import { concat, ComponentProps } from '@/utils/component';
 import { Context } from '@/utils/global';
 import { scrollAnimation } from '@/utils/scroll';
 
-import styles from './anchor.less';
-import shadowStyles from '@/styles/shadow.less';
+import styles from './anchor.module.scss';
+import shadowStyles from '@/styles/shadow.module.scss';
 
 export declare type AnchorType = {
   name: string;

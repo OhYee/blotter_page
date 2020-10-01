@@ -16,7 +16,7 @@ import Drawer from '@/components/drawer';
 import moment from '@/utils/moment';
 import { Context } from '@/utils/global';
 
-import shadowStyles from '@/styles/shadow.less';
+import shadowStyles from '@/styles/shadow.module.scss';
 
 const key = '81533a71a4db0eb8107620d99b954d9d';
 

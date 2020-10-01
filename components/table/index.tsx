@@ -15,8 +15,8 @@ import DragableRow from './row';
 import { concat, ComponentProps } from '@/utils/component';
 import randomString from '@/utils/random';
 
-import styles from './table.less';
-import textStyles from '@/styles/text.less';
+import styles from './table.module.scss';
+import textStyles from '@/styles/text.module.scss';
 
 export declare type Column<T extends { [key: string]: any }> = {
   key: string;

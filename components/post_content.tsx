@@ -14,7 +14,7 @@ import { Flex } from '@/components/container';
 
 import { travels_get_url } from '@/utils/api';
 
-import styles from '@/pages/post/post.less';
+import styles from '@/pages/post/post.module.scss';
 
 interface PostContentProps {
   post: Blotter.Post;

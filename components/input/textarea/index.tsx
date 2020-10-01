@@ -8,8 +8,8 @@ import randomString from '@/utils/random';
 
 import { BasePartProps, InputPartProps, TransformPartProps } from '../input';
 
-import shadowStyles from '@/styles/shadow.less';
-import styles from './textarea.less';
+import shadowStyles from '@/styles/shadow.module.scss';
+import styles from './textarea.module.scss';
 
 export declare type Option<T> = {
   key?: string;

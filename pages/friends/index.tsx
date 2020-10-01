@@ -12,8 +12,8 @@ import Popover, { Tooltip } from '@/components/popover';
 import { Context } from '@/utils/global';
 import { friends } from '@/utils/api';
 
-import styles from './friends.less';
-import textStyles from '@/styles/text.less';
+import styles from './friends.module.scss';
+import textStyles from '@/styles/text.module.scss';
 
 import moment from '@/utils/moment';
 moment.locale('zh-cn');

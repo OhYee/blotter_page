@@ -1,6 +1,4 @@
-import './image.less';
 import { CSSProperties } from 'react';
-import { exception } from 'console';
 
 function CreateBox(props: {
   src: string;
@@ -98,7 +96,7 @@ function CreateBox(props: {
   close.onclose = remove;
 }
 
-export default (props: {
+export default function Image(props: {
   src: string;
   thumbnail?: string;
   alt?: string;
@@ -108,7 +106,7 @@ export default (props: {
   maxHeight?: number | string;
   width?: string;
   style?: CSSProperties;
-}) => {
+}) {
   const {
     src,
     thumbnail = src,
@@ -136,7 +134,7 @@ export default (props: {
       />
     </div>
   );
-};
+}
 
 export const setImageLightbox = (img: HTMLImageElement) => {
   try {

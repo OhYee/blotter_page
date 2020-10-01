@@ -11,8 +11,8 @@ import { tags } from '@/utils/api';
 import { Context } from '@/utils/global';
 import { sortTagsByPinYin, TagGroup } from '@/utils/sort';
 
-import styles from './tags.less';
-import textStyles from '@/styles/text.less';
+import styles from './tags.module.scss';
+import textStyles from '@/styles/text.module.scss';
 
 interface TagsProps extends React.ComponentProps<'base'> {
   total: number;
