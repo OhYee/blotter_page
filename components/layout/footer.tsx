@@ -13,12 +13,12 @@ export default function Footer(props: {
   const { beian, from, view, friends } = props;
   return (
     <Flex direction="TB">
-      <a href="/rss.xml">
-        <RSS style={{ width: '1em' }} />
-        RSS订阅
-      </a>
+      <Flex wrap={false}>
+        <RSS style={{ color: '#EE802F' }} />
+        <a href="/rss.xml">RSS订阅</a>
+      </Flex>
       <div>全站访问量 {view}</div>
-      <Flex direction="LR">
+      <Flex>
         <div>
           {from} – {new Date().getFullYear()}
         </div>
