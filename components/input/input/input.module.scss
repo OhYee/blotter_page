@@ -54,7 +54,9 @@
         width: 100%;
         outline-style: none;
         border: none;
+        color: var(--color);
         background: transparent;
+        transition: color var(--transition-time);
         &::placeholder {
           color: var(--secondary);
           transition: color var(--transition-time);
