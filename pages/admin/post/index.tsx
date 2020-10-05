@@ -198,7 +198,6 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
   };
 
   onScroll = (scrollTop: number, scrollHeight: number) => {
-    console.log(scrollTop, scrollHeight, this.state.preview, this.previewRef.current);
     if (this.state.preview === 2 && !!this.previewRef.current) {
       this.previewRef.current.scrollTop =
         (scrollTop / scrollHeight) * this.previewRef.current.scrollHeight + this.state.offset;
