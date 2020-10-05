@@ -200,6 +200,7 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
   };
 
   onScroll = (scrollTop: number, scrollHeight: number) => {
+    console.log(scrollTop, scrollHeight, this.state.preview, this.previewRef.current);
     if (this.state.preview === 2 && !!this.previewRef.current) {
       this.previewRef.current.scrollTop =
         (scrollTop / scrollHeight) * this.previewRef.current.scrollHeight + this.state.offset;
@@ -209,13 +210,13 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
   renderPreview = () => {
     const post = this.getPostAll();
     return (
-      <Card neumorphism ref={this.previewRef} style={{ position: 'relative', overflow: 'hidden' }}>
+      <Card neumorphism style={{ position: 'relative', overflow: 'hidden' }}>
         <Anchor
           style={{ position: 'absolute' }}
           container={this.previewRef.current}
           content={post.content}
         />
-        <div className={styles.preview}>
+        <div className={styles.preview} ref={this.previewRef}>
           {this.state.loading ? <Loading /> : <Success />}
           <PostContent post={post} />
           {this.state.preview === 2 ? <div style={{ height: 'calc(100vh - 20px)' }}></div> : null}
