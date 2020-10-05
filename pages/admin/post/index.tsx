@@ -141,11 +141,9 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
   //   };
 
   tagOnAdd = (tag: Blotter.Tag) => {
-    this.setState((state) => {
-      var tags = state.tags;
-      tags.push(tag);
-      return { tags };
-    });
+    this.setState((state) => ({
+      tags: [...state.tags].filter((_tag) => _tag.short !== tag.short).concat(tag),
+    }));
   };
 
   tagOnDelete = (tag: Blotter.Tag) => {
