@@ -6264,13 +6264,9 @@ class PostEdit extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
     });
 
     _defineProperty(this, "tagOnAdd", tag => {
-      this.setState(state => {
-        var tags = state.tags;
-        tags.push(tag);
-        return {
-          tags
-        };
-      });
+      this.setState(state => ({
+        tags: [...state.tags].filter(_tag => _tag.short !== tag.short).concat(tag)
+      }));
     });
 
     _defineProperty(this, "tagOnDelete", tag => {
@@ -6336,8 +6332,6 @@ class PostEdit extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
     });
 
     _defineProperty(this, "onScroll", (scrollTop, scrollHeight) => {
-      console.log(scrollTop, scrollHeight, this.state.preview, this.previewRef.current);
-
       if (this.state.preview === 2 && !!this.previewRef.current) {
         this.previewRef.current.scrollTop = scrollTop / scrollHeight * this.previewRef.current.scrollHeight + this.state.offset;
       }
