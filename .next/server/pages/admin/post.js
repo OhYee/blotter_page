@@ -6336,6 +6336,8 @@ class PostEdit extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
     });
 
     _defineProperty(this, "onScroll", (scrollTop, scrollHeight) => {
+      console.log(scrollTop, scrollHeight, this.state.preview, this.previewRef.current);
+
       if (this.state.preview === 2 && !!this.previewRef.current) {
         this.previewRef.current.scrollTop = scrollTop / scrollHeight * this.previewRef.current.scrollHeight + this.state.offset;
       }
@@ -6345,7 +6347,6 @@ class PostEdit extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       const post = this.getPostAll();
       return __jsx(_components_card__WEBPACK_IMPORTED_MODULE_4__[/* default */ "a"], {
         neumorphism: true,
-        ref: this.previewRef,
         style: {
           position: 'relative',
           overflow: 'hidden'
@@ -6357,7 +6358,8 @@ class PostEdit extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
         container: this.previewRef.current,
         content: post.content
       }), __jsx("div", {
-        className: _post_module_scss__WEBPACK_IMPORTED_MODULE_21___default.a.preview
+        className: _post_module_scss__WEBPACK_IMPORTED_MODULE_21___default.a.preview,
+        ref: this.previewRef
       }, this.state.loading ? __jsx(_components_svg__WEBPACK_IMPORTED_MODULE_9__[/* Loading */ "x"], null) : __jsx(_components_svg__WEBPACK_IMPORTED_MODULE_9__[/* Success */ "N"], null), __jsx(_components_post_content__WEBPACK_IMPORTED_MODULE_11__[/* default */ "a"], {
         post: post
       }), this.state.preview === 2 ? __jsx("div", {
