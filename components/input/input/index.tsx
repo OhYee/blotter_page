@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Edit } from '@/components/svg';
+import { Edit, Left } from '@/components/svg';
 import Popover from '@/components/popover';
 
 import { concat, ComponentProps } from '@/utils/component';
@@ -191,7 +191,11 @@ export default function Input<SelectType>(props: InputProps<SelectType>) {
                   autoFocus={autoFocus || transform}
                 />
               </Popover>
-              {!!suffix ? <span className={styles.suffix}>{suffix}</span> : null}
+              {!!suffix ? (
+                <span className={styles.suffix}>{suffix}</span>
+              ) : !!options && options.length !== 0 ? (
+                <Left style={{ transform: 'rotate(270deg)' }} />
+              ) : null}
             </div>
           </div>
           {!!hint ? <div className={styles.hint}>{hint}</div> : null}
