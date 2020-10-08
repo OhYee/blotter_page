@@ -238,13 +238,21 @@ function searchParamsToUrlQuery(searchParams) {
   return query;
 }
 
+function stringifyUrlQueryParam(param) {
+  if (typeof param === 'string' || typeof param === 'number' && !isNaN(param) || typeof param === 'boolean') {
+    return String(param);
+  } else {
+    return '';
+  }
+}
+
 function urlQueryToSearchParams(urlQuery) {
   const result = new URLSearchParams();
   Object.entries(urlQuery).forEach(([key, value]) => {
     if (Array.isArray(value)) {
-      value.forEach(item => result.append(key, item));
+      value.forEach(item => result.append(key, stringifyUrlQueryParam(item)));
     } else {
-      result.set(key, value);
+      result.set(key, stringifyUrlQueryParam(value));
     }
   });
   return result;
@@ -2226,10 +2234,10 @@ function Link(props) {
     href,
     as
   } = _react.default.useMemo(() => {
-    const resolvedHref = (0, _router.resolveHref)(pathname, props.href);
+    const [resolvedHref, resolvedAs] = (0, _router.resolveHref)(pathname, props.href, true);
     return {
       href: resolvedHref,
-      as: props.as ? (0, _router.resolveHref)(pathname, props.as) : resolvedHref
+      as: props.as ? (0, _router.resolveHref)(pathname, props.as) : resolvedAs || resolvedHref
     };
   }, [pathname, props.href, props.as]);
 
@@ -2421,6 +2429,7 @@ exports.hasBasePath = hasBasePath;
 exports.addBasePath = addBasePath;
 exports.delBasePath = delBasePath;
 exports.isLocalURL = isLocalURL;
+exports.interpolateAs = interpolateAs;
 exports.resolveHref = resolveHref;
 exports.markLoadingError = markLoadingError;
 exports.default = void 0;
@@ -2444,6 +2453,8 @@ var _resolveRewrites = _interopRequireDefault(__webpack_require__("S3md"));
 var _routeMatcher = __webpack_require__("gguc");
 
 var _routeRegex = __webpack_require__("YTqd");
+
+var _escapePathDelimiters = _interopRequireDefault(__webpack_require__("fcRV"));
 
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : {
@@ -2491,24 +2502,93 @@ function isLocalURL(url) {
     return false;
   }
 }
+
+function interpolateAs(route, asPathname, query) {
+  let interpolatedRoute = '';
+  const dynamicRegex = (0, _routeRegex.getRouteRegex)(route);
+  const dynamicGroups = dynamicRegex.groups;
+  const dynamicMatches = // Try to match the dynamic route against the asPath
+  (asPathname !== route ? (0, _routeMatcher.getRouteMatcher)(dynamicRegex)(asPathname) : '') || // Fall back to reading the values from the href
+  // TODO: should this take priority; also need to change in the router.
+  query;
+  interpolatedRoute = route;
+  const params = Object.keys(dynamicGroups);
+
+  if (!params.every(param => {
+    let value = dynamicMatches[param] || '';
+    const {
+      repeat,
+      optional
+    } = dynamicGroups[param]; // support single-level catch-all
+    // TODO: more robust handling for user-error (passing `/`)
+
+    let replaced = `[${repeat ? '...' : ''}${param}]`;
+
+    if (optional) {
+      replaced = `${!value ? '/' : ''}[${replaced}]`;
+    }
+
+    if (repeat && !Array.isArray(value)) value = [value];
+    return (optional || param in dynamicMatches) && ( // Interpolate group into data URL if present
+    interpolatedRoute = interpolatedRoute.replace(replaced, repeat ? value.map(_escapePathDelimiters.default).join('/') : (0, _escapePathDelimiters.default)(value)) || '/');
+  })) {
+    interpolatedRoute = ''; // did not satisfy all requirements
+    // n.b. We ignore this error because we handle warning for this case in
+    // development in the `<Link>` component directly.
+  }
+
+  return {
+    params,
+    result: interpolatedRoute
+  };
+}
+
+function omitParmsFromQuery(query, params) {
+  const filteredQuery = {};
+  Object.keys(query).forEach(key => {
+    if (!params.includes(key)) {
+      filteredQuery[key] = query[key];
+    }
+  });
+  return filteredQuery;
+}
 /**
 * Resolves a given hyperlink with a certain router state (basePath not included).
 * Preserves absolute urls.
 */
 
 
-function resolveHref(currentPath, href) {
+function resolveHref(currentPath, href, resolveAs) {
   // we use a dummy base url for relative urls
   const base = new URL(currentPath, 'http://n');
   const urlAsString = typeof href === 'string' ? href : (0, _utils.formatWithValidation)(href);
 
   try {
     const finalUrl = new URL(urlAsString, base);
-    finalUrl.pathname = (0, _normalizeTrailingSlash.normalizePathTrailingSlash)(finalUrl.pathname); // if the origin didn't change, it means we received a relative href
+    finalUrl.pathname = (0, _normalizeTrailingSlash.normalizePathTrailingSlash)(finalUrl.pathname);
+    let interpolatedAs = '';
 
-    return finalUrl.origin === base.origin ? finalUrl.href.slice(finalUrl.origin.length) : finalUrl.href;
+    if ((0, _isDynamic.isDynamicRoute)(finalUrl.pathname) && finalUrl.searchParams && resolveAs) {
+      const query = (0, _querystring.searchParamsToUrlQuery)(finalUrl.searchParams);
+      const {
+        result,
+        params
+      } = interpolateAs(finalUrl.pathname, finalUrl.pathname, query);
+
+      if (result) {
+        interpolatedAs = (0, _utils.formatWithValidation)({
+          pathname: result,
+          hash: finalUrl.hash,
+          query: omitParmsFromQuery(query, params)
+        });
+      }
+    } // if the origin didn't change, it means we received a relative href
+
+
+    const resolvedHref = finalUrl.origin === base.origin ? finalUrl.href.slice(finalUrl.origin.length) : finalUrl.href;
+    return resolveAs ? [resolvedHref, interpolatedAs || resolvedHref] : resolvedHref;
   } catch (_) {
-    return urlAsString;
+    return resolveAs ? [urlAsString] : urlAsString;
   }
 }
 
@@ -2793,18 +2873,17 @@ class Router {
     let parsed = (0, _parseRelativeUrl.parseRelativeUrl)(url);
     let {
       pathname,
-      searchParams
+      query
     } = parsed;
     parsed = this._resolveHref(parsed, pages);
 
     if (parsed.pathname !== pathname) {
       pathname = parsed.pathname;
       url = (0, _utils.formatWithValidation)(parsed);
-    }
-
-    const query = (0, _querystring.searchParamsToUrlQuery)(searchParams); // url and as should always be prefixed with basePath by this
+    } // url and as should always be prefixed with basePath by this
     // point by either next/link or router.push/replace so strip the
     // basePath from the pathname to match the pages dir 1-to-1
+
 
     pathname = pathname ? (0, _normalizeTrailingSlash.removePathTrailingSlash)(delBasePath(pathname)) : pathname; // If asked to change the current URL we should reload the current page
     // (not location.reload() but reload getInitialProps and other Next.js stuffs)
@@ -2816,7 +2895,7 @@ class Router {
       method = 'replaceState';
     }
 
-    const route = (0, _normalizeTrailingSlash.removePathTrailingSlash)(pathname);
+    let route = (0, _normalizeTrailingSlash.removePathTrailingSlash)(pathname);
     const {
       shallow = false
     } = options; // we need to resolve the as value using rewrites for dynamic SSG
@@ -2829,20 +2908,26 @@ class Router {
     resolvedAs = delBasePath(resolvedAs);
 
     if ((0, _isDynamic.isDynamicRoute)(route)) {
-      const {
-        pathname: asPathname
-      } = (0, _parseRelativeUrl.parseRelativeUrl)(resolvedAs);
+      const parsedAs = (0, _parseRelativeUrl.parseRelativeUrl)(resolvedAs);
+      const asPathname = parsedAs.pathname;
       const routeRegex = (0, _routeRegex.getRouteRegex)(route);
       const routeMatch = (0, _routeMatcher.getRouteMatcher)(routeRegex)(asPathname);
+      const shouldInterpolate = route === asPathname;
+      const interpolatedAs = shouldInterpolate ? interpolateAs(route, asPathname, query) : {};
 
-      if (!routeMatch) {
+      if (!routeMatch || shouldInterpolate && !interpolatedAs.result) {
         const missingParams = Object.keys(routeRegex.groups).filter(param => !query[param]);
 
         if (missingParams.length > 0) {
           if (false) {}
 
-          throw new Error(`The provided \`as\` value (${asPathname}) is incompatible with the \`href\` value (${route}). ` + `Read more: https://err.sh/vercel/next.js/incompatible-href-as`);
+          throw new Error((shouldInterpolate ? `The provided \`href\` (${url}) value is missing query values (${missingParams.join(', ')}) to be interpolated properly. ` : `The provided \`as\` value (${asPathname}) is incompatible with the \`href\` value (${route}). `) + `Read more: https://err.sh/vercel/next.js/${shouldInterpolate ? 'href-interpolation-failed' : 'incompatible-href-as'}`);
         }
+      } else if (shouldInterpolate) {
+        as = (0, _utils.formatWithValidation)(Object.assign({}, parsedAs, {
+          pathname: interpolatedAs.result,
+          query: omitParmsFromQuery(query, interpolatedAs.params)
+        }));
       } else {
         // Merge params into `query`, overwriting any specified in search
         Object.assign(query, routeMatch);
@@ -2854,8 +2939,31 @@ class Router {
     try {
       const routeInfo = await this.getRouteInfo(route, pathname, query, as, shallow);
       let {
-        error
-      } = routeInfo;
+        error,
+        props,
+        __N_SSG,
+        __N_SSP
+      } = routeInfo; // handle redirect on client-transition
+
+      if ((__N_SSG || __N_SSP) && props && props.pageProps && props.pageProps.__N_REDIRECT) {
+        const destination = props.pageProps.__N_REDIRECT; // check if destination is internal (resolves to a page) and attempt
+        // client-navigation if it is falling back to hard navigation if
+        // it's not
+
+        if (destination.startsWith('/')) {
+          const parsedHref = (0, _parseRelativeUrl.parseRelativeUrl)(destination);
+
+          this._resolveHref(parsedHref, pages);
+
+          if (pages.includes(parsedHref.pathname)) {
+            return this.change('replaceState', destination, destination, options);
+          }
+        }
+
+        window.location.href = destination;
+        return new Promise(() => {});
+      }
+
       Router.events.emit('beforeHistoryChange', as);
       this.changeState(method, url, as, options);
 
@@ -3061,11 +3169,11 @@ class Router {
     return this.asPath !== asPath;
   }
 
-  _resolveHref(parsedHref, pages) {
+  _resolveHref(parsedHref, pages, applyBasePath = true) {
     const {
       pathname
     } = parsedHref;
-    const cleanPathname = (0, _denormalizePagePath.denormalizePagePath)(delBasePath(pathname));
+    const cleanPathname = (0, _normalizeTrailingSlash.removePathTrailingSlash)((0, _denormalizePagePath.denormalizePagePath)(applyBasePath ? delBasePath(pathname) : pathname));
 
     if (cleanPathname === '/404' || cleanPathname === '/_error') {
       return parsedHref;
@@ -3076,7 +3184,7 @@ class Router {
       // eslint-disable-next-line array-callback-return
       pages.some(page => {
         if ((0, _isDynamic.isDynamicRoute)(page) && (0, _routeRegex.getRouteRegex)(page).re.test(cleanPathname)) {
-          parsedHref.pathname = addBasePath(page);
+          parsedHref.pathname = applyBasePath ? addBasePath(page) : page;
           return true;
         }
       });
@@ -3389,6 +3497,21 @@ module.exports = require("react-dom");
 
 /***/ }),
 
+/***/ "fcRV":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+exports.default = escapePathDelimiters; // escape delimiters used by path-to-regexp
+
+function escapePathDelimiters(segment) {
+  return segment.replace(/[/#?]/g, char => encodeURIComponent(char));
+}
+
+/***/ }),
+
 /***/ "g/15":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3555,6 +3678,8 @@ exports.parseRelativeUrl = parseRelativeUrl;
 
 var _utils = __webpack_require__("g/15");
 
+var _querystring = __webpack_require__("3WeD");
+
 const DUMMY_BASE = new URL(true ? 'http://n' : undefined);
 /**
 * Parses path-relative urls (e.g. `/hello/world?foo=bar`). If url isn't path-relative
@@ -3581,7 +3706,7 @@ function parseRelativeUrl(url, base) {
 
   return {
     pathname,
-    searchParams,
+    query: (0, _querystring.searchParamsToUrlQuery)(searchParams),
     search,
     hash,
     href: href.slice(DUMMY_BASE.origin.length)

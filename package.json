@@ -37,7 +37,7 @@
 =======
 >>>>>>> Update gh-pages to output generated at a4a5ace
         "@monaco-editor/react": "^3.4.1",
-        "next": "^9.5.3",
+        "next": "^9.5.4",
         "qiniu-js": "^3.1.1",
         "react": "^16.13.1",
         "react-amap": "^1.2.8",
