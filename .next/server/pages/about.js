@@ -3205,7 +3205,11 @@ function Input(props) {
     autoFocus: autoFocus || transform
   }))), !!suffix ? __jsx("span", {
     className: input_module_default.a.suffix
-  }, suffix) : null)), !!hint ? __jsx("div", {
+  }, suffix) : !!options && options.length !== 0 ? __jsx(svg["u" /* Left */], {
+    style: {
+      transform: 'rotate(270deg)'
+    }
+  }) : null)), !!hint ? __jsx("div", {
     className: input_module_default.a.hint
   }, hint) : null) : __jsx("div", {
     className: input_module_default.a.transform

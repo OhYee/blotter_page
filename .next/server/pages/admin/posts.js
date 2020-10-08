@@ -3125,7 +3125,7 @@ class TagSearch extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
         this.setState({
           inputVisible: false
         });
-      }, 100);
+      }, 1000);
     });
 
     _defineProperty(this, "renderInput", () => {
@@ -3138,6 +3138,7 @@ class TagSearch extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
         size: "small",
         onChange: this.onChange,
         onSelect: this.onSelect,
+        selectTrigger: ['click', 'hover'],
         options: this.state.options.map(tag => ({
           key: tag.name,
           value: tag
@@ -5612,7 +5613,11 @@ function Input(props) {
     autoFocus: autoFocus || transform
   }))), !!suffix ? __jsx("span", {
     className: input_module_default.a.suffix
-  }, suffix) : null)), !!hint ? __jsx("div", {
+  }, suffix) : !!options && options.length !== 0 ? __jsx(svg["u" /* Left */], {
+    style: {
+      transform: 'rotate(270deg)'
+    }
+  }) : null)), !!hint ? __jsx("div", {
     className: input_module_default.a.hint
   }, hint) : null) : __jsx("div", {
     className: input_module_default.a.transform
