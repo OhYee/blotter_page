@@ -61,7 +61,7 @@ class TagSearch extends React.Component<TagSearchProps, TagSearchState> {
   onBlur = () => {
     setTimeout(() => {
       this.setState({ inputVisible: false });
-    }, 100);
+    }, 1000);
   };
 
   renderInput = () => {
@@ -73,6 +73,7 @@ class TagSearch extends React.Component<TagSearchProps, TagSearchState> {
         size="small"
         onChange={this.onChange}
         onSelect={this.onSelect}
+        selectTrigger={['click', 'hover']}
         options={this.state.options.map((tag) => ({ key: tag.name, value: tag }))}
         suffix={this.state.loading && <Loading />}
         autoFocus
