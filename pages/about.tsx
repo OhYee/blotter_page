@@ -324,7 +324,7 @@ class AboutPage extends React.Component<AboutPageProps, AboutPageState> {
             <Collapse title="抱大腿奖项" defaultOpen>
               {this.render_awards()}
             </Collapse>
-            <Collapse title="开源项目（需要访问 Github API，部分网络可能会出错）" defaultOpen>
+            <Collapse title="开源项目" defaultOpen>
               {this.render_projects()}
             </Collapse>
           </Flex.Item>
