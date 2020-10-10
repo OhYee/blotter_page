@@ -2124,7 +2124,7 @@ class about_AboutPage extends external_react_default.a.Component {
       title: "\u62B1\u5927\u817F\u5956\u9879",
       defaultOpen: true
     }, this.render_awards()), about_jsx(Collapse, {
-      title: "\u5F00\u6E90\u9879\u76EE\uFF08\u9700\u8981\u8BBF\u95EE Github API\uFF0C\u90E8\u5206\u7F51\u7EDC\u53EF\u80FD\u4F1A\u51FA\u9519\uFF09",
+      title: "\u5F00\u6E90\u9879\u76EE",
       defaultOpen: true
     }, this.render_projects()))));
   }
