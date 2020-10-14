@@ -132,10 +132,13 @@
 
     table {
       width: 100%;
+      border-collapse: collapse;
+
       thead {
         tr {
           font-weight: bold;
-          border-bottom: 2.5px solid #e8e8e8;
+          border-bottom: 2.5px solid var(--secondary);
+          transition: border-bottom var(--transition-time);
           th {
             padding: 10px;
             &[align='left'] {
@@ -151,8 +154,12 @@
         }
       }
       tbody {
+        tr:not(:last-child) {
+          border-bottom: 1px solid var(--secondary);
+        }
         tr {
-          border-bottom: 1px solid #e8e8e8;
+          transition: border-bottom var(--transition-time);
+
           td {
             padding: 10px;
           }
