@@ -15,6 +15,7 @@ import Collapse from '@/components/collapse';
 import { Context } from '@/utils/global';
 import { showQR } from '@/utils/payment';
 import { githubUser, githubRepos, githubRepo, about } from '@/utils/api';
+import { formatDate } from '@/utils/time';
 import { GithubRepo } from '@/types/github';
 
 import moment from '@/utils/moment';
@@ -129,8 +130,13 @@ class AboutPage extends React.Component<AboutPageProps, AboutPageState> {
     return (
       <Flex mainAxis="space-around">
         {socialMedia.map((item) => (
-          <Tooltip key={item.name} title={item.name} style={{ fontSize: 25 }} className={textStyles.primary}>
-            <a  href={item.link} target="_blank">
+          <Tooltip
+            key={item.name}
+            title={item.name}
+            style={{ fontSize: 25 }}
+            className={textStyles.primary}
+          >
+            <a href={item.link} target="_blank">
               {item.icon()}
             </a>
           </Tooltip>
@@ -244,7 +250,7 @@ class AboutPage extends React.Component<AboutPageProps, AboutPageState> {
         style: { textAlign: 'center' },
         sorter: (a, b) => new Date(a.pushed_at).getTime() - new Date(b.pushed_at).getTime(),
         render(text) {
-          return moment(text).format('YYYY-MM-DD hh:mm:ss');
+          return formatDate(text);
         },
       },
       {

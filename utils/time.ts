@@ -4,10 +4,14 @@ moment.locale('zh-cn');
 export default moment;
 
 export function formatSecond(time: number) {
-  return formatMilliseconds(time * 1000);
+  return formatDate(time * 1000);
 }
 
-export function formatMilliseconds(time: number) {
+export function formatMilliseconds(time) {
+  return formatDate(time);
+}
+
+export function formatDate(time: number | string) {
   const datetime = new Date(time);
   const year = datetime.getFullYear();
   const month = datetime.getMonth() + 1;
