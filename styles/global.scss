@@ -17,16 +17,18 @@ blockquote {
   border-left: 0.25em solid #dfe2e5;
 }
 
-code {
-  background: #fff5f5;
-  color: #ff502c;
-  font-size: 0.87em;
-  border: 1px #ffaaaa dotted;
-  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
-  padding: 0.2em 0.4em;
-  margin: 0 0.5em;
-  border-radius: 3px;
-  word-break: break-all;
+:not(pre) > code {
+  code {
+    background: #fff5f5;
+    color: #ff502c;
+    font-size: 0.87em;
+    border: 1px #ffaaaa dotted;
+    font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+    padding: 0.2em 0.4em;
+    margin: 0 0.5em;
+    border-radius: 3px;
+    word-break: break-all;
+  }
 }
 
 pre {
@@ -38,9 +40,11 @@ pre {
 }
 
 .dark {
-  code {
-    background: #ff502c;
-    color: #fff5f5;
+  :not(pre) > code {
+    code {
+      background: #ff502c;
+      color: #fff5f5;
+    }
   }
   pre {
     background-color: #0a0806 !important;
