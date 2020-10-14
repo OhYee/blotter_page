@@ -165,5 +165,5 @@ export const setSVGLightbox = (svg: SVGSVGElement) => {
 };
 
 function base64(s: string): string {
-  return window.btoa(s.replace(/[\u00A0-\u2666]/g, (c) => `&#${c.charCodeAt(0)};`));
+  return window.btoa(s.replace(/[\u007f-\ufffff]/g, (c) => `&#${c.charCodeAt(0)};`));
 }
