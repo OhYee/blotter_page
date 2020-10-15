@@ -1408,7 +1408,7 @@ const setSVGLightbox = svg => {
 };
 
 function base64(s) {
-  return window.btoa(s.replace(/[\u007f-\ufffff]/g, c => `&#${c.charCodeAt(0)};`));
+  return window.btoa(s.replace(/[\u007f-\uffff]/g, c => `&#${c.charCodeAt(0)};`));
 }
 
 /***/ }),
