@@ -1660,18 +1660,6 @@ function Table(props) {
 
 /***/ }),
 
-/***/ "RtTr":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("wy2R");
-/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_0__);
-
-moment__WEBPACK_IMPORTED_MODULE_0___default.a.locale('zh-cn');
-/* harmony default export */ __webpack_exports__["a"] = (moment__WEBPACK_IMPORTED_MODULE_0___default.a);
-
-/***/ }),
-
 /***/ "SFWT":
 /***/ (function(module, exports) {
 
@@ -1801,8 +1789,8 @@ function showQR(type) {
 // EXTERNAL MODULE: ./utils/api.ts + 1 modules
 var api = __webpack_require__("AoAR");
 
-// EXTERNAL MODULE: ./utils/moment.ts
-var moment = __webpack_require__("RtTr");
+// EXTERNAL MODULE: ./utils/time.ts
+var time = __webpack_require__("eSIs");
 
 // EXTERNAL MODULE: ./styles/text.module.scss
 var text_module = __webpack_require__("s0TQ");
@@ -2024,7 +2012,7 @@ class about_AboutPage extends external_react_default.a.Component {
         sorter: (a, b) => new Date(a.pushed_at).getTime() - new Date(b.pushed_at).getTime(),
 
         render(text) {
-          return Object(moment["a" /* default */])(text).format('YYYY-MM-DD hh:mm:ss');
+          return Object(time["a" /* formatDate */])(text);
         }
 
       }, {
@@ -2443,6 +2431,37 @@ module.exports = {
 	"transform_icon": "input_transform_icon__3DIoj"
 };
 
+
+/***/ }),
+
+/***/ "eSIs":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return formatSecond; });
+/* unused harmony export formatMilliseconds */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return formatDate; });
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("wy2R");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_0__);
+
+moment__WEBPACK_IMPORTED_MODULE_0___default.a.locale('zh-cn');
+/* unused harmony default export */ var _unused_webpack_default_export = (moment__WEBPACK_IMPORTED_MODULE_0___default.a);
+function formatSecond(time) {
+  return formatDate(time * 1000);
+}
+function formatMilliseconds(time) {
+  return formatDate(time);
+}
+function formatDate(time) {
+  const datetime = new Date(time);
+  const year = datetime.getFullYear();
+  const month = datetime.getMonth() + 1;
+  const day = datetime.getDate();
+  const hour = datetime.getHours();
+  const minute = datetime.getMinutes();
+  const second = datetime.getSeconds();
+  return `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')} ${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}:${second.toString().padStart(2, '0')}`;
+}
 
 /***/ }),
 

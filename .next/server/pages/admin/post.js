@@ -1436,8 +1436,8 @@ function CardContent(props) {
     key: "abstract",
     className: _styles_text_module_scss__WEBPACK_IMPORTED_MODULE_12___default.a.color
   }, post.abstract)];
-  const publishTime = Object(_utils_time__WEBPACK_IMPORTED_MODULE_11__[/* formatSecond */ "a"])(post.publish_time);
-  const editTime = Object(_utils_time__WEBPACK_IMPORTED_MODULE_11__[/* formatSecond */ "a"])(post.publish_time);
+  const publishTime = Object(_utils_time__WEBPACK_IMPORTED_MODULE_11__[/* formatSecond */ "b"])(post.publish_time);
+  const editTime = Object(_utils_time__WEBPACK_IMPORTED_MODULE_11__[/* formatSecond */ "b"])(post.publish_time);
   return __jsx(_components_container__WEBPACK_IMPORTED_MODULE_5__[/* Flex */ "a"], {
     direction: "TB",
     fullWidth: true
@@ -4026,17 +4026,21 @@ module.exports = {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return formatSecond; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return formatSecond; });
 /* unused harmony export formatMilliseconds */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return formatDate; });
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("wy2R");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_0__);
 
 moment__WEBPACK_IMPORTED_MODULE_0___default.a.locale('zh-cn');
 /* unused harmony default export */ var _unused_webpack_default_export = (moment__WEBPACK_IMPORTED_MODULE_0___default.a);
 function formatSecond(time) {
-  return formatMilliseconds(time * 1000);
+  return formatDate(time * 1000);
 }
 function formatMilliseconds(time) {
+  return formatDate(time);
+}
+function formatDate(time) {
   const datetime = new Date(time);
   const year = datetime.getFullYear();
   const month = datetime.getMonth() + 1;

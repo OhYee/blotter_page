@@ -1131,21 +1131,21 @@ class AdminPostList extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Compone
     }, {
       title: '发布时间',
       key: 'publish_time',
-      tooltip: text => Object(_utils_time__WEBPACK_IMPORTED_MODULE_15__[/* formatSecond */ "a"])(text),
+      tooltip: text => Object(_utils_time__WEBPACK_IMPORTED_MODULE_15__[/* formatSecond */ "b"])(text),
       sorter: true,
       minWidth: '10em',
       maxWidth: '15em',
       ellipsis: true,
-      render: text => Object(_utils_time__WEBPACK_IMPORTED_MODULE_15__[/* formatSecond */ "a"])(text)
+      render: text => Object(_utils_time__WEBPACK_IMPORTED_MODULE_15__[/* formatSecond */ "b"])(text)
     }, {
       title: '编辑时间',
       key: 'edit_time',
-      tooltip: text => Object(_utils_time__WEBPACK_IMPORTED_MODULE_15__[/* formatSecond */ "a"])(text),
+      tooltip: text => Object(_utils_time__WEBPACK_IMPORTED_MODULE_15__[/* formatSecond */ "b"])(text),
       sorter: true,
       minWidth: '10em',
       maxWidth: '15em',
       ellipsis: true,
-      render: text => Object(_utils_time__WEBPACK_IMPORTED_MODULE_15__[/* formatSecond */ "a"])(text)
+      render: text => Object(_utils_time__WEBPACK_IMPORTED_MODULE_15__[/* formatSecond */ "b"])(text)
     }, {
       title: '阅读量',
       key: 'view',
@@ -3674,17 +3674,21 @@ module.exports = {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return formatSecond; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return formatSecond; });
 /* unused harmony export formatMilliseconds */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return formatDate; });
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("wy2R");
 /* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_0__);
 
 moment__WEBPACK_IMPORTED_MODULE_0___default.a.locale('zh-cn');
 /* unused harmony default export */ var _unused_webpack_default_export = (moment__WEBPACK_IMPORTED_MODULE_0___default.a);
 function formatSecond(time) {
-  return formatMilliseconds(time * 1000);
+  return formatDate(time * 1000);
 }
 function formatMilliseconds(time) {
+  return formatDate(time);
+}
+function formatDate(time) {
   const datetime = new Date(time);
   const year = datetime.getFullYear();
   const month = datetime.getMonth() + 1;
