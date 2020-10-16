@@ -6,7 +6,7 @@ import Image from '@/components/image';
 import TagPart from '@/components/tag';
 import Card from '@/components/card';
 import { Flex } from '@/components/container';
-import { Eye, Calendar, Tag, Edit } from '@/components/svg';
+import { Eye, Calendar, Tag, Edit, Document } from '@/components/svg';
 import { A } from '@/components/button';
 import Loading from '@/components/loading';
 
@@ -15,6 +15,7 @@ import { concat } from '@/utils/component';
 import moment, { formatSecond } from '@/utils/time';
 
 import textStyles from '@/styles/text.module.scss';
+import styles from './post_card.module.scss';
 
 type PostCardProps = {
   post: Blotter.PostCard | undefined;
@@ -35,7 +36,7 @@ export function CardContent(props: { post: Blotter.PostCard; inPost?: boolean })
   const publishTime = formatSecond(post.publish_time);
   const editTime = formatSecond(post.publish_time);
   return (
-    <Flex direction="TB" fullWidth>
+    <Flex direction="TB" fullWidth className={styles.post_card}>
       {!inPost ? (
         <Link href="/post/[url]" as={`/post/${post.url}`}>
           <a className={textStyles.color}>{title}</a>
@@ -44,21 +45,33 @@ export function CardContent(props: { post: Blotter.PostCard; inPost?: boolean })
         title
       )}
 
-      <Flex mainAxis="flex-start">
+      <Flex mainAxis="flex-start" className={styles.info}>
         <Flex mainAxis="flex-start" mainSize="small">
           <Eye />
-          {post.view}
+          <span style={{ fontSize: '0.8em' }}>{!!post.view ? post.view : 0}</span>
         </Flex>
         <Flex mainAxis="flex-start" mainSize="small">
           <Calendar />
-          <time dateTime={publishTime.replace(' ', 'T') + 'T+08'}>{publishTime}</time>
+          <time dateTime={publishTime.replace(' ', 'T') + 'T+08'} style={{ fontSize: '0.8em' }}>
+            {publishTime}
+          </time>
         </Flex>
         {post.publish_time == post.edit_time ? null : (
           <Flex mainAxis="flex-start" mainSize="small">
             <Edit />
-            <time dateTime={editTime.replace(' ', 'T') + 'T+08'}>{editTime}</time>
+            <time dateTime={editTime.replace(' ', 'T') + 'T+08'} style={{ fontSize: '0.8em' }}>
+              {editTime}
+            </time>
           </Flex>
         )}
+
+        <Flex mainAxis="flex-start" mainSize="small">
+          <Document />
+          <span style={{ fontSize: '0.8em' }}>{`本文章共 ${
+            post.length
+          } 字 / 预计阅读时间 ${Math.max(1, Math.round(post.length / 400))} 分`}</span>
+        </Flex>
+
         {inPost && (context.user.permission & 1) == 1 ? (
           <Link href={`/admin/post?url=${post.url}`} passHref>
             <A primary neumorphism size="small" target="_blank">
