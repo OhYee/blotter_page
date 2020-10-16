@@ -98,15 +98,20 @@
       dd {
         text-indent: 2em;
         margin: 0;
+        padding: .1em 0;
       }
       dt {
         font-weight: bold;
+        padding: .1em 0;
       }
     }
 
     ul,
     ol {
       margin: 0;
+      li {
+           padding: .1em, 0;
+      }
     }
 
     details {
