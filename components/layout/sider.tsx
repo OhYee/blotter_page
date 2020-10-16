@@ -56,7 +56,10 @@ export default function Sider(props: {
           direction="TB"
           wrap={false}
           className={[shadowStyles.shadow, styles.siderbar].join(' ')}
-          style={{ width: collapsed ? (big_screen ? 80 : 0) : 200 }}
+          style={{
+            width: collapsed ? (big_screen ? 80 : 0) : 200,
+            maxWidth: collapsed ? (big_screen ? 80 : 0) : 200, // 苹果设备在 width = 0 时会恢复宽度，设置 max-width 来避免该问题
+          }}
         >
           <div />
 
