@@ -15,6 +15,7 @@ import FixedButton from '@/components/layout/fixed_button';
 import { Flex } from '@/components/container';
 
 import { concat } from '@/utils/component';
+import { message } from '../notification';
 
 interface BasicLayoutProps extends ComponentProps<'base'>, WithRouterProps {}
 interface BasicLayoutState {
@@ -48,6 +49,23 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
   componentDidMount() {
     this.context.callback({ big_screen: document.body.clientWidth > 1024 });
     window.addEventListener('resize', this.onResize);
+    // 苹果用户提醒
+    // https://github.com/facebook/react/issues/17258
+    var issafariBrowser = /Safari/.test(navigator.userAgent) && !/Chrome/.test(navigator.userAgent);
+    if (issafariBrowser) {
+      message({
+        alertType: 'warning',
+        autoClose: 0,
+        title: '苹果用户提醒',
+        content: (
+          <div>
+            检测到您是苹果用户，IOS 13 后 Safari 的 Webkit 可能存在
+            Bug，部分按钮可能难以触发，请快速多次点击或尝试长按触发。相关讨论可见{' '}
+            <a href="https://github.com/facebook/react/issues/17258">Github</a>
+          </div>
+        ),
+      });
+    }
   }
 
   componentWillUnmount() {
