@@ -66,7 +66,7 @@ export default function Sider(props: {
           <img
             src={avatar}
             width="100%"
-            height="100%"
+            // 在 Ubuntu 的 Chrome 上，点击 menu 项时，图片会奇怪地变大。删除 height 参数解决
             style={{ background: 'white', borderRadius: '100px', maxWidth: '120px' }}
           />
           {!user.existed ? (
