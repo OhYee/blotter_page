@@ -70,6 +70,7 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
       raw: '',
       content: '',
       tags: [],
+      length: 0,
     };
   }
 
@@ -103,7 +104,10 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
     this.setState({ loading: true });
     try {
       var r = await markdown(source);
-      this.setState({ content: r.html });
+      this.setState({
+        content: r.html,
+        length: r.html.replace(/<[^>]+>|\s/g, '').match(/[\u007f-\uffff]/g).length,
+      });
     } catch {
       var r = { html: '' };
     }
@@ -169,6 +173,7 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
       raw: this.state.raw,
       images: this.state.images,
       content: this.state.content,
+      length: this.state.length,
     };
     return post;
   };
