@@ -72,6 +72,7 @@ declare namespace Blotter {
     edit_time: number;
     tags: Tag[];
     head_image: string;
+    length: number;
   }
   interface Post extends PostCard {
     content: string;
