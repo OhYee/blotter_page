@@ -13,6 +13,7 @@ import Carousel from '@/components/carousel';
 import { Flex } from '@/components/container';
 
 import { travels_get_url } from '@/utils/api';
+import { Context } from '@/utils/global';
 
 import styles from '@/pages/post/post.module.scss';
 
@@ -25,6 +26,8 @@ interface PostContentState {
 }
 
 class PostContent extends Component<PostContentProps, PostContentState> {
+  static contextType = Context;
+  context!: React.ContextType<typeof Context>;
   constructor(props) {
     super(props);
     this.state = { travel: undefined };
@@ -146,6 +149,7 @@ class PostContent extends Component<PostContentProps, PostContentState> {
 
           <section
             className="post-content"
+            style={{ fontSize: this.context.big_screen ? 16 : 14 }}
             dangerouslySetInnerHTML={{ __html: this.props.post.content }}
           />
         </Flex>
