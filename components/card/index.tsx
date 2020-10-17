@@ -14,6 +14,7 @@ export declare type CardProps = ComponentProps<{
   cover?: React.ReactNode;
   className?: string;
   style?: React.CSSProperties;
+  mainStyle?: React.CSSProperties;
 }>;
 
 function Card(props: CardProps, ref?: React.LegacyRef<HTMLDivElement>) {
@@ -25,6 +26,7 @@ function Card(props: CardProps, ref?: React.LegacyRef<HTMLDivElement>) {
     className,
     style,
     children,
+    mainStyle,
     ...restProps
   } = props;
   var classList = [styles.card, className];
@@ -36,7 +38,9 @@ function Card(props: CardProps, ref?: React.LegacyRef<HTMLDivElement>) {
     <div {...restProps} ref={ref} className={concat(...classList)} style={style}>
       <Flex direction="TB" fullWidth>
         {cover}
-        <div className={styles.main}>{children}</div>
+        <div className={styles.main} style={mainStyle}>
+          {children}
+        </div>
       </Flex>
     </div>
   );
