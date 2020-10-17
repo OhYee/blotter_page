@@ -1,8 +1,9 @@
 .post {
   :global(.post-content) {
     // margin-top: 16px;
-    line-height: 1.5;
+    line-height: 2;
     overflow-wrap: break-word;
+    font-size: 16px;
 
     p {
       margin: 0;
@@ -98,11 +99,11 @@
       dd {
         text-indent: 2em;
         margin: 0;
-        padding: .1em 0;
+        padding: 0.1em 0;
       }
       dt {
         font-weight: bold;
-        padding: .1em 0;
+        padding: 0.1em 0;
       }
     }
 
@@ -110,7 +111,7 @@
     ol {
       margin: 0;
       li {
-           padding: .1em, 0;
+        padding: 0.1em, 0;
       }
     }
 

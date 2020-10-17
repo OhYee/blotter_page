@@ -26,6 +26,9 @@ interface PostPageProps extends ComponentProps<'base'>, WithRouterProps {
 interface PostPageState {}
 
 class PostPage extends React.Component<PostPageProps, PostPageState> {
+  static contextType = Context;
+  context!: React.ContextType<typeof Context>;
+
   static defaultProps = {
     anchors: [],
   };
@@ -124,8 +127,15 @@ class PostPage extends React.Component<PostPageProps, PostPageState> {
             </Head>
           )}
         </Context.Consumer>
-        <Flex direction="TB" fullWidth>
-          <Card neumorphism>
+        <Flex
+          direction="TB"
+          fullWidth
+          style={{
+            maxWidth: this.context.big_screen ? 'calc(100vw - 600px)' : '100%',
+            margin: 'auto',
+          }}
+        >
+          <Card neumorphism style={{ padding: 20 }}>
             <PostContent post={this.props.post} />
           </Card>
           <Card neumorphism>{this.render_share()}</Card>
