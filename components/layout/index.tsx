@@ -110,7 +110,7 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
           mainSize="large"
           style={{
             minHeight: '100vh',
-            width: this.context.big_screen ? 'calc(100vw - 320px)' : '90%',
+            width: this.context.big_screen ? 'calc(100vw - 320px)' : 'calc(100vw - 20px)',
             margin: 'auto',
           }}
           itemStyle={{ width: '100%' }}
