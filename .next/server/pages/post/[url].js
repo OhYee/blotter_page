@@ -2079,11 +2079,8 @@ function Tag(props) {
       color: getFrontColor(tag.color)
     } : {})
   }, tag.icon ? __jsx(avatar["a" /* default */], {
-    src: tag.icon,
-    style: {
-      fontSize: '0.75em',
-      background: 'white'
-    }
+    className: tag_module_default.a.icon,
+    src: tag.icon
   }) : null, tag.name))), !!onClose && __jsx(svg["e" /* Close */], {
     onClick: onClose,
     style: {
@@ -2710,7 +2707,7 @@ function CardContent(props) {
     neumorphism: true,
     size: "small",
     target: "_blank"
-  }, "\u7F16\u8F91")) : null), __jsx(_components_container__WEBPACK_IMPORTED_MODULE_5__[/* Flex */ "a"], {
+  }, "\u7F16\u8F91")) : null), __jsx("div", null), __jsx(_components_container__WEBPACK_IMPORTED_MODULE_5__[/* Flex */ "a"], {
     mainAxis: "flex-start",
     subSize: "middle"
   }, [__jsx(_components_svg__WEBPACK_IMPORTED_MODULE_6__[/* Tag */ "Q"], {
@@ -3470,6 +3467,8 @@ class PostPage extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
   constructor(props) {
     super(props);
 
+    _defineProperty(this, "context", void 0);
+
     _defineProperty(this, "render_share", () => {
       return __jsx(_utils_global__WEBPACK_IMPORTED_MODULE_12__[/* Context */ "a"].Consumer, null, context => {
         if (typeof document === 'undefined') return null;
@@ -3544,9 +3543,16 @@ class PostPage extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       content: this.props.post.abstract
     }))), __jsx(_components_container__WEBPACK_IMPORTED_MODULE_4__[/* Flex */ "a"], {
       direction: "TB",
-      fullWidth: true
+      fullWidth: true,
+      style: {
+        maxWidth: this.context.big_screen ? 'calc(100vw - 600px)' : '100%',
+        margin: 'auto'
+      }
     }, __jsx(_components_card__WEBPACK_IMPORTED_MODULE_7__[/* default */ "a"], {
-      neumorphism: true
+      neumorphism: true,
+      style: {
+        padding: 20
+      }
     }, __jsx(_components_post_content__WEBPACK_IMPORTED_MODULE_5__[/* default */ "a"], {
       post: this.props.post
     })), __jsx(_components_card__WEBPACK_IMPORTED_MODULE_7__[/* default */ "a"], {
@@ -3564,6 +3570,8 @@ class PostPage extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
   }
 
 }
+
+_defineProperty(PostPage, "contextType", _utils_global__WEBPACK_IMPORTED_MODULE_12__[/* Context */ "a"]);
 
 _defineProperty(PostPage, "defaultProps", {
   anchors: []
@@ -5590,7 +5598,8 @@ const Flex = Object.assign(FlexComponent, {
 
 // Exports
 module.exports = {
-	"tag": "tag_tag__3U27K"
+	"tag": "tag_tag__3U27K",
+	"icon": "tag_icon__1rOdI"
 };
 
 

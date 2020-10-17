@@ -2278,7 +2278,6 @@ function defaultRender(current, pageNumber, size, page, onChange, disabled) {
     case -2:
       {
         return __jsx(_components_button__WEBPACK_IMPORTED_MODULE_2__[/* default */ "b"], {
-          neumorphism: true,
           disabled: disabled || current - 1 < 1,
           onClick: () => onChange(current - 1, size),
           icon: __jsx(_components_svg__WEBPACK_IMPORTED_MODULE_3__[/* Pre */ "F"], null)
@@ -2288,7 +2287,6 @@ function defaultRender(current, pageNumber, size, page, onChange, disabled) {
     case -3:
       {
         return __jsx(_components_button__WEBPACK_IMPORTED_MODULE_2__[/* default */ "b"], {
-          neumorphism: true,
           disabled: disabled || current + 1 > pageNumber,
           onClick: () => onChange(current + 1, size),
           icon: __jsx(_components_svg__WEBPACK_IMPORTED_MODULE_3__[/* Next */ "D"], null)
@@ -2303,7 +2301,6 @@ function defaultRender(current, pageNumber, size, page, onChange, disabled) {
     default:
       {
         return __jsx(_components_button__WEBPACK_IMPORTED_MODULE_2__[/* default */ "b"], {
-          neumorphism: true,
           disabled: disabled || current === page,
           clicked: current === page,
           onClick: () => onChange(page, size)

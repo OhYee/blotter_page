@@ -167,6 +167,18 @@ module.exports = __webpack_require__("cha2");
 
 /***/ }),
 
+/***/ "1ndZ":
+/***/ (function(module, exports) {
+
+// Exports
+module.exports = {
+	"footer": "footer_footer__1KZqX",
+	"friends": "footer_friends__3aTnK"
+};
+
+
+/***/ }),
+
 /***/ "284h":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2746,8 +2758,13 @@ function Menus(props) {
 // EXTERNAL MODULE: ./components/if.tsx
 var components_if = __webpack_require__("IgCw");
 
+// EXTERNAL MODULE: ./components/layout/footer.module.scss
+var footer_module = __webpack_require__("1ndZ");
+var footer_module_default = /*#__PURE__*/__webpack_require__.n(footer_module);
+
 // CONCATENATED MODULE: ./components/layout/footer.tsx
 var footer_jsx = external_react_default.a.createElement;
+
 
 
 
@@ -2760,7 +2777,8 @@ function Footer(props) {
     friends
   } = props;
   return footer_jsx(container["a" /* Flex */], {
-    direction: "TB"
+    direction: "TB",
+    className: footer_module_default.a.footer
   }, footer_jsx(container["a" /* Flex */], {
     wrap: false
   }, footer_jsx(svg["J" /* RSS */], {
@@ -2783,7 +2801,8 @@ function Footer(props) {
     condition: !!friends && friends.length > 0
   }, footer_jsx(container["a" /* Flex */], {
     mainAxis: "center",
-    subSize: "small"
+    subSize: "small",
+    className: footer_module_default.a.friends
   }, [footer_jsx("strong", {
     key: "title"
   }, "\u4F18\u79C0\u535A\u5BA2\u8BA2\u9605\uFF1A"), ...friends.map(friend => footer_jsx("a", {

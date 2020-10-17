@@ -1778,11 +1778,8 @@ function Tag(props) {
       color: getFrontColor(tag.color)
     } : {})
   }, tag.icon ? __jsx(avatar["a" /* default */], {
-    src: tag.icon,
-    style: {
-      fontSize: '0.75em',
-      background: 'white'
-    }
+    className: tag_module_default.a.icon,
+    src: tag.icon
   }) : null, tag.name))), !!onClose && __jsx(svg["e" /* Close */], {
     onClick: onClose,
     style: {
@@ -1915,7 +1912,6 @@ function pageRender(current, pageNumber, size, page, onChange, disabled) {
           href: `/archives?page=${current - 1}&size=${size}`,
           passHref: true
         }, __jsx(_components_button__WEBPACK_IMPORTED_MODULE_6__[/* A */ "a"], {
-          neumorphism: true,
           disabled: disabled || current - 1 < 1,
           onClick: () => onChange(current - 1, size),
           icon: __jsx(_components_svg__WEBPACK_IMPORTED_MODULE_5__[/* Pre */ "F"], null)
@@ -1928,7 +1924,6 @@ function pageRender(current, pageNumber, size, page, onChange, disabled) {
           href: `/archives?page=${current + 1}&size=${size}`,
           passHref: true
         }, __jsx(_components_button__WEBPACK_IMPORTED_MODULE_6__[/* A */ "a"], {
-          neumorphism: true,
           disabled: disabled || current + 1 > pageNumber,
           onClick: () => onChange(current + 1, size),
           icon: __jsx(_components_svg__WEBPACK_IMPORTED_MODULE_5__[/* Next */ "D"], null)
@@ -1946,7 +1941,6 @@ function pageRender(current, pageNumber, size, page, onChange, disabled) {
           href: `/archives?page=${page}&size=${size}`,
           passHref: true
         }, __jsx(_components_button__WEBPACK_IMPORTED_MODULE_6__[/* A */ "a"], {
-          neumorphism: true,
           disabled: disabled || current === page,
           clicked: current === page,
           onClick: () => onChange(page, size)
@@ -2533,7 +2527,7 @@ function CardContent(props) {
     neumorphism: true,
     size: "small",
     target: "_blank"
-  }, "\u7F16\u8F91")) : null), __jsx(_components_container__WEBPACK_IMPORTED_MODULE_5__[/* Flex */ "a"], {
+  }, "\u7F16\u8F91")) : null), __jsx("div", null), __jsx(_components_container__WEBPACK_IMPORTED_MODULE_5__[/* Flex */ "a"], {
     mainAxis: "flex-start",
     subSize: "middle"
   }, [__jsx(_components_svg__WEBPACK_IMPORTED_MODULE_6__[/* Tag */ "Q"], {
@@ -2892,7 +2886,6 @@ function defaultRender(current, pageNumber, size, page, onChange, disabled) {
     case -2:
       {
         return __jsx(_components_button__WEBPACK_IMPORTED_MODULE_2__[/* default */ "b"], {
-          neumorphism: true,
           disabled: disabled || current - 1 < 1,
           onClick: () => onChange(current - 1, size),
           icon: __jsx(_components_svg__WEBPACK_IMPORTED_MODULE_3__[/* Pre */ "F"], null)
@@ -2902,7 +2895,6 @@ function defaultRender(current, pageNumber, size, page, onChange, disabled) {
     case -3:
       {
         return __jsx(_components_button__WEBPACK_IMPORTED_MODULE_2__[/* default */ "b"], {
-          neumorphism: true,
           disabled: disabled || current + 1 > pageNumber,
           onClick: () => onChange(current + 1, size),
           icon: __jsx(_components_svg__WEBPACK_IMPORTED_MODULE_3__[/* Next */ "D"], null)
@@ -2917,7 +2909,6 @@ function defaultRender(current, pageNumber, size, page, onChange, disabled) {
     default:
       {
         return __jsx(_components_button__WEBPACK_IMPORTED_MODULE_2__[/* default */ "b"], {
-          neumorphism: true,
           disabled: disabled || current === page,
           clicked: current === page,
           onClick: () => onChange(page, size)
@@ -4886,7 +4877,8 @@ const Flex = Object.assign(FlexComponent, {
 
 // Exports
 module.exports = {
-	"tag": "tag_tag__3U27K"
+	"tag": "tag_tag__3U27K",
+	"icon": "tag_icon__1rOdI"
 };
 
 

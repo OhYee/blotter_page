@@ -1835,11 +1835,8 @@ function Tag(props) {
       color: getFrontColor(tag.color)
     } : {})
   }, tag.icon ? __jsx(avatar["a" /* default */], {
-    src: tag.icon,
-    style: {
-      fontSize: '0.75em',
-      background: 'white'
-    }
+    className: tag_module_default.a.icon,
+    src: tag.icon
   }) : null, tag.name))), !!onClose && __jsx(svg["e" /* Close */], {
     onClick: onClose,
     style: {
@@ -2466,7 +2463,7 @@ function CardContent(props) {
     neumorphism: true,
     size: "small",
     target: "_blank"
-  }, "\u7F16\u8F91")) : null), __jsx(_components_container__WEBPACK_IMPORTED_MODULE_5__[/* Flex */ "a"], {
+  }, "\u7F16\u8F91")) : null), __jsx("div", null), __jsx(_components_container__WEBPACK_IMPORTED_MODULE_5__[/* Flex */ "a"], {
     mainAxis: "flex-start",
     subSize: "middle"
   }, [__jsx(_components_svg__WEBPACK_IMPORTED_MODULE_6__[/* Tag */ "Q"], {
@@ -5972,7 +5969,8 @@ module.exports = {
 
 // Exports
 module.exports = {
-	"tag": "tag_tag__3U27K"
+	"tag": "tag_tag__3U27K",
+	"icon": "tag_icon__1rOdI"
 };
 
 
