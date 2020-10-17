@@ -36,7 +36,7 @@ export default function Login(props: { onClose?: () => void }) {
   }, [setLoading, props.onClose, getUsername, getPassword]);
 
   return (
-    <Flex direction="TB" mainSize="large" fullWidth style={{ minWidth: '50vw' }}>
+    <Flex direction="TB" mainSize="large" fullWidth>
       <Input
         prefix={<User />}
         placeholder="用户名"
@@ -68,7 +68,7 @@ export default function Login(props: { onClose?: () => void }) {
 
 export function LoginModal(props: { show: boolean; onClose?: () => void }) {
   return (
-    <Modal show={props.show} onClose={props.onClose}>
+    <Modal show={props.show} onClose={props.onClose} style={{ maxWidth: 500, width: '90%' }}>
       <Login onClose={props.onClose} />
     </Modal>
   );
