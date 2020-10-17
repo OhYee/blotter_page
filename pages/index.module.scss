@@ -1,0 +1,19 @@
+.index {
+  .search_card {
+    line-height: 2em;
+    position: relative;
+    overflow: hidden;
+    transition: box-shadow var(--transition-time), height var(--transition-time);
+    .mask {
+      width: 100%;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(0deg, var(--background), 70%, transparent);
+      text-align: center;
+      transition: background var(--transition-time), padding var(--transition-time);
+      cursor: pointer;
+    }
+  }
+}

@@ -6,18 +6,16 @@ import Link from 'next/link';
 
 import { Flex } from '@/components/container';
 import PostList from '@/components/post_list';
-import Input, { CheckBox } from '@/components/input';
-import { Search } from '@/components/svg';
+import { Left } from '@/components/svg';
 import PostSearch from '@/components/post_search';
-
-import { Context } from '@/utils/global';
-
-import { indexPosts, tagsSearch } from '@/utils/api';
-import { waitUntil } from '@/utils/debounce';
-import TagPart from '@/components/tag';
-import TagSearch from '@/components/tag_search';
 import Card from '@/components/card';
 import Button from '@/components/button';
+
+import { Context } from '@/utils/global';
+import { indexPosts, tagsSearch } from '@/utils/api';
+import { waitUntil } from '@/utils/debounce';
+
+import styles from './index.module.scss';
 
 interface IndexProps extends React.ComponentProps<'base'> {
   posts: Blotter.PostCard[];
@@ -35,6 +33,7 @@ interface IndexState {
   tags: Blotter.Tag[];
   with_tags: Blotter.Tag[];
   without_tags: Blotter.Tag[];
+  show: boolean;
 }
 
 class Index extends React.Component<IndexProps, IndexState> {
@@ -60,6 +59,7 @@ class Index extends React.Component<IndexProps, IndexState> {
       tags: [],
       with_tags: [],
       without_tags: [],
+      show: false,
     };
   }
 
@@ -118,7 +118,7 @@ class Index extends React.Component<IndexProps, IndexState> {
 
   render() {
     return (
-      <div>
+      <div className={styles.index}>
         <Context.Consumer>
           {(context) => (
             <Head>
@@ -127,7 +127,11 @@ class Index extends React.Component<IndexProps, IndexState> {
           )}
         </Context.Consumer>
         <Flex direction="TB" fullWidth>
-          <Card neumorphism style={{ lineHeight: '2em' }}>
+          <Card
+            className={styles.search_card}
+            neumorphism
+            style={{ height: !this.state.show ? 100 : 230 }}
+          >
             <PostSearch
               searchWord={this.state.search}
               onSearchChange={this.onChange}
@@ -143,6 +147,22 @@ class Index extends React.Component<IndexProps, IndexState> {
               }
               tags={this.state.tags}
             />
+            <div
+              className={styles.mask}
+              style={{
+                paddingTop: this.state.show ? 0 : 30,
+              }}
+              onClick={() => {
+                this.setState((state) => ({ show: !state.show }));
+              }}
+            >
+              <Left
+                style={{
+                  transform: this.state.show ? 'rotate(90deg)' : 'rotate(270deg)',
+                  transition: 'transform var(--transition-time)',
+                }}
+              />
+            </div>
           </Card>
 
           <PostList
@@ -154,7 +174,7 @@ class Index extends React.Component<IndexProps, IndexState> {
             total={this.state.total}
             callback={this.state.callback}
           />
-          <Flex.Item className="textCenter" style={{ textAlign: "center" }}>
+          <Flex.Item className="textCenter" style={{ textAlign: 'center', marginTop: 20 }}>
             <Link href="/archives?page=2&size=10">
               <Button neumorphism>查看更多</Button>
             </Link>
