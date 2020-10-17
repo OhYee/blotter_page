@@ -1,0 +1,10 @@
+.footer {
+  font-size: 0.8em;
+  color: var(--secondary);
+  transition: color var(--transition-time);
+  .friends {
+    color: var(--color);
+    transition: color var(--transition-time);
+    margin-top: 20px;
+  }
+}
