@@ -115,7 +115,7 @@ class Friends extends React.Component<FriendsProps, FriendsState> {
                   ellipsis
                   title={!!friend.description ? friend.description : '没有描述'}
                   className={textStyles.color}
-                  style={{ lineHeight: '2em', width: '100%' }}
+                  style={{ lineHeight: '2em', width: '13em' }}
                 >
                   {!!friend.description ? friend.description : '没有描述'}
                 </Tooltip>
