@@ -135,7 +135,11 @@ class PostPage extends React.Component<PostPageProps, PostPageState> {
             margin: 'auto',
           }}
         >
-          <Card neumorphism style={{ padding: 20 }}>
+          <Card
+            neumorphism
+            style={{ padding: this.context.big_screen ? 20 : 0 }}
+            mainStyle={this.context.big_screen ? {} : { padding: 10 }}
+          >
             <PostContent post={this.props.post} />
           </Card>
           <Card neumorphism>{this.render_share()}</Card>
