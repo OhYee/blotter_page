@@ -248,7 +248,10 @@ const Comment: React.FC<{
                   {!quote && depth != 1 && depth >= maxDepth ? (
                     <Comment comment={parent} depth={depth} quote={true} />
                   ) : null}
-                  <div dangerouslySetInnerHTML={{ __html: comment.content }}></div>
+                  <div
+                    style={{ wordBreak: 'break-all' }}
+                    dangerouslySetInnerHTML={{ __html: comment.content }}
+                  ></div>
                 </div>
               ) : (
                 delWarning
