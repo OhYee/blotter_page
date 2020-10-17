@@ -6,6 +6,11 @@
   left: 0;
   // 边栏展开的阴影 z 坐标为 3，这里应该大于3
   z-index: 4;
+  pointer-events: none;
+  & > * {
+    pointer-events: all;
+  }
+
   .siderbar {
     transition: background var(--transition-time), width var(--transition-time),
       box-shadow var(--transition-time), max-width var(--transition-time);
@@ -40,7 +45,6 @@
       transition: padding-left var(--transition-time), text-align var(--transition-time),
         background var(--transition-time), border-right var(--transition-time);
       list-style: none;
-      width: 100%;
       border-right: 0px;
 
       // 垂直居中
