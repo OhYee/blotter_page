@@ -1,4 +1,7 @@
 .tag {
+  border-radius: 20px;
+  padding: 0 10px;
+  font-size: 0.8em;
   height: 2em;
   overflow: hidden;
   color: var(--color);
@@ -6,4 +9,9 @@
   transition: color var(--transition-time), background var(--transition-time),
     box-shadow var(--transition-time) !important;
   width: fit-content;
+  .icon {
+    margin-left: -10px;
+    font-size: 0.75em;
+    background: white;
+  }
 }

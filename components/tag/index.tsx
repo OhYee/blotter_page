@@ -93,7 +93,7 @@ export default function Tag(props: TagProps) {
             }}
           >
             {tag.icon ? (
-              <Avatar src={tag.icon} style={{ fontSize: '0.75em', background: 'white' }} />
+              <Avatar className={styles.icon} src={tag.icon}  />
             ) : null}
             {tag.name}
           </Flex>
