@@ -19,7 +19,6 @@ function defaultRender(
     case -2: {
       return (
         <Button
-          neumorphism
           disabled={disabled || current - 1 < 1}
           onClick={() => onChange(current - 1, size)}
           icon={<Pre />}
@@ -29,7 +28,6 @@ function defaultRender(
     case -3: {
       return (
         <Button
-          neumorphism
           disabled={disabled || current + 1 > pageNumber}
           onClick={() => onChange(current + 1, size)}
           icon={<Next />}
@@ -42,7 +40,6 @@ function defaultRender(
     default: {
       return (
         <Button
-          neumorphism
           disabled={disabled || current === page}
           clicked={current === page}
           onClick={() => onChange(page, size)}
@@ -55,14 +52,14 @@ function defaultRender(
 }
 
 export declare type PaginationPropsRenderFunction = (
-    current: number,
-    pageNumber: number,
-    size: number,
-    page: number,
-    onChange: (page: number, size: number) => void,
-    disabled: boolean,
+  current: number,
+  pageNumber: number,
+  size: number,
+  page: number,
+  onChange: (page: number, size: number) => void,
+  disabled: boolean,
 ) => React.ReactNode; // -2 prepage -3 next page -1 dots
-  
+
 export declare type PaginationProps = ComponentProps<{
   page?: number;
   size?: number;

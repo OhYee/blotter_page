@@ -28,7 +28,6 @@ function pageRender(
       return (
         <Link href={`/archives?page=${current - 1}&size=${size}`} passHref>
           <A
-            neumorphism
             disabled={disabled || current - 1 < 1}
             onClick={() => onChange(current - 1, size)}
             icon={<Pre />}
@@ -40,7 +39,6 @@ function pageRender(
       return (
         <Link href={`/archives?page=${current + 1}&size=${size}`} passHref>
           <A
-            neumorphism
             disabled={disabled || current + 1 > pageNumber}
             onClick={() => onChange(current + 1, size)}
             icon={<Next />}
@@ -55,7 +53,6 @@ function pageRender(
       return (
         <Link href={`/archives?page=${page}&size=${size}`} passHref>
           <A
-            neumorphism
             disabled={disabled || current === page}
             clicked={current === page}
             onClick={() => onChange(page, size)}

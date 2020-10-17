@@ -82,7 +82,6 @@ class TagDetail extends React.Component<TagDetailProps, TagDetailState> {
             passHref
           >
             <A
-              neumorphism
               disabled={disabled || current - 1 < 1}
               onClick={() => onChange(current - 1, size)}
               icon={<Pre />}
@@ -98,7 +97,6 @@ class TagDetail extends React.Component<TagDetailProps, TagDetailState> {
             passHref
           >
             <A
-              neumorphism
               disabled={disabled || current + 1 > pageNumber}
               onClick={() => onChange(current + 1, size)}
               icon={<Next />}
@@ -117,7 +115,6 @@ class TagDetail extends React.Component<TagDetailProps, TagDetailState> {
             passHref
           >
             <A
-              neumorphism
               disabled={disabled || current === page}
               clicked={current === page}
               onClick={() => onChange(page, size)}
