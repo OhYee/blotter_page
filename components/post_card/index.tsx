@@ -34,7 +34,7 @@ export function CardContent(props: { post: Blotter.PostCard; inPost?: boolean })
     </p>,
   ];
   const publishTime = formatSecond(post.publish_time);
-  const editTime = formatSecond(post.publish_time);
+  const editTime = formatSecond(post.edit_time);
   return (
     <Flex direction="TB" fullWidth className={styles.post_card}>
       {!inPost ? (
