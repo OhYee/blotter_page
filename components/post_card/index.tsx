@@ -81,6 +81,7 @@ export function CardContent(props: { post: Blotter.PostCard; inPost?: boolean })
         ) : null}
       </Flex>
 
+      <div></div>
       <Flex mainAxis="flex-start" subSize="middle">
         {[
           <Tag key="tag_icon" />,
