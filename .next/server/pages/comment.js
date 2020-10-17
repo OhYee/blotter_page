@@ -1057,6 +1057,9 @@ const Comment = props => {
     depth: depth,
     quote: true
   }) : null, __jsx("div", {
+    style: {
+      wordBreak: 'break-all'
+    },
     dangerouslySetInnerHTML: {
       __html: comment.content
     }

@@ -1576,6 +1576,9 @@ const Comment = props => {
     depth: depth,
     quote: true
   }) : null, __jsx("div", {
+    style: {
+      wordBreak: 'break-all'
+    },
     dangerouslySetInnerHTML: {
       __html: comment.content
     }
@@ -4973,6 +4976,9 @@ function Carousel(props) {
 // EXTERNAL MODULE: ./utils/api.ts + 1 modules
 var api = __webpack_require__("AoAR");
 
+// EXTERNAL MODULE: ./utils/global.ts
+var global = __webpack_require__("dSKx");
+
 // EXTERNAL MODULE: ./pages/post/post.module.scss
 var post_module = __webpack_require__("tyV5");
 var post_module_default = /*#__PURE__*/__webpack_require__.n(post_module);
@@ -4994,9 +5000,12 @@ function post_content_defineProperty(obj, key, value) { if (key in obj) { Object
 
 
 
+
 class post_content_PostContent extends external_react_["Component"] {
   constructor(props) {
     super(props);
+
+    post_content_defineProperty(this, "context", void 0);
 
     post_content_defineProperty(this, "isTravel", () => {
       return this.props.post.tags.filter(item => item.name === '游记' && item.short === 'travels').length > 0;
@@ -5111,6 +5120,9 @@ class post_content_PostContent extends external_react_["Component"] {
       autoplay: 5000
     }) : null, post_content_jsx("section", {
       className: "post-content",
+      style: {
+        fontSize: this.context.big_screen ? 16 : 14
+      },
       dangerouslySetInnerHTML: {
         __html: this.props.post.content
       }
@@ -5118,6 +5130,8 @@ class post_content_PostContent extends external_react_["Component"] {
   }
 
 }
+
+post_content_defineProperty(post_content_PostContent, "contextType", global["a" /* Context */]);
 
 /* harmony default export */ var components_post_content = __webpack_exports__["a"] = (post_content_PostContent);
 
