@@ -3136,9 +3136,10 @@ function Card(props, ref) {
     cover,
     className,
     style,
-    children
+    children,
+    mainStyle
   } = props,
-        restProps = _objectWithoutProperties(props, ["shadow", "neumorphism", "neumorphismInset", "cover", "className", "style", "children"]);
+        restProps = _objectWithoutProperties(props, ["shadow", "neumorphism", "neumorphismInset", "cover", "className", "style", "children", "mainStyle"]);
 
   var classList = [_card_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.card, className];
   if (shadow) classList.push(_styles_shadow_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.shadow);
@@ -3152,7 +3153,8 @@ function Card(props, ref) {
     direction: "TB",
     fullWidth: true
   }, cover, __jsx("div", {
-    className: _card_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.main
+    className: _card_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.main,
+    style: mainStyle
   }, children)));
 }
 
@@ -3551,7 +3553,10 @@ class PostPage extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
     }, __jsx(_components_card__WEBPACK_IMPORTED_MODULE_7__[/* default */ "a"], {
       neumorphism: true,
       style: {
-        padding: 20
+        padding: this.context.big_screen ? 20 : 0
+      },
+      mainStyle: this.context.big_screen ? {} : {
+        padding: 10
       }
     }, __jsx(_components_post_content__WEBPACK_IMPORTED_MODULE_5__[/* default */ "a"], {
       post: this.props.post

@@ -426,6 +426,7 @@ function Card(props, ref) {
     className,
     style,
 <<<<<<< HEAD
+<<<<<<< HEAD
     children,
     mainStyle
   } = props,
@@ -454,8 +455,12 @@ function Card(props, ref) {
 /* harmony default export */ __webpack_exports__["a"] = (/*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.forwardRef(Card));
 =======
     children
+=======
+    children,
+    mainStyle
+>>>>>>> Update gh-pages to output generated at 0f2f69c
   } = props,
-        restProps = _objectWithoutProperties(props, ["shadow", "neumorphism", "neumorphismInset", "cover", "className", "style", "children"]);
+        restProps = _objectWithoutProperties(props, ["shadow", "neumorphism", "neumorphismInset", "cover", "className", "style", "children", "mainStyle"]);
 
   var classList = [_card_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.card, className];
   if (shadow) classList.push(_styles_shadow_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.shadow);
@@ -469,7 +474,8 @@ function Card(props, ref) {
     direction: "TB",
     fullWidth: true
   }, cover, __jsx("div", {
-    className: _card_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.main
+    className: _card_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.main,
+    style: mainStyle
   }, children)));
 }
 
