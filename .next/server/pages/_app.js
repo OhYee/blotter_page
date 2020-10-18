@@ -2567,10 +2567,7 @@ function Login(props) {
   return __jsx(container["a" /* Flex */], {
     direction: "TB",
     mainSize: "large",
-    fullWidth: true,
-    style: {
-      minWidth: '50vw'
-    }
+    fullWidth: true
   }, __jsx(input["j" /* default */], {
     prefix: __jsx(svg["T" /* User */], null),
     placeholder: "\u7528\u6237\u540D",
@@ -2602,7 +2599,11 @@ function Login(props) {
 function LoginModal(props) {
   return __jsx(popover["b" /* Modal */], {
     show: props.show,
-    onClose: props.onClose
+    onClose: props.onClose,
+    style: {
+      maxWidth: 500,
+      width: '90%'
+    }
   }, __jsx(Login, {
     onClose: props.onClose
   }));
