@@ -2659,7 +2659,7 @@ function CardContent(props) {
     className: _styles_text_module_scss__WEBPACK_IMPORTED_MODULE_12___default.a.color
   }, post.abstract)];
   const publishTime = Object(_utils_time__WEBPACK_IMPORTED_MODULE_11__[/* formatSecond */ "b"])(post.publish_time);
-  const editTime = Object(_utils_time__WEBPACK_IMPORTED_MODULE_11__[/* formatSecond */ "b"])(post.publish_time);
+  const editTime = Object(_utils_time__WEBPACK_IMPORTED_MODULE_11__[/* formatSecond */ "b"])(post.edit_time);
   return __jsx(_components_container__WEBPACK_IMPORTED_MODULE_5__[/* Flex */ "a"], {
     direction: "TB",
     fullWidth: true,
