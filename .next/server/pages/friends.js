@@ -1163,7 +1163,7 @@ class Friends extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
         className: _styles_text_module_scss__WEBPACK_IMPORTED_MODULE_10___default.a.color,
         style: {
           lineHeight: '2em',
-          width: '100%'
+          width: '13em'
         }
       }, !!friend.description ? friend.description : '没有描述')))), __jsx(_components_container__WEBPACK_IMPORTED_MODULE_3__[/* Flex */ "a"], {
         direction: "TB",
