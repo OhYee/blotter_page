@@ -76,11 +76,10 @@ export default function DatePicker(props: DatePickerProps) {
         switch (type) {
           case 'datetime':
             return onChange(new Date(date.Y, date.M - 1, date.D, time.H, time.M, time.S).getTime());
-
           case 'date':
             return onChange(new Date(date.Y, date.M - 1, date.D).getTime());
           case 'time':
-            return onChange(time.H * 3600 + time.M * 60 + time.S);
+            return onChange(new Date(1970, 0, 1, time.H, time.M, time.S).getTime());
         }
       }
     },
@@ -146,8 +145,12 @@ export default function DatePicker(props: DatePickerProps) {
           label={label}
           lablePlacement={lablePlacement}
           placeholder={placeholder}
-          editable={false}
           value={format}
+          editable={!!onChange}
+          onChange={(value) => {
+            const datetime = new Date(value);
+            if (!!onChange && !isNaN(datetime.getTime())) onChange(datetime.getTime());
+          }}
         />
       </Popover>
     </div>
@@ -375,6 +378,9 @@ interface TimeObject {
 function TimePart(props: { time: TimeObject; onChange: (time: TimeObject) => void }) {
   const { time, onChange } = props;
   const [state, setState] = React.useState(time);
+  React.useEffect(() => {
+    setState(time);
+  }, [time]);
   return (
     <Flex direction="TB">
       <InputNumber
