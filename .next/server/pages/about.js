@@ -3576,7 +3576,7 @@ function DatePicker(props) {
           return onChange(new Date(date.Y, date.M - 1, date.D).getTime());
 
         case 'time':
-          return onChange(time.H * 3600 + time.M * 60 + time.S);
+          return onChange(new Date(1970, 0, 1, time.H, time.M, time.S).getTime());
       }
     }
   }, [onChange]);
@@ -3607,8 +3607,12 @@ function DatePicker(props) {
     label: label,
     lablePlacement: lablePlacement,
     placeholder: placeholder,
-    editable: false,
-    value: format
+    value: format,
+    editable: !!onChange,
+    onChange: value => {
+      const datetime = new Date(value);
+      if (!!onChange && !isNaN(datetime.getTime())) onChange(datetime.getTime());
+    }
   })));
 }
 
@@ -3820,6 +3824,9 @@ function TimePart(props) {
     onChange
   } = props;
   const [state, setState] = external_react_default.a.useState(time);
+  external_react_default.a.useEffect(() => {
+    setState(time);
+  }, [time]);
   return datepicker_jsx(container["a" /* Flex */], {
     direction: "TB"
   }, datepicker_jsx(InputNumber, {

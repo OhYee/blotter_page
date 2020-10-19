@@ -6393,13 +6393,13 @@ class PostEdit extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
 
     _defineProperty(this, "editor", void 0);
 
-    _defineProperty(this, "initial", url => {
+    _defineProperty(this, "initial", (url, first) => {
       this.setState({
         loading: true
       });
       Object(_utils_api__WEBPACK_IMPORTED_MODULE_19__[/* adminPost */ "c"])(url).then(r => {
         const post = _objectSpread(_objectSpread({}, r), {}, {
-          edit_time: new Date().getTime(),
+          edit_time: first ? new Date().getTime() : r.edit_time * 1000,
           publish_time: r.publish_time * 1000
         });
 
@@ -6492,7 +6492,7 @@ class PostEdit extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
         Object(_utils_api__WEBPACK_IMPORTED_MODULE_19__[/* postEdit */ "y"])(post).then(r => {
           if (Object(_utils_notification__WEBPACK_IMPORTED_MODULE_16__[/* default */ "a"])(r)) {
             next_router__WEBPACK_IMPORTED_MODULE_2___default.a.push(`/admin/post?url=${post.url}`);
-            this.initial(post.url);
+            this.initial(post.url, false);
             Object(_utils_storage__WEBPACK_IMPORTED_MODULE_20__[/* removeLocalStorage */ "b"])(`post-${this.props.router.query.url}`);
           }
         }).finally(() => {
@@ -6758,7 +6758,7 @@ class PostEdit extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
     this.setState({
       draft: value
     });
-    if (url != '' && typeof url != 'undefined') this.initial(url);
+    if (url != '' && typeof url != 'undefined') this.initial(url, true);
   }
 
   render() {
@@ -7346,7 +7346,7 @@ function DatePicker(props) {
           return onChange(new Date(date.Y, date.M - 1, date.D).getTime());
 
         case 'time':
-          return onChange(time.H * 3600 + time.M * 60 + time.S);
+          return onChange(new Date(1970, 0, 1, time.H, time.M, time.S).getTime());
       }
     }
   }, [onChange]);
@@ -7377,8 +7377,12 @@ function DatePicker(props) {
     label: label,
     lablePlacement: lablePlacement,
     placeholder: placeholder,
-    editable: false,
-    value: format
+    value: format,
+    editable: !!onChange,
+    onChange: value => {
+      const datetime = new Date(value);
+      if (!!onChange && !isNaN(datetime.getTime())) onChange(datetime.getTime());
+    }
   })));
 }
 
@@ -7590,6 +7594,9 @@ function TimePart(props) {
     onChange
   } = props;
   const [state, setState] = external_react_default.a.useState(time);
+  external_react_default.a.useEffect(() => {
+    setState(time);
+  }, [time]);
   return datepicker_jsx(container["a" /* Flex */], {
     direction: "TB"
   }, datepicker_jsx(InputNumber, {
