@@ -43,6 +43,7 @@
       width: 100%;
     }
 
+    // 在动态地址栏的手机浏览器上，需要额外留出更多的空间
     max-height: calc(100vh - 400px);
     max-width: 300px;
     overflow: auto;
