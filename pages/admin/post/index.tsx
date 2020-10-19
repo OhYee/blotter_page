@@ -78,16 +78,16 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
     var url = this.props.router.query.url as string;
     const value = getLocalStorage(`post-${url}`);
     this.setState({ draft: value });
-    if (url != '' && typeof url != 'undefined') this.initial(url);
+    if (url != '' && typeof url != 'undefined') this.initial(url, true);
   }
 
-  initial = (url: string) => {
+  initial = (url: string, first: boolean) => {
     this.setState({ loading: true });
     adminPost(url)
       .then((r) => {
         const post = {
           ...r,
-          edit_time: new Date().getTime(),
+          edit_time: first ? new Date().getTime() : r.edit_time * 1000,
           publish_time: r.publish_time * 1000,
         };
         this.setState(
@@ -188,7 +188,7 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
         .then((r) => {
           if (ShowNotification(r)) {
             Router.push(`/admin/post?url=${post.url}`);
-            this.initial(post.url);
+            this.initial(post.url, false);
             removeLocalStorage(`post-${this.props.router.query.url as string}`);
           }
         })
