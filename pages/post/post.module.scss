@@ -78,6 +78,15 @@
       text-align: center;
     }
 
+    // katex 的部分特殊符号使用 svg 渲染，需要将其排除出页面 svg 图片
+    :global(.katex) svg {
+      display: block;
+      height: inherit !important;
+      margin: inherit;
+      max-width: inherit !important;
+      max-height: inherit;
+    }
+
     svg {
       margin: auto;
       display: block;
