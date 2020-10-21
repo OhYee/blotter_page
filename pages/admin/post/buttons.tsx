@@ -2,7 +2,17 @@ import React from 'react';
 
 import Button, { ButtonProps } from '@/components/button';
 import { Flex } from '@/components/container';
-import { Minus, Plus, Save, Image, Edit, Fold, Unfold } from '@/components/svg';
+import {
+  Minus,
+  Plus,
+  Save,
+  Image,
+  Edit,
+  Fold,
+  Unfold,
+  FullScreen,
+  FullScreenExit,
+} from '@/components/svg';
 
 import { QiniuModal } from '@/components/upload';
 
@@ -135,6 +145,9 @@ export default function RenderFixedButton(props: {
   onScrollOffset: (diff: number) => void;
   onFold: () => void;
   onUnfold: () => void;
+  fullscreen: boolean;
+  onFullScreen: (fullscreen: boolean) => void;
+  style?: React.CSSProperties;
 }) {
   const {
     preview,
@@ -144,14 +157,24 @@ export default function RenderFixedButton(props: {
     onScrollOffset,
     onFold,
     onUnfold,
+    fullscreen,
+    onFullScreen,
+    ...restProps
   } = props;
 
   return (
-    <Flex direction="TB" className={styles.fixed_button}>
+    <Flex {...restProps} direction="TB" className={styles.fixed_button}>
       <RenderPreviewButton preview={preview} onPreviewClick={onPreviewClick} />
       <RenderOffset onScrollOffset={onScrollOffset} />
       <FoldButtons onFold={onFold} onUnfold={onUnfold} />
       <JumpButton />
+      <Button
+        neumorphism
+        loading={submitDisabled}
+        onClick={() => onFullScreen(!fullscreen)}
+        circle
+        icon={fullscreen ? <FullScreenExit /> : <FullScreen />}
+      />
       <RenderImages />
       <Button
         neumorphism

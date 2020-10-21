@@ -37,6 +37,7 @@ type PostEditState = {
   draft: string;
   offset: number;
   fontSize: number;
+  fullscreen: boolean;
 } & TypeTReplaceByU<Blotter.PostAll, { publish_time: number; edit_time: number }>;
 
 class PostEdit extends React.Component<PostEditProps, PostEditState> {
@@ -56,6 +57,7 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
       offset: 0,
       fontSize: 16,
       images: [],
+      fullscreen: false,
 
       keywords: [],
       id: '',
@@ -104,12 +106,15 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
     this.setState({ loading: true });
     try {
       var r = await markdown(source);
+      // 当没有中文时，words 返回的是 null，需要使用 || 设置默认值 []
+      const words = r.html.replace(/<[^>]+>|\s/g, '').match(/[\u007f-\uffff]/g) || [];
       this.setState({
         content: r.html,
-        length: r.html.replace(/<[^>]+>|\s/g, '').match(/[\u007f-\uffff]/g).length,
+        length: words.length,
       });
-    } catch {
-      var r = { html: '' };
+    } catch (e) {
+      r = { html: '' };
+      console.error(e);
     }
     this.setState({ loading: false });
     return r.html;
@@ -436,6 +441,13 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
           }}
           onFold={() => this.editor.trigger('fold', 'editor.foldAll')}
           onUnfold={() => this.editor.trigger('unfold', 'editor.unfoldAll')}
+          fullscreen={this.state.fullscreen}
+          onFullScreen={(fullscreen) => {
+            this.setState({ fullscreen }, () => {
+              this.editor.layout();
+            });
+          }}
+          style={this.state.fullscreen ? { zIndex: 99999 } : {}}
         />
 
         <Flex direction="TB" fullWidth>
@@ -443,7 +455,23 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
 
           {this.state.preview === 1 ? this.renderPreview() : null}
 
-          <Flex wrap={false}>
+          <Flex
+            wrap={false}
+            style={
+              this.state.fullscreen
+                ? {
+                    position: 'absolute',
+                    top: 0,
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    background: 'var(--background)',
+                    width: '100%',
+                    zIndex: 99998,
+                  }
+                : {}
+            }
+          >
             <Flex.Item style={{ flex: '1', width: this.state.preview === 2 ? '0%' : '100%' }}>
               <Card neumorphism className={styles.editor} id="editor">
                 <RenderEditor
