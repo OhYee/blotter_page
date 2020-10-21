@@ -312,7 +312,9 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
 
           <Button
             neumorphism
-            onClick={async () => importImages(await this.renderMarkdown(this.state.raw))}
+            onClick={async () =>
+              this.setState({ images: importImages(await this.renderMarkdown(this.state.raw)) })
+            }
           >
             导入图片
           </Button>

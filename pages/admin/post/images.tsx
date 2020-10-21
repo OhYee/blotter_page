@@ -1,4 +1,4 @@
-export default async function importImages(html: string) {
+export default function importImages(html: string) {
   //   const html = await this.renderMarkdown(this.editor.getValue());
   const reg = new RegExp('<img ([^>]*)>', 'g');
   var images: string[] = [];
