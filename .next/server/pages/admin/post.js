@@ -2994,12 +2994,16 @@ function RenderFixedButton(props) {
     onSubmit,
     onScrollOffset,
     onFold,
-    onUnfold
-  } = props;
-  return __jsx(_components_container__WEBPACK_IMPORTED_MODULE_2__[/* Flex */ "a"], {
+    onUnfold,
+    fullscreen,
+    onFullScreen
+  } = props,
+        restProps = _objectWithoutProperties(props, ["preview", "onPreviewClick", "submitDisabled", "onSubmit", "onScrollOffset", "onFold", "onUnfold", "fullscreen", "onFullScreen"]);
+
+  return __jsx(_components_container__WEBPACK_IMPORTED_MODULE_2__[/* Flex */ "a"], _extends({}, restProps, {
     direction: "TB",
     className: _post_module_scss__WEBPACK_IMPORTED_MODULE_5___default.a.fixed_button
-  }, __jsx(RenderPreviewButton, {
+  }), __jsx(RenderPreviewButton, {
     preview: preview,
     onPreviewClick: onPreviewClick
   }), __jsx(RenderOffset, {
@@ -3007,7 +3011,13 @@ function RenderFixedButton(props) {
   }), __jsx(FoldButtons, {
     onFold: onFold,
     onUnfold: onUnfold
-  }), __jsx(JumpButton, null), __jsx(RenderImages, null), __jsx(_components_button__WEBPACK_IMPORTED_MODULE_1__[/* default */ "b"], {
+  }), __jsx(JumpButton, null), __jsx(_components_button__WEBPACK_IMPORTED_MODULE_1__[/* default */ "b"], {
+    neumorphism: true,
+    loading: submitDisabled,
+    onClick: () => onFullScreen(!fullscreen),
+    circle: true,
+    icon: fullscreen ? __jsx(_components_svg__WEBPACK_IMPORTED_MODULE_3__[/* FullScreenExit */ "r"], null) : __jsx(_components_svg__WEBPACK_IMPORTED_MODULE_3__[/* FullScreen */ "q"], null)
+  }), __jsx(RenderImages, null), __jsx(_components_button__WEBPACK_IMPORTED_MODULE_1__[/* default */ "b"], {
     neumorphism: true,
     loading: submitDisabled,
     onClick: onSubmit,
@@ -6417,15 +6427,18 @@ class PostEdit extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       });
 
       try {
-        var r = await Object(_utils_api__WEBPACK_IMPORTED_MODULE_19__[/* markdown */ "t"])(source);
+        var r = await Object(_utils_api__WEBPACK_IMPORTED_MODULE_19__[/* markdown */ "t"])(source); // 当没有中文时，words 返回的是 null，需要使用 || 设置默认值 []
+
+        const words = r.html.replace(/<[^>]+>|\s/g, '').match(/[\u007f-\uffff]/g) || [];
         this.setState({
           content: r.html,
-          length: r.html.replace(/<[^>]+>|\s/g, '').match(/[\u007f-\uffff]/g).length
+          length: words.length
         });
-      } catch {
-        var r = {
+      } catch (e) {
+        r = {
           html: ''
         };
+        console.error(e);
       }
 
       this.setState({
@@ -6638,7 +6651,9 @@ class PostEdit extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
         }
       }, "\u91CD\u7F6E\u65E5\u671F"), __jsx(_components_button__WEBPACK_IMPORTED_MODULE_3__[/* default */ "b"], {
         neumorphism: true,
-        onClick: async () => Object(_images__WEBPACK_IMPORTED_MODULE_13__["default"])(await this.renderMarkdown(this.state.raw))
+        onClick: async () => this.setState({
+          images: Object(_images__WEBPACK_IMPORTED_MODULE_13__["default"])(await this.renderMarkdown(this.state.raw))
+        })
       }, "\u5BFC\u5165\u56FE\u7247")), __jsx(_components_tag_search__WEBPACK_IMPORTED_MODULE_10__[/* default */ "a"], {
         onAdd: this.tagOnAdd,
         onDelete: this.tagOnDelete,
@@ -6735,6 +6750,7 @@ class PostEdit extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       offset: 0,
       fontSize: 16,
       images: [],
+      fullscreen: false,
       keywords: [],
       id: '',
       title: '',
@@ -6782,14 +6798,35 @@ class PostEdit extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
         });
       },
       onFold: () => this.editor.trigger('fold', 'editor.foldAll'),
-      onUnfold: () => this.editor.trigger('unfold', 'editor.unfoldAll')
+      onUnfold: () => this.editor.trigger('unfold', 'editor.unfoldAll'),
+      fullscreen: this.state.fullscreen,
+      onFullScreen: fullscreen => {
+        this.setState({
+          fullscreen
+        }, () => {
+          this.editor.layout();
+        });
+      },
+      style: this.state.fullscreen ? {
+        zIndex: 99999
+      } : {}
     }), __jsx(_components_container__WEBPACK_IMPORTED_MODULE_6__[/* Flex */ "a"], {
       direction: "TB",
       fullWidth: true
     }, __jsx(_components_card__WEBPACK_IMPORTED_MODULE_4__[/* default */ "a"], {
       neumorphism: true
     }, this.renderToolbar()), this.state.preview === 1 ? this.renderPreview() : null, __jsx(_components_container__WEBPACK_IMPORTED_MODULE_6__[/* Flex */ "a"], {
-      wrap: false
+      wrap: false,
+      style: this.state.fullscreen ? {
+        position: 'absolute',
+        top: 0,
+        bottom: 0,
+        left: 0,
+        right: 0,
+        background: 'var(--background)',
+        width: '100%',
+        zIndex: 99998
+      } : {}
     }, __jsx(_components_container__WEBPACK_IMPORTED_MODULE_6__[/* Flex */ "a"].Item, {
       style: {
         flex: '1',
@@ -8073,7 +8110,7 @@ module.exports = {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return importImages; });
-async function importImages(html) {
+function importImages(html) {
   //   const html = await this.renderMarkdown(this.editor.getValue());
   const reg = new RegExp('<img ([^>]*)>', 'g');
   var images = [];

@@ -107,7 +107,7 @@ module.exports = __webpack_require__("u1y9");
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return importImages; });
-async function importImages(html) {
+function importImages(html) {
   //   const html = await this.renderMarkdown(this.editor.getValue());
   const reg = new RegExp('<img ([^>]*)>', 'g');
   var images = [];

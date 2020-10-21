@@ -1539,12 +1539,16 @@ function RenderFixedButton(props) {
     onSubmit,
     onScrollOffset,
     onFold,
-    onUnfold
-  } = props;
-  return __jsx(_components_container__WEBPACK_IMPORTED_MODULE_2__[/* Flex */ "a"], {
+    onUnfold,
+    fullscreen,
+    onFullScreen
+  } = props,
+        restProps = _objectWithoutProperties(props, ["preview", "onPreviewClick", "submitDisabled", "onSubmit", "onScrollOffset", "onFold", "onUnfold", "fullscreen", "onFullScreen"]);
+
+  return __jsx(_components_container__WEBPACK_IMPORTED_MODULE_2__[/* Flex */ "a"], _extends({}, restProps, {
     direction: "TB",
     className: _post_module_scss__WEBPACK_IMPORTED_MODULE_5___default.a.fixed_button
-  }, __jsx(RenderPreviewButton, {
+  }), __jsx(RenderPreviewButton, {
     preview: preview,
     onPreviewClick: onPreviewClick
   }), __jsx(RenderOffset, {
@@ -1552,7 +1556,13 @@ function RenderFixedButton(props) {
   }), __jsx(FoldButtons, {
     onFold: onFold,
     onUnfold: onUnfold
-  }), __jsx(JumpButton, null), __jsx(RenderImages, null), __jsx(_components_button__WEBPACK_IMPORTED_MODULE_1__[/* default */ "b"], {
+  }), __jsx(JumpButton, null), __jsx(_components_button__WEBPACK_IMPORTED_MODULE_1__[/* default */ "b"], {
+    neumorphism: true,
+    loading: submitDisabled,
+    onClick: () => onFullScreen(!fullscreen),
+    circle: true,
+    icon: fullscreen ? __jsx(_components_svg__WEBPACK_IMPORTED_MODULE_3__[/* FullScreenExit */ "r"], null) : __jsx(_components_svg__WEBPACK_IMPORTED_MODULE_3__[/* FullScreen */ "q"], null)
+  }), __jsx(RenderImages, null), __jsx(_components_button__WEBPACK_IMPORTED_MODULE_1__[/* default */ "b"], {
     neumorphism: true,
     loading: submitDisabled,
     onClick: onSubmit,
