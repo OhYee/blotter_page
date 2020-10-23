@@ -2154,6 +2154,10 @@ const defaultContext = {
   author: '',
   avatar: '',
   from: '',
+  head: '',
+  ad_show: '',
+  ad_inner: '',
+  ad_text: '',
   user: {
     id: '000000000000000000000000',
     username: '',

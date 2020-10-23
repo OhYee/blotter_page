@@ -3617,6 +3617,10 @@ const defaultContext = {
   author: '',
   avatar: '',
   from: '',
+  head: '',
+  ad_show: '',
+  ad_inner: '',
+  ad_text: '',
   user: {
     id: '000000000000000000000000',
     username: '',
@@ -5113,7 +5117,11 @@ class post_content_PostContent extends external_react_["Component"] {
     }, post_content_jsx(post_card["a" /* CardContent */], {
       post: this.props.post,
       inPost: true
-    })), this.renderTravel(), !!this.props.post.images && this.props.post.images.length > 0 ? post_content_jsx(Carousel, {
+    })), this.renderTravel(), !!this.context.ad_text && post_content_jsx("div", {
+      dangerouslySetInnerHTML: {
+        __html: this.context.ad_text
+      }
+    }), !!this.props.post.images && this.props.post.images.length > 0 ? post_content_jsx(Carousel, {
       images: this.props.post.images,
       height: '500px',
       maxHeight: '50vh',
@@ -5125,6 +5133,10 @@ class post_content_PostContent extends external_react_["Component"] {
       },
       dangerouslySetInnerHTML: {
         __html: this.props.post.content
+      }
+    }), !!this.context.ad_inner && post_content_jsx("div", {
+      dangerouslySetInnerHTML: {
+        __html: this.context.ad_inner
       }
     })));
   }

@@ -528,14 +528,20 @@ const defaultContext = {
   avatar: '',
   from: '',
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> Update gh-pages to output generated at 2968262
   head: '',
   ad_show: '',
   ad_inner: '',
   ad_text: '',
+<<<<<<< HEAD
   front_version: Object(_time__WEBPACK_IMPORTED_MODULE_2__[/* formatDate */ "a"])(next_config__WEBPACK_IMPORTED_MODULE_1___default()().publicRuntimeConfig.version),
   back_version: 'UNKNOWN',
 =======
 >>>>>>> Update gh-pages to output generated at c905054
+=======
+>>>>>>> Update gh-pages to output generated at 2968262
   user: {
     id: '000000000000000000000000',
     username: '',

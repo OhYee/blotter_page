@@ -2772,6 +2772,7 @@ var footer_jsx = external_react_default.a.createElement;
 
 
 
+
 function Footer(props) {
   const {
     beian,
@@ -2779,6 +2780,7 @@ function Footer(props) {
     view,
     friends
   } = props;
+  const context = external_react_default.a.useContext(global["a" /* Context */]);
   return footer_jsx(container["a" /* Flex */], {
     direction: "TB",
     className: footer_module_default.a.footer
@@ -2811,7 +2813,11 @@ function Footer(props) {
   }, "\u4F18\u79C0\u535A\u5BA2\u8BA2\u9605\uFF1A"), ...friends.map(friend => footer_jsx("a", {
     key: friend.name,
     href: friend.link
-  }, friend.name))])));
+  }, friend.name))])), !!context.ad_show && footer_jsx("div", {
+    dangerouslySetInnerHTML: {
+      __html: context.ad_show
+    }
+  }));
 }
 // EXTERNAL MODULE: ./utils/scroll.ts
 var utils_scroll = __webpack_require__("jpDW");
@@ -2984,7 +2990,11 @@ class layout_BasicLayout extends external_react_default.a.Component {
     return layout_jsx("div", {
       id: "blotter_root",
       className: Object(component["a" /* concat */])(layout_module_default.a.root)
-    }, layout_jsx(global["a" /* Context */].Consumer, null, context => layout_jsx(head_default.a, null, layout_jsx("title", null, context.blog_name))), layout_jsx(Sider, {
+    }, layout_jsx(global["a" /* Context */].Consumer, null, context => layout_jsx(head_default.a, null, layout_jsx("title", null, context.blog_name), context.head && layout_jsx("div", {
+      dangerouslySetInnerHTML: {
+        __html: context.head
+      }
+    }))), layout_jsx(Sider, {
       pathname: this.props.router.pathname,
       user: this.context.user,
       avatar: this.context.avatar,
@@ -3163,6 +3173,10 @@ const defaultContext = {
   author: '',
   avatar: '',
   from: '',
+  head: '',
+  ad_show: '',
+  ad_inner: '',
+  ad_text: '',
   user: {
     id: '000000000000000000000000',
     username: '',
