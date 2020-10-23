@@ -4,6 +4,8 @@ import { Flex } from '@/components/container';
 import If from '@/components/if';
 import { RSS } from '@/components/svg';
 
+import { Context } from '@/utils/global';
+
 import styles from './footer.module.scss';
 
 export default function Footer(props: {
@@ -13,6 +15,8 @@ export default function Footer(props: {
   friends: Blotter.FriendSimple[];
 }) {
   const { beian, from, view, friends } = props;
+  const context = React.useContext(Context);
+
   return (
     <Flex direction="TB" className={styles.footer}>
       <Flex wrap={false}>
@@ -46,6 +50,7 @@ export default function Footer(props: {
           ]}
         </Flex>
       </If>
+      {!!context.ad_show && <div dangerouslySetInnerHTML={{ __html: context.ad_show }}></div>}
     </Flex>
   );
 }
