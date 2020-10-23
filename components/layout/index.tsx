@@ -90,6 +90,7 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
           {(context) => (
             <Head>
               <title>{context.blog_name}</title>
+              {context.head && <div dangerouslySetInnerHTML={{ __html: context.head }}></div>}
             </Head>
           )}
         </Context.Consumer>
