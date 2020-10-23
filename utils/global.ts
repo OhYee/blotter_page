@@ -18,6 +18,10 @@ export const defaultContext: GlobalProps = {
   author: '',
   avatar: '',
   from: '',
+  head: '',
+  ad_show: '',
+  ad_inner: '',
+  ad_text: '',
   user: {
     id: '000000000000000000000000',
     username: '',
@@ -59,6 +63,10 @@ export declare interface GlobalProps {
   author: string;
   avatar: string;
   from: string;
+  head: string;
+  ad_show: string;
+  ad_inner: string;
+  ad_text: string;
 }
 
 export function getTimeTheme() {
