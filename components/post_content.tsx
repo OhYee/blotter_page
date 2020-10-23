@@ -138,6 +138,10 @@ class PostContent extends Component<PostContentProps, PostContentState> {
 
           {this.renderTravel()}
 
+          {!!this.context.ad_text && (
+            <div dangerouslySetInnerHTML={{ __html: this.context.ad_text }}></div>
+          )}
+
           {!!this.props.post.images && this.props.post.images.length > 0 ? (
             <Carousel
               images={this.props.post.images}
@@ -152,6 +156,10 @@ class PostContent extends Component<PostContentProps, PostContentState> {
             style={{ fontSize: this.context.big_screen ? 16 : 14 }}
             dangerouslySetInnerHTML={{ __html: this.props.post.content }}
           />
+
+          {!!this.context.ad_inner && (
+            <div dangerouslySetInnerHTML={{ __html: this.context.ad_inner }}></div>
+          )}
         </Flex>
       </article>
     );
