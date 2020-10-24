@@ -4959,7 +4959,7 @@ function Carousel(props) {
       right: '10px'
     },
     onClick: next
-  }), __jsx(container["a" /* Flex */], {
+  }), !!images && images.length > 1 && __jsx(container["a" /* Flex */], {
     fullWidth: true,
     wrap: false,
     className: carousel_module_default.a.nav
