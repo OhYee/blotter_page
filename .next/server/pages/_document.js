@@ -809,36 +809,6 @@ class MyDocument extends next_document__WEBPACK_IMPORTED_MODULE_1___default.a {
     }), __jsx("link", {
       rel: "shortcut icon",
       href: "/static/img/favicon.ico"
-    }), __jsx("script", {
-      dangerouslySetInnerHTML: {
-        __html: `
-window.onload = function() { 
-    // 百度自动推送
-    (function(){
-        var bp = document.createElement('script');
-        var curProtocol = window.location.protocol.split(':')[0];
-        if (curProtocol === 'https') {
-            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
-        }
-        else {
-            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
-        }
-        var s = document.getElementsByTagName("script")[0];
-        s.parentNode.insertBefore(bp, s);
-    })();
-
-    // 百度统计
-    var _hmt = _hmt || [];
-    (function() {
-        var hm = document.createElement("script");
-        hm.src = "https://hm.baidu.com/hm.js?9f114bc8c6227268e6d0e44abd656932";
-        var s = document.getElementsByTagName("script")[0]; 
-        s.parentNode.insertBefore(hm, s);
-    })();
-
-}            
-`
-      }
     })), __jsx("body", null, __jsx(next_document__WEBPACK_IMPORTED_MODULE_1__["Main"], null), __jsx("div", {
       id: "portals"
     }), __jsx(next_document__WEBPACK_IMPORTED_MODULE_1__["NextScript"], null)));
