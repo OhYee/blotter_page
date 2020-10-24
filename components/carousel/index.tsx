@@ -85,23 +85,25 @@ export default function Carousel(props: CarouselProps) {
         onClick={next}
       />
 
-      <Flex fullWidth wrap={false} className={styles.nav}>
-        {images.map((image, idx) => (
-          <div
-            key={idx}
-            onClick={() => setNow(idx)}
-            style={{ cursor: 'pointer' }}
-            className={concat(styles.nav_item, idx === now ? styles.active : '')}
-          >
-            <Image
-              src={image}
-              alt={`图片 ${idx + 1}`}
-              title={image.split('#').slice(1).join('#')}
-              height={'100px'}
-            />
-          </div>
-        ))}
-      </Flex>
+      {!!images && images.length > 1 && (
+        <Flex fullWidth wrap={false} className={styles.nav}>
+          {images.map((image, idx) => (
+            <div
+              key={idx}
+              onClick={() => setNow(idx)}
+              style={{ cursor: 'pointer' }}
+              className={concat(styles.nav_item, idx === now ? styles.active : '')}
+            >
+              <Image
+                src={image}
+                alt={`图片 ${idx + 1}`}
+                title={image.split('#').slice(1).join('#')}
+                height={'100px'}
+              />
+            </div>
+          ))}
+        </Flex>
+      )}
     </div>
   );
 }
