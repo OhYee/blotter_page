@@ -3,6 +3,7 @@ import React from 'react';
 import { Flex } from '@/components/container';
 import If from '@/components/if';
 import { RSS } from '@/components/svg';
+import { AD } from '@/components/js';
 
 import { Context } from '@/utils/global';
 
@@ -50,7 +51,12 @@ export default function Footer(props: {
           ]}
         </Flex>
       </If>
-      {!!context.ad_show && <div dangerouslySetInnerHTML={{ __html: context.ad_show }}></div>}
+      {!!context.ad_show && (
+        <AD
+          setting={context.ad_show}
+          style={{ width: '100%', height: 'fit-content', display: 'block' }}
+        />
+      )}
     </Flex>
   );
 }

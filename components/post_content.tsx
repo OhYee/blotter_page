@@ -11,6 +11,7 @@ import Anchor from '@/components/anchor';
 import Loading from '@/components/loading';
 import Carousel from '@/components/carousel';
 import { Flex } from '@/components/container';
+import { AD } from '@/components/js';
 
 import { travels_get_url } from '@/utils/api';
 import { Context } from '@/utils/global';
@@ -138,9 +139,7 @@ class PostContent extends Component<PostContentProps, PostContentState> {
 
           {this.renderTravel()}
 
-          {!!this.context.ad_text && (
-            <div dangerouslySetInnerHTML={{ __html: this.context.ad_text }}></div>
-          )}
+          {!!this.context.ad_text && <AD setting={this.context.ad_text} />}
 
           {!!this.props.post.images && this.props.post.images.length > 0 ? (
             <Carousel
@@ -157,9 +156,7 @@ class PostContent extends Component<PostContentProps, PostContentState> {
             dangerouslySetInnerHTML={{ __html: this.props.post.content }}
           />
 
-          {!!this.context.ad_inner && (
-            <div dangerouslySetInnerHTML={{ __html: this.context.ad_inner }}></div>
-          )}
+          {!!this.context.ad_inner && <AD setting={this.context.ad_inner} />}
         </Flex>
       </article>
     );
