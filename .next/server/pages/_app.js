@@ -1479,6 +1479,82 @@ module.exports = {
 
 /***/ }),
 
+/***/ "N5zP":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* unused harmony export default */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AD; });
+/* unused harmony export splitJS */
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("cDcd");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
+
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
+function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
+
+function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
+
+
+function JS(props) {
+  const {
+    js,
+    children
+  } = props;
+  react__WEBPACK_IMPORTED_MODULE_0___default.a.useEffect(() => {
+    try {
+      eval(js);
+    } catch (e) {
+      console.warn(e);
+    }
+  }, []);
+  return children;
+}
+function AD(props) {
+  const {
+    setting
+  } = props,
+        restProps = _objectWithoutProperties(props, ["setting"]);
+
+  const {
+    js,
+    html
+  } = react__WEBPACK_IMPORTED_MODULE_0___default.a.useMemo(() => splitJS(setting), [setting]);
+  return __jsx(JS, {
+    js: js
+  }, __jsx("div", _extends({}, restProps, {
+    dangerouslySetInnerHTML: {
+      __html: html
+    }
+  })));
+}
+function splitJS(text) {
+  var re = new RegExp(`<script.*?>(.*?)<\/script>`, 'g');
+  var js = [];
+  var html = [];
+  var pos = 0;
+
+  do {
+    var result = re.exec(text);
+
+    if (result !== null) {
+      js.push(result[1]);
+      html.push(text.slice(pos, result.index));
+      pos = result.index + result[0].length;
+    } else {
+      html.push(text.slice(pos));
+    }
+  } while (result);
+
+  return {
+    js: js.join('\n'),
+    html: html.join('\n')
+  };
+}
+
+/***/ }),
+
 /***/ "Oi1/":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -2761,12 +2837,16 @@ function Menus(props) {
 // EXTERNAL MODULE: ./components/if.tsx
 var components_if = __webpack_require__("IgCw");
 
+// EXTERNAL MODULE: ./components/js.tsx
+var js = __webpack_require__("N5zP");
+
 // EXTERNAL MODULE: ./components/layout/footer.module.scss
 var footer_module = __webpack_require__("1ndZ");
 var footer_module_default = /*#__PURE__*/__webpack_require__.n(footer_module);
 
 // CONCATENATED MODULE: ./components/layout/footer.tsx
 var footer_jsx = external_react_default.a.createElement;
+
 
 
 
@@ -2813,9 +2893,12 @@ function Footer(props) {
   }, "\u4F18\u79C0\u535A\u5BA2\u8BA2\u9605\uFF1A"), ...friends.map(friend => footer_jsx("a", {
     key: friend.name,
     href: friend.link
-  }, friend.name))])), !!context.ad_show && footer_jsx("div", {
-    dangerouslySetInnerHTML: {
-      __html: context.ad_show
+  }, friend.name))])), !!context.ad_show && footer_jsx(js["a" /* AD */], {
+    setting: context.ad_show,
+    style: {
+      width: '100%',
+      height: 'fit-content',
+      display: 'block'
     }
   }));
 }

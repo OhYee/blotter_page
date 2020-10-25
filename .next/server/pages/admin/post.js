@@ -1927,6 +1927,82 @@ module.exports = {
 
 /***/ }),
 
+/***/ "N5zP":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* unused harmony export default */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AD; });
+/* unused harmony export splitJS */
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("cDcd");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
+
+function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
+function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
+
+function _objectWithoutPropertiesLoose(source, excluded) { if (source == null) return {}; var target = {}; var sourceKeys = Object.keys(source); var key, i; for (i = 0; i < sourceKeys.length; i++) { key = sourceKeys[i]; if (excluded.indexOf(key) >= 0) continue; target[key] = source[key]; } return target; }
+
+
+function JS(props) {
+  const {
+    js,
+    children
+  } = props;
+  react__WEBPACK_IMPORTED_MODULE_0___default.a.useEffect(() => {
+    try {
+      eval(js);
+    } catch (e) {
+      console.warn(e);
+    }
+  }, []);
+  return children;
+}
+function AD(props) {
+  const {
+    setting
+  } = props,
+        restProps = _objectWithoutProperties(props, ["setting"]);
+
+  const {
+    js,
+    html
+  } = react__WEBPACK_IMPORTED_MODULE_0___default.a.useMemo(() => splitJS(setting), [setting]);
+  return __jsx(JS, {
+    js: js
+  }, __jsx("div", _extends({}, restProps, {
+    dangerouslySetInnerHTML: {
+      __html: html
+    }
+  })));
+}
+function splitJS(text) {
+  var re = new RegExp(`<script.*?>(.*?)<\/script>`, 'g');
+  var js = [];
+  var html = [];
+  var pos = 0;
+
+  do {
+    var result = re.exec(text);
+
+    if (result !== null) {
+      js.push(result[1]);
+      html.push(text.slice(pos, result.index));
+      pos = result.index + result[0].length;
+    } else {
+      html.push(text.slice(pos));
+    }
+  } while (result);
+
+  return {
+    js: js.join('\n'),
+    html: html.join('\n')
+  };
+}
+
+/***/ }),
+
 /***/ "Oi1/":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -5338,6 +5414,9 @@ function Carousel(props) {
     height: '100px'
   })))));
 }
+// EXTERNAL MODULE: ./components/js.tsx
+var js = __webpack_require__("N5zP");
+
 // EXTERNAL MODULE: ./utils/api.ts + 1 modules
 var api = __webpack_require__("AoAR");
 
@@ -5352,6 +5431,7 @@ var post_module_default = /*#__PURE__*/__webpack_require__.n(post_module);
 var post_content_jsx = external_react_default.a.createElement;
 
 function post_content_defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 
 
 
@@ -5478,10 +5558,8 @@ class post_content_PostContent extends external_react_["Component"] {
     }, post_content_jsx(post_card["a" /* CardContent */], {
       post: this.props.post,
       inPost: true
-    })), this.renderTravel(), !!this.context.ad_text && post_content_jsx("div", {
-      dangerouslySetInnerHTML: {
-        __html: this.context.ad_text
-      }
+    })), this.renderTravel(), !!this.context.ad_text && post_content_jsx(js["a" /* AD */], {
+      setting: this.context.ad_text
     }), !!this.props.post.images && this.props.post.images.length > 0 ? post_content_jsx(Carousel, {
       images: this.props.post.images,
       height: '500px',
@@ -5495,10 +5573,8 @@ class post_content_PostContent extends external_react_["Component"] {
       dangerouslySetInnerHTML: {
         __html: this.props.post.content
       }
-    }), !!this.context.ad_inner && post_content_jsx("div", {
-      dangerouslySetInnerHTML: {
-        __html: this.context.ad_inner
-      }
+    }), !!this.context.ad_inner && post_content_jsx(js["a" /* AD */], {
+      setting: this.context.ad_inner
     })));
   }
 
