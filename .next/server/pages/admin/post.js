@@ -6896,7 +6896,7 @@ class PostEdit extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
         });
       },
       style: this.state.fullscreen ? {
-        zIndex: 998
+        zIndex: 5
       } : {}
     }), __jsx(_components_container__WEBPACK_IMPORTED_MODULE_6__[/* Flex */ "a"], {
       direction: "TB",
@@ -6913,7 +6913,7 @@ class PostEdit extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
         right: 0,
         background: 'var(--background)',
         width: '100%',
-        zIndex: 997
+        zIndex: 4
       } : {}
     }, __jsx(_components_container__WEBPACK_IMPORTED_MODULE_6__[/* Flex */ "a"].Item, {
       style: {
