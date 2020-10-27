@@ -447,7 +447,7 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
               this.editor.layout();
             });
           }}
-          style={this.state.fullscreen ? { zIndex: 998 } : {}}
+          style={this.state.fullscreen ? { zIndex: 5 } : {}}
         />
 
         <Flex direction="TB" fullWidth>
@@ -467,7 +467,7 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
                     right: 0,
                     background: 'var(--background)',
                     width: '100%',
-                    zIndex: 997,
+                    zIndex: 4,
                   }
                 : {}
             }
