@@ -27,6 +27,7 @@ import { markdown, adminPost, postExist, postEdit } from '@/utils/api';
 import { setLocalStorage, getLocalStorage, removeLocalStorage } from '@/utils/storage';
 
 import styles from './post.module.scss';
+import { exception } from 'console';
 
 interface PostEditProps extends React.ComponentProps<'base'>, WithRouterProps {}
 
@@ -44,6 +45,7 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
   static defaultProps = {};
   previewRef = React.createRef<HTMLDivElement>();
   editor: any;
+  ws: WebSocket;
 
   constructor(props: any) {
     super(props);
@@ -81,7 +83,22 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
     const value = getLocalStorage(`post-${url}`);
     this.setState({ draft: value });
     if (url != '' && typeof url != 'undefined') this.initial(url, true);
+
+    this.ws = new WebSocket(`${window.location.origin.replace('http', 'ws')}/api/markdown/ws`);
+    this.ws.onclose = this.wsClose;
+    window.addEventListener('beforeunload', this.wsClose);
   }
+
+  componentWillUnmount() {
+    this.wsClose();
+  }
+
+  wsClose = () => {
+    console.log('WS close');
+    if (!!this.ws) this.ws.close();
+    this.ws = undefined;
+    window.removeEventListener('beforeunload', this.wsClose);
+  };
 
   initial = (url: string, first: boolean) => {
     this.setState({ loading: true });
@@ -104,8 +121,40 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
 
   renderMarkdown = async (source: string) => {
     this.setState({ loading: true });
-    try {
+    var r = { html: '' };
+
+    if (!!this.ws) {
+      try {
+        this.ws.send(JSON.stringify({ source }));
+      } catch {
+        this.wsClose();
+        return;
+      }
+      var got = false;
+      this.ws.onmessage = (msg) => {
+        const obj = JSON.parse(msg.data);
+        if (typeof obj.html === 'string') {
+          r.html = obj.html;
+        } else {
+          console.error('Can not parse', obj);
+        }
+        this.ws.onmessage = undefined;
+        got = true;
+      };
+      await new Promise((resolve) => {
+        var start = new Date();
+        var timer = setInterval(() => {
+          if (got || new Date().getTime() - start.getTime() > 10000) {
+            clearInterval(timer);
+            resolve(true);
+          }
+        }, 100);
+      });
+    } else {
       var r = await markdown(source);
+    }
+
+    try {
       // 当没有中文时，words 返回的是 null，需要使用 || 设置默认值 []
       const words = r.html.replace(/<[^>]+>|\s/g, '').match(/[\u007f-\uffff]/g) || [];
       this.setState({
@@ -117,7 +166,6 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
       console.error(e);
     }
     this.setState({ loading: false });
-    return r.html;
   };
 
   onChange = (value: string) => {
@@ -317,9 +365,10 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
 
           <Button
             neumorphism
-            onClick={async () =>
-              this.setState({ images: importImages(await this.renderMarkdown(this.state.raw)) })
-            }
+            onClick={async () => {
+              await this.renderMarkdown(this.state.raw);
+              this.setState({ images: importImages(this.state.content) });
+            }}
           >
             导入图片
           </Button>
