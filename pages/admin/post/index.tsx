@@ -4,6 +4,12 @@ import Head from 'next/head';
 import Router, { withRouter } from 'next/router';
 import { WithRouterProps } from 'next/dist/client/with-router';
 
+const MD = require('markdown-it')({ html: true, linkify: true, breaks: true })
+  .use(require('@zombie110year/markdown-it-katex'))
+  .use(require('markdown-it-deflist'))
+  .use(require('markdown-it-footnote'))
+  .use(require('markdown-it-named-headers'));
+
 import Button from '@/components/button';
 import Card from '@/components/card';
 import Input, { CheckBox, DatePicker, InputNumber, TextArea } from '@/components/input';
@@ -39,13 +45,14 @@ type PostEditState = {
   offset: number;
   fontSize: number;
   fullscreen: boolean;
+  backRender: boolean;
 } & TypeTReplaceByU<Blotter.PostAll, { publish_time: number; edit_time: number }>;
 
 class PostEdit extends React.Component<PostEditProps, PostEditState> {
   static defaultProps = {};
   previewRef = React.createRef<HTMLDivElement>();
   editor: any;
-  ws: WebSocket;
+  //   ws: WebSocket;
 
   constructor(props: any) {
     super(props);
@@ -60,6 +67,7 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
       fontSize: 16,
       images: [],
       fullscreen: false,
+      backRender: false,
 
       keywords: [],
       id: '',
@@ -84,21 +92,21 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
     this.setState({ draft: value });
     if (url != '' && typeof url != 'undefined') this.initial(url, true);
 
-    this.ws = new WebSocket(`${window.location.origin.replace('http', 'ws')}/api/markdown/ws`);
-    this.ws.onclose = this.wsClose;
-    window.addEventListener('beforeunload', this.wsClose);
+    // this.ws = new WebSocket(`${window.location.origin.replace('http', 'ws')}/api/markdown/ws`);
+    // this.ws.onclose = this.wsClose;
+    // window.addEventListener('beforeunload', this.wsClose);
   }
 
   componentWillUnmount() {
-    this.wsClose();
+    // this.wsClose();
   }
 
-  wsClose = () => {
-    console.log('WS close');
-    if (!!this.ws) this.ws.close();
-    this.ws = undefined;
-    window.removeEventListener('beforeunload', this.wsClose);
-  };
+  //   wsClose = () => {
+  //     console.log('WS close');
+  //     if (!!this.ws) this.ws.close();
+  //     this.ws = undefined;
+  //     window.removeEventListener('beforeunload', this.wsClose);
+  //   };
 
   initial = (url: string, first: boolean) => {
     this.setState({ loading: true });
@@ -123,38 +131,10 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
     this.setState({ loading: true });
     var r = { html: '' };
 
-    if (!!this.ws) {
-      try {
-        this.ws.send(JSON.stringify({ source }));
-      } catch {
-        this.wsClose();
-        return;
-      }
-      var got = false;
-      this.ws.onmessage = (msg) => {
-        const obj = JSON.parse(msg.data);
-        if (typeof obj.html === 'string') {
-          r.html = obj.html;
-        } else {
-          console.error('Can not parse', obj);
-        }
-        this.ws.onmessage = undefined;
-        got = true;
-      };
-      await new Promise((resolve) => {
-        var start = new Date();
-        var timer = setInterval(() => {
-          if (got || new Date().getTime() - start.getTime() > 10000) {
-            clearInterval(timer);
-            resolve(true);
-          }
-        }, 100);
-      });
-    } else {
-      var r = await markdown(source);
-    }
-
     try {
+      if (this.state.backRender) r = await markdown(source);
+      else r.html = MD.render(source);
+
       // 当没有中文时，words 返回的是 null，需要使用 || 设置默认值 []
       const words = r.html.replace(/<[^>]+>|\s/g, '').match(/[\u007f-\uffff]/g) || [];
       this.setState({
@@ -497,6 +477,12 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
             });
           }}
           style={this.state.fullscreen ? { zIndex: 5 } : {}}
+          backRender={this.state.backRender}
+          onChangeRender={(backRender) =>
+            this.setState({ backRender }, () => {
+              this.renderMarkdown(this.state.raw);
+            })
+          }
         />
 
         <Flex direction="TB" fullWidth>
