@@ -37,6 +37,12 @@
 =======
 >>>>>>> Update gh-pages to output generated at a4a5ace
         "@monaco-editor/react": "^3.4.1",
+        "@zombie110year/markdown-it-katex": "^2.1.0",
+        "markdown-it": "^12.0.2",
+        "markdown-it-deflist": "^2.1.0",
+        "markdown-it-footnote": "^3.0.2",
+        "markdown-it-katex": "^2.0.3",
+        "markdown-it-named-headers": "^0.0.4",
         "next": "^9.5.4",
         "qiniu-js": "^3.1.1",
         "react": "^16.13.1",
@@ -48,6 +54,7 @@
         "@types/node": "^14.0.5",
         "@types/react": "^16.9.35",
         "axios": "^0.19.2",
+        "moment": "^2.29.0",
         "react-dom": "^16.12.0",
         "react-router": "^5.1.2",
 <<<<<<< HEAD
@@ -58,8 +65,11 @@
 =======
 =======
         "sass": "^1.26.11",
+<<<<<<< HEAD
         "moment": "^2.29.0",
 >>>>>>> Update gh-pages to output generated at c905054
+=======
+>>>>>>> Update gh-pages to output generated at 5a92428
         "typescript": "^4.0.2"
 >>>>>>> Update gh-pages to output generated at 671564e
     }

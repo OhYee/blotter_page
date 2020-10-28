@@ -126,6 +126,13 @@ function isDynamicRoute(route) {
 
 /***/ }),
 
+/***/ "/xJA":
+/***/ (function(module, exports) {
+
+module.exports = require("markdown-it-footnote");
+
+/***/ }),
+
 /***/ "0Bsm":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -164,6 +171,13 @@ function withRouter(ComposedComponent) {
 
 module.exports = __webpack_require__("tHau");
 
+
+/***/ }),
+
+/***/ "1h7B":
+/***/ (function(module, exports) {
+
+module.exports = require("markdown-it-named-headers");
 
 /***/ }),
 
@@ -1331,6 +1345,13 @@ const setSVGLightbox = svg => {
 function base64(s) {
   return window.btoa(s.replace(/[\u007f-\uffff]/g, c => `&#${c.charCodeAt(0)};`));
 }
+
+/***/ }),
+
+/***/ "Ekt7":
+/***/ (function(module, exports) {
+
+module.exports = require("@zombie110year/markdown-it-katex");
 
 /***/ }),
 
@@ -2778,6 +2799,13 @@ function findAnchors(html) {
 
 /***/ }),
 
+/***/ "XUTK":
+/***/ (function(module, exports) {
+
+module.exports = require("markdown-it");
+
+/***/ }),
+
 /***/ "YFqc":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3072,9 +3100,11 @@ function RenderFixedButton(props) {
     onFold,
     onUnfold,
     fullscreen,
-    onFullScreen
+    onFullScreen,
+    backRender,
+    onChangeRender
   } = props,
-        restProps = _objectWithoutProperties(props, ["preview", "onPreviewClick", "submitDisabled", "onSubmit", "onScrollOffset", "onFold", "onUnfold", "fullscreen", "onFullScreen"]);
+        restProps = _objectWithoutProperties(props, ["preview", "onPreviewClick", "submitDisabled", "onSubmit", "onScrollOffset", "onFold", "onUnfold", "fullscreen", "onFullScreen", "backRender", "onChangeRender"]);
 
   return __jsx(_components_container__WEBPACK_IMPORTED_MODULE_2__[/* Flex */ "a"], _extends({}, restProps, {
     direction: "TB",
@@ -3089,7 +3119,11 @@ function RenderFixedButton(props) {
     onUnfold: onUnfold
   }), __jsx(JumpButton, null), __jsx(_components_button__WEBPACK_IMPORTED_MODULE_1__[/* default */ "b"], {
     neumorphism: true,
-    loading: submitDisabled,
+    onClick: () => onChangeRender(!backRender),
+    circle: true,
+    icon: backRender ? '后' : '前'
+  }), __jsx(_components_button__WEBPACK_IMPORTED_MODULE_1__[/* default */ "b"], {
+    neumorphism: true,
     onClick: () => onFullScreen(!fullscreen),
     circle: true,
     icon: fullscreen ? __jsx(_components_svg__WEBPACK_IMPORTED_MODULE_3__[/* FullScreenExit */ "r"], null) : __jsx(_components_svg__WEBPACK_IMPORTED_MODULE_3__[/* FullScreen */ "q"], null)
@@ -6421,6 +6455,13 @@ module.exports = {
 
 /***/ }),
 
+/***/ "sdgC":
+/***/ (function(module, exports) {
+
+module.exports = require("markdown-it-deflist");
+
+/***/ }),
+
 /***/ "tHau":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -6464,6 +6505,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
+const MD = __webpack_require__("XUTK")({
+  html: true,
+  linkify: true,
+  breaks: true
+}).use(__webpack_require__("Ekt7")).use(__webpack_require__("sdgC")).use(__webpack_require__("/xJA")).use(__webpack_require__("1h7B"));
+
+
 
 
 
@@ -6484,21 +6532,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 class PostEdit extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
+  //   ws: WebSocket;
   constructor(props) {
     super(props);
 
     _defineProperty(this, "previewRef", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef());
 
     _defineProperty(this, "editor", void 0);
-
-    _defineProperty(this, "ws", void 0);
-
-    _defineProperty(this, "wsClose", () => {
-      console.log('WS close');
-      if (!!this.ws) this.ws.close();
-      this.ws = undefined;
-      window.removeEventListener('beforeunload', this.wsClose);
-    });
 
     _defineProperty(this, "initial", (url, first) => {
       this.setState({
@@ -6526,46 +6566,9 @@ class PostEdit extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
         html: ''
       };
 
-      if (!!this.ws) {
-        try {
-          this.ws.send(JSON.stringify({
-            source
-          }));
-        } catch {
-          this.wsClose();
-          return;
-        }
-
-        var got = false;
-
-        this.ws.onmessage = msg => {
-          const obj = JSON.parse(msg.data);
-
-          if (typeof obj.html === 'string') {
-            r.html = obj.html;
-          } else {
-            console.error('Can not parse', obj);
-          }
-
-          this.ws.onmessage = undefined;
-          got = true;
-        };
-
-        await new Promise(resolve => {
-          var start = new Date();
-          var timer = setInterval(() => {
-            if (got || new Date().getTime() - start.getTime() > 10000) {
-              clearInterval(timer);
-              resolve(true);
-            }
-          }, 100);
-        });
-      } else {
-        var r = await Object(_utils_api__WEBPACK_IMPORTED_MODULE_19__[/* markdown */ "t"])(source);
-      }
-
       try {
-        // 当没有中文时，words 返回的是 null，需要使用 || 设置默认值 []
+        if (this.state.backRender) r = await Object(_utils_api__WEBPACK_IMPORTED_MODULE_19__[/* markdown */ "t"])(source);else r.html = MD.render(source); // 当没有中文时，words 返回的是 null，需要使用 || 设置默认值 []
+
         const words = r.html.replace(/<[^>]+>|\s/g, '').match(/[\u007f-\uffff]/g) || [];
         this.setState({
           content: r.html,
@@ -6890,6 +6893,7 @@ class PostEdit extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       fontSize: 16,
       images: [],
       fullscreen: false,
+      backRender: false,
       keywords: [],
       id: '',
       title: '',
@@ -6913,15 +6917,19 @@ class PostEdit extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
     this.setState({
       draft: value
     });
-    if (url != '' && typeof url != 'undefined') this.initial(url, true);
-    this.ws = new WebSocket(`${window.location.origin.replace('http', 'ws')}/api/markdown/ws`);
-    this.ws.onclose = this.wsClose;
-    window.addEventListener('beforeunload', this.wsClose);
+    if (url != '' && typeof url != 'undefined') this.initial(url, true); // this.ws = new WebSocket(`${window.location.origin.replace('http', 'ws')}/api/markdown/ws`);
+    // this.ws.onclose = this.wsClose;
+    // window.addEventListener('beforeunload', this.wsClose);
   }
 
-  componentWillUnmount() {
-    this.wsClose();
-  }
+  componentWillUnmount() {// this.wsClose();
+  } //   wsClose = () => {
+  //     console.log('WS close');
+  //     if (!!this.ws) this.ws.close();
+  //     this.ws = undefined;
+  //     window.removeEventListener('beforeunload', this.wsClose);
+  //   };
+
 
   render() {
     return __jsx(react__WEBPACK_IMPORTED_MODULE_0___default.a.Fragment, null, __jsx(_utils_global__WEBPACK_IMPORTED_MODULE_17__[/* Context */ "a"].Consumer, null, context => __jsx(next_head__WEBPACK_IMPORTED_MODULE_1___default.a, null, __jsx("title", null, `文章编辑|后台|${context.blog_name}`))), __jsx(_buttons__WEBPACK_IMPORTED_MODULE_15__["default"], {
@@ -6955,7 +6963,13 @@ class PostEdit extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       },
       style: this.state.fullscreen ? {
         zIndex: 5
-      } : {}
+      } : {},
+      backRender: this.state.backRender,
+      onChangeRender: backRender => this.setState({
+        backRender
+      }, () => {
+        this.renderMarkdown(this.state.raw);
+      })
     }), __jsx(_components_container__WEBPACK_IMPORTED_MODULE_6__[/* Flex */ "a"], {
       direction: "TB",
       fullWidth: true
