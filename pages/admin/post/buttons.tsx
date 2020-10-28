@@ -147,6 +147,8 @@ export default function RenderFixedButton(props: {
   onUnfold: () => void;
   fullscreen: boolean;
   onFullScreen: (fullscreen: boolean) => void;
+  backRender: boolean;
+  onChangeRender: (backRender: boolean) => void;
   style?: React.CSSProperties;
 }) {
   const {
@@ -159,6 +161,8 @@ export default function RenderFixedButton(props: {
     onUnfold,
     fullscreen,
     onFullScreen,
+    backRender,
+    onChangeRender,
     ...restProps
   } = props;
 
@@ -170,7 +174,12 @@ export default function RenderFixedButton(props: {
       <JumpButton />
       <Button
         neumorphism
-        loading={submitDisabled}
+        onClick={() => onChangeRender(!backRender)}
+        circle
+        icon={backRender ? '后' : '前'}
+      />
+      <Button
+        neumorphism
         onClick={() => onFullScreen(!fullscreen)}
         circle
         icon={fullscreen ? <FullScreenExit /> : <FullScreen />}
