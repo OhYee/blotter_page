@@ -6686,7 +6686,7 @@ function Messages(props) {
       top: 20,
       right: 20,
       width: '300px',
-      zIndex: 2
+      zIndex: 999
     },
     itemStyle: {
       width: '100%'

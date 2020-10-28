@@ -6491,6 +6491,15 @@ class PostEdit extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
 
     _defineProperty(this, "editor", void 0);
 
+    _defineProperty(this, "ws", void 0);
+
+    _defineProperty(this, "wsClose", () => {
+      console.log('WS close');
+      if (!!this.ws) this.ws.close();
+      this.ws = undefined;
+      window.removeEventListener('beforeunload', this.wsClose);
+    });
+
     _defineProperty(this, "initial", (url, first) => {
       this.setState({
         loading: true
@@ -6513,10 +6522,50 @@ class PostEdit extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       this.setState({
         loading: true
       });
+      var r = {
+        html: ''
+      };
+
+      if (!!this.ws) {
+        try {
+          this.ws.send(JSON.stringify({
+            source
+          }));
+        } catch {
+          this.wsClose();
+          return;
+        }
+
+        var got = false;
+
+        this.ws.onmessage = msg => {
+          const obj = JSON.parse(msg.data);
+
+          if (typeof obj.html === 'string') {
+            r.html = obj.html;
+          } else {
+            console.error('Can not parse', obj);
+          }
+
+          this.ws.onmessage = undefined;
+          got = true;
+        };
+
+        await new Promise(resolve => {
+          var start = new Date();
+          var timer = setInterval(() => {
+            if (got || new Date().getTime() - start.getTime() > 10000) {
+              clearInterval(timer);
+              resolve(true);
+            }
+          }, 100);
+        });
+      } else {
+        var r = await Object(_utils_api__WEBPACK_IMPORTED_MODULE_19__[/* markdown */ "t"])(source);
+      }
 
       try {
-        var r = await Object(_utils_api__WEBPACK_IMPORTED_MODULE_19__[/* markdown */ "t"])(source); // 当没有中文时，words 返回的是 null，需要使用 || 设置默认值 []
-
+        // 当没有中文时，words 返回的是 null，需要使用 || 设置默认值 []
         const words = r.html.replace(/<[^>]+>|\s/g, '').match(/[\u007f-\uffff]/g) || [];
         this.setState({
           content: r.html,
@@ -6532,7 +6581,6 @@ class PostEdit extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       this.setState({
         loading: false
       });
-      return r.html;
     });
 
     _defineProperty(this, "onChange", value => {
@@ -6739,9 +6787,12 @@ class PostEdit extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
         }
       }, "\u91CD\u7F6E\u65E5\u671F"), __jsx(_components_button__WEBPACK_IMPORTED_MODULE_3__[/* default */ "b"], {
         neumorphism: true,
-        onClick: async () => this.setState({
-          images: Object(_images__WEBPACK_IMPORTED_MODULE_13__["default"])(await this.renderMarkdown(this.state.raw))
-        })
+        onClick: async () => {
+          await this.renderMarkdown(this.state.raw);
+          this.setState({
+            images: Object(_images__WEBPACK_IMPORTED_MODULE_13__["default"])(this.state.content)
+          });
+        }
       }, "\u5BFC\u5165\u56FE\u7247")), __jsx(_components_tag_search__WEBPACK_IMPORTED_MODULE_10__[/* default */ "a"], {
         onAdd: this.tagOnAdd,
         onDelete: this.tagOnDelete,
@@ -6863,6 +6914,13 @@ class PostEdit extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       draft: value
     });
     if (url != '' && typeof url != 'undefined') this.initial(url, true);
+    this.ws = new WebSocket(`${window.location.origin.replace('http', 'ws')}/api/markdown/ws`);
+    this.ws.onclose = this.wsClose;
+    window.addEventListener('beforeunload', this.wsClose);
+  }
+
+  componentWillUnmount() {
+    this.wsClose();
   }
 
   render() {
@@ -8375,7 +8433,7 @@ function Messages(props) {
       top: 20,
       right: 20,
       width: '300px',
-      zIndex: 2
+      zIndex: 999
     },
     itemStyle: {
       width: '100%'
