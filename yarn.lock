@@ -5852,6 +5852,7 @@ katex@^0.11.1:
     commander "^2.19.0"
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 kind-of@^3.0.2, kind-of@^3.0.3, kind-of@^3.2.0:
 =======
 jsprim@^1.2.2:
@@ -5886,6 +5887,8 @@ katex@^0.6.0:
     match-at "^0.1.0"
 
 >>>>>>> Update gh-pages to output generated at 5a92428
+=======
+>>>>>>> Update gh-pages to output generated at dbada48
 kind-of@^3.0.2, kind-of@^3.0.3, kind-of@^3.2.0:
 >>>>>>> Update gh-pages to output generated at a4a5ace
   version "3.2.2"
@@ -6206,6 +6209,7 @@ markdown-it-footnote@^3.0.2:
   integrity sha512-JVW6fCmZWjvMdDQSbOT3nnOQtd9iAXmw7hTSh26+v42BnvXeVyGMDBm5b/EZocMed2MbCAHiTX632vY0FyGB8A==
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 markdown-it-highlightjs@^3.3.1:
   version "3.3.1"
   resolved "https://registry.yarnpkg.com/markdown-it-highlightjs/-/markdown-it-highlightjs-3.3.1.tgz#38403610487292b8a1ae2d1acc7bb66e4ede6be8"
@@ -6222,6 +6226,8 @@ markdown-it-katex@^2.0.3:
     katex "^0.6.0"
 >>>>>>> Update gh-pages to output generated at 5a92428
 
+=======
+>>>>>>> Update gh-pages to output generated at dbada48
 markdown-it-named-headers@^0.0.4:
   version "0.0.4"
   resolved "https://registry.yarnpkg.com/markdown-it-named-headers/-/markdown-it-named-headers-0.0.4.tgz#82efc28324240a6b1e77b9aae501771d5f351c1f"
@@ -6261,12 +6267,15 @@ material-colors@^1.2.1:
 >>>>>>> Update gh-pages to output generated at c905054
 =======
 
+<<<<<<< HEAD
 match-at@^0.1.0:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/match-at/-/match-at-0.1.1.tgz#25d040d291777704d5e6556bbb79230ec2de0540"
   integrity sha512-h4Yd392z9mST+dzc+yjuybOGFNOZjmXIPKWjxBd1Bb23r4SmDOsk2NYCU2BMUBGbSpZqwVsZYNq26QS3xfaT3Q==
 
 >>>>>>> Update gh-pages to output generated at 5a92428
+=======
+>>>>>>> Update gh-pages to output generated at dbada48
 md5.js@^1.3.4:
   version "1.3.5"
   resolved "https://registry.yarnpkg.com/md5.js/-/md5.js-1.3.5.tgz#b5d07b8e3216e3e27cd728d72f70d1e6a342005f"
