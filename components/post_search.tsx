@@ -37,7 +37,7 @@ function RenderTagSearch(props: { tags: Blotter.Tag[]; onChange: (tags: Blotter.
   );
 }
 
-export default function PostSearch(props: PostSearchProps) {
+function PostSearch(props: PostSearchProps, ref: React.Ref<HTMLDivElement>) {
   const {
     searchWord,
     onSearchChange,
@@ -49,9 +49,8 @@ export default function PostSearch(props: PostSearchProps) {
     tags,
     ...restProps
   } = props;
-
   return (
-    <Flex {...restProps} direction="TB" fullWidth subAxis="flex-start">
+    <Flex {...restProps} ref={ref} direction="TB" fullWidth subAxis="flex-start">
       <Input
         style={{ width: '100%' }}
         placeholder="搜索文章"
@@ -101,3 +100,5 @@ export default function PostSearch(props: PostSearchProps) {
     </Flex>
   );
 }
+
+export default React.forwardRef(PostSearch);
