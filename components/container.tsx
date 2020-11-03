@@ -28,7 +28,7 @@ export declare type FlexProps = ComponentProps<{
   itemStyle?: React.CSSProperties;
 }> &
   React.HTMLAttributes<HTMLDivElement>;
-const FlexComponent: React.FC<FlexProps> = (props) => {
+const FlexComponent: React.ForwardRefRenderFunction<HTMLDivElement, FlexProps> = (props, ref) => {
   const {
     direction = 'LR',
     wrap = true,
@@ -117,6 +117,7 @@ const FlexComponent: React.FC<FlexProps> = (props) => {
 
   return (
     <div
+      ref={ref}
       style={{ ...(fullWidth ? { width: '100%' } : {}), ...containerStyles, ...style }}
       {...restProps}
     >
@@ -169,4 +170,6 @@ const FlexItem: React.FC<FlexItemProps> = (props) => {
 };
 FlexItem.displayName = 'FlexItem';
 
-export const Flex = Object.assign(FlexComponent, { Item: FlexItem });
+export const Flex = Object.assign(React.forwardRef<HTMLDivElement, FlexProps>(FlexComponent), {
+  Item: FlexItem,
+});
