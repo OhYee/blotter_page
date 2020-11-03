@@ -1337,7 +1337,6 @@ module.exports = require("react-dnd-html5-backend");
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PostSearch; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("cDcd");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _components_container__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("pJr+");
@@ -1382,7 +1381,7 @@ function RenderTagSearch(props) {
   });
 }
 
-function PostSearch(props) {
+function PostSearch(props, ref) {
   const {
     searchWord,
     onSearchChange,
@@ -1396,6 +1395,7 @@ function PostSearch(props) {
         restProps = _objectWithoutProperties(props, ["searchWord", "onSearchChange", "checkedKeys", "onCheckChange", "withTags", "withoutTags", "onTagChange", "tags"]);
 
   return __jsx(_components_container__WEBPACK_IMPORTED_MODULE_1__[/* Flex */ "a"], _extends({}, restProps, {
+    ref: ref,
     direction: "TB",
     fullWidth: true,
     subAxis: "flex-start"
@@ -1435,6 +1435,8 @@ function PostSearch(props) {
     key: tag.id
   }))));
 }
+
+/* harmony default export */ __webpack_exports__["a"] = (/*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.forwardRef(PostSearch));
 
 /***/ }),
 
@@ -5085,7 +5087,7 @@ function getSize(size) {
   return size === 'large' ? 20 : size === 'middle' ? 10 : size === 'small' ? 5 : size === 'none' ? 0 : size;
 }
 
-const FlexComponent = props => {
+const FlexComponent = (props, ref) => {
   const {
     direction = 'LR',
     wrap = true,
@@ -5185,6 +5187,7 @@ const FlexComponent = props => {
   defaultStyle = ObjectFilter(defaultStyle, (_, value) => value != 0);
   specialStyle = ObjectFilter(specialStyle, (_, value) => value != 0);
   return __jsx("div", _extends({
+    ref: ref,
     style: _objectSpread(_objectSpread(_objectSpread({}, fullWidth ? {
       width: '100%'
     } : {}), containerStyles), style)
@@ -5231,7 +5234,7 @@ const FlexItem = props => {
 };
 
 FlexItem.displayName = 'FlexItem';
-const Flex = Object.assign(FlexComponent, {
+const Flex = Object.assign( /*#__PURE__*/external_react_default.a.forwardRef(FlexComponent), {
   Item: FlexItem
 });
 

@@ -227,6 +227,8 @@ class Index extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
   constructor(props) {
     super(props);
 
+    _defineProperty(this, "ref", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createRef());
+
     _defineProperty(this, "onChange", value => {
       Object(_utils_debounce__WEBPACK_IMPORTED_MODULE_11__[/* waitUntil */ "a"])('index_search', () => {
         this.setState({
@@ -255,7 +257,7 @@ class Index extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
           search: '',
           callback: undefined,
           tags: []
-        });
+        }, this.resetSearchHeight);
       } else {
         this.setState({
           loading: true
@@ -264,7 +266,7 @@ class Index extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
         var tags = [];
 
         if (this.state.search !== '') {
-          tags = await (await Object(_utils_api__WEBPACK_IMPORTED_MODULE_10__[/* tagsSearch */ "L"])(this.state.search)).tags;
+          tags = (await Object(_utils_api__WEBPACK_IMPORTED_MODULE_10__[/* tagsSearch */ "L"])(this.state.search)).tags;
         }
 
         this.setState({
@@ -273,8 +275,16 @@ class Index extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
           loading: false,
           callback: this.onPageChange,
           tags: tags
-        });
+        }, this.resetSearchHeight);
       }
+    });
+
+    _defineProperty(this, "resetSearchHeight", () => {
+      this.setState({
+        search_height: !this.state.show ? 100 : 50 + (this.ref.current || {
+          offsetHeight: 0
+        }).offsetHeight
+      });
     });
 
     this.state = {
@@ -288,7 +298,8 @@ class Index extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       tags: [],
       with_tags: [],
       without_tags: [],
-      show: false
+      show: false,
+      search_height: 100
     };
   }
 
@@ -302,9 +313,10 @@ class Index extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       className: _index_module_scss__WEBPACK_IMPORTED_MODULE_12___default.a.search_card,
       neumorphism: true,
       style: {
-        height: !this.state.show ? 100 : 230
+        height: this.state.search_height
       }
     }, __jsx(_components_post_search__WEBPACK_IMPORTED_MODULE_6__[/* default */ "a"], {
+      ref: this.ref,
       searchWord: this.state.search,
       onSearchChange: this.onChange,
       checkedKeys: this.state.search_fields,
@@ -325,7 +337,7 @@ class Index extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
       onClick: () => {
         this.setState(state => ({
           show: !state.show
-        }));
+        }), this.resetSearchHeight);
       }
     }, __jsx(_components_svg__WEBPACK_IMPORTED_MODULE_5__[/* Left */ "v"], {
       style: {
@@ -1404,7 +1416,6 @@ module.exports = {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PostSearch; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("cDcd");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _components_container__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("pJr+");
@@ -1449,7 +1460,7 @@ function RenderTagSearch(props) {
   });
 }
 
-function PostSearch(props) {
+function PostSearch(props, ref) {
   const {
     searchWord,
     onSearchChange,
@@ -1463,6 +1474,7 @@ function PostSearch(props) {
         restProps = _objectWithoutProperties(props, ["searchWord", "onSearchChange", "checkedKeys", "onCheckChange", "withTags", "withoutTags", "onTagChange", "tags"]);
 
   return __jsx(_components_container__WEBPACK_IMPORTED_MODULE_1__[/* Flex */ "a"], _extends({}, restProps, {
+    ref: ref,
     direction: "TB",
     fullWidth: true,
     subAxis: "flex-start"
@@ -1502,6 +1514,8 @@ function PostSearch(props) {
     key: tag.id
   }))));
 }
+
+/* harmony default export */ __webpack_exports__["a"] = (/*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.forwardRef(PostSearch));
 
 /***/ }),
 
@@ -4992,7 +5006,7 @@ function getSize(size) {
   return size === 'large' ? 20 : size === 'middle' ? 10 : size === 'small' ? 5 : size === 'none' ? 0 : size;
 }
 
-const FlexComponent = props => {
+const FlexComponent = (props, ref) => {
   const {
     direction = 'LR',
     wrap = true,
@@ -5092,6 +5106,7 @@ const FlexComponent = props => {
   defaultStyle = ObjectFilter(defaultStyle, (_, value) => value != 0);
   specialStyle = ObjectFilter(specialStyle, (_, value) => value != 0);
   return __jsx("div", _extends({
+    ref: ref,
     style: _objectSpread(_objectSpread(_objectSpread({}, fullWidth ? {
       width: '100%'
     } : {}), containerStyles), style)
@@ -5138,7 +5153,7 @@ const FlexItem = props => {
 };
 
 FlexItem.displayName = 'FlexItem';
-const Flex = Object.assign(FlexComponent, {
+const Flex = Object.assign( /*#__PURE__*/external_react_default.a.forwardRef(FlexComponent), {
   Item: FlexItem
 });
 

@@ -3484,7 +3484,7 @@ function getSize(size) {
   return size === 'large' ? 20 : size === 'middle' ? 10 : size === 'small' ? 5 : size === 'none' ? 0 : size;
 }
 
-const FlexComponent = props => {
+const FlexComponent = (props, ref) => {
   const {
     direction = 'LR',
     wrap = true,
@@ -3584,6 +3584,7 @@ const FlexComponent = props => {
   defaultStyle = ObjectFilter(defaultStyle, (_, value) => value != 0);
   specialStyle = ObjectFilter(specialStyle, (_, value) => value != 0);
   return __jsx("div", _extends({
+    ref: ref,
     style: _objectSpread(_objectSpread(_objectSpread({}, fullWidth ? {
       width: '100%'
     } : {}), containerStyles), style)
@@ -3630,7 +3631,7 @@ const FlexItem = props => {
 };
 
 FlexItem.displayName = 'FlexItem';
-const Flex = Object.assign(FlexComponent, {
+const Flex = Object.assign( /*#__PURE__*/external_react_default.a.forwardRef(FlexComponent), {
   Item: FlexItem
 });
 

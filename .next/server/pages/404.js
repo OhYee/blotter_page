@@ -704,10 +704,14 @@ function getSize(size) {
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 const FlexComponent = (props, ref) => {
 =======
 const FlexComponent = props => {
 >>>>>>> Update gh-pages to output generated at c905054
+=======
+const FlexComponent = (props, ref) => {
+>>>>>>> Update gh-pages to output generated at e3ba89e
   const {
     direction = 'LR',
     wrap = true,
@@ -822,6 +826,7 @@ const FlexComponent = props => {
   }));
 =======
   return __jsx("div", _extends({
+    ref: ref,
     style: _objectSpread(_objectSpread(_objectSpread({}, fullWidth ? {
       width: '100%'
     } : {}), containerStyles), style)
@@ -881,8 +886,12 @@ const Flex = Object.assign( /*#__PURE__*/external_react_default.a.forwardRef(Fle
 };
 
 FlexItem.displayName = 'FlexItem';
+<<<<<<< HEAD
 const Flex = Object.assign(FlexComponent, {
 >>>>>>> Update gh-pages to output generated at c905054
+=======
+const Flex = Object.assign( /*#__PURE__*/external_react_default.a.forwardRef(FlexComponent), {
+>>>>>>> Update gh-pages to output generated at e3ba89e
   Item: FlexItem
 });
 
