@@ -34,11 +34,12 @@ interface IndexState {
   with_tags: Blotter.Tag[];
   without_tags: Blotter.Tag[];
   show: boolean;
+  search_height: number;
 }
 
 class Index extends React.Component<IndexProps, IndexState> {
   static defaultProps = { posts: [] };
-
+  ref = React.createRef<HTMLDivElement>();
   static async getInitialProps(args: NextPageContext) {
     var data = await indexPosts('', [], 1, 10, [], []);
     return {
@@ -60,6 +61,7 @@ class Index extends React.Component<IndexProps, IndexState> {
       with_tags: [],
       without_tags: [],
       show: false,
+      search_height: 100,
     };
   }
 
@@ -85,13 +87,16 @@ class Index extends React.Component<IndexProps, IndexState> {
       this.state.with_tags.length == 0 &&
       this.state.without_tags.length == 0
     ) {
-      this.setState({
-        posts: this.props.posts,
-        total: 0,
-        search: '',
-        callback: undefined,
-        tags: [],
-      });
+      this.setState(
+        {
+          posts: this.props.posts,
+          total: 0,
+          search: '',
+          callback: undefined,
+          tags: [],
+        },
+        this.resetSearchHeight,
+      );
     } else {
       this.setState({ loading: true });
       var data = await indexPosts(
@@ -104,16 +109,27 @@ class Index extends React.Component<IndexProps, IndexState> {
       );
       var tags = [];
       if (this.state.search !== '') {
-        tags = await (await tagsSearch(this.state.search)).tags;
+        tags = (await tagsSearch(this.state.search)).tags;
       }
-      this.setState({
-        posts: data.posts,
-        total: data.total,
-        loading: false,
-        callback: this.onPageChange,
-        tags: tags,
-      });
+      this.setState(
+        {
+          posts: data.posts,
+          total: data.total,
+          loading: false,
+          callback: this.onPageChange,
+          tags: tags,
+        },
+        this.resetSearchHeight,
+      );
     }
+  };
+
+  resetSearchHeight = () => {
+    this.setState({
+      search_height: !this.state.show
+        ? 100
+        : 50 + (this.ref.current || { offsetHeight: 0 }).offsetHeight,
+    });
   };
 
   render() {
@@ -130,9 +146,12 @@ class Index extends React.Component<IndexProps, IndexState> {
           <Card
             className={styles.search_card}
             neumorphism
-            style={{ height: !this.state.show ? 100 : 230 }}
+            style={{
+              height: this.state.search_height,
+            }}
           >
             <PostSearch
+              ref={this.ref}
               searchWord={this.state.search}
               onSearchChange={this.onChange}
               checkedKeys={this.state.search_fields}
@@ -153,7 +172,7 @@ class Index extends React.Component<IndexProps, IndexState> {
                 paddingTop: this.state.show ? 0 : 30,
               }}
               onClick={() => {
-                this.setState((state) => ({ show: !state.show }));
+                this.setState((state) => ({ show: !state.show }), this.resetSearchHeight);
               }}
             >
               <Left
