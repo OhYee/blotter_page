@@ -154,10 +154,10 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
       () => {
         setLocalStorage(`post-${this.props.router.query.url as string}`, value);
         if (this.state.preview) {
-          this.renderMarkdown(value);
+          new Promise(() => this.renderMarkdown(value));
         }
       },
-      1000,
+      2000,
     );
   };
 
