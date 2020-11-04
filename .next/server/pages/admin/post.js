@@ -775,7 +775,7 @@ const api_avatar = async (email, callback) => {
   }, callback);
 };
 const addComment = async (args, callback) => {
-  return await request('get', '/api/comment/add', args, callback);
+  return await request('post', '/api/comment/add', args, callback);
 };
 const markdown = async (source, callback) => {
   return await request('post', '/api/markdown', {
@@ -6592,9 +6592,9 @@ class PostEdit extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
         Object(_utils_storage__WEBPACK_IMPORTED_MODULE_20__[/* setLocalStorage */ "d"])(`post-${this.props.router.query.url}`, value);
 
         if (this.state.preview) {
-          this.renderMarkdown(value);
+          new Promise(() => this.renderMarkdown(value));
         }
-      }, 1000);
+      }, 2000);
     });
 
     _defineProperty(this, "tagOnAdd", tag => {

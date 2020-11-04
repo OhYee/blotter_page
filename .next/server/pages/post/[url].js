@@ -700,7 +700,7 @@ const api_avatar = async (email, callback) => {
   }, callback);
 };
 const addComment = async (args, callback) => {
-  return await request('get', '/api/comment/add', args, callback);
+  return await request('post', '/api/comment/add', args, callback);
 };
 const markdown = async (source, callback) => {
   return await request('post', '/api/markdown', {
@@ -1329,6 +1329,7 @@ var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
 
 
 
+const emailRep = /^([A-Za-z0-9_\-\.\u4e00-\u9fa5])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,8})$/;
 
 const adWarning = __jsx("b", null, "\u5E7F\u544A\u8BC4\u8BBA\uFF0C\u5DF2\u88AB\u5C4F\u853D");
 
@@ -1422,7 +1423,7 @@ const Editor = props => {
       width: '100%'
     },
     onChange: setEmail,
-    hint: email !== '' && !/^(\w+)(\.\w+)*@(\w+)(\.\w+)*.(\w+)$/i.test(email) && __jsx(_components_input__WEBPACK_IMPORTED_MODULE_7__[/* Hint */ "d"], {
+    hint: email !== '' && !emailRep.test(email) && __jsx(_components_input__WEBPACK_IMPORTED_MODULE_7__[/* Hint */ "d"], {
       error: true
     }, "\u4F60\u786E\u5B9A\u8FD9\u662F\u4E00\u4E2A\u90AE\u7BB1\uFF1F")
   }), __jsx(_components_input__WEBPACK_IMPORTED_MODULE_7__[/* TextArea */ "g"], {
@@ -1468,7 +1469,7 @@ const Editor = props => {
     neumorphism: true,
     onClick: onSubmitClick,
     loading: loading,
-    disabled: raw.length < 5 || !/^(\w+)(\.\w+)*@(\w+)(\.\w+)*.(\w+)$/i.test(email)
+    disabled: raw.length < 5 || !emailRep.test(email)
   }, "\u8BC4\u8BBA"))))));
 };
 
@@ -1559,7 +1560,8 @@ const Comment = props => {
     }
   })), __jsx(_components_container__WEBPACK_IMPORTED_MODULE_1__[/* Flex */ "a"].Item, {
     style: {
-      flex: '1 1 auto'
+      flex: '1 1 calc(100% - 5em - 10px)',
+      width: 'calc(100% - 5em - 10px)'
     }
   }, __jsx(_components_container__WEBPACK_IMPORTED_MODULE_1__[/* Flex */ "a"], {
     mainSize: "small",

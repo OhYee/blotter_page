@@ -373,7 +373,7 @@ const api_avatar = async (email, callback) => {
   }, callback);
 };
 const addComment = async (args, callback) => {
-  return await request('get', '/api/comment/add', args, callback);
+  return await request('post', '/api/comment/add', args, callback);
 };
 const markdown = async (source, callback) => {
   return await request('post', '/api/markdown', {
