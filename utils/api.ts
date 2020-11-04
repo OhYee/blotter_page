@@ -150,7 +150,7 @@ export const addComment = async (
   args: AddCommentArgs,
   callback?: RequestCallback<Blotter.APIResponse>,
 ) => {
-  return await request('get', '/api/comment/add', args, callback);
+  return await request('post', '/api/comment/add', args, callback);
 };
 
 export const markdown = async (source: string, callback?: RequestCallback<{ html: string }>) => {
