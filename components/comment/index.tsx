@@ -226,7 +226,9 @@ const Comment: React.FC<{
             style={{ width: '2.5em', height: '2.5em' }}
           />
         </Flex.Item>
-        <Flex.Item style={{ flex: '1 1 auto' }}>
+        <Flex.Item
+          style={{ flex: '1 1 calc(100% - 5em - 10px)', width: 'calc(100% - 5em - 10px)' }}
+        >
           <Flex mainSize="small" direction="TB" fullWidth>
             <Flex mainAxis="flex-start">
               {comment.email}
