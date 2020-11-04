@@ -19,6 +19,7 @@ import shadowStyles from '@/styles/shadow.module.scss';
 import textStyles from '@/styles/text.module.scss';
 import styles from './comment.module.scss';
 
+const emailRep = /^([A-Za-z0-9_\-\.\u4e00-\u9fa5])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,8})$/;
 const adWarning = <b>广告评论，已被屏蔽</b>;
 const delWarning = <b>该评论已被删除</b>;
 const defaultAvatar = 'https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png';
@@ -81,12 +82,7 @@ const Editor: React.FC<{ id: string; closeEditorCallback?: () => void }> = (prop
             placeholder="输入您的邮箱(仅用于收取有人回复您的通知，不会在前端泄露)"
             style={{ width: '100%' }}
             onChange={setEmail}
-            hint={
-              email !== '' &&
-              !/^(\w+)(\.\w+)*@(\w+)(\.\w+)*.(\w+)$/i.test(email) && (
-                <Hint error>你确定这是一个邮箱？</Hint>
-              )
-            }
+            hint={email !== '' && !emailRep.test(email) && <Hint error>你确定这是一个邮箱？</Hint>}
           />
           <TextArea
             value={raw}
@@ -137,7 +133,7 @@ const Editor: React.FC<{ id: string; closeEditorCallback?: () => void }> = (prop
                 neumorphism
                 onClick={onSubmitClick}
                 loading={loading}
-                disabled={raw.length < 5 || !/^(\w+)(\.\w+)*@(\w+)(\.\w+)*.(\w+)$/i.test(email)}
+                disabled={raw.length < 5 || !emailRep.test(email)}
               >
                 评论
               </Button>
