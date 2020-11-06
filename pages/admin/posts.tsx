@@ -171,7 +171,7 @@ class AdminPostList extends React.Component<AdminPostListProps, AdminPostListSta
       maxWidth: '15em',
       render: (text, record, index) => (
         <Flex mainAxis="space-around">
-          <Link href={`/admin/post?url=${record.url}`}>
+          <Link href={`/admin/post?url=${record.url}`} passHref>
             <A size="small" neumorphism prefix={<Edit />}>
               编辑
             </A>
@@ -237,7 +237,7 @@ class AdminPostList extends React.Component<AdminPostListProps, AdminPostListSta
           }
         />
         <div style={{ textAlign: 'right' }}>
-          <Link href="/admin/post">
+          <Link href="/admin/post" passHref>
             <A primary neumorphism prefix={<Plus />}>
               新建文章
             </A>
