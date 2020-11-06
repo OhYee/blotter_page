@@ -68,7 +68,7 @@ const Editor: React.FC<{ id: string; closeEditorCallback?: () => void }> = (prop
 
   return (
     <Flex subAxis="flex-start" wrap={false}>
-      <Flex.Item style={{ flex: '0 0 5em', display: 'flex', justifyContent: 'center' }}>
+      <Flex.Item style={{ flex: '0 0 3em', display: 'flex', justifyContent: 'center' }}>
         <Avatar
           src={avatarURL ? avatarURL : defaultAvatar}
           style={{ width: '2.5em', height: '2.5em' }}
@@ -161,7 +161,7 @@ const Comment: React.FC<{
       <CommentList comments={comment.children} depth={depth + 1} parent={comment} />
     </React.Fragment>
   );
-  var maxDepth = context.big_screen ? 5 : 2;
+  var maxDepth = context.big_screen ? 5 : 1;
   var actions: React.ReactNode[];
   if (quote) {
     actions = [
@@ -220,14 +220,14 @@ const Comment: React.FC<{
         wrap={false}
         style={quote ? { borderLeft: '#ccc 5px solid', paddingLeft: 10 } : {}}
       >
-        <Flex.Item style={{ flex: '0 0 5em', display: 'flex', justifyContent: 'center' }}>
+        <Flex.Item style={{ flex: '0 0 3em', display: 'flex', justifyContent: 'center' }}>
           <Avatar
             src={comment.avatar ? comment.avatar : defaultAvatar}
             style={{ width: '2.5em', height: '2.5em' }}
           />
         </Flex.Item>
         <Flex.Item
-          style={{ flex: '1 1 calc(100% - 5em - 10px)', width: 'calc(100% - 5em - 10px)' }}
+          style={{ flex: '1 1 calc(100% - 3em - 10px)', width: 'calc(100% - 3em - 10px)' }}
         >
           <Flex mainSize="small" direction="TB" fullWidth>
             <Flex mainAxis="flex-start">
