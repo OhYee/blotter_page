@@ -1190,7 +1190,8 @@ class AdminPostList extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Compone
       render: (text, record, index) => __jsx(_components_container__WEBPACK_IMPORTED_MODULE_10__[/* Flex */ "a"], {
         mainAxis: "space-around"
       }, __jsx(next_link__WEBPACK_IMPORTED_MODULE_2___default.a, {
-        href: `/admin/post?url=${record.url}`
+        href: `/admin/post?url=${record.url}`,
+        passHref: true
       }, __jsx(_components_button__WEBPACK_IMPORTED_MODULE_5__[/* A */ "a"], {
         size: "small",
         neumorphism: true,
@@ -1261,7 +1262,8 @@ class AdminPostList extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Compone
         textAlign: 'right'
       }
     }, __jsx(next_link__WEBPACK_IMPORTED_MODULE_2___default.a, {
-      href: "/admin/post"
+      href: "/admin/post",
+      passHref: true
     }, __jsx(_components_button__WEBPACK_IMPORTED_MODULE_5__[/* A */ "a"], {
       primary: true,
       neumorphism: true,
