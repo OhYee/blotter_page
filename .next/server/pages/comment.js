@@ -879,7 +879,7 @@ const Editor = props => {
     wrap: false
   }, __jsx(_components_container__WEBPACK_IMPORTED_MODULE_1__[/* Flex */ "a"].Item, {
     style: {
-      flex: '0 0 5em',
+      flex: '0 0 3em',
       display: 'flex',
       justifyContent: 'center'
     }
@@ -974,7 +974,7 @@ const Comment = props => {
     parent: comment
   }));
 
-  var maxDepth = context.big_screen ? 5 : 2;
+  var maxDepth = context.big_screen ? 5 : 1;
   var actions;
 
   if (quote) {
@@ -1029,7 +1029,7 @@ const Comment = props => {
     } : {}
   }, __jsx(_components_container__WEBPACK_IMPORTED_MODULE_1__[/* Flex */ "a"].Item, {
     style: {
-      flex: '0 0 5em',
+      flex: '0 0 3em',
       display: 'flex',
       justifyContent: 'center'
     }
@@ -1041,8 +1041,8 @@ const Comment = props => {
     }
   })), __jsx(_components_container__WEBPACK_IMPORTED_MODULE_1__[/* Flex */ "a"].Item, {
     style: {
-      flex: '1 1 calc(100% - 5em - 10px)',
-      width: 'calc(100% - 5em - 10px)'
+      flex: '1 1 calc(100% - 3em - 10px)',
+      width: 'calc(100% - 3em - 10px)'
     }
   }, __jsx(_components_container__WEBPACK_IMPORTED_MODULE_1__[/* Flex */ "a"], {
     mainSize: "small",
