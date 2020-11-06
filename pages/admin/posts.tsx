@@ -16,10 +16,7 @@ import { adminPosts, postDelete } from '@/utils/api';
 import { Context } from '@/utils/global';
 import ShowNotification from '@/utils/notification';
 import { waitUntil } from '@/utils/debounce';
-import TagSearch from '@/components/tag_search';
 import { formatSecond } from '@/utils/time';
-
-import textStyle from '@/styles/text.module.scss';
 
 const defaultSort = 'publish_time';
 const defaultUp = false;
