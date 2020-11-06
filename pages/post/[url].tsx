@@ -147,7 +147,11 @@ class PostPage extends React.Component<PostPageProps, PostPageState> {
             <CommentPart url={`/post/${this.props.router.query.url as string}`} />
           </Card>
         </Flex>
-        <Anchor style={{ position: 'fixed' }} content={this.props.post.content} />
+        <Anchor
+          style={{ position: 'fixed' }}
+          content={this.props.post.content}
+          suffixAnchors={[{ name: '评论区', id: 'blotter-comment', level: 1 }]}
+        />
       </React.Fragment>
     );
   }
