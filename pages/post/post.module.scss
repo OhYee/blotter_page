@@ -147,6 +147,8 @@
       overflow: auto;
       position: relative;
       white-space: nowrap;
+      max-height: 50vh;
+      line-height: 1;
     }
 
     table {
