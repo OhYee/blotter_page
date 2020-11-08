@@ -8,7 +8,8 @@ const MD = require('markdown-it')({ html: true, linkify: true, breaks: true })
   .use(require('@zombie110year/markdown-it-katex'))
   .use(require('markdown-it-deflist'))
   .use(require('markdown-it-footnote'))
-  .use(require('markdown-it-named-headers'));
+  .use(require('markdown-it-named-headers'))
+  .use(require('markdown-it-highlightjs'));
 
 import Button from '@/components/button';
 import Card from '@/components/card';
