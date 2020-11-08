@@ -798,6 +798,9 @@ class MyDocument extends next_document__WEBPACK_IMPORTED_MODULE_1___default.a {
 
   render() {
     return __jsx(next_document__WEBPACK_IMPORTED_MODULE_1__["Html"], null, __jsx(next_document__WEBPACK_IMPORTED_MODULE_1__["Head"], null, __jsx("meta", {
+      content: "utf-8",
+      httpEquiv: "encoding"
+    }), __jsx("meta", {
       name: "theme-color",
       content: "#1565c0"
     }), __jsx("meta", {

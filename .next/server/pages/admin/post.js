@@ -5743,6 +5743,13 @@ module.exports = {
 
 /***/ }),
 
+/***/ "mvJ0":
+/***/ (function(module, exports) {
+
+module.exports = require("markdown-it-highlightjs");
+
+/***/ }),
+
 /***/ "nOHt":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -6510,7 +6517,7 @@ const MD = __webpack_require__("XUTK")({
   html: true,
   linkify: true,
   breaks: true
-}).use(__webpack_require__("Ekt7")).use(__webpack_require__("sdgC")).use(__webpack_require__("/xJA")).use(__webpack_require__("1h7B"));
+}).use(__webpack_require__("Ekt7")).use(__webpack_require__("sdgC")).use(__webpack_require__("/xJA")).use(__webpack_require__("1h7B")).use(__webpack_require__("mvJ0"));
 
 
 
