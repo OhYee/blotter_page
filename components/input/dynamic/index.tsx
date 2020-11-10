@@ -13,7 +13,7 @@ import randomString from '@/utils/random';
 import { waitUntil } from '@/utils/debounce';
 import hash from '@/utils/hash';
 
-import styles from './dynamic.module.scss'
+import styles from './dynamic.module.scss';
 
 const stringLength = 20;
 
@@ -189,7 +189,7 @@ const ObjectField = (
     <Flex fullWidth direction="TB" subAxis="flex-end">
       <Flex fullWidth direction="TB">
         {slice.map((item) => (
-          <Flex subAxis="flex-start">
+          <Flex subAxis="flex-start" key={hash(item)}>
             <Flex.Item style={{ flex: '0 0 30%' }}>
               <DynamicForm
                 value={item.key}
