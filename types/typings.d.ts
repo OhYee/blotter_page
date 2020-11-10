@@ -114,10 +114,45 @@ declare namespace Blotter {
     link: string;
     time: number;
   }
-  interface Variable {
-    key: string;
-    value: any;
+  interface Variables {
+    ad_inner: string;
+    ad_show: string;
+    ad_text: string;
+    author: string;
+    avatar: string;
+    awards: string;
+    beian: string;
+    blog_name: string;
+    description: string;
+    edu: string;
+    email: string;
+    from: int;
+    github: string;
+    github_id: string;
+    github_redirect: string;
+    github_secret: string;
+    grey: boolean;
+    head: string;
+    qiniu_access_key: string;
+    qiniu_prefix: string;
+    qiniu_secret_key: string;
+    qiniu_static_domain: string;
+    qq: string;
+    qq_id: string;
+    qq_key: string;
+    qq_redirect: string;
+    qqrobot: string;
+    quote: string;
+    root: string;
+    smtp_address: string;
+    smtp_password: string;
+    smtp_user: string;
+    smtp_username: string;
+    view: int;
+    vmess: string;
+    zhihu: string;
   }
+
   interface City {
     name: string;
     lng: number;
