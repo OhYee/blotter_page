@@ -114,6 +114,10 @@ declare namespace Blotter {
     link: string;
     time: number;
   }
+  interface Variable {
+    key: string;
+    value: any;
+  }
   interface Variables {
     ad_inner: string;
     ad_show: string;
