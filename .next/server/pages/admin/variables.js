@@ -1240,7 +1240,44 @@ class AdminVariables extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Compon
     super(props);
     this.state = {
       loading: false,
-      variables: []
+      variables: {
+        ad_inner: '',
+        ad_show: '',
+        ad_text: '',
+        author: '',
+        avatar: '',
+        awards: '',
+        beian: '',
+        blog_name: '',
+        description: '',
+        edu: '',
+        email: '',
+        from: '',
+        github: '',
+        github_id: '',
+        github_redirect: '',
+        github_secret: '',
+        grey: false,
+        head: '',
+        qiniu_access_key: '',
+        qiniu_prefix: '',
+        qiniu_secret_key: '',
+        qiniu_static_domain: '',
+        qq: '',
+        qq_id: '',
+        qq_key: '',
+        qq_redirect: '',
+        qqrobot: '',
+        quote: '',
+        root: '',
+        smtp_address: '',
+        smtp_password: '',
+        smtp_user: '',
+        smtp_username: '',
+        view: '',
+        vmess: '',
+        zhihu: ''
+      }
     };
   }
 
@@ -1256,7 +1293,7 @@ class AdminVariables extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Compon
     }
 
     this.setState({
-      variables: obj,
+      variables: r,
       loading: false
     });
   }
@@ -3116,7 +3153,8 @@ const ObjectField = props => {
     fullWidth: true,
     direction: "TB"
   }, slice.map(item => dynamic_jsx(container["a" /* Flex */], {
-    subAxis: "flex-start"
+    subAxis: "flex-start",
+    key: utils_hash(item)
   }, dynamic_jsx(container["a" /* Flex */].Item, {
     style: {
       flex: '0 0 30%'

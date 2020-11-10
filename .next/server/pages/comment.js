@@ -3538,7 +3538,8 @@ const ObjectField = props => {
     fullWidth: true,
     direction: "TB"
   }, slice.map(item => dynamic_jsx(container["a" /* Flex */], {
-    subAxis: "flex-start"
+    subAxis: "flex-start",
+    key: utils_hash(item)
   }, dynamic_jsx(container["a" /* Flex */].Item, {
     style: {
       flex: '0 0 30%'
