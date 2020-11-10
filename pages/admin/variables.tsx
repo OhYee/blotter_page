@@ -18,7 +18,7 @@ interface AdminVariablesProps extends ComponentProps<'base'> {}
 
 interface AdminVariablesState {
   loading: boolean;
-  variables: { [key: string]: any };
+  variables: Blotter.Variables;
 }
 
 class AdminVariables extends React.Component<AdminVariablesProps, AdminVariablesState> {
@@ -28,7 +28,44 @@ class AdminVariables extends React.Component<AdminVariablesProps, AdminVariables
     super(props);
     this.state = {
       loading: false,
-      variables: [],
+      variables: {
+        ad_inner: '',
+        ad_show: '',
+        ad_text: '',
+        author: '',
+        avatar: '',
+        awards: '',
+        beian: '',
+        blog_name: '',
+        description: '',
+        edu: '',
+        email: '',
+        from: '',
+        github: '',
+        github_id: '',
+        github_redirect: '',
+        github_secret: '',
+        grey: false,
+        head: '',
+        qiniu_access_key: '',
+        qiniu_prefix: '',
+        qiniu_secret_key: '',
+        qiniu_static_domain: '',
+        qq: '',
+        qq_id: '',
+        qq_key: '',
+        qq_redirect: '',
+        qqrobot: '',
+        quote: '',
+        root: '',
+        smtp_address: '',
+        smtp_password: '',
+        smtp_user: '',
+        smtp_username: '',
+        view: '',
+        vmess: '',
+        zhihu: '',
+      },
     };
   }
 
@@ -39,7 +76,7 @@ class AdminVariables extends React.Component<AdminVariablesProps, AdminVariables
     for (var i in r) {
       obj[r[i].key] = r[i].value;
     }
-    this.setState({ variables: obj, loading: false });
+    this.setState({ variables: r, loading: false });
   }
 
   render() {

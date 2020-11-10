@@ -305,7 +305,7 @@ export const about = async (
   return await request('get', `/api/about`, {}, callback);
 };
 
-export const variables = async (callback?: RequestCallback<Blotter.Variable[]>) => {
+export const variables = async (callback?: RequestCallback<Blotter.Variables>) => {
   return await request('get', `/api/admin/variables`, {}, callback);
 };
 
