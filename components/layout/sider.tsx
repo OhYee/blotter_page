@@ -70,7 +70,7 @@ export default function Sider(props: {
             style={{ background: 'white', borderRadius: '100px', maxWidth: '120px' }}
           />
           {!user.existed ? (
-            <a onClick={onLoginClick}>
+            <a onClick={onLoginClick} style={{ cursor: 'pointer' }}>
               <Avatar>
                 <User />
               </Avatar>
