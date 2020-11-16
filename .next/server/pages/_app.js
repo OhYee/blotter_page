@@ -2756,7 +2756,10 @@ function Sider(props) {
       maxWidth: '120px'
     }
   }), !user.existed ? sider_jsx("a", {
-    onClick: onLoginClick
+    onClick: onLoginClick,
+    style: {
+      cursor: 'pointer'
+    }
   }, sider_jsx(components_avatar["a" /* default */], null, sider_jsx(svg["T" /* User */], null))) : sider_jsx(popover["d" /* default */], {
     placement: "right",
     trigger: ['click', 'hover'],
