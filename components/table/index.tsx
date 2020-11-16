@@ -234,13 +234,24 @@ export default function Table<T>(props: TableProps<T>) {
     [sortKey, sortAscending, setState, onChange],
   );
 
+  const { DndProviderComponent, DragableRowComponent } = React.useMemo(
+    () =>
+      !!onMove
+        ? { DndProviderComponent: DndProvider, DragableRowComponent: DragableRow }
+        : {
+            DndProviderComponent: (props) => props.children,
+            DragableRowComponent: (props) => props.children,
+          },
+    [onMove],
+  );
+
   return (
     <div className={concat(styles.table)} style={style}>
       {!!loading && (
         <div className={styles.loading}>{loading === true ? <Loading /> : loading}</div>
       )}
       <div className={concat(styles.wrapper, !!loading ? styles.onloading : '')}>
-        <DndProvider backend={HTML5Backend}>
+        <DndProviderComponent backend={!!onMove && HTML5Backend}>
           <table>
             {showHeader ? (
               <thead style={{ visibility: showHeader ? 'visible' : 'hidden' }}>
@@ -322,7 +333,7 @@ export default function Table<T>(props: TableProps<T>) {
 
             <tbody>
               {showData.map((item, idx) => [
-                <DragableRow key={idx} index={idx} dragKey={dragKey} onMove={onMove}>
+                <DragableRowComponent key={idx} index={idx} dragKey={dragKey} onMove={onMove}>
                   {!!expand ? (
                     <td>
                       <Left
@@ -361,7 +372,7 @@ export default function Table<T>(props: TableProps<T>) {
                       </td>
                     );
                   })}
-                </DragableRow>,
+                </DragableRowComponent>,
                 !!expand && !!expanded[idx] ? (
                   <tr key={`${idx}-expand`}>
                     <td></td>
@@ -388,7 +399,7 @@ export default function Table<T>(props: TableProps<T>) {
               </tfoot>
             ) : null}
           </table>
-        </DndProvider>
+        </DndProviderComponent>
       </div>
       {pagination !== false ? (
         <Pagination
