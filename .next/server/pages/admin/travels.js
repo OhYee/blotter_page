@@ -1819,7 +1819,9 @@ class Travel extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
   }
 
   render() {
-    return __jsx(_components_card__WEBPACK_IMPORTED_MODULE_2__[/* default */ "a"], null, __jsx(_utils_global__WEBPACK_IMPORTED_MODULE_7__[/* Context */ "a"].Consumer, null, context => __jsx(next_head__WEBPACK_IMPORTED_MODULE_1___default.a, null, __jsx("title", null, `游记编辑|${context.blog_name}`))), __jsx(_components_container__WEBPACK_IMPORTED_MODULE_10__[/* Flex */ "a"], {
+    return __jsx(_components_card__WEBPACK_IMPORTED_MODULE_2__[/* default */ "a"], {
+      neumorphism: true
+    }, __jsx(_utils_global__WEBPACK_IMPORTED_MODULE_7__[/* Context */ "a"].Consumer, null, context => __jsx(next_head__WEBPACK_IMPORTED_MODULE_1___default.a, null, __jsx("title", null, `游记编辑|${context.blog_name}`))), __jsx(_components_container__WEBPACK_IMPORTED_MODULE_10__[/* Flex */ "a"], {
       direction: "TB",
       fullWidth: true,
       mainAxis: "flex-end"

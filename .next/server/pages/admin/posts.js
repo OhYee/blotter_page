@@ -1245,7 +1245,9 @@ class AdminPostList extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Compone
   }
 
   render() {
-    return __jsx(_components_card__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"], null, __jsx(_utils_global__WEBPACK_IMPORTED_MODULE_12__[/* Context */ "a"].Consumer, null, context => __jsx(next_head__WEBPACK_IMPORTED_MODULE_1___default.a, null, __jsx("title", null, `文章列表|后台|${context.blog_name}`))), __jsx(_components_post_search__WEBPACK_IMPORTED_MODULE_8__[/* default */ "a"], {
+    return __jsx(_components_card__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"], {
+      neumorphism: true
+    }, __jsx(_utils_global__WEBPACK_IMPORTED_MODULE_12__[/* Context */ "a"].Consumer, null, context => __jsx(next_head__WEBPACK_IMPORTED_MODULE_1___default.a, null, __jsx("title", null, `文章列表|后台|${context.blog_name}`))), __jsx(_components_post_search__WEBPACK_IMPORTED_MODULE_8__[/* default */ "a"], {
       searchWord: this.state.search,
       onSearchChange: this.onChange,
       checkedKeys: this.state.search_fields,

@@ -1176,7 +1176,9 @@ class AdminFriendList extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Compo
   }
 
   render() {
-    return __jsx(_components_card__WEBPACK_IMPORTED_MODULE_4__[/* default */ "a"], null, __jsx(_utils_global__WEBPACK_IMPORTED_MODULE_9__[/* Context */ "a"].Consumer, null, context => __jsx(next_head__WEBPACK_IMPORTED_MODULE_1___default.a, null, __jsx("title", null, `优秀博客订阅|后台|${context.blog_name}`))), __jsx(_components_container__WEBPACK_IMPORTED_MODULE_2__[/* Flex */ "a"], {
+    return __jsx(_components_card__WEBPACK_IMPORTED_MODULE_4__[/* default */ "a"], {
+      neumorphism: true
+    }, __jsx(_utils_global__WEBPACK_IMPORTED_MODULE_9__[/* Context */ "a"].Consumer, null, context => __jsx(next_head__WEBPACK_IMPORTED_MODULE_1___default.a, null, __jsx("title", null, `优秀博客订阅|后台|${context.blog_name}`))), __jsx(_components_container__WEBPACK_IMPORTED_MODULE_2__[/* Flex */ "a"], {
       direction: "TB",
       fullWidth: true
     }, this.renderTableHead(), __jsx(_components_table__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"], {
