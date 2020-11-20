@@ -179,7 +179,7 @@ class AdminMenus extends React.Component<AdminMenusProps, AdminMenusState> {
 
   render() {
     return (
-      <Card>
+      <Card neumorphism>
         <Context.Consumer>
           {(context) => (
             <Head>

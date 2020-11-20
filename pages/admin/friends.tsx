@@ -396,7 +396,7 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
 
   render() {
     return (
-      <Card>
+      <Card neumorphism>
         <Context.Consumer>
           {(context) => (
             <Head>

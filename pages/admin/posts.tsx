@@ -214,7 +214,7 @@ class AdminPostList extends React.Component<AdminPostListProps, AdminPostListSta
 
   render() {
     return (
-      <Card>
+      <Card neumorphism>
         <Context.Consumer>
           {(context) => (
             <Head>

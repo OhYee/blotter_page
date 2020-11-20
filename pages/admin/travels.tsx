@@ -263,7 +263,7 @@ class Travel extends React.Component<TravelProps, TravelState> {
 
   render() {
     return (
-      <Card>
+      <Card neumorphism>
         <Context.Consumer>
           {(context) => (
             <Head>

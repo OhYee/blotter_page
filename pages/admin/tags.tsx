@@ -258,7 +258,7 @@ class AdminTagList extends React.Component<AdminTagListProps, AdminTagListState>
 
   render() {
     return (
-      <Card>
+      <Card neumorphism>
         <Context.Consumer>
           {(context) => (
             <Head>
