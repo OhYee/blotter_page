@@ -21,21 +21,21 @@ export default function DragableRow(props: DragableTableProps) {
   const { dragKey, index, onMove, ...restProps } = props;
   var { style } = props;
 
-  const type = dragKey;
-
-  const [{}, drop] = useDrop<DragDropObject, DragDropObject, DragDropObject>({
-    accept: type,
-    drop: (item) => {
-      if (!!onMove) onMove(item.index, index);
-      return item;
-    },
-  });
-
-  const [{}, drag] = useDrag<DragDropObject, DragDropObject, DragDropObject>({
-    item: { type, index },
-  });
-
   if (!!onMove) {
+    const type = dragKey;
+
+    const [{}, drop] = useDrop<DragDropObject, DragDropObject, DragDropObject>({
+      accept: type,
+      drop: (item) => {
+        if (!!onMove) onMove(item.index, index);
+        return item;
+      },
+    });
+
+    const [{}, drag] = useDrag<DragDropObject, DragDropObject, DragDropObject>({
+      item: { type, index },
+    });
+
     drop(drag(ref));
     style = { cursor: 'move', ...style };
   }

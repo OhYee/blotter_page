@@ -234,14 +234,8 @@ export default function Table<T>(props: TableProps<T>) {
     [sortKey, sortAscending, setState, onChange],
   );
 
-  const { DndProviderComponent, DragableRowComponent } = React.useMemo(
-    () =>
-      !!onMove
-        ? { DndProviderComponent: DndProvider, DragableRowComponent: DragableRow }
-        : {
-            DndProviderComponent: (props) => props.children,
-            DragableRowComponent: (props) => props.children,
-          },
+  const DndProviderComponent = React.useMemo(
+    () => (!!onMove ? DndProvider : (props) => props.children),
     [onMove],
   );
 
@@ -251,7 +245,7 @@ export default function Table<T>(props: TableProps<T>) {
         <div className={styles.loading}>{loading === true ? <Loading /> : loading}</div>
       )}
       <div className={concat(styles.wrapper, !!loading ? styles.onloading : '')}>
-        <DndProviderComponent backend={!!onMove && HTML5Backend}>
+        <DndProviderComponent backend={HTML5Backend}>
           <table>
             {showHeader ? (
               <thead style={{ visibility: showHeader ? 'visible' : 'hidden' }}>
@@ -333,7 +327,7 @@ export default function Table<T>(props: TableProps<T>) {
 
             <tbody>
               {showData.map((item, idx) => [
-                <DragableRowComponent key={idx} index={idx} dragKey={dragKey} onMove={onMove}>
+                <DragableRow key={idx} index={idx} dragKey={dragKey} onMove={onMove}>
                   {!!expand ? (
                     <td>
                       <Left
@@ -372,7 +366,7 @@ export default function Table<T>(props: TableProps<T>) {
                       </td>
                     );
                   })}
-                </DragableRowComponent>,
+                </DragableRow>,
                 !!expand && !!expanded[idx] ? (
                   <tr key={`${idx}-expand`}>
                     <td></td>
