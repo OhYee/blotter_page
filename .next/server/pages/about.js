@@ -1253,22 +1253,22 @@ function DragableRow(props) {
   var {
     style
   } = props;
-  const type = dragKey;
-  const [{}, drop] = Object(external_react_dnd_["useDrop"])({
-    accept: type,
-    drop: item => {
-      if (!!onMove) onMove(item.index, index);
-      return item;
-    }
-  });
-  const [{}, drag] = Object(external_react_dnd_["useDrag"])({
-    item: {
-      type,
-      index
-    }
-  });
 
   if (!!onMove) {
+    const type = dragKey;
+    const [{}, drop] = Object(external_react_dnd_["useDrop"])({
+      accept: type,
+      drop: item => {
+        if (!!onMove) onMove(item.index, index);
+        return item;
+      }
+    });
+    const [{}, drag] = Object(external_react_dnd_["useDrag"])({
+      item: {
+        type,
+        index
+      }
+    });
     drop(drag(ref));
     style = _objectSpread({
       cursor: 'move'
@@ -1501,16 +1501,7 @@ function Table(props) {
 
     if (!!onChange) onChange(_page, _size, _sortKey, _sortAscending, _filter);
   }, [sortKey, sortAscending, setState, onChange]);
-  const {
-    DndProviderComponent,
-    DragableRowComponent
-  } = external_react_default.a.useMemo(() => !!onMove ? {
-    DndProviderComponent: external_react_dnd_["DndProvider"],
-    DragableRowComponent: DragableRow
-  } : {
-    DndProviderComponent: props => props.children,
-    DragableRowComponent: props => props.children
-  }, [onMove]);
+  const DndProviderComponent = external_react_default.a.useMemo(() => !!onMove ? external_react_dnd_["DndProvider"] : props => props.children, [onMove]);
   return table_jsx("div", {
     className: Object(component["a" /* concat */])(table_module_default.a.table),
     style: style
@@ -1519,7 +1510,7 @@ function Table(props) {
   }, loading === true ? table_jsx(svg["y" /* Loading */], null) : loading), table_jsx("div", {
     className: Object(component["a" /* concat */])(table_module_default.a.wrapper, !!loading ? table_module_default.a.onloading : '')
   }, table_jsx(DndProviderComponent, {
-    backend: !!onMove && external_react_dnd_html5_backend_["HTML5Backend"]
+    backend: external_react_dnd_html5_backend_["HTML5Backend"]
   }, table_jsx("table", null, showHeader ? table_jsx("thead", {
     style: {
       visibility: showHeader ? 'visible' : 'hidden'
@@ -1571,7 +1562,7 @@ function Table(props) {
     onClick: () => {
       setFilterModal(col);
     }
-  })) : null))))) : null, table_jsx("tbody", null, showData.map((item, idx) => [table_jsx(DragableRowComponent, {
+  })) : null))))) : null, table_jsx("tbody", null, showData.map((item, idx) => [table_jsx(DragableRow, {
     key: idx,
     index: idx,
     dragKey: dragKey,
