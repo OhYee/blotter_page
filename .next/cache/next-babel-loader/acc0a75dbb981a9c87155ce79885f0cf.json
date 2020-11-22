@@ -1,1 +1,0 @@
-{"ast":null,"code":"export function ObjectFilter(obj, callback) {\n  var ret = {};\n\n  for (var key in obj) {\n    const value = obj[key];\n\n    if (callback(key, value)) {\n      ret[key] = value;\n    }\n  }\n\n  return ret;\n}","map":null,"metadata":{},"sourceType":"module"}

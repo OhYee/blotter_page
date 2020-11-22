@@ -1,1 +1,0 @@
-{"ast":null,"code":"/* 忽略打字过程中的查询 */\nvar _timer = {};\nexport function waitUntil(id, callback, time) {\n  if (_timer[id]) {\n    clearTimeout(_timer[id]);\n    delete _timer[id];\n  }\n\n  _timer[id] = setTimeout(function () {\n    callback();\n    delete _timer[id];\n  }, time);\n}","map":null,"metadata":{},"sourceType":"module"}

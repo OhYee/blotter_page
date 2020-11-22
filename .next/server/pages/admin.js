@@ -116,7 +116,7 @@ function isDynamicRoute(route) {
 "use strict";
 
 
-var _interopRequireDefault = __webpack_require__("TqRt");
+var _interopRequireDefault = __webpack_require__("AroE");
 
 exports.__esModule = true;
 exports.default = withRouter;
@@ -143,64 +143,29 @@ function withRouter(ComposedComponent) {
 
 /***/ }),
 
-/***/ "284h":
+/***/ "0G5g":
 /***/ (function(module, exports, __webpack_require__) {
 
-var _typeof = __webpack_require__("cDf5");
+"use strict";
 
-function _getRequireWildcardCache() {
-  if (typeof WeakMap !== "function") return null;
-  var cache = new WeakMap();
 
-  _getRequireWildcardCache = function _getRequireWildcardCache() {
-    return cache;
-  };
+exports.__esModule = true;
+exports.default = void 0;
 
-  return cache;
-}
-
-function _interopRequireWildcard(obj) {
-  if (obj && obj.__esModule) {
-    return obj;
-  }
-
-  if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") {
-    return {
-      "default": obj
-    };
-  }
-
-  var cache = _getRequireWildcardCache();
-
-  if (cache && cache.has(obj)) {
-    return cache.get(obj);
-  }
-
-  var newObj = {};
-  var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
-
-  for (var key in obj) {
-    if (Object.prototype.hasOwnProperty.call(obj, key)) {
-      var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
-
-      if (desc && (desc.get || desc.set)) {
-        Object.defineProperty(newObj, key, desc);
-      } else {
-        newObj[key] = obj[key];
+const requestIdleCallback = typeof self !== 'undefined' && self.requestIdleCallback || function (cb) {
+  let start = Date.now();
+  return setTimeout(function () {
+    cb({
+      didTimeout: false,
+      timeRemaining: function () {
+        return Math.max(0, 50 - (Date.now() - start));
       }
-    }
-  }
+    });
+  }, 1);
+};
 
-  newObj["default"] = obj;
-
-  if (cache) {
-    cache.set(obj, newObj);
-  }
-
-  return newObj;
-}
-
-module.exports = _interopRequireWildcard;
+var _default = requestIdleCallback;
+exports.default = _default;
 
 /***/ }),
 
@@ -399,6 +364,103 @@ module.exports = __webpack_require__("tg/1");
 
 /***/ }),
 
+/***/ "7KCV":
+/***/ (function(module, exports, __webpack_require__) {
+
+var _typeof = __webpack_require__("C+bE");
+
+function _getRequireWildcardCache() {
+  if (typeof WeakMap !== "function") return null;
+  var cache = new WeakMap();
+
+  _getRequireWildcardCache = function _getRequireWildcardCache() {
+    return cache;
+  };
+
+  return cache;
+}
+
+function _interopRequireWildcard(obj) {
+  if (obj && obj.__esModule) {
+    return obj;
+  }
+
+  if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") {
+    return {
+      "default": obj
+    };
+  }
+
+  var cache = _getRequireWildcardCache();
+
+  if (cache && cache.has(obj)) {
+    return cache.get(obj);
+  }
+
+  var newObj = {};
+  var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor;
+
+  for (var key in obj) {
+    if (Object.prototype.hasOwnProperty.call(obj, key)) {
+      var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null;
+
+      if (desc && (desc.get || desc.set)) {
+        Object.defineProperty(newObj, key, desc);
+      } else {
+        newObj[key] = obj[key];
+      }
+    }
+  }
+
+  newObj["default"] = obj;
+
+  if (cache) {
+    cache.set(obj, newObj);
+  }
+
+  return newObj;
+}
+
+module.exports = _interopRequireWildcard;
+
+/***/ }),
+
+/***/ "AroE":
+/***/ (function(module, exports) {
+
+function _interopRequireDefault(obj) {
+  return obj && obj.__esModule ? obj : {
+    "default": obj
+  };
+}
+
+module.exports = _interopRequireDefault;
+
+/***/ }),
+
+/***/ "C+bE":
+/***/ (function(module, exports) {
+
+function _typeof(obj) {
+  "@babel/helpers - typeof";
+
+  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
+    module.exports = _typeof = function _typeof(obj) {
+      return typeof obj;
+    };
+  } else {
+    module.exports = _typeof = function _typeof(obj) {
+      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
+    };
+  }
+
+  return _typeof(obj);
+}
+
+module.exports = _typeof;
+
+/***/ }),
+
 /***/ "EyMQ":
 /***/ (function(module, exports) {
 
@@ -411,6 +473,13 @@ module.exports = {
 
 /***/ }),
 
+/***/ "F5FC":
+/***/ (function(module, exports) {
+
+module.exports = require("react/jsx-runtime");
+
+/***/ }),
+
 /***/ "Hh1h":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -419,6 +488,266 @@ module.exports = {
 function concat(...classList) {
   return classList.filter(s => !!s).join(' ');
 }
+
+/***/ }),
+
+/***/ "Nh2W":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__("AroE");
+
+exports.__esModule = true;
+exports.markAssetError = markAssetError;
+exports.isAssetError = isAssetError;
+exports.getClientBuildManifest = getClientBuildManifest;
+exports.default = void 0;
+
+var _getAssetPathFromRoute = _interopRequireDefault(__webpack_require__("UhrY"));
+
+var _requestIdleCallback = _interopRequireDefault(__webpack_require__("0G5g")); // 3.8s was arbitrarily chosen as it's what https://web.dev/interactive
+// considers as "Good" time-to-interactive. We must assume something went
+// wrong beyond this point, and then fall-back to a full page transition to
+// show the user something of value.
+
+
+const MS_MAX_IDLE_DELAY = 3800;
+
+function withFuture(key, map, generator) {
+  let entry = map.get(key);
+
+  if (entry) {
+    if ('future' in entry) {
+      return entry.future;
+    }
+
+    return Promise.resolve(entry);
+  }
+
+  let resolver;
+  const prom = new Promise(resolve => {
+    resolver = resolve;
+  });
+  map.set(key, entry = {
+    resolve: resolver,
+    future: prom
+  });
+  return generator ? // eslint-disable-next-line no-sequences
+  generator().then(value => (resolver(value), value)) : prom;
+}
+
+function hasPrefetch(link) {
+  try {
+    link = document.createElement('link');
+    return (// detect IE11 since it supports prefetch but isn't detected
+      // with relList.support
+      !!window.MSInputMethodContext && !!document.documentMode || link.relList.supports('prefetch')
+    );
+  } catch (_unused) {
+    return false;
+  }
+}
+
+const canPrefetch = hasPrefetch();
+
+function prefetchViaDom(href, as, link) {
+  return new Promise((res, rej) => {
+    if (document.querySelector(`link[rel="prefetch"][href^="${href}"]`)) {
+      return res();
+    }
+
+    link = document.createElement('link'); // The order of property assignment here is intentional:
+
+    if (as) link.as = as;
+    link.rel = `prefetch`;
+    link.crossOrigin = undefined;
+    link.onload = res;
+    link.onerror = rej; // `href` should always be last:
+
+    link.href = href;
+    document.head.appendChild(link);
+  });
+}
+
+const ASSET_LOAD_ERROR = Symbol('ASSET_LOAD_ERROR'); // TODO: unexport
+
+function markAssetError(err) {
+  return Object.defineProperty(err, ASSET_LOAD_ERROR, {});
+}
+
+function isAssetError(err) {
+  return err && ASSET_LOAD_ERROR in err;
+}
+
+function appendScript(src, script) {
+  return new Promise((resolve, reject) => {
+    script = document.createElement('script'); // The order of property assignment here is intentional.
+    // 1. Setup success/failure hooks in case the browser synchronously
+    //    executes when `src` is set.
+
+    script.onload = resolve;
+
+    script.onerror = () => reject(markAssetError(new Error(`Failed to load script: ${src}`))); // 2. Configure the cross-origin attribute before setting `src` in case the
+    //    browser begins to fetch.
+
+
+    script.crossOrigin = undefined; // 3. Finally, set the source and inject into the DOM in case the child
+    //    must be appended for fetching to start.
+
+    script.src = src;
+    document.body.appendChild(script);
+  });
+}
+
+function idleTimeout(ms, err) {
+  return new Promise((_resolve, reject) => (0, _requestIdleCallback.default)(() => setTimeout(() => reject(err), ms)));
+} // TODO: stop exporting or cache the failure
+// It'd be best to stop exporting this. It's an implementation detail. We're
+// only exporting it for backwards compatibilty with the `page-loader`.
+// Only cache this response as a last resort if we cannot eliminate all other
+// code branches that use the Build Manifest Callback and push them through
+// the Route Loader interface.
+
+
+function getClientBuildManifest() {
+  if (self.__BUILD_MANIFEST) {
+    return Promise.resolve(self.__BUILD_MANIFEST);
+  }
+
+  const onBuildManifest = new Promise(resolve => {
+    // Mandatory because this is not concurrent safe:
+    const cb = self.__BUILD_MANIFEST_CB;
+
+    self.__BUILD_MANIFEST_CB = () => {
+      resolve(self.__BUILD_MANIFEST);
+      cb && cb();
+    };
+  });
+  return Promise.race([onBuildManifest, idleTimeout(MS_MAX_IDLE_DELAY, markAssetError(new Error('Failed to load client build manifest')))]);
+}
+
+function getFilesForRoute(assetPrefix, route) {
+  if (false) {}
+
+  return getClientBuildManifest().then(manifest => {
+    if (!(route in manifest)) {
+      throw markAssetError(new Error(`Failed to lookup route: ${route}`));
+    }
+
+    const allFiles = manifest[route].map(entry => assetPrefix + '/_next/' + encodeURI(entry));
+    return {
+      scripts: allFiles.filter(v => v.endsWith('.js')),
+      css: allFiles.filter(v => v.endsWith('.css'))
+    };
+  });
+}
+
+function createRouteLoader(assetPrefix) {
+  const entrypoints = new Map();
+  const loadedScripts = new Map();
+  const styleSheets = new Map();
+  const routes = new Map();
+
+  function maybeExecuteScript(src) {
+    let prom = loadedScripts.get(src);
+
+    if (prom) {
+      return prom;
+    } // Skip executing script if it's already in the DOM:
+
+
+    if (document.querySelector(`script[src^="${src}"]`)) {
+      return Promise.resolve();
+    }
+
+    loadedScripts.set(src, prom = appendScript(src));
+    return prom;
+  }
+
+  function fetchStyleSheet(href) {
+    let prom = styleSheets.get(href);
+
+    if (prom) {
+      return prom;
+    }
+
+    styleSheets.set(href, prom = fetch(href).then(res => {
+      if (!res.ok) {
+        throw new Error(`Failed to load stylesheet: ${href}`);
+      }
+
+      return res.text().then(text => ({
+        href: href,
+        content: text
+      }));
+    }).catch(err => {
+      throw markAssetError(err);
+    }));
+    return prom;
+  }
+
+  return {
+    whenEntrypoint(route) {
+      return withFuture(route, entrypoints);
+    },
+
+    onEntrypoint(route, execute) {
+      Promise.resolve(execute).then(fn => fn()).then(exports => ({
+        component: exports && exports.default || exports,
+        exports: exports
+      }), err => ({
+        error: err
+      })).then(input => {
+        const old = entrypoints.get(route);
+        entrypoints.set(route, input);
+        if (old && 'resolve' in old) old.resolve(input);
+      });
+    },
+
+    loadRoute(route) {
+      return withFuture(route, routes, async () => {
+        try {
+          const {
+            scripts,
+            css
+          } = await getFilesForRoute(assetPrefix, route);
+          const [, styles] = await Promise.all([entrypoints.has(route) ? [] : Promise.all(scripts.map(maybeExecuteScript)), Promise.all(css.map(fetchStyleSheet))]);
+          const entrypoint = await Promise.race([this.whenEntrypoint(route), idleTimeout(MS_MAX_IDLE_DELAY, markAssetError(new Error(`Route did not complete loading: ${route}`)))]);
+          const res = Object.assign({
+            styles
+          }, entrypoint);
+          return 'error' in entrypoint ? entrypoint : res;
+        } catch (err) {
+          return {
+            error: err
+          };
+        }
+      });
+    },
+
+    prefetch(route) {
+      // https://github.com/GoogleChromeLabs/quicklink/blob/453a661fa1fa940e2d2e044452398e38c67a98fb/src/index.mjs#L115-L118
+      // License: Apache 2.0
+      let cn;
+
+      if (cn = navigator.connection) {
+        // Don't prefetch if using 2G or if Save-Data is enabled.
+        if (cn.saveData || /2g/.test(cn.effectiveType)) return Promise.resolve();
+      }
+
+      return getFilesForRoute(assetPrefix, route).then(output => Promise.all(canPrefetch ? output.scripts.map(script => prefetchViaDom(script, 'script')) : [])).then(() => {
+        (0, _requestIdleCallback.default)(() => this.loadRoute(route));
+      }).catch( // swallow prefetch errors
+      () => {});
+    }
+
+  };
+}
+
+var _default = createRouteLoader;
+exports.default = _default;
 
 /***/ }),
 
@@ -448,16 +777,10 @@ module.exports = {
 
 /***/ }),
 
-/***/ "TqRt":
+/***/ "UhrY":
 /***/ (function(module, exports) {
 
-function _interopRequireDefault(obj) {
-  return obj && obj.__esModule ? obj : {
-    "default": obj
-  };
-}
-
-module.exports = _interopRequireDefault;
+module.exports = require("next/dist/next-server/lib/router/utils/get-asset-path-from-route.js");
 
 /***/ }),
 
@@ -625,17 +948,24 @@ function getRouteRegex(normalizedRoute) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("cDcd");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _components_container__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("pJr+");
-/* harmony import */ var _utils_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__("Hh1h");
-/* harmony import */ var _card_module_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__("EyMQ");
-/* harmony import */ var _card_module_scss__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_card_module_scss__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _styles_shadow_module_scss__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__("tyXD");
-/* harmony import */ var _styles_shadow_module_scss__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_styles_shadow_module_scss__WEBPACK_IMPORTED_MODULE_4__);
-var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("F5FC");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("cDcd");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _components_container__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__("pJr+");
+/* harmony import */ var _utils_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__("Hh1h");
+/* harmony import */ var _card_module_scss__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__("EyMQ");
+/* harmony import */ var _card_module_scss__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_card_module_scss__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _styles_shadow_module_scss__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__("tyXD");
+/* harmony import */ var _styles_shadow_module_scss__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_styles_shadow_module_scss__WEBPACK_IMPORTED_MODULE_5__);
 
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
+
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
 
@@ -660,24 +990,27 @@ function Card(props, ref) {
   } = props,
         restProps = _objectWithoutProperties(props, ["shadow", "neumorphism", "neumorphismInset", "cover", "className", "style", "children", "mainStyle"]);
 
-  var classList = [_card_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.card, className];
-  if (shadow) classList.push(_styles_shadow_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.shadow);
-  if (neumorphism) classList.push(_styles_shadow_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.neumorphism);
-  if (neumorphismInset) classList.push(_styles_shadow_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.neumorphism_inset);
-  return __jsx("div", _extends({}, restProps, {
+  var classList = [_card_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.card, className];
+  if (shadow) classList.push(_styles_shadow_module_scss__WEBPACK_IMPORTED_MODULE_5___default.a.shadow);
+  if (neumorphism) classList.push(_styles_shadow_module_scss__WEBPACK_IMPORTED_MODULE_5___default.a.neumorphism);
+  if (neumorphismInset) classList.push(_styles_shadow_module_scss__WEBPACK_IMPORTED_MODULE_5___default.a.neumorphism_inset);
+  return /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("div", _objectSpread(_objectSpread({}, restProps), {}, {
     ref: ref,
-    className: Object(_utils_component__WEBPACK_IMPORTED_MODULE_2__[/* concat */ "a"])(...classList),
-    style: style
-  }), __jsx(_components_container__WEBPACK_IMPORTED_MODULE_1__[/* Flex */ "a"], {
-    direction: "TB",
-    fullWidth: true
-  }, cover, __jsx("div", {
-    className: _card_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.main,
-    style: mainStyle
-  }, children)));
+    className: Object(_utils_component__WEBPACK_IMPORTED_MODULE_3__[/* concat */ "a"])(...classList),
+    style: style,
+    children: /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsxs"])(_components_container__WEBPACK_IMPORTED_MODULE_2__[/* Flex */ "a"], {
+      direction: "TB",
+      fullWidth: true,
+      children: [cover, /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("div", {
+        className: _card_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.main,
+        style: mainStyle,
+        children: children
+      })]
+    })
+  }));
 }
 
-/* harmony default export */ __webpack_exports__["a"] = (/*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.forwardRef(Card));
+/* harmony default export */ __webpack_exports__["a"] = (/*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.forwardRef(Card));
 
 /***/ }),
 
@@ -688,36 +1021,13 @@ module.exports = require("react");
 
 /***/ }),
 
-/***/ "cDf5":
-/***/ (function(module, exports) {
-
-function _typeof(obj) {
-  "@babel/helpers - typeof";
-
-  if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
-    module.exports = _typeof = function _typeof(obj) {
-      return typeof obj;
-    };
-  } else {
-    module.exports = _typeof = function _typeof(obj) {
-      return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-    };
-  }
-
-  return _typeof(obj);
-}
-
-module.exports = _typeof;
-
-/***/ }),
-
 /***/ "cTJO":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var _interopRequireWildcard = __webpack_require__("284h");
+var _interopRequireWildcard = __webpack_require__("7KCV");
 
 exports.__esModule = true;
 exports.default = void 0;
@@ -728,60 +1038,9 @@ var _router = __webpack_require__("elyg");
 
 var _router2 = __webpack_require__("nOHt");
 
-let cachedObserver;
-const listeners = new Map();
-const IntersectionObserver = false ? undefined : null;
+var _useIntersection = __webpack_require__("vNVm");
+
 const prefetched = {};
-
-function getObserver() {
-  // Return shared instance of IntersectionObserver if already created
-  if (cachedObserver) {
-    return cachedObserver;
-  } // Only create shared IntersectionObserver if supported in browser
-
-
-  if (!IntersectionObserver) {
-    return undefined;
-  }
-
-  return cachedObserver = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (!listeners.has(entry.target)) {
-        return;
-      }
-
-      const cb = listeners.get(entry.target);
-
-      if (entry.isIntersecting || entry.intersectionRatio > 0) {
-        cachedObserver.unobserve(entry.target);
-        listeners.delete(entry.target);
-        cb();
-      }
-    });
-  }, {
-    rootMargin: '200px'
-  });
-}
-
-const listenToIntersections = (el, cb) => {
-  const observer = getObserver();
-
-  if (!observer) {
-    return () => {};
-  }
-
-  observer.observe(el);
-  listeners.set(el, cb);
-  return () => {
-    try {
-      observer.unobserve(el);
-    } catch (err) {
-      console.error(err);
-    }
-
-    listeners.delete(el);
-  };
-};
 
 function prefetch(router, href, as, options) {
   if (true) return;
@@ -792,9 +1051,10 @@ function prefetch(router, href, as, options) {
 
   router.prefetch(href, as, options).catch(err => {
     if (false) {}
-  }); // Join on an invalid URI character
+  });
+  const curLocale = options && typeof options.locale !== 'undefined' ? options.locale : router && router.locale; // Join on an invalid URI character
 
-  prefetched[href + '%' + as] = true;
+  prefetched[href + '%' + as + (curLocale ? '%' + curLocale : '')] = true;
 }
 
 function isModifiedEvent(event) {
@@ -805,7 +1065,7 @@ function isModifiedEvent(event) {
   event.nativeEvent && event.nativeEvent.which === 2;
 }
 
-function linkClicked(e, router, href, as, replace, shallow, scroll) {
+function linkClicked(e, router, href, as, replace, shallow, scroll, locale) {
   const {
     nodeName
   } = e.currentTarget;
@@ -823,7 +1083,8 @@ function linkClicked(e, router, href, as, replace, shallow, scroll) {
 
 
   router[replace ? 'replace' : 'push'](href, as, {
-    shallow
+    shallow,
+    locale
   }).then(success => {
     if (!success) return;
 
@@ -838,9 +1099,6 @@ function Link(props) {
   if (false) {}
 
   const p = props.prefetch !== false;
-
-  const [childElm, setChildElm] = _react.default.useState();
-
   const router = (0, _router2.useRouter)();
   const pathname = router && router.pathname || '/';
 
@@ -855,24 +1113,12 @@ function Link(props) {
     };
   }, [pathname, props.href, props.as]);
 
-  _react.default.useEffect(() => {
-    if (p && IntersectionObserver && childElm && childElm.tagName && (0, _router.isLocalURL)(href)) {
-      // Join on an invalid URI character
-      const isPrefetched = prefetched[href + '%' + as];
-
-      if (!isPrefetched) {
-        return listenToIntersections(childElm, () => {
-          prefetch(router, href, as);
-        });
-      }
-    }
-  }, [p, childElm, href, as, router]);
-
   let {
     children,
     replace,
     shallow,
-    scroll
+    scroll,
+    locale
   } = props; // Deprecated. Warning shown by propType check. If the children provided is a string (<Link>example</Link>) we wrap it in an <a> tag
 
   if (typeof children === 'string') {
@@ -882,45 +1128,61 @@ function Link(props) {
 
   const child = _react.Children.only(children);
 
-  const childProps = {
-    ref: el => {
-      if (el) setChildElm(el);
+  const childRef = child && typeof child === 'object' && child.ref;
+  const [setIntersectionRef, isVisible] = (0, _useIntersection.useIntersection)({
+    rootMargin: '200px'
+  });
 
-      if (child && typeof child === 'object' && child.ref) {
-        if (typeof child.ref === 'function') child.ref(el);else if (typeof child.ref === 'object') {
-          child.ref.current = el;
-        }
+  const setRef = _react.default.useCallback(el => {
+    setIntersectionRef(el);
+
+    if (childRef) {
+      if (typeof childRef === 'function') childRef(el);else if (typeof childRef === 'object') {
+        childRef.current = el;
       }
-    },
+    }
+  }, [childRef, setIntersectionRef]);
+
+  (0, _react.useEffect)(() => {
+    const shouldPrefetch = isVisible && p && (0, _router.isLocalURL)(href);
+    const curLocale = typeof locale !== 'undefined' ? locale : router && router.locale;
+    const isPrefetched = prefetched[href + '%' + as + (curLocale ? '%' + curLocale : '')];
+
+    if (shouldPrefetch && !isPrefetched) {
+      prefetch(router, href, as, {
+        locale: curLocale
+      });
+    }
+  }, [as, href, isVisible, locale, p, router]);
+  const childProps = {
+    ref: setRef,
     onClick: e => {
       if (child.props && typeof child.props.onClick === 'function') {
         child.props.onClick(e);
       }
 
       if (!e.defaultPrevented) {
-        linkClicked(e, router, href, as, replace, shallow, scroll);
+        linkClicked(e, router, href, as, replace, shallow, scroll, locale);
       }
     }
   };
 
-  if (p) {
-    childProps.onMouseEnter = e => {
-      if (!(0, _router.isLocalURL)(href)) return;
+  childProps.onMouseEnter = e => {
+    if (!(0, _router.isLocalURL)(href)) return;
 
-      if (child.props && typeof child.props.onMouseEnter === 'function') {
-        child.props.onMouseEnter(e);
-      }
+    if (child.props && typeof child.props.onMouseEnter === 'function') {
+      child.props.onMouseEnter(e);
+    }
 
-      prefetch(router, href, as, {
-        priority: true
-      });
-    };
-  } // If child is an <a> tag and doesn't have a href attribute, or if the 'passHref' property is
+    prefetch(router, href, as, {
+      priority: true
+    });
+  }; // If child is an <a> tag and doesn't have a href attribute, or if the 'passHref' property is
   // defined, we specify the current 'href', so that repetition is not needed by the user
 
 
   if (props.passHref || child.type === 'a' && !('href' in child.props)) {
-    childProps.href = (0, _router.addBasePath)(as);
+    childProps.href = (0, _router.addBasePath)((0, _router.addLocale)(as, typeof locale !== 'undefined' ? locale : router && router.locale, router && router.defaultLocale));
   }
 
   return /*#__PURE__*/_react.default.cloneElement(child, childProps);
@@ -1043,22 +1305,27 @@ function mitt() {
 
 
 exports.__esModule = true;
+exports.addLocale = addLocale;
+exports.delLocale = delLocale;
 exports.hasBasePath = hasBasePath;
 exports.addBasePath = addBasePath;
 exports.delBasePath = delBasePath;
 exports.isLocalURL = isLocalURL;
 exports.interpolateAs = interpolateAs;
 exports.resolveHref = resolveHref;
-exports.markLoadingError = markLoadingError;
 exports.default = void 0;
 
 var _normalizeTrailingSlash = __webpack_require__("X24+");
+
+var _routeLoader = __webpack_require__("Nh2W");
 
 var _denormalizePagePath = __webpack_require__("wkBG");
 
 var _mitt = _interopRequireDefault(__webpack_require__("dZ6Y"));
 
 var _utils = __webpack_require__("g/15");
+
+var _escapePathDelimiters = _interopRequireDefault(__webpack_require__("fcRV"));
 
 var _isDynamic = __webpack_require__("/jkW");
 
@@ -1071,8 +1338,6 @@ var _resolveRewrites = _interopRequireDefault(__webpack_require__("S3md"));
 var _routeMatcher = __webpack_require__("gguc");
 
 var _routeRegex = __webpack_require__("YTqd");
-
-var _escapePathDelimiters = _interopRequireDefault(__webpack_require__("fcRV"));
 
 function _interopRequireDefault(obj) {
   return obj && obj.__esModule ? obj : {
@@ -1091,13 +1356,29 @@ function buildCancellationError() {
   });
 }
 
+function addPathPrefix(path, prefix) {
+  return prefix && path.startsWith('/') ? path === '/' ? (0, _normalizeTrailingSlash.normalizePathTrailingSlash)(prefix) : `${prefix}${path}` : path;
+}
+
+function addLocale(path, locale, defaultLocale) {
+  if (false) {}
+
+  return path;
+}
+
+function delLocale(path, locale) {
+  if (false) {}
+
+  return path;
+}
+
 function hasBasePath(path) {
   return path === basePath || path.startsWith(basePath + '/');
 }
 
 function addBasePath(path) {
   // we only add the basepath on relative urls
-  return basePath && path.startsWith('/') ? path === '/' ? (0, _normalizeTrailingSlash.normalizePathTrailingSlash)(basePath) : basePath + path : path;
+  return addPathPrefix(path, basePath);
 }
 
 function delBasePath(path) {
@@ -1179,7 +1460,11 @@ function omitParmsFromQuery(query, params) {
 function resolveHref(currentPath, href, resolveAs) {
   // we use a dummy base url for relative urls
   const base = new URL(currentPath, 'http://n');
-  const urlAsString = typeof href === 'string' ? href : (0, _utils.formatWithValidation)(href);
+  const urlAsString = typeof href === 'string' ? href : (0, _utils.formatWithValidation)(href); // Return because it cannot be routed by the Next.js router
+
+  if (!isLocalURL(urlAsString)) {
+    return resolveAs ? [urlAsString] : urlAsString;
+  }
 
   try {
     const finalUrl = new URL(urlAsString, base);
@@ -1210,12 +1495,6 @@ function resolveHref(currentPath, href, resolveAs) {
   }
 }
 
-const PAGE_LOAD_ERROR = Symbol('PAGE_LOAD_ERROR');
-
-function markLoadingError(err) {
-  return Object.defineProperty(err, PAGE_LOAD_ERROR, {});
-}
-
 function prepareUrlAs(router, url, as) {
   // If url and as provided as an object representation,
   // we'll format them into the string version here.
@@ -1226,6 +1505,7 @@ function prepareUrlAs(router, url, as) {
 }
 
 const manualScrollRestoration =  false && false;
+const SSG_DATA_NOT_FOUND_ERROR = 'SSG Data NOT_FOUND';
 
 function fetchRetry(url, attempts) {
   return fetch(url, {
@@ -1247,6 +1527,12 @@ function fetchRetry(url, attempts) {
         return fetchRetry(url, attempts - 1);
       }
 
+      if (res.status === 404) {
+        // TODO: handle reloading in development from fallback returning 200
+        // to on-demand-entry-handler causing it to reload periodically
+        throw new Error(SSG_DATA_NOT_FOUND_ERROR);
+      }
+
       throw new Error(`Failed to load static props`);
     }
 
@@ -1260,7 +1546,7 @@ function fetchNextData(dataHref, isServerRender) {
     // on a client-side transition. Otherwise, we'd get into an infinite
     // loop.
     if (!isServerRender) {
-      markLoadingError(err);
+      (0, _routeLoader.markAssetError)(err);
     }
 
     throw err;
@@ -1278,10 +1564,12 @@ class Router {
     App,
     wrapApp,
     Component,
-    initialStyleSheets,
     err,
     subscription,
-    isFallback
+    isFallback,
+    locale,
+    locales,
+    defaultLocale
   }) {
     this.route = void 0;
     this.pathname = void 0;
@@ -1300,6 +1588,9 @@ class Router {
     this.isFallback = void 0;
     this._inFlightRoute = void 0;
     this._shallow = void 0;
+    this.locale = void 0;
+    this.locales = void 0;
+    this.defaultLocale = void 0;
 
     this.onPopState = e => {
       const state = e.state;
@@ -1350,7 +1641,8 @@ class Router {
       }
 
       this.change('replaceState', url, as, Object.assign({}, options, {
-        shallow: options.shallow && this._shallow
+        shallow: options.shallow && this._shallow,
+        locale: options.locale || this.defaultLocale
       }));
     }; // represents the current component key
 
@@ -1364,7 +1656,7 @@ class Router {
     if (_pathname !== '/_error') {
       this.components[this.route] = {
         Component,
-        styleSheets: initialStyleSheets,
+        initial: true,
         props: initialProps,
         err,
         __N_SSG: initialProps && initialProps.__N_SSG,
@@ -1396,6 +1688,8 @@ class Router {
 
     this.isSsr = true;
     this.isFallback = isFallback;
+
+    if (false) {}
 
     if (false) {}
   }
@@ -1450,6 +1744,10 @@ class Router {
       return false;
     }
 
+    let localeChange = options.locale !== this.locale;
+
+    if (false) {}
+
     if (!options._h) {
       this.isSsr = false;
     } // marking route changes as a navigation start entry
@@ -1463,7 +1761,8 @@ class Router {
       this.abortComponentLoad(this._inFlightRoute);
     }
 
-    const cleanedAs = hasBasePath(as) ? delBasePath(as) : as;
+    as = addBasePath(addLocale(hasBasePath(as) ? delBasePath(as) : as, options.locale, this.defaultLocale));
+    const cleanedAs = delLocale(hasBasePath(as) ? delBasePath(as) : as, this.locale);
     this._inFlightRoute = as; // If the url change is only related to a hash change
     // We should not proceed. We should only change the state.
     // WARNING: `_h` is an internal option for handing Next.js client-side
@@ -1479,20 +1778,30 @@ class Router {
       this.notify(this.components[this.route]);
       Router.events.emit('hashChangeComplete', as);
       return true;
-    } // The build manifest needs to be loaded before auto-static dynamic pages
-    // get their query parameters to allow ensuring they can be parsed properly
-    // when rewritten to
+    }
 
-
-    const pages = await this.pageLoader.getPageList();
-    const {
-      __rewrites: rewrites
-    } = await this.pageLoader.promisedBuildManifest;
     let parsed = (0, _parseRelativeUrl.parseRelativeUrl)(url);
     let {
       pathname,
       query
-    } = parsed;
+    } = parsed; // The build manifest needs to be loaded before auto-static dynamic pages
+    // get their query parameters to allow ensuring they can be parsed properly
+    // when rewritten to
+
+    let pages, rewrites;
+
+    try {
+      pages = await this.pageLoader.getPageList();
+      ({
+        __rewrites: rewrites
+      } = await (0, _routeLoader.getClientBuildManifest)());
+    } catch (err) {
+      // If we fail to resolve the page list or client-build manifest, we must
+      // do a server-side transition:
+      window.location.href = as;
+      return false;
+    }
+
     parsed = this._resolveHref(parsed, pages);
 
     if (parsed.pathname !== pathname) {
@@ -1509,7 +1818,7 @@ class Router {
     // as this should not go into the history (That's how browsers work)
     // We should compare the new asPath to the current asPath, not the url
 
-    if (!this.urlIsNew(cleanedAs)) {
+    if (!this.urlIsNew(cleanedAs) && !localeChange) {
       method = 'replaceState';
     }
 
@@ -1523,7 +1832,7 @@ class Router {
 
     if (false) {}
 
-    resolvedAs = delBasePath(resolvedAs);
+    resolvedAs = delLocale(delBasePath(resolvedAs), this.locale);
 
     if ((0, _isDynamic.isDynamicRoute)(route)) {
       const parsedAs = (0, _parseRelativeUrl.parseRelativeUrl)(resolvedAs);
@@ -1571,10 +1880,14 @@ class Router {
         if (destination.startsWith('/')) {
           const parsedHref = (0, _parseRelativeUrl.parseRelativeUrl)(destination);
 
-          this._resolveHref(parsedHref, pages);
+          this._resolveHref(parsedHref, pages, false);
 
           if (pages.includes(parsedHref.pathname)) {
-            return this.change('replaceState', destination, destination, options);
+            const {
+              url: newUrl,
+              as: newAs
+            } = prepareUrlAs(this, destination, destination);
+            return this.change(method, newUrl, newAs, options);
           }
         }
 
@@ -1595,6 +1908,8 @@ class Router {
         Router.events.emit('routeChangeError', error, cleanedAs);
         throw error;
       }
+
+      if (false) {}
 
       if (false) {}
 
@@ -1632,7 +1947,7 @@ class Router {
       throw err;
     }
 
-    if (PAGE_LOAD_ERROR in err || loadErrorFail) {
+    if ((0, _routeLoader.isAssetError)(err) || loadErrorFail) {
       Router.events.emit('routeChangeError', err, as); // If we can't load the page it could be one of following reasons
       //  1. Page doesn't exists
       //  2. Page does exist in a different zone
@@ -1646,26 +1961,55 @@ class Router {
     }
 
     try {
-      const {
-        page: Component,
-        styleSheets
-      } = await this.fetchComponent('/_error');
+      let Component;
+      let styleSheets;
+      let props;
+      const ssg404 = err.message === SSG_DATA_NOT_FOUND_ERROR;
+
+      if (ssg404) {
+        try {
+          let mod;
+          ({
+            page: Component,
+            styleSheets,
+            mod
+          } = await this.fetchComponent('/404')); // TODO: should we tolerate these props missing and still render the
+          // page instead of falling back to _error?
+
+          if (mod && mod.__N_SSG) {
+            props = await this._getStaticData(this.pageLoader.getDataHref('/404', '/404', true, this.locale));
+          }
+        } catch (_err) {// non-fatal fallback to _error
+        }
+      }
+
+      if (typeof Component === 'undefined' || typeof styleSheets === 'undefined') {
+        ;
+        ({
+          page: Component,
+          styleSheets
+        } = await this.fetchComponent('/_error'));
+      }
+
       const routeInfo = {
+        props,
         Component,
         styleSheets,
-        err,
-        error: err
+        err: ssg404 ? undefined : err,
+        error: ssg404 ? undefined : err
       };
 
-      try {
-        routeInfo.props = await this.getInitialProps(Component, {
-          err,
-          pathname,
-          query
-        });
-      } catch (gipErr) {
-        console.error('Error in error page `getInitialProps`: ', gipErr);
-        routeInfo.props = {};
+      if (!routeInfo.props) {
+        try {
+          routeInfo.props = await this.getInitialProps(Component, {
+            err,
+            pathname,
+            query
+          });
+        } catch (gipErr) {
+          console.error('Error in error page `getInitialProps`: ', gipErr);
+          routeInfo.props = {};
+        }
       }
 
       return routeInfo;
@@ -1676,12 +2020,13 @@ class Router {
 
   async getRouteInfo(route, pathname, query, as, shallow = false) {
     try {
-      const cachedRouteInfo = this.components[route];
+      const existingRouteInfo = this.components[route];
 
-      if (shallow && cachedRouteInfo && this.route === route) {
-        return cachedRouteInfo;
+      if (shallow && existingRouteInfo && this.route === route) {
+        return existingRouteInfo;
       }
 
+      const cachedRouteInfo = existingRouteInfo && 'initial' in existingRouteInfo ? undefined : existingRouteInfo;
       const routeInfo = cachedRouteInfo ? cachedRouteInfo : await this.fetchComponent(route).then(res => ({
         Component: res.page,
         styleSheets: res.styleSheets,
@@ -1702,7 +2047,7 @@ class Router {
         dataHref = this.pageLoader.getDataHref((0, _utils.formatWithValidation)({
           pathname,
           query
-        }), delBasePath(as), __N_SSG);
+        }), delBasePath(as), __N_SSG, this.locale);
       }
 
       const props = await this._getData(() => __N_SSG ? this._getStaticData(dataHref) : __N_SSP ? this._getServerData(dataHref) : this.getInitialProps(Component, // we provide AppTree later so this needs to be `any`
@@ -1823,8 +2168,11 @@ class Router {
     let {
       pathname
     } = parsed;
+
+    if (false) {}
+
     const pages = await this.pageLoader.getPageList();
-    parsed = this._resolveHref(parsed, pages);
+    parsed = this._resolveHref(parsed, pages, false);
 
     if (parsed.pathname !== pathname) {
       pathname = parsed.pathname;
@@ -1835,7 +2183,9 @@ class Router {
     if (false) {}
 
     const route = (0, _normalizeTrailingSlash.removePathTrailingSlash)(pathname);
-    await Promise.all([this.pageLoader.prefetchData(url, asPath), this.pageLoader[options.priority ? 'loadPage' : 'prefetch'](route)]);
+    await Promise.all([this.pageLoader._isSsg(url).then(isSsg => {
+      return isSsg ? this._getStaticData(this.pageLoader.getDataHref(url, asPath, true, typeof options.locale !== 'undefined' ? options.locale : this.locale)) : false;
+    }), this.pageLoader[options.priority ? 'loadPage' : 'prefetch'](route)]);
   }
 
   async fetchComponent(route) {
@@ -2119,8 +2469,6 @@ exports.parseRelativeUrl = parseRelativeUrl;
 var _utils = __webpack_require__("g/15");
 
 var _querystring = __webpack_require__("3WeD");
-
-const DUMMY_BASE = new URL(true ? 'http://n' : undefined);
 /**
 * Parses path-relative urls (e.g. `/hello/world?foo=bar`). If url isn't path-relative
 * (e.g. `./hello`) then at least base must be.
@@ -2128,19 +2476,20 @@ const DUMMY_BASE = new URL(true ? 'http://n' : undefined);
 * the current origin will be parsed as relative
 */
 
+
 function parseRelativeUrl(url, base) {
-  const resolvedBase = base ? new URL(base, DUMMY_BASE) : DUMMY_BASE;
+  const globalBase = new URL(true ? 'http://n' : undefined);
+  const resolvedBase = base ? new URL(base, globalBase) : globalBase;
   const {
     pathname,
     searchParams,
     search,
     hash,
     href,
-    origin,
-    protocol
+    origin
   } = new URL(url, resolvedBase);
 
-  if (origin !== DUMMY_BASE.origin || protocol !== 'http:' && protocol !== 'https:') {
+  if (origin !== globalBase.origin) {
     throw new Error('invariant: invalid relative URL');
   }
 
@@ -2149,7 +2498,7 @@ function parseRelativeUrl(url, base) {
     query: (0, _querystring.searchParamsToUrlQuery)(searchParams),
     search,
     hash,
-    href: href.slice(DUMMY_BASE.origin.length)
+    href: href.slice(globalBase.origin.length)
   };
 }
 
@@ -2161,9 +2510,9 @@ function parseRelativeUrl(url, base) {
 "use strict";
 
 
-var _interopRequireWildcard = __webpack_require__("284h");
+var _interopRequireWildcard = __webpack_require__("7KCV");
 
-var _interopRequireDefault = __webpack_require__("TqRt");
+var _interopRequireDefault = __webpack_require__("AroE");
 
 exports.__esModule = true;
 exports.useRouter = useRouter;
@@ -2197,7 +2546,7 @@ const singletonRouter = {
 
 }; // Create public properties and methods of the router in the singletonRouter
 
-const urlPropertyFields = ['pathname', 'route', 'query', 'asPath', 'components', 'isFallback', 'basePath'];
+const urlPropertyFields = ['pathname', 'route', 'query', 'asPath', 'components', 'isFallback', 'basePath', 'locale', 'locales', 'defaultLocale'];
 const routerEvents = ['routeChangeStart', 'beforeHistoryChange', 'routeChangeComplete', 'routeChangeError', 'hashChangeStart', 'hashChangeComplete'];
 const coreMethodFields = ['push', 'replace', 'reload', 'back', 'prefetch', 'beforePopState']; // Events is a static property on the router, the router doesn't have to be initialized to use it
 
@@ -2287,7 +2636,7 @@ function makePublicRouterInstance(router) {
 
   for (const property of urlPropertyFields) {
     if (typeof _router[property] === 'object') {
-      instance[property] = Object.assign({}, _router[property]); // makes sure query is not stateful
+      instance[property] = Object.assign(Array.isArray(_router[property]) ? [] : {}, _router[property]); // makes sure query is not stateful
 
       continue;
     }
@@ -2315,6 +2664,9 @@ function makePublicRouterInstance(router) {
 // EXPORTS
 __webpack_require__.d(__webpack_exports__, "a", function() { return /* binding */ Flex; });
 
+// EXTERNAL MODULE: external "react/jsx-runtime"
+var jsx_runtime_ = __webpack_require__("F5FC");
+
 // EXTERNAL MODULE: external "react"
 var external_react_ = __webpack_require__("cDcd");
 var external_react_default = /*#__PURE__*/__webpack_require__.n(external_react_);
@@ -2334,9 +2686,7 @@ function ObjectFilter(obj, callback) {
   return ret;
 }
 // CONCATENATED MODULE: ./components/container.tsx
-var __jsx = external_react_default.a.createElement;
 
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
@@ -2454,17 +2804,19 @@ const FlexComponent = (props, ref) => {
 
   defaultStyle = ObjectFilter(defaultStyle, (_, value) => value != 0);
   specialStyle = ObjectFilter(specialStyle, (_, value) => value != 0);
-  return __jsx("div", _extends({
+  return /*#__PURE__*/Object(jsx_runtime_["jsx"])("div", _objectSpread(_objectSpread({
     ref: ref,
     style: _objectSpread(_objectSpread(_objectSpread({}, fullWidth ? {
       width: '100%'
     } : {}), containerStyles), style)
-  }, restProps), list.map((child, idx) => __jsx(FlexItem, {
-    key: idx,
-    style: _objectSpread(_objectSpread(_objectSpread({}, fullWidth ? {
-      width: '100%'
-    } : {}), idx === specialPos ? specialStyle : defaultStyle), itemStyle)
-  }, child)));
+  }, restProps), {}, {
+    children: list.map((child, idx) => /*#__PURE__*/Object(jsx_runtime_["jsx"])(FlexItem, {
+      style: _objectSpread(_objectSpread(_objectSpread({}, fullWidth ? {
+        width: '100%'
+      } : {}), idx === specialPos ? specialStyle : defaultStyle), itemStyle),
+      children: child
+    }, idx))
+  }));
 };
 
 const FlexItem = props => {
@@ -2494,11 +2846,12 @@ const FlexItem = props => {
     restProps = _objectSpread(_objectSpread({}, restProps), restProps2);
   }
 
-  return __jsx("div", _extends({
-    key: key,
+  return /*#__PURE__*/Object(jsx_runtime_["jsx"])("div", _objectSpread(_objectSpread({
     style: style,
     className: className
-  }, restProps), child);
+  }, restProps), {}, {
+    children: child
+  }), key);
 };
 
 FlexItem.displayName = 'FlexItem';
@@ -2513,17 +2866,20 @@ const Flex = Object.assign( /*#__PURE__*/external_react_default.a.forwardRef(Fle
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("cDcd");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var next_head__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("xnum");
-/* harmony import */ var next_head__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(next_head__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var _components_card__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__("bTPZ");
-/* harmony import */ var _utils_global__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__("dSKx");
-/* harmony import */ var next_link__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__("YFqc");
-/* harmony import */ var next_link__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(next_link__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _index_module_scss__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__("R+ps");
-/* harmony import */ var _index_module_scss__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_index_module_scss__WEBPACK_IMPORTED_MODULE_5__);
-var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("F5FC");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("cDcd");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var next_head__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__("xnum");
+/* harmony import */ var next_head__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(next_head__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _components_card__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__("bTPZ");
+/* harmony import */ var _utils_global__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__("dSKx");
+/* harmony import */ var next_link__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__("YFqc");
+/* harmony import */ var next_link__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(next_link__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _index_module_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__("R+ps");
+/* harmony import */ var _index_module_scss__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_index_module_scss__WEBPACK_IMPORTED_MODULE_6__);
+
+
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
@@ -2562,7 +2918,7 @@ const data = [{
   url: '/admin/upload'
 }];
 
-class AdminIndex extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
+class AdminIndex extends react__WEBPACK_IMPORTED_MODULE_1___default.a.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -2571,15 +2927,26 @@ class AdminIndex extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component 
   }
 
   render() {
-    return __jsx(_components_card__WEBPACK_IMPORTED_MODULE_2__[/* default */ "a"], {
-      neumorphism: true
-    }, __jsx(_utils_global__WEBPACK_IMPORTED_MODULE_3__[/* Context */ "a"].Consumer, null, context => __jsx(next_head__WEBPACK_IMPORTED_MODULE_1___default.a, null, __jsx("title", null, `后台|${context.blog_name}`))), __jsx("ul", {
-      className: _index_module_scss__WEBPACK_IMPORTED_MODULE_5___default.a.list
-    }, data.map(item => __jsx("li", {
-      key: item.title
-    }, __jsx(next_link__WEBPACK_IMPORTED_MODULE_4___default.a, {
-      href: item.url
-    }, __jsx("a", null, item.title))))));
+    return /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsxs"])(_components_card__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"], {
+      neumorphism: true,
+      children: [/*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(_utils_global__WEBPACK_IMPORTED_MODULE_4__[/* Context */ "a"].Consumer, {
+        children: context => /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(next_head__WEBPACK_IMPORTED_MODULE_2___default.a, {
+          children: /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("title", {
+            children: `后台|${context.blog_name}`
+          })
+        })
+      }), /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("ul", {
+        className: _index_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.list,
+        children: data.map(item => /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("li", {
+          children: /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(next_link__WEBPACK_IMPORTED_MODULE_5___default.a, {
+            href: item.url,
+            children: /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("a", {
+              children: item.title
+            })
+          })
+        }, item.title))
+      })]
+    });
   }
 
 }
@@ -2603,6 +2970,101 @@ module.exports = {
 	"neumorphism_inset": "shadow_neumorphism_inset__3_9tK"
 };
 
+
+/***/ }),
+
+/***/ "vNVm":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _interopRequireDefault = __webpack_require__("AroE");
+
+exports.__esModule = true;
+exports.useIntersection = useIntersection;
+
+var _react = __webpack_require__("cDcd");
+
+var _requestIdleCallback = _interopRequireDefault(__webpack_require__("0G5g"));
+
+const hasIntersectionObserver = typeof IntersectionObserver !== 'undefined';
+
+function useIntersection({
+  rootMargin,
+  disabled
+}) {
+  const isDisabled = disabled || !hasIntersectionObserver;
+  const unobserve = (0, _react.useRef)();
+  const [visible, setVisible] = (0, _react.useState)(false);
+  const setRef = (0, _react.useCallback)(el => {
+    if (unobserve.current) {
+      unobserve.current();
+      unobserve.current = undefined;
+    }
+
+    if (isDisabled || visible) return;
+
+    if (el && el.tagName) {
+      unobserve.current = observe(el, isVisible => isVisible && setVisible(isVisible), {
+        rootMargin
+      });
+    }
+  }, [isDisabled, rootMargin, visible]);
+  (0, _react.useEffect)(() => {
+    if (!hasIntersectionObserver) {
+      if (!visible) (0, _requestIdleCallback.default)(() => setVisible(true));
+    }
+  }, [visible]);
+  return [setRef, visible];
+}
+
+function observe(element, callback, options) {
+  const {
+    id,
+    observer,
+    elements
+  } = createObserver(options);
+  elements.set(element, callback);
+  observer.observe(element);
+  return function unobserve() {
+    observer.unobserve(element); // Destroy observer when there's nothing left to watch:
+
+    if (elements.size === 0) {
+      observer.disconnect();
+      observers.delete(id);
+    }
+  };
+}
+
+const observers = new Map();
+
+function createObserver(options) {
+  const id = options.rootMargin || '';
+  let instance = observers.get(id);
+
+  if (instance) {
+    return instance;
+  }
+
+  const elements = new Map();
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      const callback = elements.get(entry.target);
+      const isVisible = entry.isIntersecting || entry.intersectionRatio > 0;
+
+      if (callback && isVisible) {
+        callback(isVisible);
+      }
+    });
+  }, options);
+  observers.set(id, instance = {
+    id,
+    observer,
+    elements
+  });
+  return instance;
+}
 
 /***/ }),
 

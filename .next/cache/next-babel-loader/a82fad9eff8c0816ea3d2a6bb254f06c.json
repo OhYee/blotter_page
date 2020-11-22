@@ -1,1 +1,0 @@
-{"ast":null,"code":"function randomString(length = 8) {\n  return Math.random().toString(36).slice(-length);\n}\n\nexport default randomString;","map":null,"metadata":{},"sourceType":"module"}

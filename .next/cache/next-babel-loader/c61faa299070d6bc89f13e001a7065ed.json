@@ -1,1 +1,0 @@
-{"ast":null,"code":"import moment from 'moment';\nmoment.locale('zh-cn');\nexport default moment;","map":null,"metadata":{},"sourceType":"module"}

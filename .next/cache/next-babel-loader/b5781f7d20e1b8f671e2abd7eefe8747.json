@@ -1,1 +1,0 @@
-{"ast":null,"code":"import randomString from '@/utils/random';\n\nfunction hash(value) {\n  switch (typeof value) {\n    case 'string':\n      return value;\n\n    case 'object':\n      return JSON.stringify(value);\n\n    case 'number':\n      return `${value}`;\n  }\n\n  return randomString();\n}\n\nexport default hash;","map":null,"metadata":{},"sourceType":"module"}

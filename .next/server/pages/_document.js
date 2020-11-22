@@ -127,6 +127,13 @@ const ESCAPE_LOOKUP={'&':'\\u0026','>':'\\u003e','<':'\\u003c','\u2028':'\\u2028
 
 /***/ }),
 
+/***/ "F5FC":
+/***/ (function(module, exports) {
+
+module.exports = require("react/jsx-runtime");
+
+/***/ }),
+
 /***/ "UJjI":
 /***/ (function(module, exports) {
 
@@ -252,7 +259,7 @@ function getOptionalModernScriptVariant(path) {
 
 function getDocumentFiles(buildManifest, pathname) {
   const sharedFiles = (0, _getPageFiles.getPageFiles)(buildManifest, '/_app');
-  const pageFiles = pathname !== '/_error' ? (0, _getPageFiles.getPageFiles)(buildManifest, pathname) : [];
+  const pageFiles = (0, _getPageFiles.getPageFiles)(buildManifest, pathname);
   return {
     sharedFiles,
     pageFiles,
@@ -307,10 +314,12 @@ Document.headTagsMiddleware =  false ? undefined : () => [];
 function Html(props) {
   const {
     inAmpMode,
-    docComponentsRendered
+    docComponentsRendered,
+    locale
   } = (0, _react.useContext)(_documentContext.DocumentContext);
   docComponentsRendered.Html = true;
   return /*#__PURE__*/_react.default.createElement("html", Object.assign({}, props, {
+    lang: props.lang || locale || undefined,
     amp: inAmpMode ? '' : undefined,
     "data-ampdevmode": inAmpMode && false ? '' : undefined
   }));
@@ -329,18 +338,23 @@ class Head extends _react.Component {
       dynamicImports
     } = this.context;
     const cssFiles = files.allFiles.filter(f => f.endsWith('.css'));
-    const sharedFiles = new Set(files.sharedFiles);
+    const sharedFiles = new Set(files.sharedFiles); // Unmanaged files are CSS files that will be handled directly by the
+    // webpack runtime (`mini-css-extract-plugin`).
+
+    let unmangedFiles = new Set([]);
     let dynamicCssFiles = dedupe(dynamicImports.filter(f => f.file.endsWith('.css'))).map(f => f.file);
 
     if (dynamicCssFiles.length) {
       const existing = new Set(cssFiles);
       dynamicCssFiles = dynamicCssFiles.filter(f => !(existing.has(f) || sharedFiles.has(f)));
+      unmangedFiles = new Set(dynamicCssFiles);
       cssFiles.push(...dynamicCssFiles);
     }
 
     const cssLinkElements = [];
     cssFiles.forEach(file => {
       const isSharedFile = sharedFiles.has(file);
+      const isUnmanagedFile = unmangedFiles.has(file);
       cssLinkElements.push( /*#__PURE__*/_react.default.createElement("link", {
         key: `${file}-preload`,
         nonce: this.props.nonce,
@@ -354,8 +368,8 @@ class Head extends _react.Component {
         rel: "stylesheet",
         href: `${assetPrefix}/_next/${encodeURI(file)}${devOnlyCacheBusterQueryString}`,
         crossOrigin: this.props.crossOrigin || undefined,
-        "data-n-g": isSharedFile ? '' : undefined,
-        "data-n-p": isSharedFile ? undefined : ''
+        "data-n-g": isUnmanagedFile ? undefined : isSharedFile ? '' : undefined,
+        "data-n-p": isUnmanagedFile ? undefined : isSharedFile ? undefined : ''
       }));
     });
     return cssLinkElements.length === 0 ? null : cssLinkElements;
@@ -425,6 +439,8 @@ class Head extends _react.Component {
   }
 
   render() {
+    var _this$props$nonce;
+
     const {
       styles,
       ampPath,
@@ -527,7 +543,10 @@ class Head extends _react.Component {
       dangerouslySetInnerHTML: {
         __html: `body{display:block}`
       }
-    }))), children, head, inAmpMode && /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("meta", {
+    }))), children, head, /*#__PURE__*/_react.default.createElement("meta", {
+      name: "next-head-count",
+      content: _react.default.Children.count(head || []).toString()
+    }), inAmpMode && /*#__PURE__*/_react.default.createElement(_react.default.Fragment, null, /*#__PURE__*/_react.default.createElement("meta", {
       name: "viewport",
       content: "width=device-width,minimum-scale=1,initial-scale=1"
     }), !hasCanonicalRel && /*#__PURE__*/_react.default.createElement("link", {
@@ -559,7 +578,7 @@ class Head extends _react.Component {
       rel: "amphtml",
       href: canonicalBase + getAmpPath(ampPath, dangerousAsPath)
     }),  false ? undefined : this.getCssLinks(files), /*#__PURE__*/_react.default.createElement("noscript", {
-      "data-n-css": true
+      "data-n-css": (_this$props$nonce = this.props.nonce) != null ? _this$props$nonce : ''
     }), !disableRuntimeJS && this.getPreloadDynamicChunks(), !disableRuntimeJS && this.getPreloadMainLinks(files), this.context.isDevelopment &&
     /*#__PURE__*/
     // this element is used to mount development styles so the
@@ -761,13 +780,13 @@ function getAmpPath(ampPath, asPath) {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return MyDocument; });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("cDcd");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("F5FC");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var next_document__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("8cZr");
 /* harmony import */ var next_document__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(next_document__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _utils_redirect__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__("lqEU");
 
-var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
+
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
@@ -797,24 +816,30 @@ class MyDocument extends next_document__WEBPACK_IMPORTED_MODULE_1___default.a {
   }
 
   render() {
-    return __jsx(next_document__WEBPACK_IMPORTED_MODULE_1__["Html"], null, __jsx(next_document__WEBPACK_IMPORTED_MODULE_1__["Head"], null, __jsx("meta", {
-      content: "utf-8",
-      httpEquiv: "encoding"
-    }), __jsx("meta", {
-      name: "theme-color",
-      content: "#1565c0"
-    }), __jsx("meta", {
-      name: "msapplication-TileColor",
-      content: "#1565c0"
-    }), __jsx("meta", {
-      name: "msapplication-TileImage",
-      content: "/static/img/logo_196x196.png"
-    }), __jsx("link", {
-      rel: "shortcut icon",
-      href: "/static/img/favicon.ico"
-    })), __jsx("body", null, __jsx(next_document__WEBPACK_IMPORTED_MODULE_1__["Main"], null), __jsx("div", {
-      id: "portals"
-    }), __jsx(next_document__WEBPACK_IMPORTED_MODULE_1__["NextScript"], null)));
+    return /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsxs"])(next_document__WEBPACK_IMPORTED_MODULE_1__["Html"], {
+      children: [/*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsxs"])(next_document__WEBPACK_IMPORTED_MODULE_1__["Head"], {
+        children: [/*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("meta", {
+          content: "utf-8",
+          httpEquiv: "encoding"
+        }), /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("meta", {
+          name: "theme-color",
+          content: "#1565c0"
+        }), /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("meta", {
+          name: "msapplication-TileColor",
+          content: "#1565c0"
+        }), /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("meta", {
+          name: "msapplication-TileImage",
+          content: "/static/img/logo_196x196.png"
+        }), /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("link", {
+          rel: "shortcut icon",
+          href: "/static/img/favicon.ico"
+        })]
+      }), /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsxs"])("body", {
+        children: [/*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(next_document__WEBPACK_IMPORTED_MODULE_1__["Main"], {}), /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("div", {
+          id: "portals"
+        }), /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(next_document__WEBPACK_IMPORTED_MODULE_1__["NextScript"], {})]
+      })]
+    });
   }
 
 }
