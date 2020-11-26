@@ -3487,14 +3487,10 @@ class layout_BasicLayout extends external_react_default.a.Component {
       id: "blotter_root",
       className: Object(component["a" /* concat */])(layout_module_default.a.root),
       children: [/*#__PURE__*/Object(jsx_runtime_["jsx"])(global["a" /* Context */].Consumer, {
-        children: context => /*#__PURE__*/Object(jsx_runtime_["jsxs"])(head_default.a, {
-          children: [/*#__PURE__*/Object(jsx_runtime_["jsx"])("title", {
+        children: context => /*#__PURE__*/Object(jsx_runtime_["jsx"])(head_default.a, {
+          children: /*#__PURE__*/Object(jsx_runtime_["jsx"])("title", {
             children: context.blog_name
-          }), context.head && /*#__PURE__*/Object(jsx_runtime_["jsx"])("div", {
-            dangerouslySetInnerHTML: {
-              __html: context.head
-            }
-          })]
+          })
         })
       }), /*#__PURE__*/Object(jsx_runtime_["jsx"])(Sider, {
         pathname: this.props.router.pathname,
@@ -3522,6 +3518,10 @@ class layout_BasicLayout extends external_react_default.a.Component {
           view: this.context.view,
           from: this.context.from
         })]
+      }), this.context.head && /*#__PURE__*/Object(jsx_runtime_["jsx"])("div", {
+        dangerouslySetInnerHTML: {
+          __html: this.context.head
+        }
       })]
     });
   }

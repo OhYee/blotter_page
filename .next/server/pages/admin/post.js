@@ -7537,8 +7537,9 @@ class PostEdit extends react__WEBPACK_IMPORTED_MODULE_1___default.a.Component {
         children: [/*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(_components_card__WEBPACK_IMPORTED_MODULE_5__[/* default */ "a"], {
           neumorphism: true,
           children: this.renderToolbar()
-        }), this.state.preview === 1 ? this.renderPreview() : null, /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsxs"])(_components_container__WEBPACK_IMPORTED_MODULE_7__[/* Flex */ "a"], {
+        }), /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsxs"])(_components_container__WEBPACK_IMPORTED_MODULE_7__[/* Flex */ "a"], {
           wrap: false,
+          direction: this.state.preview === 0 ? 'row' : this.state.preview === 1 ? 'column-reverse' : 'row',
           style: this.state.fullscreen ? {
             position: 'absolute',
             top: 0,
@@ -7578,10 +7579,12 @@ class PostEdit extends react__WEBPACK_IMPORTED_MODULE_1___default.a.Component {
                 onScoll: e => this.onScroll(e.scrollTop, e.scrollHeight)
               })
             })
-          }), this.state.preview === 2 ? /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(_components_container__WEBPACK_IMPORTED_MODULE_7__[/* Flex */ "a"].Item, {
-            style: {
+          }), this.state.preview !== 0 ? /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(_components_container__WEBPACK_IMPORTED_MODULE_7__[/* Flex */ "a"].Item, {
+            style: this.state.preview === 2 ? {
               flex: '1',
               width: '0%'
+            } : {
+              width: '100%'
             },
             children: this.renderPreview()
           }) : null]
