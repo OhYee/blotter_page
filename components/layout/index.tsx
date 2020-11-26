@@ -90,7 +90,6 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
           {(context) => (
             <Head>
               <title>{context.blog_name}</title>
-              {context.head && <div dangerouslySetInnerHTML={{ __html: context.head }}></div>}
             </Head>
           )}
         </Context.Consumer>
@@ -124,6 +123,12 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
             from={this.context.from}
           />
         </Flex>
+        {/* 
+            不能在 HEAD 中插入 div 标签，故将其移动到后面 
+            相关讨论：https://github.com/vercel/next.js/issues/12437
+            报错提示：https://err.sh/next.js/next-head-count-missing
+        */}
+        {this.context.head && <div dangerouslySetInnerHTML={{ __html: this.context.head }}></div>}
       </div>
     );
   }
