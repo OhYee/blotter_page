@@ -489,10 +489,18 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
         <Flex direction="TB" fullWidth>
           <Card neumorphism>{this.renderToolbar()}</Card>
 
-          {this.state.preview === 1 ? this.renderPreview() : null}
+          {/*
+                很奇怪，如果在存在 katex 的情况下在 双栏 和 预览 之间互相切换，可能会导致页面卡死。同时没有任何报错
+                猜测和头部引入 css 有关，大概是由于两个预览组件同时引入和删除相同的 css 导致的？
+                改成现在的形式可以避免该问题，同时优化性能（不需要多渲染一次）
+          */}
+          {/* {this.state.preview === 1 ? this.renderPreview() : null} */}
 
           <Flex
             wrap={false}
+            direction={
+              this.state.preview === 0 ? 'row' : this.state.preview === 1 ? 'column-reverse' : 'row'
+            }
             style={
               this.state.fullscreen
                 ? {
@@ -533,8 +541,12 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
                 />
               </Card>
             </Flex.Item>
-            {this.state.preview === 2 ? (
-              <Flex.Item style={{ flex: '1', width: '0%' }}>{this.renderPreview()}</Flex.Item>
+            {this.state.preview !== 0 ? (
+              <Flex.Item
+                style={this.state.preview === 2 ? { flex: '1', width: '0%' } : { width: '100%' }}
+              >
+                {this.renderPreview()}
+              </Flex.Item>
             ) : null}
           </Flex>
         </Flex>
