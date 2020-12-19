@@ -3383,7 +3383,7 @@ const Menu = callback => /*#__PURE__*/Object(jsx_runtime_["jsxs"])("ul", {
 });
 
 const InputField = props => {
-  const id = Object(random["a" /* default */])();
+  const id = external_react_default.a.useMemo(() => Object(random["a" /* default */])(), []);
   return /*#__PURE__*/Object(jsx_runtime_["jsx"])(input, {
     defaultValue: props.value,
     onChange: value => {
@@ -3396,7 +3396,7 @@ const InputField = props => {
 };
 
 const CheckField = props => {
-  const id = Object(random["a" /* default */])();
+  const id = external_react_default.a.useMemo(() => Object(random["a" /* default */])(), []);
   return /*#__PURE__*/Object(jsx_runtime_["jsx"])(CheckBox, {
     value: props.value,
     onChange: value => {
@@ -3406,7 +3406,7 @@ const CheckField = props => {
 };
 
 const AreaField = props => {
-  const id = Object(random["a" /* default */])();
+  const id = external_react_default.a.useMemo(() => Object(random["a" /* default */])(), []);
   return /*#__PURE__*/Object(jsx_runtime_["jsx"])(TextArea, {
     defaultValue: props.value,
     onChange: value => {
@@ -3416,7 +3416,7 @@ const AreaField = props => {
 };
 
 const NumberField = props => {
-  const id = Object(random["a" /* default */])();
+  const id = external_react_default.a.useMemo(() => Object(random["a" /* default */])(), []);
   return /*#__PURE__*/Object(jsx_runtime_["jsx"])(InputNumber, {
     defaultValue: props.value,
     onChange: value => {
@@ -3426,7 +3426,7 @@ const NumberField = props => {
 };
 
 const ArrayField = props => {
-  const id = Object(random["a" /* default */])();
+  const id = external_react_default.a.useMemo(() => Object(random["a" /* default */])(), []);
   return /*#__PURE__*/Object(jsx_runtime_["jsxs"])(container["a" /* Flex */], {
     fullWidth: true,
     direction: "TB",
@@ -3473,7 +3473,7 @@ const ArrayField = props => {
             })
           })]
         })
-      }, utils_hash(item)))
+      }, idx))
     }), /*#__PURE__*/Object(jsx_runtime_["jsx"])(container["a" /* Flex */].Item, {
       style: {
         width: 'unset'
@@ -3497,7 +3497,7 @@ const ArrayField = props => {
 };
 
 const ObjectField = props => {
-  const id = Object(random["a" /* default */])();
+  const id = external_react_default.a.useMemo(() => Object(random["a" /* default */])(), []);
   const slice = Object.keys(props.value).map(key => ({
     key: key,
     value: props.value[key]
@@ -3559,7 +3559,7 @@ const ObjectField = props => {
             }
           })
         })]
-      }, utils_hash(item)))
+      }, utils_hash(item.key)))
     }), /*#__PURE__*/Object(jsx_runtime_["jsx"])(container["a" /* Flex */].Item, {
       style: {
         width: 'unset'
