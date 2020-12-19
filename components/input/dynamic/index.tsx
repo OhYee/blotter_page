@@ -53,7 +53,7 @@ const Menu = (callback: (newValue: any) => void) => (
 const InputField = (
   props: ComponentProps<'base'> & { value: string; callback: (value: any) => void },
 ) => {
-  const id = randomString();
+  const id = React.useMemo(() => randomString(), []);
   return (
     <Input
       defaultValue={props.value}
@@ -68,7 +68,7 @@ const InputField = (
 const CheckField = (
   props: ComponentProps<'base'> & { value: boolean; callback: (value: any) => void },
 ) => {
-  const id = randomString();
+  const id = React.useMemo(() => randomString(), []);
   return (
     <CheckBox
       value={props.value}
@@ -82,7 +82,7 @@ const CheckField = (
 const AreaField = (
   props: ComponentProps<'base'> & { value: string; callback: (value: any) => void },
 ) => {
-  const id = randomString();
+  const id = React.useMemo(() => randomString(), []);
   return (
     <TextArea
       defaultValue={props.value}
@@ -96,7 +96,7 @@ const AreaField = (
 const NumberField = (
   props: ComponentProps<'base'> & { value: number; callback: (value: any) => void },
 ) => {
-  const id = randomString();
+  const id = React.useMemo(() => randomString(), []);
   return (
     <InputNumber
       defaultValue={props.value}
@@ -113,13 +113,13 @@ const ArrayField = (
     callback: (value: any) => void;
   },
 ) => {
-  const id = randomString();
+  const id = React.useMemo(() => randomString(), []);
   return (
     <Flex fullWidth direction="TB" subAxis="flex-end">
       <Flex fullWidth direction="TB">
         {props.value.map((item, idx) => (
           <DragItem
-            key={hash(item)}
+            key={idx}
             id={id}
             index={idx}
             swap={(i, j) => {
@@ -183,13 +183,13 @@ const ObjectField = (
     callback: (value: any) => void;
   },
 ) => {
-  const id = randomString();
+  const id = React.useMemo(() => randomString(), []);
   const slice = Object.keys(props.value).map((key) => ({ key: key, value: props.value[key] }));
   return (
     <Flex fullWidth direction="TB" subAxis="flex-end">
       <Flex fullWidth direction="TB">
         {slice.map((item) => (
-          <Flex subAxis="flex-start" key={hash(item)}>
+          <Flex subAxis="flex-start" key={hash(item.key)}>
             <Flex.Item style={{ flex: '0 0 30%' }}>
               <DynamicForm
                 value={item.key}
