@@ -1173,7 +1173,7 @@ class Friends extends react__WEBPACK_IMPORTED_MODULE_1___default.a.Component {
               title: post.title,
               ellipsis: true,
               style: {
-                width: post.time !== 0 ? 'calc(100% - 4em)' : '100%',
+                width: post.time !== 0 ? 'calc(100% - 5em)' : '100%',
                 display: 'inline-block'
               },
               children: post.title
@@ -1181,7 +1181,7 @@ class Friends extends react__WEBPACK_IMPORTED_MODULE_1___default.a.Component {
               title: Object(_utils_moment__WEBPACK_IMPORTED_MODULE_12__[/* default */ "a"])(post.time, 'X').format('YYYY-MM-DD HH:mm:SS'),
               ellipsis: true,
               style: {
-                width: 'calc(4em * 4 / 3)',
+                width: '5em',
                 textAlign: 'right',
                 fontSize: '0.75em',
                 display: 'inline-block'
