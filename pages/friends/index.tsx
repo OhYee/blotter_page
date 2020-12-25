@@ -53,7 +53,7 @@ class Friends extends React.Component<FriendsProps, FriendsState> {
               title={post.title}
               ellipsis
               style={{
-                width: post.time !== 0 ? 'calc(100% - 4em)' : '100%',
+                width: post.time !== 0 ? 'calc(100% - 5em)' : '100%',
                 display: 'inline-block',
               }}
             >
@@ -64,7 +64,7 @@ class Friends extends React.Component<FriendsProps, FriendsState> {
                 title={moment(post.time, 'X').format('YYYY-MM-DD HH:mm:SS')}
                 ellipsis
                 style={{
-                  width: 'calc(4em * 4 / 3)',
+                  width: '5em',
                   textAlign: 'right',
                   fontSize: '0.75em',
                   display: 'inline-block',
