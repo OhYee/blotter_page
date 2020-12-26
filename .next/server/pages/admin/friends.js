@@ -1053,6 +1053,28 @@ class AdminFriendList extends react__WEBPACK_IMPORTED_MODULE_1___default.a.Compo
         children: "\u65B0\u5EFA\u8BA2\u9605"
       }), /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(_components_button__WEBPACK_IMPORTED_MODULE_6__[/* default */ "b"], {
         neumorphism: true,
+        onClick: () => {
+          this.setState(state => {
+            var {
+              data
+            } = state;
+            data = data.map(d => {
+              d.posts.sort((a, b) => b.time - a.time);
+              return d;
+            });
+            data.sort((a, b) => (b.posts.length > 0 ? b.posts[0].time : 0) - (a.posts.length > 0 ? a.posts[0].time : 0));
+            data = data.map(d => {
+              d.posts = d.posts.map(dd => dd);
+              return d;
+            });
+            return {
+              data
+            };
+          });
+        },
+        children: "\u81EA\u52A8\u6392\u5E8F"
+      }), /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(_components_button__WEBPACK_IMPORTED_MODULE_6__[/* default */ "b"], {
+        neumorphism: true,
         primary: true,
         loading: this.state.submitLoading,
         onClick: async () => {
@@ -1093,8 +1115,8 @@ class AdminFriendList extends react__WEBPACK_IMPORTED_MODULE_1___default.a.Compo
         ellipsis: true,
         minWidth: '5em',
         maxWidth: '20em',
-        render: (_, __, idx) => /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(_components_input__WEBPACK_IMPORTED_MODULE_8__[/* DatePicker */ "b"], {
-          defaultValue: Date.now(),
+        render: (value, __, idx) => /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(_components_input__WEBPACK_IMPORTED_MODULE_8__[/* DatePicker */ "b"], {
+          defaultValue: value * 1000,
           onChange: e => {
             this.setState(state => {
               var {
