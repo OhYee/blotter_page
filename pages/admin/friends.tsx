@@ -243,6 +243,30 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
       </Button>
       <Button
         neumorphism
+        onClick={() => {
+          this.setState((state) => {
+            var { data } = state;
+            data = data.map((d) => {
+              d.posts.sort((a, b) => b.time - a.time);
+              return d;
+            });
+            data.sort(
+              (a, b) =>
+                (b.posts.length > 0 ? b.posts[0].time : 0) -
+                (a.posts.length > 0 ? a.posts[0].time : 0),
+            );
+            data = data.map((d) => {
+              d.posts = d.posts.map((dd) => dd);
+              return d;
+            });
+            return { data };
+          });
+        }}
+      >
+        自动排序
+      </Button>
+      <Button
+        neumorphism
         primary
         loading={this.state.submitLoading}
         onClick={async () => {
