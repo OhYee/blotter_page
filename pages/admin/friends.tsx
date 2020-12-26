@@ -308,9 +308,9 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
         ellipsis: true,
         minWidth: '5em',
         maxWidth: '20em',
-        render: (_, __, idx) => (
+        render: (value, __, idx) => (
           <DatePicker
-            defaultValue={Date.now()}
+            defaultValue={value * 1000}
             onChange={(e) => {
               this.setState((state) => {
                 var { data } = state;
