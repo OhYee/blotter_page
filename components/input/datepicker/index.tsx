@@ -249,7 +249,7 @@ function YearSelect(props: { year: number; onSelect: (year: number) => void }) {
   const { year, onSelect } = props;
   const [y, setY] = React.useState(year);
   return (
-    <div className={styles.yearSelect}>
+    <div className={styles['year-select']}>
       <Flex mainAxis="space-around">
         <Button icon={<Left />} onClick={() => setY(y - yRange)} />
         {year}
@@ -281,7 +281,7 @@ const M12 = Array(12)
 function MonthSelect(props: { month: number; onSelect: (month: number) => void }) {
   const { month, onSelect } = props;
   return (
-    <div className={styles.monthSelect}>
+    <div className={styles['month-select']}>
       {M12.map((i) => (
         <div
           key={i}
@@ -334,7 +334,7 @@ function DateSelect(props: {
   }, [date, year, month]);
 
   return (
-    <Flex direction="TB" subAxis="flex-end" mainSize="small" className={styles.date_select}>
+    <Flex direction="TB" subAxis="flex-end" mainSize="small" className={styles['date-select']}>
       <div className={styles.body}>
         {D7.map((i) => (
           <strong key={i}>{i}</strong>
