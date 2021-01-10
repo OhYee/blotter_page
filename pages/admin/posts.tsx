@@ -66,16 +66,6 @@ class AdminPostList extends React.Component<AdminPostListProps, AdminPostListSta
     this.getData();
   }
 
-  onChange = (value: string) => {
-    waitUntil(
-      'index_search',
-      () => {
-        this.setState({ search: value, page: 1, size: 10 }, this.getData);
-      },
-      1000,
-    );
-  };
-
   getData = async () => {
     this.setState({ loading: true });
     var r = await adminPosts(
@@ -224,16 +214,25 @@ class AdminPostList extends React.Component<AdminPostListProps, AdminPostListSta
         </Context.Consumer>
         <PostSearch
           searchWord={this.state.search}
-          onSearchChange={this.onChange}
+          onSearchChange={(value: string) =>
+            waitUntil(
+              'index_search',
+              () => this.setState({ search: value, page: 1, size: 10 }, this.getData),
+              1000,
+            )
+          }
           checkedKeys={this.state.search_fields}
-          onCheckChange={(search_fields) => this.setState({ search_fields })}
+          onCheckChange={(search_fields) => this.setState({ search_fields }, this.getData)}
           withTags={this.state.with_tags}
           withoutTags={this.state.without_tags}
           onTagChange={(type, tags) =>
-            this.setState((state) => ({
-              ...state,
-              ...{ [type === 'with' ? 'with_tags' : 'without_tags']: tags },
-            }))
+            this.setState(
+              (state) => ({
+                ...state,
+                ...{ [type === 'with' ? 'with_tags' : 'without_tags']: tags },
+              }),
+              this.getData,
+            )
           }
         />
         <div style={{ textAlign: 'right' }}>

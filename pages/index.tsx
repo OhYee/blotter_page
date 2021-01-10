@@ -65,15 +65,6 @@ class Index extends React.Component<IndexProps, IndexState> {
     };
   }
 
-  onChange = (value: string) => {
-    waitUntil(
-      'index_search',
-      () => {
-        this.setState({ search: value, page: 1 }, this.getPosts);
-      },
-      1000,
-    );
-  };
   onPageChange = (page: number, size?: number) => {
     if (typeof size === 'undefined') {
       size = this.state.size;
@@ -153,16 +144,25 @@ class Index extends React.Component<IndexProps, IndexState> {
             <PostSearch
               ref={this.ref}
               searchWord={this.state.search}
-              onSearchChange={this.onChange}
+              onSearchChange={(value: string) => {
+                waitUntil(
+                  'index_search',
+                  () => this.setState({ search: value, page: 1 }, this.getPosts),
+                  1000,
+                );
+              }}
               checkedKeys={this.state.search_fields}
-              onCheckChange={(search_fields) => this.setState({ search_fields })}
+              onCheckChange={(search_fields) => this.setState({ search_fields }, this.getPosts)}
               withTags={this.state.with_tags}
               withoutTags={this.state.without_tags}
               onTagChange={(type, tags) =>
-                this.setState((state) => ({
-                  ...state,
-                  ...{ [type === 'with' ? 'with_tags' : 'without_tags']: tags },
-                }))
+                this.setState(
+                  (state) => ({
+                    ...state,
+                    ...{ [type === 'with' ? 'with_tags' : 'without_tags']: tags },
+                  }),
+                  this.getPosts,
+                )
               }
               tags={this.state.tags}
             />
