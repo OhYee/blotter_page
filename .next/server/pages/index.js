@@ -258,15 +258,6 @@ class Index extends react__WEBPACK_IMPORTED_MODULE_1___default.a.Component {
 
     _defineProperty(this, "ref", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createRef());
 
-    _defineProperty(this, "onChange", value => {
-      Object(_utils_debounce__WEBPACK_IMPORTED_MODULE_12__[/* waitUntil */ "a"])('index_search', () => {
-        this.setState({
-          search: value,
-          page: 1
-        }, this.getPosts);
-      }, 1000);
-    });
-
     _defineProperty(this, "onPageChange", (page, size) => {
       if (typeof size === 'undefined') {
         size = this.state.size;
@@ -353,16 +344,21 @@ class Index extends react__WEBPACK_IMPORTED_MODULE_1___default.a.Component {
           children: [/*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(_components_post_search__WEBPACK_IMPORTED_MODULE_7__[/* default */ "a"], {
             ref: this.ref,
             searchWord: this.state.search,
-            onSearchChange: this.onChange,
+            onSearchChange: value => {
+              Object(_utils_debounce__WEBPACK_IMPORTED_MODULE_12__[/* waitUntil */ "a"])('index_search', () => this.setState({
+                search: value,
+                page: 1
+              }, this.getPosts), 1000);
+            },
             checkedKeys: this.state.search_fields,
             onCheckChange: search_fields => this.setState({
               search_fields
-            }),
+            }, this.getPosts),
             withTags: this.state.with_tags,
             withoutTags: this.state.without_tags,
             onTagChange: (type, tags) => this.setState(state => _objectSpread(_objectSpread({}, state), {
               [type === 'with' ? 'with_tags' : 'without_tags']: tags
-            })),
+            }), this.getPosts),
             tags: this.state.tags
           }), /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("div", {
             className: _index_module_scss__WEBPACK_IMPORTED_MODULE_13___default.a.mask,
@@ -5224,13 +5220,13 @@ module.exports = {
 
 // Exports
 module.exports = {
-	"date_select": "datepicker_date_select__1iuNA",
+	"date-select": "datepicker_date-select__fB4H4",
 	"body": "datepicker_body__27Qdx",
 	"disabled": "datepicker_disabled__10tPv",
 	"active": "datepicker_active__2npYw",
 	"today": "datepicker_today__2DbMi",
-	"month_select": "datepicker_month_select__BdRvm",
-	"year_select": "datepicker_year_select__3QGxk"
+	"month-select": "datepicker_month-select__2KXOQ",
+	"year-select": "datepicker_year-select__-OCR9"
 };
 
 
@@ -6690,7 +6686,7 @@ function YearSelect(props) {
   } = props;
   const [y, setY] = external_react_default.a.useState(year);
   return /*#__PURE__*/Object(jsx_runtime_["jsxs"])("div", {
-    className: datepicker_module_default.a.yearSelect,
+    className: datepicker_module_default.a['year-select'],
     children: [/*#__PURE__*/Object(jsx_runtime_["jsxs"])(container["a" /* Flex */], {
       mainAxis: "space-around",
       children: [/*#__PURE__*/Object(jsx_runtime_["jsx"])(components_button["b" /* default */], {
@@ -6723,7 +6719,7 @@ function MonthSelect(props) {
     onSelect
   } = props;
   return /*#__PURE__*/Object(jsx_runtime_["jsx"])("div", {
-    className: datepicker_module_default.a.monthSelect,
+    className: datepicker_module_default.a['month-select'],
     children: M12.map(i => /*#__PURE__*/Object(jsx_runtime_["jsx"])("div", {
       className: i + 1 === month ? datepicker_module_default.a.active : '',
       onClick: () => onSelect(i + 1),
@@ -6777,7 +6773,7 @@ function DateSelect(props) {
     direction: "TB",
     subAxis: "flex-end",
     mainSize: "small",
-    className: datepicker_module_default.a.date_select,
+    className: datepicker_module_default.a['date-select'],
     children: [/*#__PURE__*/Object(jsx_runtime_["jsxs"])("div", {
       className: datepicker_module_default.a.body,
       children: [D7.map(i => /*#__PURE__*/Object(jsx_runtime_["jsx"])("strong", {

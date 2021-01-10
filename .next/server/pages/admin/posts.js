@@ -1160,16 +1160,6 @@ class AdminPostList extends react__WEBPACK_IMPORTED_MODULE_1___default.a.Compone
   constructor(props) {
     super(props);
 
-    _defineProperty(this, "onChange", value => {
-      Object(_utils_debounce__WEBPACK_IMPORTED_MODULE_15__[/* waitUntil */ "a"])('index_search', () => {
-        this.setState({
-          search: value,
-          page: 1,
-          size: 10
-        }, this.getData);
-      }, 1000);
-    });
-
     _defineProperty(this, "getData", async () => {
       this.setState({
         loading: true
@@ -1340,16 +1330,20 @@ class AdminPostList extends react__WEBPACK_IMPORTED_MODULE_1___default.a.Compone
         })
       }), /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(_components_post_search__WEBPACK_IMPORTED_MODULE_9__[/* default */ "a"], {
         searchWord: this.state.search,
-        onSearchChange: this.onChange,
+        onSearchChange: value => Object(_utils_debounce__WEBPACK_IMPORTED_MODULE_15__[/* waitUntil */ "a"])('index_search', () => this.setState({
+          search: value,
+          page: 1,
+          size: 10
+        }, this.getData), 1000),
         checkedKeys: this.state.search_fields,
         onCheckChange: search_fields => this.setState({
           search_fields
-        }),
+        }, this.getData),
         withTags: this.state.with_tags,
         withoutTags: this.state.without_tags,
         onTagChange: (type, tags) => this.setState(state => _objectSpread(_objectSpread({}, state), {
           [type === 'with' ? 'with_tags' : 'without_tags']: tags
-        }))
+        }), this.getData)
       }), /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("div", {
         style: {
           textAlign: 'right'
@@ -5318,13 +5312,13 @@ module.exports = {
 
 // Exports
 module.exports = {
-	"date_select": "datepicker_date_select__1iuNA",
+	"date-select": "datepicker_date-select__fB4H4",
 	"body": "datepicker_body__27Qdx",
 	"disabled": "datepicker_disabled__10tPv",
 	"active": "datepicker_active__2npYw",
 	"today": "datepicker_today__2DbMi",
-	"month_select": "datepicker_month_select__BdRvm",
-	"year_select": "datepicker_year_select__3QGxk"
+	"month-select": "datepicker_month-select__2KXOQ",
+	"year-select": "datepicker_year-select__-OCR9"
 };
 
 
@@ -6784,7 +6778,7 @@ function YearSelect(props) {
   } = props;
   const [y, setY] = external_react_default.a.useState(year);
   return /*#__PURE__*/Object(jsx_runtime_["jsxs"])("div", {
-    className: datepicker_module_default.a.yearSelect,
+    className: datepicker_module_default.a['year-select'],
     children: [/*#__PURE__*/Object(jsx_runtime_["jsxs"])(container["a" /* Flex */], {
       mainAxis: "space-around",
       children: [/*#__PURE__*/Object(jsx_runtime_["jsx"])(components_button["b" /* default */], {
@@ -6817,7 +6811,7 @@ function MonthSelect(props) {
     onSelect
   } = props;
   return /*#__PURE__*/Object(jsx_runtime_["jsx"])("div", {
-    className: datepicker_module_default.a.monthSelect,
+    className: datepicker_module_default.a['month-select'],
     children: M12.map(i => /*#__PURE__*/Object(jsx_runtime_["jsx"])("div", {
       className: i + 1 === month ? datepicker_module_default.a.active : '',
       onClick: () => onSelect(i + 1),
@@ -6871,7 +6865,7 @@ function DateSelect(props) {
     direction: "TB",
     subAxis: "flex-end",
     mainSize: "small",
-    className: datepicker_module_default.a.date_select,
+    className: datepicker_module_default.a['date-select'],
     children: [/*#__PURE__*/Object(jsx_runtime_["jsxs"])("div", {
       className: datepicker_module_default.a.body,
       children: [D7.map(i => /*#__PURE__*/Object(jsx_runtime_["jsx"])("strong", {

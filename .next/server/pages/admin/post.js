@@ -6210,13 +6210,13 @@ function scrollAnimation(container, target, _current) {
 
 // Exports
 module.exports = {
-	"date_select": "datepicker_date_select__1iuNA",
+	"date-select": "datepicker_date-select__fB4H4",
 	"body": "datepicker_body__27Qdx",
 	"disabled": "datepicker_disabled__10tPv",
 	"active": "datepicker_active__2npYw",
 	"today": "datepicker_today__2DbMi",
-	"month_select": "datepicker_month_select__BdRvm",
-	"year_select": "datepicker_year_select__3QGxk"
+	"month-select": "datepicker_month-select__2KXOQ",
+	"year-select": "datepicker_year-select__-OCR9"
 };
 
 
@@ -8315,7 +8315,7 @@ function YearSelect(props) {
   } = props;
   const [y, setY] = external_react_default.a.useState(year);
   return /*#__PURE__*/Object(jsx_runtime_["jsxs"])("div", {
-    className: datepicker_module_default.a.yearSelect,
+    className: datepicker_module_default.a['year-select'],
     children: [/*#__PURE__*/Object(jsx_runtime_["jsxs"])(container["a" /* Flex */], {
       mainAxis: "space-around",
       children: [/*#__PURE__*/Object(jsx_runtime_["jsx"])(components_button["b" /* default */], {
@@ -8348,7 +8348,7 @@ function MonthSelect(props) {
     onSelect
   } = props;
   return /*#__PURE__*/Object(jsx_runtime_["jsx"])("div", {
-    className: datepicker_module_default.a.monthSelect,
+    className: datepicker_module_default.a['month-select'],
     children: M12.map(i => /*#__PURE__*/Object(jsx_runtime_["jsx"])("div", {
       className: i + 1 === month ? datepicker_module_default.a.active : '',
       onClick: () => onSelect(i + 1),
@@ -8402,7 +8402,7 @@ function DateSelect(props) {
     direction: "TB",
     subAxis: "flex-end",
     mainSize: "small",
-    className: datepicker_module_default.a.date_select,
+    className: datepicker_module_default.a['date-select'],
     children: [/*#__PURE__*/Object(jsx_runtime_["jsxs"])("div", {
       className: datepicker_module_default.a.body,
       children: [D7.map(i => /*#__PURE__*/Object(jsx_runtime_["jsx"])("strong", {
