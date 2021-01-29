@@ -169,10 +169,16 @@ class Friends extends React.Component<FriendsProps, FriendsState> {
                     <a>评论区</a>
                   </Link>
                   或者使用
-                  <a href={`mailto:${context.email}`}>邮件</a>添加订阅(申请友链)
+                  <a href={`mailto:${context.email}`}>邮件</a>添加订阅(交换友链)
                 </p>
 
-                <p>唯一的要求就是起码一年能更新几篇文章吧，别的只要内容合法合规，来者不拒</p>
+                <p>
+                  要求就是起码<b>一年能更新几篇文章</b>同时<b>添加本站友链</b>
+                  ，别的只要内容合法合规即可（其他要求视具体情况而定）
+                </p>
+                <p>
+                  除去个别高质量订阅，建议添加本站作为友链，否则可能会影响排序，或导致订阅被移除
+                </p>
 
                 <p>
                   如果可以，最好提供logo以及站点RSS，RSS将用于更新最新文章（没有也没事，就当我练习爬虫技术了）
