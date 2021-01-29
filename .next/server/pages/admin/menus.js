@@ -2141,7 +2141,8 @@ function Pagination(props) {
     onChange = () => {},
     className,
     style,
-    disabled = false
+    disabled = false,
+    extend
   } = props;
   const pageNumber = react__WEBPACK_IMPORTED_MODULE_1___default.a.useMemo(() => Math.ceil(total / size), [total, size]);
   var pages = Array(range * 2 + 1).fill(0).map((_, idx) => idx + page - range).filter(p => p >= 1 && p <= pageNumber);
@@ -2154,7 +2155,7 @@ function Pagination(props) {
   pages.unshift(-2);
   pages.push(-3);
   var items = pages.map(p => /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(_components_container__WEBPACK_IMPORTED_MODULE_2__[/* Flex */ "a"].Item, {
-    children: render(page, pageNumber, size, p, onChange, disabled)
+    children: render(page, pageNumber, size, p, onChange, disabled, extend)
   }, p));
   if (!!sizeSelect && sizeSelect.length > 1) items.push( /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(_components_input__WEBPACK_IMPORTED_MODULE_5__[/* default */ "j"], {
     editable: false,

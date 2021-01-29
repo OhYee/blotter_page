@@ -4433,51 +4433,12 @@ var card = __webpack_require__("bTPZ");
 // EXTERNAL MODULE: ./components/container.tsx + 1 modules
 var container = __webpack_require__("pJr+");
 
+// EXTERNAL MODULE: ./components/timeline/index.tsx
+var timeline = __webpack_require__("zH0V");
+
 // EXTERNAL MODULE: ./utils/component.ts
 var component = __webpack_require__("Hh1h");
 
-// EXTERNAL MODULE: ./components/timeline/timeline.module.scss
-var timeline_module = __webpack_require__("x/jf");
-var timeline_module_default = /*#__PURE__*/__webpack_require__.n(timeline_module);
-
-// CONCATENATED MODULE: ./components/timeline/index.tsx
-
-
-
-
-
-function Timeline(props) {
-  const {
-    direction = 'TB',
-    data,
-    className,
-    style,
-    id
-  } = props;
-  const subDirection = direction == 'TB' ? 'LR' : 'TB';
-  return /*#__PURE__*/Object(jsx_runtime_["jsx"])("div", {
-    id: id,
-    className: Object(component["a" /* concat */])(timeline_module_default.a.timeline, className),
-    style: style,
-    children: data.map((item, index) =>
-    /*#__PURE__*/
-    // <div >
-    Object(jsx_runtime_["jsxs"])(external_react_default.a.Fragment, {
-      children: [/*#__PURE__*/Object(jsx_runtime_["jsx"])("div", {
-        className: timeline_module_default.a.time,
-        children: item.time
-      }), /*#__PURE__*/Object(jsx_runtime_["jsx"])("div", {
-        className: timeline_module_default.a.circle
-      }), /*#__PURE__*/Object(jsx_runtime_["jsx"])("div", {
-        className: timeline_module_default.a.line
-      }), /*#__PURE__*/Object(jsx_runtime_["jsx"])("div", {
-        className: timeline_module_default.a.name,
-        children: item.name
-      })]
-    }, index) // </div>
-    )
-  });
-}
 // EXTERNAL MODULE: ./components/drawer/drawer.module.scss
 var drawer_module = __webpack_require__("rV6A");
 var drawer_module_default = /*#__PURE__*/__webpack_require__.n(drawer_module);
@@ -4651,7 +4612,7 @@ class travel_map_TravelMap extends external_react_default.a.Component {
               height: '100%',
               overflow: 'auto'
             },
-            children: /*#__PURE__*/Object(jsx_runtime_["jsx"])(Timeline, {
+            children: /*#__PURE__*/Object(jsx_runtime_["jsx"])(timeline["a" /* default */], {
               data: this.props.cities.map(item => {
                 var result = [];
                 item.travels.map(i => result.push(_objectSpread(_objectSpread({}, item), i)));
@@ -5058,6 +5019,58 @@ module.exports = {
 /***/ (function(module, exports) {
 
 module.exports = require("next/head");
+
+/***/ }),
+
+/***/ "zH0V":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Timeline; });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("F5FC");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("cDcd");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _utils_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__("Hh1h");
+/* harmony import */ var _timeline_module_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__("x/jf");
+/* harmony import */ var _timeline_module_scss__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_timeline_module_scss__WEBPACK_IMPORTED_MODULE_3__);
+
+
+
+
+
+function Timeline(props) {
+  const {
+    direction = 'TB',
+    data,
+    className,
+    style,
+    id
+  } = props;
+  const subDirection = direction == 'TB' ? 'LR' : 'TB';
+  return /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("div", {
+    id: id,
+    className: Object(_utils_component__WEBPACK_IMPORTED_MODULE_2__[/* concat */ "a"])(_timeline_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.timeline, className),
+    style: style,
+    children: data.map((item, index) =>
+    /*#__PURE__*/
+    // <div >
+    Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsxs"])(react__WEBPACK_IMPORTED_MODULE_1___default.a.Fragment, {
+      children: [/*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("div", {
+        className: _timeline_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.time,
+        children: item.time
+      }), /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("div", {
+        className: _timeline_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.circle
+      }), /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("div", {
+        className: _timeline_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.line
+      }), /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("div", {
+        className: _timeline_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.name,
+        children: item.name
+      })]
+    }, index) // </div>
+    )
+  });
+}
 
 /***/ }),
 

@@ -1452,7 +1452,8 @@ class PostList extends react__WEBPACK_IMPORTED_MODULE_1___default.a.Component {
         size: this.props.size,
         total: this.props.total,
         onChange: this.props.callback,
-        render: this.props.pageRender
+        render: this.props.pageRender,
+        extend: this.props.pageExtend
       }) : null]
     });
   }
@@ -2251,9 +2252,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_post_list__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__("Kd4/");
 /* harmony import */ var _components_svg__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__("Oi1/");
 /* harmony import */ var _components_button__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__("Au3V");
-/* harmony import */ var _utils_api__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__("AoAR");
-/* harmony import */ var _utils_parse__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__("5BbW");
-/* harmony import */ var _utils_global__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__("dSKx");
+/* harmony import */ var _components_timeline__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__("zH0V");
+/* harmony import */ var _components_card__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__("bTPZ");
+/* harmony import */ var _components_container__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__("pJr+");
+/* harmony import */ var _utils_api__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__("AoAR");
+/* harmony import */ var _utils_parse__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__("5BbW");
+/* harmony import */ var _utils_global__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__("dSKx");
+/* harmony import */ var _utils_time__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__("eSIs");
+/* harmony import */ var _components_pagination__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__("cIRy");
+/* harmony import */ var _components_tag__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__("LjQu");
+/* harmony import */ var _styles_text_module_scss__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__("s0TQ");
+/* harmony import */ var _styles_text_module_scss__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_styles_text_module_scss__WEBPACK_IMPORTED_MODULE_17__);
+/* harmony import */ var _components_input__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__("tJ/W");
 
 
 
@@ -2270,12 +2280,20 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
-function pageRender(current, pageNumber, size, page, onChange, disabled) {
+
+
+
+
+
+
+
+
+function pageRender(current, pageNumber, size, page, onChange, disabled, extend) {
   switch (page) {
     case -2:
       {
         return /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(next_link__WEBPACK_IMPORTED_MODULE_3___default.a, {
-          href: `/archives?page=${current - 1}&size=${size}`,
+          href: `/archives?card=${extend ? 1 : 0}&page=${current - 1}&size=${size}`,
           passHref: true,
           children: /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(_components_button__WEBPACK_IMPORTED_MODULE_7__[/* A */ "a"], {
             disabled: disabled || current - 1 < 1,
@@ -2288,7 +2306,7 @@ function pageRender(current, pageNumber, size, page, onChange, disabled) {
     case -3:
       {
         return /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(next_link__WEBPACK_IMPORTED_MODULE_3___default.a, {
-          href: `/archives?page=${current + 1}&size=${size}`,
+          href: `/archives?card=${extend ? 1 : 0}&page=${current + 1}&size=${size}`,
           passHref: true,
           children: /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(_components_button__WEBPACK_IMPORTED_MODULE_7__[/* A */ "a"], {
             disabled: disabled || current + 1 > pageNumber,
@@ -2306,7 +2324,7 @@ function pageRender(current, pageNumber, size, page, onChange, disabled) {
     default:
       {
         return /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(next_link__WEBPACK_IMPORTED_MODULE_3___default.a, {
-          href: `/archives?page=${page}&size=${size}`,
+          href: `/archives?card=${extend ? 1 : 0}&page=${page}&size=${size}`,
           passHref: true,
           children: /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(_components_button__WEBPACK_IMPORTED_MODULE_7__[/* A */ "a"], {
             disabled: disabled || current === page,
@@ -2319,26 +2337,32 @@ function pageRender(current, pageNumber, size, page, onChange, disabled) {
   }
 }
 
+const timelineSize = 20;
+
 class Archives extends react__WEBPACK_IMPORTED_MODULE_1___default.a.Component {
   static async getInitialProps(args) {
-    var page = Object(_utils_parse__WEBPACK_IMPORTED_MODULE_9__[/* parseNumberParams */ "a"])('page', args.asPath, 1);
-    var size = Object(_utils_parse__WEBPACK_IMPORTED_MODULE_9__[/* parseNumberParams */ "a"])('size', args.asPath, 10);
-    var data = await Object(_utils_api__WEBPACK_IMPORTED_MODULE_8__[/* archives */ "f"])(page, size);
+    const card = Object(_utils_parse__WEBPACK_IMPORTED_MODULE_12__[/* parseNumberParams */ "a"])('card', args.asPath, 0) != 0;
+    const page = Object(_utils_parse__WEBPACK_IMPORTED_MODULE_12__[/* parseNumberParams */ "a"])('page', args.asPath, 1);
+    const size = Object(_utils_parse__WEBPACK_IMPORTED_MODULE_12__[/* parseNumberParams */ "a"])('size', args.asPath, card ? 10 : timelineSize);
+    const data = await Object(_utils_api__WEBPACK_IMPORTED_MODULE_11__[/* archives */ "f"])(page, size);
     return {
       page: page,
       size: size,
       posts: data.posts,
-      total: data.total
+      total: data.total,
+      card: card
     };
   }
 
   constructor(props) {
     super(props);
 
+    _defineProperty(this, "context", void 0);
+
     _defineProperty(this, "onChange", (page, size) => {
       if (size != this.props.size) {
         const newPage = Math.floor((this.props.page - 1) * this.props.size / size + 1);
-        next_router__WEBPACK_IMPORTED_MODULE_4___default.a.push(`/archives?page=${newPage}&size=${size}`);
+        next_router__WEBPACK_IMPORTED_MODULE_4___default.a.push(`/archives?card=${this.props.card ? 1 : 0}&page=${newPage}&size=${size}`);
       }
     });
 
@@ -2349,21 +2373,88 @@ class Archives extends react__WEBPACK_IMPORTED_MODULE_1___default.a.Component {
 
   render() {
     return /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsxs"])("div", {
-      children: [/*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(_utils_global__WEBPACK_IMPORTED_MODULE_10__[/* Context */ "a"].Consumer, {
+      children: [/*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(_utils_global__WEBPACK_IMPORTED_MODULE_13__[/* Context */ "a"].Consumer, {
         children: context => /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(next_head__WEBPACK_IMPORTED_MODULE_2___default.a, {
           children: /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("title", {
             children: `第${this.props.page}页|归档页|${context.blog_name}`
           })
         })
-      }), /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(_components_post_list__WEBPACK_IMPORTED_MODULE_5__[/* default */ "a"], {
-        header: `共 ${this.props.total} 篇文章`,
-        posts: this.props.posts,
-        page: this.props.page,
-        size: this.props.size,
-        total: this.props.total,
-        loading: this.state.loading,
-        callback: this.onChange,
-        pageRender: pageRender
+      }), /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsxs"])(_components_container__WEBPACK_IMPORTED_MODULE_10__[/* Flex */ "a"], {
+        direction: "TB",
+        fullWidth: true,
+        children: [/*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(_components_card__WEBPACK_IMPORTED_MODULE_9__[/* default */ "a"], {
+          neumorphism: true,
+          children: /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsxs"])(_components_container__WEBPACK_IMPORTED_MODULE_10__[/* Flex */ "a"], {
+            direction: "LR",
+            mainAxis: "flex-start",
+            children: [/*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(_components_input__WEBPACK_IMPORTED_MODULE_18__[/* CheckBox */ "a"], {
+              switchStyle: true,
+              checkText: "\u5361\u7247",
+              uncheckText: "\u65F6\u95F4\u7EBF",
+              value: this.props.card,
+              onChange: value => next_router__WEBPACK_IMPORTED_MODULE_4___default.a.push(`/archives?card=${value ? 1 : 0}&page=${this.props.page}&size=${this.props.size}`)
+            }), /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsxs"])("p", {
+              children: ["\u5171 ", this.props.total, " \u7BC7\u6587\u7AE0"]
+            })]
+          })
+        }), this.props.card ? /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(_components_post_list__WEBPACK_IMPORTED_MODULE_5__[/* default */ "a"] // header={`共 ${this.props.total} 篇文章`}
+        , {
+          posts: this.props.posts,
+          page: this.props.page,
+          size: this.props.size,
+          total: this.props.total,
+          loading: this.state.loading,
+          callback: this.onChange,
+          pageRender: pageRender,
+          pageExtend: this.props.card
+        }) : /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(_components_card__WEBPACK_IMPORTED_MODULE_9__[/* default */ "a"], {
+          neumorphism: true,
+          children: /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsxs"])(_components_container__WEBPACK_IMPORTED_MODULE_10__[/* Flex */ "a"], {
+            direction: "TB",
+            fullWidth: true,
+            children: [/*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(_components_timeline__WEBPACK_IMPORTED_MODULE_8__[/* default */ "a"], {
+              direction: "TB",
+              data: this.props.posts.map(p => ({
+                time: Object(_utils_time__WEBPACK_IMPORTED_MODULE_14__[/* formatSecond */ "b"])(p.publish_time),
+                name: /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsxs"])(_components_container__WEBPACK_IMPORTED_MODULE_10__[/* Flex */ "a"], {
+                  direction: this.context.big_screen ? 'LR' : 'TB',
+                  subAxis: "flex-start",
+                  fullWidth: !this.context.big_screen,
+                  children: [/*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(next_link__WEBPACK_IMPORTED_MODULE_3___default.a, {
+                    href: "/post/[url]",
+                    as: `/post/${p.url}`,
+                    children: /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("a", {
+                      className: _styles_text_module_scss__WEBPACK_IMPORTED_MODULE_17___default.a.color,
+                      style: {
+                        fontWeight: 'bolder'
+                      },
+                      children: p.title
+                    })
+                  }), /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(_components_container__WEBPACK_IMPORTED_MODULE_10__[/* Flex */ "a"], {
+                    direction: "LR",
+                    mainAxis: "flex-end",
+                    subSize: "middle",
+                    children: p.tags.map(tag => /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(_components_tag__WEBPACK_IMPORTED_MODULE_16__[/* default */ "a"], {
+                      tag: tag
+                    }))
+                  })]
+                })
+              })),
+              style: {
+                gridTemplateColumns: this.context.big_screen ? '150px 25px 1px auto' : '75px 25px 1px auto'
+              }
+            }), /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(_components_pagination__WEBPACK_IMPORTED_MODULE_15__[/* default */ "a"], {
+              page: this.props.page,
+              size: this.props.size,
+              total: this.props.total,
+              disabled: this.state.loading,
+              onChange: this.onChange,
+              render: pageRender,
+              sizeSelect: [10, 20, 30, 40],
+              extend: this.props.card
+            })]
+          })
+        })]
       })]
     });
   }
@@ -2376,6 +2467,8 @@ _defineProperty(Archives, "defaultProps", {
   size: 10,
   posts: Array(10).fill(undefined)
 });
+
+_defineProperty(Archives, "contextType", _utils_global__WEBPACK_IMPORTED_MODULE_13__[/* Context */ "a"]);
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(next_router__WEBPACK_IMPORTED_MODULE_4__["withRouter"])(Archives));
 
@@ -3309,7 +3402,8 @@ function Pagination(props) {
     onChange = () => {},
     className,
     style,
-    disabled = false
+    disabled = false,
+    extend
   } = props;
   const pageNumber = react__WEBPACK_IMPORTED_MODULE_1___default.a.useMemo(() => Math.ceil(total / size), [total, size]);
   var pages = Array(range * 2 + 1).fill(0).map((_, idx) => idx + page - range).filter(p => p >= 1 && p <= pageNumber);
@@ -3322,7 +3416,7 @@ function Pagination(props) {
   pages.unshift(-2);
   pages.push(-3);
   var items = pages.map(p => /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(_components_container__WEBPACK_IMPORTED_MODULE_2__[/* Flex */ "a"].Item, {
-    children: render(page, pageNumber, size, p, onChange, disabled)
+    children: render(page, pageNumber, size, p, onChange, disabled, extend)
   }, p));
   if (!!sizeSelect && sizeSelect.length > 1) items.push( /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(_components_input__WEBPACK_IMPORTED_MODULE_5__[/* default */ "j"], {
     editable: false,
@@ -7282,6 +7376,21 @@ module.exports = require("moment");
 
 /***/ }),
 
+/***/ "x/jf":
+/***/ (function(module, exports) {
+
+// Exports
+module.exports = {
+	"timeline": "timeline_timeline__2mrrW",
+	"circle": "timeline_circle__16aBP",
+	"line": "timeline_line__CPs_W",
+	"time": "timeline_time__2jslX",
+	"name": "timeline_name__2MA9V"
+};
+
+
+/***/ }),
+
 /***/ "xnum":
 /***/ (function(module, exports) {
 
@@ -7306,6 +7415,58 @@ function waitUntil(id, callback, time) {
     callback();
     delete _timer[id];
   }, time);
+}
+
+/***/ }),
+
+/***/ "zH0V":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Timeline; });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("F5FC");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("cDcd");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _utils_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__("Hh1h");
+/* harmony import */ var _timeline_module_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__("x/jf");
+/* harmony import */ var _timeline_module_scss__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_timeline_module_scss__WEBPACK_IMPORTED_MODULE_3__);
+
+
+
+
+
+function Timeline(props) {
+  const {
+    direction = 'TB',
+    data,
+    className,
+    style,
+    id
+  } = props;
+  const subDirection = direction == 'TB' ? 'LR' : 'TB';
+  return /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("div", {
+    id: id,
+    className: Object(_utils_component__WEBPACK_IMPORTED_MODULE_2__[/* concat */ "a"])(_timeline_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.timeline, className),
+    style: style,
+    children: data.map((item, index) =>
+    /*#__PURE__*/
+    // <div >
+    Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsxs"])(react__WEBPACK_IMPORTED_MODULE_1___default.a.Fragment, {
+      children: [/*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("div", {
+        className: _timeline_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.time,
+        children: item.time
+      }), /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("div", {
+        className: _timeline_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.circle
+      }), /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("div", {
+        className: _timeline_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.line
+      }), /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("div", {
+        className: _timeline_module_scss__WEBPACK_IMPORTED_MODULE_3___default.a.name,
+        children: item.name
+      })]
+    }, index) // </div>
+    )
+  });
 }
 
 /***/ }),
