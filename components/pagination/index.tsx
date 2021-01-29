@@ -58,6 +58,7 @@ export declare type PaginationPropsRenderFunction = (
   page: number,
   onChange: (page: number, size: number) => void,
   disabled: boolean,
+  extend?: any,
 ) => React.ReactNode; // -2 prepage -3 next page -1 dots
 
 export declare type PaginationProps = ComponentProps<{
@@ -69,6 +70,7 @@ export declare type PaginationProps = ComponentProps<{
   onChange?: (page: number, size: number) => void;
   render?: PaginationPropsRenderFunction;
   disabled?: boolean;
+  extend?: any;
 }>;
 
 export default function Pagination(props: PaginationProps) {
@@ -83,6 +85,7 @@ export default function Pagination(props: PaginationProps) {
     className,
     style,
     disabled = false,
+    extend,
   } = props;
   const pageNumber = React.useMemo(() => Math.ceil(total / size), [total, size]);
 
@@ -100,7 +103,7 @@ export default function Pagination(props: PaginationProps) {
   pages.push(-3);
 
   var items = pages.map((p) => (
-    <Flex.Item key={p}>{render(page, pageNumber, size, p, onChange, disabled)}</Flex.Item>
+    <Flex.Item key={p}>{render(page, pageNumber, size, p, onChange, disabled, extend)}</Flex.Item>
   ));
   if (!!sizeSelect && sizeSelect.length > 1)
     items.push(

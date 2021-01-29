@@ -17,6 +17,7 @@ type PostListProps = {
   callback?: (page: number, size?: number) => void;
   header?: string;
   pageRender?: PaginationPropsRenderFunction;
+  pageExtend?: any;
 };
 
 type PostListState = {};
@@ -110,6 +111,7 @@ class PostList extends React.Component<PostListProps & ComponentProps<'base'>, P
             total={this.props.total}
             onChange={this.props.callback}
             render={this.props.pageRender}
+            extend={this.props.pageExtend}
           />
         ) : null}
       </Flex>

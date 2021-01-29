@@ -5,6 +5,10 @@
   justify-items: center;
   align-items: center;
 
+  > * {
+    width: 100%;
+  }
+
   .circle {
     border: 2px solid var(--primary);
     transition: border var(--transition-time);
@@ -24,6 +28,7 @@
   }
   .time {
     font-size: 13px;
+    text-align: center;
   }
   .name {
     font-size: 13px;
