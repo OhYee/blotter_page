@@ -849,6 +849,8 @@ class AdminFriendList extends react__WEBPACK_IMPORTED_MODULE_1___default.a.Compo
   constructor(props) {
     super(props);
 
+    _defineProperty(this, "context", void 0);
+
     _defineProperty(this, "getData", async () => {
       this.setState({
         loading: true
@@ -925,6 +927,29 @@ class AdminFriendList extends react__WEBPACK_IMPORTED_MODULE_1___default.a.Compo
               data
             } = state;
             data[idx].error = e;
+            data.map(d => {
+              d.posts = d.posts.map(dd => dd);
+              return d;
+            });
+            return {
+              data
+            };
+          });
+        }
+      })
+    }, {
+      title: '交换',
+      key: 'ex',
+      minWidth: '5em',
+      maxWidth: '10em',
+      render: (_, __, idx) => /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(_components_input__WEBPACK_IMPORTED_MODULE_8__[/* CheckBox */ "a"], {
+        value: !!this.state.data[idx].ex,
+        onChange: e => {
+          this.setState(state => {
+            var {
+              data
+            } = state;
+            data[idx].ex = e;
             data.map(d => {
               d.posts = d.posts.map(dd => dd);
               return d;
@@ -1039,7 +1064,8 @@ class AdminFriendList extends react__WEBPACK_IMPORTED_MODULE_1___default.a.Compo
               description: '',
               rss: '',
               posts: [],
-              error: false
+              error: false,
+              ex: false
             });
             data = data.map(d => {
               d.posts = d.posts.map(dd => dd);
@@ -1057,12 +1083,21 @@ class AdminFriendList extends react__WEBPACK_IMPORTED_MODULE_1___default.a.Compo
           this.setState(state => {
             var {
               data
-            } = state;
+            } = state; // 如果第一个是当前博客，则保留不动
+
+            var first = undefined;
+
+            if (this.context.root === data[0].link) {
+              first = data[0];
+              data = data.splice(1);
+            }
+
             data = data.map(d => {
               d.posts.sort((a, b) => b.time - a.time);
               return d;
             });
-            data.sort((a, b) => (b.posts.length > 0 ? b.posts[0].time : 0) - (a.posts.length > 0 ? a.posts[0].time : 0));
+            data.sort((a, b) => a.ex === b.ex ? (b.posts.length > 0 ? b.posts[0].time : 0) - (a.posts.length > 0 ? a.posts[0].time : 0) : a.ex ? -1 : 1);
+            if (!!first) data = [first, ...data];
             data = data.map(d => {
               d.posts = d.posts.map(dd => dd);
               return d;
@@ -1279,6 +1314,8 @@ class AdminFriendList extends react__WEBPACK_IMPORTED_MODULE_1___default.a.Compo
 }
 
 _defineProperty(AdminFriendList, "defaultProps", {});
+
+_defineProperty(AdminFriendList, "contextType", _utils_global__WEBPACK_IMPORTED_MODULE_10__[/* Context */ "a"]);
 
 /* harmony default export */ __webpack_exports__["default"] = (AdminFriendList);
 

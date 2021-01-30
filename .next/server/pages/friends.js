@@ -1242,13 +1242,13 @@ class Friends extends react__WEBPACK_IMPORTED_MODULE_1___default.a.Component {
                 subAxis: "flex-start",
                 children: [/*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(_components_popover__WEBPACK_IMPORTED_MODULE_7__[/* Tooltip */ "c"], {
                   ellipsis: true,
-                  title: friend.name,
+                  title: friend.name + ' ' + (friend.ex ? '(友情链接)' : '(单向订阅)'),
                   children: /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("strong", {
-                    children: /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("a", {
+                    children: /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsxs"])("a", {
                       href: friend.link,
                       target: "_blank",
                       className: _styles_text_module_scss__WEBPACK_IMPORTED_MODULE_11___default.a.color,
-                      children: friend.name
+                      children: [friend.name, " ", friend.ex ? '⭐' : '👀']
                     })
                   })
                 }), /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(_components_popover__WEBPACK_IMPORTED_MODULE_7__[/* Tooltip */ "c"], {
