@@ -156,6 +156,7 @@ declare namespace Blotter {
     view: int;
     vmess: string;
     zhihu: string;
+    server_chan: string;
   }
 
   interface City {
