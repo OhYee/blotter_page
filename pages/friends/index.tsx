@@ -104,10 +104,13 @@ class Friends extends React.Component<FriendsProps, FriendsState> {
             <Flex.Item style={{ flex: '1 1 auto' }}>
               {/* 信息描述 */}
               <Flex direction="TB" subAxis="flex-start">
-                <Tooltip ellipsis title={friend.name}>
+                <Tooltip
+                  ellipsis
+                  title={friend.name + ' ' + (friend.ex ? '(友情链接)' : '(单向订阅)')}
+                >
                   <strong>
                     <a href={friend.link} target="_blank" className={textStyles.color}>
-                      {friend.name}
+                      {friend.name} {friend.ex ? '⭐' : '👀'}
                     </a>
                   </strong>
                 </Tooltip>

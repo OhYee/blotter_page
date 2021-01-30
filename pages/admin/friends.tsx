@@ -34,6 +34,9 @@ interface AdminFriendListState {
 class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendListState> {
   static defaultProps = {};
 
+  static contextType = Context;
+  context!: React.ContextType<typeof Context>;
+
   constructor(props: any) {
     super(props);
     this.state = {
@@ -120,6 +123,28 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
             this.setState((state) => {
               var { data } = state;
               data[idx].error = e;
+              data.map((d) => {
+                d.posts = d.posts.map((dd) => dd);
+                return d;
+              });
+              return { data };
+            });
+          }}
+        />
+      ),
+    },
+    {
+      title: '交换',
+      key: 'ex',
+      minWidth: '5em',
+      maxWidth: '10em',
+      render: (_, __, idx) => (
+        <CheckBox
+          value={!!this.state.data[idx].ex}
+          onChange={(e) => {
+            this.setState((state) => {
+              var { data } = state;
+              data[idx].ex = e;
               data.map((d) => {
                 d.posts = d.posts.map((dd) => dd);
                 return d;
@@ -230,6 +255,7 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
               rss: '',
               posts: [],
               error: false,
+              ex: false,
             });
             data = data.map((d) => {
               d.posts = d.posts.map((dd) => dd);
@@ -246,15 +272,29 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
         onClick={() => {
           this.setState((state) => {
             var { data } = state;
+
+            // 如果第一个是当前博客，则保留不动
+            var first = undefined;
+            if (this.context.root === data[0].link) {
+              first = data[0];
+              data = data.splice(1);
+            }
+
             data = data.map((d) => {
               d.posts.sort((a, b) => b.time - a.time);
               return d;
             });
-            data.sort(
-              (a, b) =>
-                (b.posts.length > 0 ? b.posts[0].time : 0) -
-                (a.posts.length > 0 ? a.posts[0].time : 0),
+            data.sort((a, b) =>
+              a.ex === b.ex
+                ? (b.posts.length > 0 ? b.posts[0].time : 0) -
+                  (a.posts.length > 0 ? a.posts[0].time : 0)
+                : a.ex
+                ? -1
+                : 1,
             );
+
+            if (!!first) data = [first, ...data];
+
             data = data.map((d) => {
               d.posts = d.posts.map((dd) => dd);
               return d;
