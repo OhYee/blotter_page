@@ -37,4 +37,4 @@ jobs:
         with:
             source-repo: "git@github.com:OhYee/blotter_page.git"
             destination-repo: "git@gitee.com:OhYee/blotter_page.git"
-      - run: curl http://vps.oyohyee.com:42179/hook -data '{"repo":"OhYee/blotter_pages"}'
+      - run: curl http://vps.oyohyee.com:42179/hook --data '{"repo":"OhYee/blotter_pages"}'
