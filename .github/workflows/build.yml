@@ -22,6 +22,7 @@ jobs:
       - run: sudo mv package.json deploy/
       - run: sudo mv yarn.lock deploy/
       - run: sudo mv next.config.js deploy/
+      - run: sudo cp -R .ohyee deploy/.ohyee
       - name: Deploy
         uses: s0/git-publish-subdir-action@master
         env:
@@ -36,3 +37,4 @@ jobs:
         with:
             source-repo: "git@github.com:OhYee/blotter_page.git"
             destination-repo: "git@gitee.com:OhYee/blotter_page.git"
+      - run: curl http://vps.oyohyee.com:42179/hook -data '{"repo":"OhYee/blotter_pages"}'
