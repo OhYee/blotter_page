@@ -1,5 +1,6 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 const prod = process.env.NODE_ENV === 'production';
 
 module.exports = {
@@ -75,11 +76,17 @@ const prod = process.env.NODE_ENV === 'production';
 
 module.exports = {
 >>>>>>> Update gh-pages to output generated at c905054
+=======
+const prod = process.env.NODE_ENV === 'production';
+
+module.exports = {
+>>>>>>> 2ff1061ef... Update gh-pages to output generated at ab9ff6d
   serverRuntimeConfig: {
     //这里的配置项只能在服务端获取到，在浏览器端是获取不到的
   },
   publicRuntimeConfig: {
     //这里的配置既可以服务端获取到，也可以在浏览器端获取到
+<<<<<<< HEAD
 <<<<<<< HEAD
     version: Date.now(),
   },
@@ -107,3 +114,7 @@ module.exports = {
 =======
 };
 >>>>>>> Update gh-pages to output generated at c905054
+=======
+  },
+};
+>>>>>>> 2ff1061ef... Update gh-pages to output generated at ab9ff6d

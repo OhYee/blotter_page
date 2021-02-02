@@ -139,8 +139,11 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 >>>>>>> Update gh-pages to output generated at c905054
+=======
+>>>>>>> 2ff1061ef... Update gh-pages to output generated at ab9ff6d
 {
   "/404": "pages/404.js",
   "/_app": "pages/_app.js",
@@ -172,6 +175,7 @@
   "/register": "pages/register.js",
   "/tag/[tag]": "pages/tag/[tag].js",
   "/tags": "pages/tags.js",
+<<<<<<< HEAD
 <<<<<<< HEAD
   "/user/[username]": "pages/user/[username].js",
   "/version": "pages/version.js"
@@ -600,3 +604,7 @@
   "/user/[username]": "pages/user/[username].js"
 }
 >>>>>>> Update gh-pages to output generated at c905054
+=======
+  "/user/[username]": "pages/user/[username].js"
+}
+>>>>>>> 2ff1061ef... Update gh-pages to output generated at ab9ff6d

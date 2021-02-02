@@ -8,6 +8,9 @@
     "dependencies": {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 2ff1061ef... Update gh-pages to output generated at ab9ff6d
         "@monaco-editor/react": "^3.4.1",
         "@zombie110year/markdown-it-katex": "^2.1.0",
         "markdown-it": "^12.0.2",
@@ -32,6 +35,7 @@
         "react-router": "^5.2.0",
         "sass": "^1.29.0",
         "typescript": "^4.1.2"
+<<<<<<< HEAD
 =======
         "@ant-design/compatible": "^1.0.2",
 =======
@@ -85,5 +89,7 @@
         "sass": "^1.29.0",
         "typescript": "^4.1.2"
 >>>>>>> Update gh-pages to output generated at 0dc947b
+=======
+>>>>>>> 2ff1061ef... Update gh-pages to output generated at ab9ff6d
     }
 }
