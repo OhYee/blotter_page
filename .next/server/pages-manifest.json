@@ -177,6 +177,7 @@
   "/tags": "pages/tags.js",
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   "/user/[username]": "pages/user/[username].js",
   "/version": "pages/version.js"
 }
@@ -608,3 +609,8 @@
   "/user/[username]": "pages/user/[username].js"
 }
 >>>>>>> 2ff1061ef... Update gh-pages to output generated at ab9ff6d
+=======
+  "/user/[username]": "pages/user/[username].js",
+  "/version": "pages/version.js"
+}
+>>>>>>> df22cdaf1... Update gh-pages to output generated at 18b38e6

@@ -88,6 +88,7 @@ module.exports = {
     //这里的配置既可以服务端获取到，也可以在浏览器端获取到
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     version: Date.now(),
   },
 };
@@ -115,6 +116,9 @@ module.exports = {
 };
 >>>>>>> Update gh-pages to output generated at c905054
 =======
+=======
+    version: Date.now(),
+>>>>>>> df22cdaf1... Update gh-pages to output generated at 18b38e6
   },
 };
 >>>>>>> 2ff1061ef... Update gh-pages to output generated at ab9ff6d

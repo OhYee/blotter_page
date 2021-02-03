@@ -230,7 +230,7 @@ __webpack_require__.d(__webpack_exports__, "D", function() { return /* binding *
 __webpack_require__.d(__webpack_exports__, "A", function() { return /* binding */ qiniu_delete_image; });
 __webpack_require__.d(__webpack_exports__, "E", function() { return /* binding */ qiniu_rename_image; });
 
-// UNUSED EXPORTS: postExist, tagExisted, githubUser, githubRepo
+// UNUSED EXPORTS: postExist, tagExisted, githubUser, githubRepo, version
 
 // EXTERNAL MODULE: ./components/notification/index.tsx
 var notification = __webpack_require__("wvHr");
@@ -572,6 +572,9 @@ const qiniu_rename_image = async (bucket, key, new_key, callback) => {
     key,
     new_key
   }, callback);
+};
+const version = async (callback) => {
+  return await request('get', '/api/version', {}, callback);
 };
 
 /***/ }),

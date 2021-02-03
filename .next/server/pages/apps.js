@@ -700,6 +700,13 @@ function concat(...classList) {
 
 /***/ }),
 
+/***/ "KNus":
+/***/ (function(module, exports) {
+
+module.exports = require("next/config");
+
+/***/ }),
+
 /***/ "Nh2W":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1753,6 +1760,11 @@ exports.default = _default;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return getTimeTheme; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("cDcd");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var next_config__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("KNus");
+/* harmony import */ var next_config__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(next_config__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _time__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__("eSIs");
+
+
 
 const defaultContext = {
   callback: () => {},
@@ -1776,6 +1788,8 @@ const defaultContext = {
   ad_show: '',
   ad_inner: '',
   ad_text: '',
+  front_version: Object(_time__WEBPACK_IMPORTED_MODULE_2__[/* formatDate */ "a"])(next_config__WEBPACK_IMPORTED_MODULE_1___default()().publicRuntimeConfig.version),
+  back_version: 'UNKNOWN',
   user: {
     id: '000000000000000000000000',
     username: '',
@@ -1845,6 +1859,37 @@ function mitt() {
     }
 
   };
+}
+
+/***/ }),
+
+/***/ "eSIs":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return formatSecond; });
+/* unused harmony export formatMilliseconds */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return formatDate; });
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("wy2R");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_0__);
+
+moment__WEBPACK_IMPORTED_MODULE_0___default.a.locale('zh-cn');
+/* unused harmony default export */ var _unused_webpack_default_export = (moment__WEBPACK_IMPORTED_MODULE_0___default.a);
+function formatSecond(time) {
+  return formatDate(time * 1000);
+}
+function formatMilliseconds(time) {
+  return formatDate(time);
+}
+function formatDate(time) {
+  const datetime = new Date(time);
+  const year = datetime.getFullYear();
+  const month = datetime.getMonth() + 1;
+  const day = datetime.getDate();
+  const hour = datetime.getHours();
+  const minute = datetime.getMinutes();
+  const second = datetime.getSeconds();
+  return `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')} ${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}:${second.toString().padStart(2, '0')}`;
 }
 
 /***/ }),
@@ -3660,6 +3705,13 @@ function createObserver(options) {
 "use strict";
 exports.__esModule=true;exports.normalizePathSep=normalizePathSep;exports.denormalizePagePath=denormalizePagePath;function normalizePathSep(path){return path.replace(/\\/g,'/');}function denormalizePagePath(page){page=normalizePathSep(page);if(page.startsWith('/index/')){page=page.slice(6);}else if(page==='/index'){page='/';}return page;}
 //# sourceMappingURL=denormalize-page-path.js.map
+
+/***/ }),
+
+/***/ "wy2R":
+/***/ (function(module, exports) {
+
+module.exports = require("moment");
 
 /***/ }),
 

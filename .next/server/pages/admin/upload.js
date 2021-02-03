@@ -285,7 +285,7 @@ __webpack_require__.d(__webpack_exports__, "D", function() { return /* binding *
 __webpack_require__.d(__webpack_exports__, "A", function() { return /* binding */ qiniu_delete_image; });
 __webpack_require__.d(__webpack_exports__, "E", function() { return /* binding */ qiniu_rename_image; });
 
-// UNUSED EXPORTS: postExist, tagExisted, githubUser, githubRepo
+// UNUSED EXPORTS: postExist, tagExisted, githubUser, githubRepo, version
 
 // EXTERNAL MODULE: ./components/notification/index.tsx
 var notification = __webpack_require__("wvHr");
@@ -627,6 +627,9 @@ const qiniu_rename_image = async (bucket, key, new_key, callback) => {
     key,
     new_key
   }, callback);
+};
+const version = async (callback) => {
+  return await request('get', '/api/version', {}, callback);
 };
 
 /***/ }),
@@ -1012,6 +1015,13 @@ module.exports = require("react/jsx-runtime");
 function concat(...classList) {
   return classList.filter(s => !!s).join(' ');
 }
+
+/***/ }),
+
+/***/ "KNus":
+/***/ (function(module, exports) {
+
+module.exports = require("next/config");
 
 /***/ }),
 
@@ -2031,6 +2041,11 @@ TabsItem.displayName = 'TabsItem';
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return getTimeTheme; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("cDcd");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var next_config__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("KNus");
+/* harmony import */ var next_config__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(next_config__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _time__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__("eSIs");
+
+
 
 const defaultContext = {
   callback: () => {},
@@ -2054,6 +2069,8 @@ const defaultContext = {
   ad_show: '',
   ad_inner: '',
   ad_text: '',
+  front_version: Object(_time__WEBPACK_IMPORTED_MODULE_2__[/* formatDate */ "a"])(next_config__WEBPACK_IMPORTED_MODULE_1___default()().publicRuntimeConfig.version),
+  back_version: 'UNKNOWN',
   user: {
     id: '000000000000000000000000',
     username: '',
@@ -2104,6 +2121,37 @@ module.exports = {
 	"transform_icon": "input_transform_icon__3DIoj"
 };
 
+
+/***/ }),
+
+/***/ "eSIs":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return formatSecond; });
+/* unused harmony export formatMilliseconds */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return formatDate; });
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("wy2R");
+/* harmony import */ var moment__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(moment__WEBPACK_IMPORTED_MODULE_0__);
+
+moment__WEBPACK_IMPORTED_MODULE_0___default.a.locale('zh-cn');
+/* unused harmony default export */ var _unused_webpack_default_export = (moment__WEBPACK_IMPORTED_MODULE_0___default.a);
+function formatSecond(time) {
+  return formatDate(time * 1000);
+}
+function formatMilliseconds(time) {
+  return formatDate(time);
+}
+function formatDate(time) {
+  const datetime = new Date(time);
+  const year = datetime.getFullYear();
+  const month = datetime.getMonth() + 1;
+  const day = datetime.getDate();
+  const hour = datetime.getHours();
+  const minute = datetime.getMinutes();
+  const second = datetime.getSeconds();
+  return `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')} ${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}:${second.toString().padStart(2, '0')}`;
+}
 
 /***/ }),
 
@@ -4248,6 +4296,13 @@ function message(props) {
 /* harmony default export */ __webpack_exports__["a"] = (Object.assign(Notification, {
   message
 }));
+
+/***/ }),
+
+/***/ "wy2R":
+/***/ (function(module, exports) {
+
+module.exports = require("moment");
 
 /***/ }),
 

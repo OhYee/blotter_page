@@ -208,7 +208,7 @@ __webpack_require__.d(__webpack_exports__, "D", function() { return /* binding *
 __webpack_require__.d(__webpack_exports__, "A", function() { return /* binding */ qiniu_delete_image; });
 __webpack_require__.d(__webpack_exports__, "E", function() { return /* binding */ qiniu_rename_image; });
 
-// UNUSED EXPORTS: postExist, tagExisted, githubUser, githubRepo
+// UNUSED EXPORTS: postExist, tagExisted, githubUser, githubRepo, version
 
 // EXTERNAL MODULE: ./components/notification/index.tsx
 var notification = __webpack_require__("wvHr");
@@ -551,6 +551,9 @@ const qiniu_rename_image = async (bucket, key, new_key, callback) => {
     new_key
   }, callback);
 };
+const version = async (callback) => {
+  return await request('get', '/api/version', {}, callback);
+};
 
 /***/ }),
 
@@ -836,6 +839,13 @@ _defineProperty(If, "defaultProps", {
 });
 
 /* harmony default export */ __webpack_exports__["a"] = (If);
+
+/***/ }),
+
+/***/ "KNus":
+/***/ (function(module, exports) {
+
+module.exports = require("next/config");
 
 /***/ }),
 
@@ -2476,6 +2486,11 @@ function Pagination(props) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return getTimeTheme; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("cDcd");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var next_config__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("KNus");
+/* harmony import */ var next_config__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(next_config__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _time__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__("eSIs");
+
+
 
 const defaultContext = {
   callback: () => {},
@@ -2499,6 +2514,8 @@ const defaultContext = {
   ad_show: '',
   ad_inner: '',
   ad_text: '',
+  front_version: Object(_time__WEBPACK_IMPORTED_MODULE_2__[/* formatDate */ "a"])(next_config__WEBPACK_IMPORTED_MODULE_1___default()().publicRuntimeConfig.version),
+  back_version: 'UNKNOWN',
   user: {
     id: '000000000000000000000000',
     username: '',
