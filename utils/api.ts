@@ -473,3 +473,9 @@ export const qiniu_rename_image = async (
 ) => {
   return await request('get', '/api/qiniu/image/rename', { bucket, key, new_key }, callback);
 };
+
+export const version = async (
+  callback?: RequestCallback<{version:string}>,
+) => {
+  return await request('get', '/api/version', {}, callback);
+};

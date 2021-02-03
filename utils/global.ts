@@ -1,4 +1,7 @@
 import React from 'react';
+import getConfig from 'next/config';
+
+import { formatDate } from './time';
 
 export const defaultContext: GlobalProps = {
   callback: () => {},
@@ -22,6 +25,8 @@ export const defaultContext: GlobalProps = {
   ad_show: '',
   ad_inner: '',
   ad_text: '',
+  front_version:  formatDate(getConfig().publicRuntimeConfig.version),
+  back_version: 'UNKNOWN',
   user: {
     id: '000000000000000000000000',
     username: '',
@@ -67,6 +72,8 @@ export declare interface GlobalProps {
   ad_show: string;
   ad_inner: string;
   ad_text: string;
+  front_version: string;
+  back_version: string;
 }
 
 export function getTimeTheme() {
