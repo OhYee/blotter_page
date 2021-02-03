@@ -39,6 +39,7 @@ else
 
     SCREEN_NAME="front"
     screen -S ${SCREEN_NAME} -X quit &>>$LOG_FILE
+    screen -wipe &>>$LOG_FILE
     screen -dmS ${SCREEN_NAME} yarn &>>$LOG_FILE && yarn start &>>$LOG_FILE
 
     func_log "rebuild at $(date -u '+%Y-%m-%d %H:%M:%S')"
