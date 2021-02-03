@@ -20,7 +20,7 @@ if [[ -z $OHYEE_ACTION_AFTER_PULL ]]; then
 
         # 强制更新
         git fetch --all
-        git reset --hard origin/master
+        git reset --hard origin/gh-pages
         git pull
 
         export OHYEE_ACTION_AFTER_PULL="true"
@@ -38,9 +38,10 @@ else
     cd $FOLDER
 
     SCREEN_NAME="front"
+    yarn &>>$LOG_FILE
     screen -S ${SCREEN_NAME} -X quit &>>$LOG_FILE
     screen -wipe &>>$LOG_FILE
-    screen -dmS ${SCREEN_NAME} yarn &>>$LOG_FILE && yarn start &>>$LOG_FILE
+    screen -dmS ${SCREEN_NAME} yarn start &>>$LOG_FILE
 
     func_log "rebuild at $(date -u '+%Y-%m-%d %H:%M:%S')"
 fi
