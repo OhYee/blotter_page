@@ -194,7 +194,10 @@ class Friends extends React.Component<FriendsProps, FriendsState> {
 
                 <p>
                   友链文章爬虫见
-                  <a href="https://github.com/OhYee/blotter/tree/master/spider" target="_blank">
+                  <a
+                    href="https://github.com/OhYee/blotter/tree/master/tools/spider"
+                    target="_blank"
+                  >
                     相关代码
                   </a>
                   ，User-Agent 为<code>OhYee Spider</code>
