@@ -1,4 +1,5 @@
 
+<<<<<<< HEAD
 <<<<<<< HEAD:.next/cache/next-minifier/index-v5/a5/8e/a706b92b256d02cd6544fc3741a9da5e3533d56e8b9527f79ccff17c9b40
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -28,3 +29,6 @@ ea777f5e43ea7c502f2681eba8cd9faa86dd7832	{"key":"{\"terser\":\"5.1.0\",\"terser-
 =======
 0c7c733a1379cba6d4c942a519cf6770f6977f58	{"key":"{\"terser\":\"5.1.0\",\"terser-webpack-plugin\":\"4.1.0\",\"terser-webpack-plugin-options\":{\"test\":new RegExp(\"\\\\.m?js(\\\\?.*)?$\", \"i\"),\"extractComments\":false,\"sourceMap\":false,\"cache\":\"\\u002Fgithub\\u002Fworkspace\\u002F.next\\u002Fcache\\u002Fnext-minifier\",\"cacheKeys\":e=>e,\"parallel\":1,\"include\":undefined,\"exclude\":undefined,\"minify\":undefined,\"terserOptions\":{\"parse\":{\"ecma\":8},\"compress\":{\"ecma\":5,\"warnings\":false,\"comparisons\":false,\"inline\":2},\"mangle\":{\"safari10\":true},\"output\":{\"ecma\":5,\"safari10\":true,\"comments\":false,\"ascii_only\":true}}},\"nodeVersion\":\"v10.16.3\",\"name\":\"static\\u002Fchunks\\u002Fcfc55de53ac53f1ccf99fbce23c3326fba8e4bcd.6e01034054ef1c4fd4dd.js\",\"contentHash\":\"bfe8164e959d4e80b35b\"}","integrity":"sha512-qdPQknmnaqVgsUf8LHuClVCqMqQKKwUYSiHZi7u8gO4Su1B/sPLtTgeCWoX9Cn3zPlOY9XvU0d1W/CgujSl44Q==","time":1612374324409,"size":31662}
 >>>>>>> df22cdaf1... Update gh-pages to output generated at 18b38e6:.next/cache/next-minifier/index-v5/06/85/fc6aa80b45e533f61e5af1b2e0ffa031f9d9d3db1c38b454a2f615c9dd93
+=======
+6a20302bb92012153de1a43a458342ac60c31510	{"key":"{\"terser\":\"5.1.0\",\"terser-webpack-plugin\":\"4.1.0\",\"terser-webpack-plugin-options\":{\"test\":new RegExp(\"\\\\.m?js(\\\\?.*)?$\", \"i\"),\"extractComments\":false,\"sourceMap\":false,\"cache\":\"\\u002Fgithub\\u002Fworkspace\\u002F.next\\u002Fcache\\u002Fnext-minifier\",\"cacheKeys\":e=>e,\"parallel\":1,\"include\":undefined,\"exclude\":undefined,\"minify\":undefined,\"terserOptions\":{\"parse\":{\"ecma\":8},\"compress\":{\"ecma\":5,\"warnings\":false,\"comparisons\":false,\"inline\":2},\"mangle\":{\"safari10\":true},\"output\":{\"ecma\":5,\"safari10\":true,\"comments\":false,\"ascii_only\":true}}},\"nodeVersion\":\"v10.16.3\",\"name\":\"static\\u002Fchunks\\u002Fcfc55de53ac53f1ccf99fbce23c3326fba8e4bcd.6e01034054ef1c4fd4dd.js\",\"contentHash\":\"bfe8164e959d4e80b35b\"}","integrity":"sha512-qdPQknmnaqVgsUf8LHuClVCqMqQKKwUYSiHZi7u8gO4Su1B/sPLtTgeCWoX9Cn3zPlOY9XvU0d1W/CgujSl44Q==","time":1612681229294,"size":31662}
+>>>>>>> 36a98b8c2... Update gh-pages to output generated at 5f29a25

@@ -1343,7 +1343,7 @@ class Friends extends react__WEBPACK_IMPORTED_MODULE_1___default.a.Component {
               children: ["\u5982\u679C\u53EF\u4EE5\uFF0C\u6700\u597D\u63D0\u4F9Blogo\u4EE5\u53CA\u7AD9\u70B9RSS\uFF0CRSS\u5C06\u7528\u4E8E\u66F4\u65B0\u6700\u65B0\u6587\u7AE0\uFF08\u6CA1\u6709\u4E5F\u6CA1\u4E8B\uFF0C\u5C31\u5F53\u6211\u7EC3\u4E60\u722C\u866B\u6280\u672F\u4E86\uFF09", /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("br", {}), "\u53CB\u94FE\u987A\u5E8F\u4F1A\u6309\u7167\u535A\u5BA2\u6700\u65B0\u6587\u7AE0\u624B\u52A8\u968F\u7F18\u6392\u5E8F\uFF08\u66F4\u65B0\u52E4\u5FEB\u7684\u9AD8\u8D28\u91CF\u5927\u4F6C\u4F18\u5148\uFF09", /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("br", {}), "\u6BCF\u6B21\u4F1A\u5C06\u6700\u65B0 ", maxPostNumber, ' ', "\u7BC7\u6587\u7AE0\u66F4\u65B0\u5230\u8FD9\u91CC\uFF0C\u8FD9\u6837\u6211\u5C31\u53EF\u4EE5\u5728\u4E00\u4E2A\u9875\u9762\u770B\u5230\u8BF8\u4F4D\u5927\u4F6C\u7684\u6700\u65B0\u6210\u679C\u4E86"]
             }), /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsxs"])("p", {
               children: ["\u53CB\u94FE\u6587\u7AE0\u722C\u866B\u89C1", /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("a", {
-                href: "https://github.com/OhYee/blotter/tree/master/spider",
+                href: "https://github.com/OhYee/blotter/tree/master/tools/spider",
                 target: "_blank",
                 children: "\u76F8\u5173\u4EE3\u7801"
               }), "\uFF0CUser-Agent \u4E3A", /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("code", {

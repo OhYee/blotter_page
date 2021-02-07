@@ -1,4 +1,5 @@
 
+<<<<<<< HEAD
 <<<<<<< HEAD:.next/cache/next-minifier/index-v5/19/07/bd0e94758e1ca0520bc0f46d4e713c45c05f85a42f922abcc3c22f9fa54d
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -28,3 +29,6 @@ c56ddea82e21d8521a5ff5157d2c2b96eb7f7d48	{"key":"{\"terser\":\"5.1.0\",\"terser-
 =======
 db7adff2b2361f4ee976205be6f2e269a4f71416	{"key":"{\"terser\":\"5.1.0\",\"terser-webpack-plugin\":\"4.1.0\",\"terser-webpack-plugin-options\":{\"test\":new RegExp(\"\\\\.m?js(\\\\?.*)?$\", \"i\"),\"extractComments\":false,\"sourceMap\":false,\"cache\":\"\\u002Fgithub\\u002Fworkspace\\u002F.next\\u002Fcache\\u002Fnext-minifier\",\"cacheKeys\":e=>e,\"parallel\":1,\"include\":undefined,\"exclude\":undefined,\"minify\":undefined,\"terserOptions\":{\"parse\":{\"ecma\":8},\"compress\":{\"ecma\":5,\"warnings\":false,\"comparisons\":false,\"inline\":2},\"mangle\":{\"safari10\":true},\"output\":{\"ecma\":5,\"safari10\":true,\"comments\":false,\"ascii_only\":true}}},\"nodeVersion\":\"v10.16.3\",\"name\":\"static\\u002Fchunks\\u002Fpolyfills-6c4becf67cf298394ac5.js\",\"contentHash\":\"e50c43dbc8565032d640\"}","integrity":"sha512-XGtZr9jfSwLSbelyulrEA2IL40MamNJXwlQp+DSyuVYHv9F1PRDckdjEpz1bMvIaf/vA2uvvZ9l2YIeahfWfXw==","time":1612374336528,"size":94762}
 >>>>>>> df22cdaf1... Update gh-pages to output generated at 18b38e6:.next/cache/next-minifier/index-v5/ab/f6/d337adf8f493a80b5b5704723ed71ca140972c2b51e961983c71c1d8d504
+=======
+52fc1306297cc655acdaed162e448a5c80e71bbf	{"key":"{\"terser\":\"5.1.0\",\"terser-webpack-plugin\":\"4.1.0\",\"terser-webpack-plugin-options\":{\"test\":new RegExp(\"\\\\.m?js(\\\\?.*)?$\", \"i\"),\"extractComments\":false,\"sourceMap\":false,\"cache\":\"\\u002Fgithub\\u002Fworkspace\\u002F.next\\u002Fcache\\u002Fnext-minifier\",\"cacheKeys\":e=>e,\"parallel\":1,\"include\":undefined,\"exclude\":undefined,\"minify\":undefined,\"terserOptions\":{\"parse\":{\"ecma\":8},\"compress\":{\"ecma\":5,\"warnings\":false,\"comparisons\":false,\"inline\":2},\"mangle\":{\"safari10\":true},\"output\":{\"ecma\":5,\"safari10\":true,\"comments\":false,\"ascii_only\":true}}},\"nodeVersion\":\"v10.16.3\",\"name\":\"static\\u002Fchunks\\u002Fpolyfills-6c4becf67cf298394ac5.js\",\"contentHash\":\"e50c43dbc8565032d640\"}","integrity":"sha512-XGtZr9jfSwLSbelyulrEA2IL40MamNJXwlQp+DSyuVYHv9F1PRDckdjEpz1bMvIaf/vA2uvvZ9l2YIeahfWfXw==","time":1612681243302,"size":94762}
+>>>>>>> 36a98b8c2... Update gh-pages to output generated at 5f29a25

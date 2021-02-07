@@ -697,6 +697,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "static/s6QxszbyXu6dkZ_Vy37FW/_buildManifest.js",
     "static/s6QxszbyXu6dkZ_Vy37FW/_ssgManifest.js"
 =======
@@ -12888,6 +12889,10 @@
     "static/CRfe_OPTuKwI5Iai7E4bi/_buildManifest.js",
     "static/CRfe_OPTuKwI5Iai7E4bi/_ssgManifest.js"
 >>>>>>> df22cdaf1... Update gh-pages to output generated at 18b38e6
+=======
+    "static/KG5vV9GhMPOuk0ayPKi-R/_buildManifest.js",
+    "static/KG5vV9GhMPOuk0ayPKi-R/_ssgManifest.js"
+>>>>>>> 36a98b8c2... Update gh-pages to output generated at 5f29a25
   ],
   "pages": {
     "/": [
@@ -39086,7 +39091,7 @@
       "static/chunks/bbbd1390fa14c49fdecf4175c8fa16befbf09ede.87ab636e7bc53219cbda.js",
       "static/chunks/cfc55de53ac53f1ccf99fbce23c3326fba8e4bcd.6e01034054ef1c4fd4dd.js",
       "static/css/ad6e5054a168871f81ad.css",
-      "static/chunks/pages/friends-373ad512c1c0233a271c.js"
+      "static/chunks/pages/friends-e61272b87dce94134a9a.js"
     ],
     "/post/[url]": [
       "static/chunks/main-dcbfd197c8a751705dfd.js",
