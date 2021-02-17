@@ -1304,12 +1304,8 @@ class AdminVariables extends react__WEBPACK_IMPORTED_MODULE_1___default.a.Compon
         smtp_username: '',
         view: '',
         vmess: '',
-<<<<<<< HEAD
-        zhihu: ''
-=======
         zhihu: '',
         server_chan: ''
->>>>>>> 2ff1061ef... Update gh-pages to output generated at ab9ff6d
       }
     };
   }

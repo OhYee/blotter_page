@@ -114,11 +114,6 @@ module.exports = require("next/router");
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return NotFound; });
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 2ff1061ef... Update gh-pages to output generated at ab9ff6d
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("F5FC");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _pages_error__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("D4/9");
@@ -126,26 +121,6 @@ __webpack_require__.r(__webpack_exports__);
 
 function NotFound() {
   return /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(_pages_error__WEBPACK_IMPORTED_MODULE_1__["default"], {
-<<<<<<< HEAD
-=======
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("cDcd");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-=======
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("F5FC");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__);
->>>>>>> Update gh-pages to output generated at 0dc947b
-/* harmony import */ var _pages_error__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("D4/9");
-
-
-function NotFound() {
-<<<<<<< HEAD
-  return __jsx(_pages_error__WEBPACK_IMPORTED_MODULE_1__["default"], {
->>>>>>> Update gh-pages to output generated at c905054
-=======
-  return /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(_pages_error__WEBPACK_IMPORTED_MODULE_1__["default"], {
->>>>>>> Update gh-pages to output generated at 0dc947b
-=======
->>>>>>> 2ff1061ef... Update gh-pages to output generated at ab9ff6d
     status: 404
   });
 }
@@ -157,13 +132,6 @@ function NotFound() {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> Update gh-pages to output generated at 0dc947b
-=======
->>>>>>> 2ff1061ef... Update gh-pages to output generated at ab9ff6d
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("F5FC");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("cDcd");
@@ -179,27 +147,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _styles_text_module_scss__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_styles_text_module_scss__WEBPACK_IMPORTED_MODULE_7__);
 
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("cDcd");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var next_head__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("xnum");
-/* harmony import */ var next_head__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(next_head__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__("4Q3z");
-/* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(next_router__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _components_card__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__("bTPZ");
-/* harmony import */ var _utils_redirect__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__("lqEU");
-/* harmony import */ var _utils_global__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__("dSKx");
-/* harmony import */ var _styles_text_module_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__("s0TQ");
-/* harmony import */ var _styles_text_module_scss__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_styles_text_module_scss__WEBPACK_IMPORTED_MODULE_6__);
-
-var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
->>>>>>> Update gh-pages to output generated at c905054
-=======
->>>>>>> Update gh-pages to output generated at 0dc947b
-=======
->>>>>>> 2ff1061ef... Update gh-pages to output generated at ab9ff6d
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
@@ -211,19 +158,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 class ErrorPage extends react__WEBPACK_IMPORTED_MODULE_1__["Component"] {
-=======
-class ErrorPage extends react__WEBPACK_IMPORTED_MODULE_0__["Component"] {
->>>>>>> Update gh-pages to output generated at c905054
-=======
-class ErrorPage extends react__WEBPACK_IMPORTED_MODULE_1__["Component"] {
->>>>>>> Update gh-pages to output generated at 0dc947b
-=======
-class ErrorPage extends react__WEBPACK_IMPORTED_MODULE_1__["Component"] {
->>>>>>> 2ff1061ef... Update gh-pages to output generated at ab9ff6d
   constructor(...args) {
     super(...args);
 
@@ -240,9 +175,6 @@ class ErrorPage extends react__WEBPACK_IMPORTED_MODULE_1__["Component"] {
   }
 
   render() {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
     const path = Object(_utils_redirect__WEBPACK_IMPORTED_MODULE_5__[/* guessPath */ "a"])(this.props.router.asPath);
     const errorMessage = {
       403: /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("span", {
@@ -309,136 +241,13 @@ class ErrorPage extends react__WEBPACK_IMPORTED_MODULE_1__["Component"] {
         })]
       })]
     });
-=======
-    const path = Object(_utils_redirect__WEBPACK_IMPORTED_MODULE_4__[/* guessPath */ "a"])(this.props.router.asPath);
-=======
-    const path = Object(_utils_redirect__WEBPACK_IMPORTED_MODULE_5__[/* guessPath */ "a"])(this.props.router.asPath);
->>>>>>> Update gh-pages to output generated at 0dc947b
-=======
-    const path = Object(_utils_redirect__WEBPACK_IMPORTED_MODULE_5__[/* guessPath */ "a"])(this.props.router.asPath);
->>>>>>> 2ff1061ef... Update gh-pages to output generated at ab9ff6d
-    const errorMessage = {
-      403: /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("span", {
-        children: "\u4F60\u8BBF\u95EE\u4E86\u6CA1\u6709\u6743\u9650\u7684\u9875\u9762"
-      }),
-      404: /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("span", {
-        children: "\u627E\u4E0D\u5230\u9875\u9762\uFF0C\u5927\u6982\u662F\u91CD\u6784\u4FEE\u6539\u4E86\u90E8\u5206\u9875\u9762\u7684\u94FE\u63A5\uFF0C\u8BF7\u5C1D\u8BD5\u6839\u636E\u6807\u7B7E\u6216\u8005\u641C\u7D22\u529F\u80FD\u627E\u5230\u5BF9\u5E94\u7684\u5185\u5BB9"
-      }),
-      500: /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsxs"])("span", {
-        children: ["\u670D\u52A1\u5668\u70B8\u4E86\uFF1F", /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("a", {
-          href: `mailto://${this.context.email}`,
-          children: "\u8054\u7CFB\u6211"
-        }), "\u6765\u4FEE\u590D\u5427"]
-      }),
-      501: /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsxs"])("span", {
-        children: ["\u6CA1\u6709\u627E\u5230\u5BF9\u5E94\u7684\u63A5\u53E3\uFF0C\u6B63\u5E38\u800C\u8A00\uFF0C\u6B63\u5E38\u6D4F\u89C8\u4E0D\u4F1A\u9047\u5230\u8FD9\u4E2A\u9519\u8BEF\u3002\u5982\u679C\u60F3\u8981\u83B7\u53D6\u535A\u5BA2\u76F8\u5173\u63A5\u53E3\uFF0C\u53EF\u4EE5\u67E5\u770B", /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("a", {
-          href: "https://github.com/OhYee/blotter",
-          children: "\u5F00\u6E90\u9879\u76EE"
-        })]
-      }),
-      502: /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsxs"])("span", {
-        children: ["\u7F51\u5173\u9519\u8BEF\uFF0C\u5927\u6982\u662F\u540E\u7AEF\u670D\u52A1\u5668\u70B8\u4E86\u3002 ", /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("a", {
-          href: `mailto://${this.context.email}`,
-          children: "\u8054\u7CFB\u6211"
-        }), "\u6765\u4FEE\u590D\u5427"]
-      })
-    };
-<<<<<<< HEAD
-<<<<<<< HEAD
-    return __jsx(_components_card__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"], {
-      neumorphism: true
-    }, __jsx(_utils_global__WEBPACK_IMPORTED_MODULE_5__[/* Context */ "a"].Consumer, null, context => __jsx(next_head__WEBPACK_IMPORTED_MODULE_1___default.a, null, __jsx("title", null, `发生一个${this.props.status}错误！|${this.context.blog_name}`))), __jsx("h1", {
-      className: _styles_text_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.color,
-      style: {
-        display: 'inline-block',
-        marginRight: 10
-      }
-    }, `发生一个${this.props.status}错误！`), __jsx("p", {
-      className: _styles_text_module_scss__WEBPACK_IMPORTED_MODULE_6___default.a.secondary,
-      style: {
-        display: 'inline-block'
-      }
-    }, errorMessage[this.props.status]), this.props.status == 404 && path !== '' ? __jsx("strong", null, "\u5F53\u524D\u60A8\u8BBF\u95EE\u7684\u9875\u9762\u662F", this.props.router.asPath, "\uFF0C\u731C\u6D4B\u5F97\u51FA\u4F60\u5B9E\u9645\u8981\u8BBF\u95EE\u5F97\u8FDE\u63A5\u662F", __jsx("a", {
-      href: path
-    }, path), "\uFF08\u7EAF\u7CB9\u731C\u6D4B\uFF09") : null, __jsx("p", {
-      style: {
-        lineHeight: '2em'
-      }
-    }, "\u4E00\u822C\u800C\u8A00\uFF0C\u6240\u6709\u53D1\u751F\u9519\u8BEF\u53EF\u80FD\u7684\u60C5\u51B5\u5982\u4E0B\uFF1A", __jsx("ul", null, Object.keys(errorMessage).map(status => __jsx("li", {
-      key: status
-    }, __jsx("strong", null, status, "\u9519\u8BEF"), ",", errorMessage[status])))));
->>>>>>> Update gh-pages to output generated at c905054
-=======
-=======
->>>>>>> 2ff1061ef... Update gh-pages to output generated at ab9ff6d
-    return /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsxs"])(_components_card__WEBPACK_IMPORTED_MODULE_4__[/* default */ "a"], {
-      neumorphism: true,
-      children: [/*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(_utils_global__WEBPACK_IMPORTED_MODULE_6__[/* Context */ "a"].Consumer, {
-        children: context => /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(next_head__WEBPACK_IMPORTED_MODULE_2___default.a, {
-          children: /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("title", {
-            children: `发生一个${this.props.status}错误！|${this.context.blog_name}`
-          })
-        })
-      }), /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("h1", {
-        className: _styles_text_module_scss__WEBPACK_IMPORTED_MODULE_7___default.a.color,
-        style: {
-          display: 'inline-block',
-          marginRight: 10
-        },
-        children: `发生一个${this.props.status}错误！`
-      }), /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("p", {
-        className: _styles_text_module_scss__WEBPACK_IMPORTED_MODULE_7___default.a.secondary,
-        style: {
-          display: 'inline-block'
-        },
-        children: errorMessage[this.props.status]
-      }), this.props.status == 404 && path !== '' ? /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsxs"])("strong", {
-        children: ["\u5F53\u524D\u60A8\u8BBF\u95EE\u7684\u9875\u9762\u662F", this.props.router.asPath, "\uFF0C\u731C\u6D4B\u5F97\u51FA\u4F60\u5B9E\u9645\u8981\u8BBF\u95EE\u5F97\u8FDE\u63A5\u662F", /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("a", {
-          href: path,
-          children: path
-        }), "\uFF08\u7EAF\u7CB9\u731C\u6D4B\uFF09"]
-      }) : null, /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsxs"])("p", {
-        style: {
-          lineHeight: '2em'
-        },
-        children: ["\u4E00\u822C\u800C\u8A00\uFF0C\u6240\u6709\u53D1\u751F\u9519\u8BEF\u53EF\u80FD\u7684\u60C5\u51B5\u5982\u4E0B\uFF1A", /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("ul", {
-          children: Object.keys(errorMessage).map(status => /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsxs"])("li", {
-            children: [/*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsxs"])("strong", {
-              children: [status, "\u9519\u8BEF"]
-            }), ",", errorMessage[status]]
-          }, status))
-        })]
-      })]
-    });
-<<<<<<< HEAD
->>>>>>> Update gh-pages to output generated at 0dc947b
-=======
->>>>>>> 2ff1061ef... Update gh-pages to output generated at ab9ff6d
   }
 
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 _defineProperty(ErrorPage, "contextType", _utils_global__WEBPACK_IMPORTED_MODULE_6__[/* Context */ "a"]);
 
 /* harmony default export */ __webpack_exports__["default"] = (Object(next_router__WEBPACK_IMPORTED_MODULE_3__["withRouter"])(ErrorPage));
-=======
-_defineProperty(ErrorPage, "contextType", _utils_global__WEBPACK_IMPORTED_MODULE_5__[/* Context */ "a"]);
-
-/* harmony default export */ __webpack_exports__["default"] = (Object(next_router__WEBPACK_IMPORTED_MODULE_2__["withRouter"])(ErrorPage));
->>>>>>> Update gh-pages to output generated at c905054
-=======
-_defineProperty(ErrorPage, "contextType", _utils_global__WEBPACK_IMPORTED_MODULE_6__[/* Context */ "a"]);
-
-/* harmony default export */ __webpack_exports__["default"] = (Object(next_router__WEBPACK_IMPORTED_MODULE_3__["withRouter"])(ErrorPage));
->>>>>>> Update gh-pages to output generated at 0dc947b
-=======
-_defineProperty(ErrorPage, "contextType", _utils_global__WEBPACK_IMPORTED_MODULE_6__[/* Context */ "a"]);
-
-/* harmony default export */ __webpack_exports__["default"] = (Object(next_router__WEBPACK_IMPORTED_MODULE_3__["withRouter"])(ErrorPage));
->>>>>>> 2ff1061ef... Update gh-pages to output generated at ab9ff6d
 
 /***/ }),
 
@@ -454,13 +263,6 @@ module.exports = {
 
 /***/ }),
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> Update gh-pages to output generated at 0dc947b
-=======
->>>>>>> 2ff1061ef... Update gh-pages to output generated at ab9ff6d
 /***/ "F5FC":
 /***/ (function(module, exports) {
 
@@ -468,14 +270,6 @@ module.exports = require("react/jsx-runtime");
 
 /***/ }),
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> Update gh-pages to output generated at c905054
-=======
->>>>>>> Update gh-pages to output generated at 0dc947b
-=======
->>>>>>> 2ff1061ef... Update gh-pages to output generated at ab9ff6d
 /***/ "Hh1h":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -487,11 +281,6 @@ function concat(...classList) {
 
 /***/ }),
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> df22cdaf1... Update gh-pages to output generated at 18b38e6
 /***/ "KNus":
 /***/ (function(module, exports) {
 
@@ -499,24 +288,10 @@ module.exports = require("next/config");
 
 /***/ }),
 
-<<<<<<< HEAD
-=======
->>>>>>> Update gh-pages to output generated at c905054
-=======
->>>>>>> 2ff1061ef... Update gh-pages to output generated at ab9ff6d
-=======
->>>>>>> df22cdaf1... Update gh-pages to output generated at 18b38e6
 /***/ "bTPZ":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> Update gh-pages to output generated at 0dc947b
-=======
->>>>>>> 2ff1061ef... Update gh-pages to output generated at ab9ff6d
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("F5FC");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("cDcd");
@@ -529,40 +304,12 @@ module.exports = require("next/config");
 /* harmony import */ var _styles_shadow_module_scss__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_styles_shadow_module_scss__WEBPACK_IMPORTED_MODULE_5__);
 
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-=======
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("cDcd");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _components_container__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("pJr+");
-/* harmony import */ var _utils_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__("Hh1h");
-/* harmony import */ var _card_module_scss__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__("EyMQ");
-/* harmony import */ var _card_module_scss__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_card_module_scss__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var _styles_shadow_module_scss__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__("tyXD");
-/* harmony import */ var _styles_shadow_module_scss__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_styles_shadow_module_scss__WEBPACK_IMPORTED_MODULE_4__);
-var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
-
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
->>>>>>> Update gh-pages to output generated at c905054
-=======
-=======
->>>>>>> 2ff1061ef... Update gh-pages to output generated at ab9ff6d
-
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-<<<<<<< HEAD
->>>>>>> Update gh-pages to output generated at 0dc947b
-=======
->>>>>>> 2ff1061ef... Update gh-pages to output generated at ab9ff6d
 
 function _objectWithoutProperties(source, excluded) { if (source == null) return {}; var target = _objectWithoutPropertiesLoose(source, excluded); var key, i; if (Object.getOwnPropertySymbols) { var sourceSymbolKeys = Object.getOwnPropertySymbols(source); for (i = 0; i < sourceSymbolKeys.length; i++) { key = sourceSymbolKeys[i]; if (excluded.indexOf(key) >= 0) continue; if (!Object.prototype.propertyIsEnumerable.call(source, key)) continue; target[key] = source[key]; } } return target; }
 
@@ -582,11 +329,6 @@ function Card(props, ref) {
     cover,
     className,
     style,
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 2ff1061ef... Update gh-pages to output generated at ab9ff6d
     children,
     mainStyle
   } = props,
@@ -613,44 +355,6 @@ function Card(props, ref) {
 }
 
 /* harmony default export */ __webpack_exports__["a"] = (/*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.forwardRef(Card));
-<<<<<<< HEAD
-=======
-    children
-=======
-    children,
-    mainStyle
->>>>>>> Update gh-pages to output generated at 0f2f69c
-  } = props,
-        restProps = _objectWithoutProperties(props, ["shadow", "neumorphism", "neumorphismInset", "cover", "className", "style", "children", "mainStyle"]);
-
-  var classList = [_card_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.card, className];
-  if (shadow) classList.push(_styles_shadow_module_scss__WEBPACK_IMPORTED_MODULE_5___default.a.shadow);
-  if (neumorphism) classList.push(_styles_shadow_module_scss__WEBPACK_IMPORTED_MODULE_5___default.a.neumorphism);
-  if (neumorphismInset) classList.push(_styles_shadow_module_scss__WEBPACK_IMPORTED_MODULE_5___default.a.neumorphism_inset);
-  return /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("div", _objectSpread(_objectSpread({}, restProps), {}, {
-    ref: ref,
-    className: Object(_utils_component__WEBPACK_IMPORTED_MODULE_3__[/* concat */ "a"])(...classList),
-    style: style,
-    children: /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsxs"])(_components_container__WEBPACK_IMPORTED_MODULE_2__[/* Flex */ "a"], {
-      direction: "TB",
-      fullWidth: true,
-      children: [cover, /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("div", {
-        className: _card_module_scss__WEBPACK_IMPORTED_MODULE_4___default.a.main,
-        style: mainStyle,
-        children: children
-      })]
-    })
-  }));
-}
-
-<<<<<<< HEAD
-/* harmony default export */ __webpack_exports__["a"] = (/*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.forwardRef(Card));
->>>>>>> Update gh-pages to output generated at c905054
-=======
-/* harmony default export */ __webpack_exports__["a"] = (/*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.forwardRef(Card));
->>>>>>> Update gh-pages to output generated at 0dc947b
-=======
->>>>>>> 2ff1061ef... Update gh-pages to output generated at ab9ff6d
 
 /***/ }),
 
@@ -670,23 +374,11 @@ module.exports = require("react");
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return getTimeTheme; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("cDcd");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> df22cdaf1... Update gh-pages to output generated at 18b38e6
 /* harmony import */ var next_config__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("KNus");
 /* harmony import */ var next_config__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(next_config__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _time__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__("eSIs");
 
 
-<<<<<<< HEAD
-=======
->>>>>>> Update gh-pages to output generated at c905054
-=======
->>>>>>> 2ff1061ef... Update gh-pages to output generated at ab9ff6d
-=======
->>>>>>> df22cdaf1... Update gh-pages to output generated at 18b38e6
 
 const defaultContext = {
   callback: () => {},
@@ -706,32 +398,12 @@ const defaultContext = {
   author: '',
   avatar: '',
   from: '',
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> Update gh-pages to output generated at 2968262
-=======
->>>>>>> 2ff1061ef... Update gh-pages to output generated at ab9ff6d
   head: '',
   ad_show: '',
   ad_inner: '',
   ad_text: '',
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
   front_version: Object(_time__WEBPACK_IMPORTED_MODULE_2__[/* formatDate */ "a"])(next_config__WEBPACK_IMPORTED_MODULE_1___default()().publicRuntimeConfig.version),
   back_version: 'UNKNOWN',
-=======
->>>>>>> Update gh-pages to output generated at c905054
-=======
->>>>>>> Update gh-pages to output generated at 2968262
-=======
->>>>>>> 2ff1061ef... Update gh-pages to output generated at ab9ff6d
-=======
-  front_version: Object(_time__WEBPACK_IMPORTED_MODULE_2__[/* formatDate */ "a"])(next_config__WEBPACK_IMPORTED_MODULE_1___default()().publicRuntimeConfig.version),
-  back_version: 'UNKNOWN',
->>>>>>> df22cdaf1... Update gh-pages to output generated at 18b38e6
   user: {
     id: '000000000000000000000000',
     username: '',
@@ -759,11 +431,6 @@ function getTimeTheme() {
 
 /***/ }),
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> df22cdaf1... Update gh-pages to output generated at 18b38e6
 /***/ "eSIs":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -795,13 +462,6 @@ function formatDate(time) {
 
 /***/ }),
 
-<<<<<<< HEAD
-=======
->>>>>>> Update gh-pages to output generated at c905054
-=======
->>>>>>> 2ff1061ef... Update gh-pages to output generated at ab9ff6d
-=======
->>>>>>> df22cdaf1... Update gh-pages to output generated at 18b38e6
 /***/ "lqEU":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -852,24 +512,9 @@ const guessPath = pathname => {
 // EXPORTS
 __webpack_require__.d(__webpack_exports__, "a", function() { return /* binding */ Flex; });
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 // EXTERNAL MODULE: external "react/jsx-runtime"
 var jsx_runtime_ = __webpack_require__("F5FC");
 
-=======
->>>>>>> Update gh-pages to output generated at c905054
-=======
-// EXTERNAL MODULE: external "react/jsx-runtime"
-var jsx_runtime_ = __webpack_require__("F5FC");
-
->>>>>>> Update gh-pages to output generated at 0dc947b
-=======
-// EXTERNAL MODULE: external "react/jsx-runtime"
-var jsx_runtime_ = __webpack_require__("F5FC");
-
->>>>>>> 2ff1061ef... Update gh-pages to output generated at ab9ff6d
 // EXTERNAL MODULE: external "react"
 var external_react_ = __webpack_require__("cDcd");
 var external_react_default = /*#__PURE__*/__webpack_require__.n(external_react_);
@@ -889,21 +534,7 @@ function ObjectFilter(obj, callback) {
   return ret;
 }
 // CONCATENATED MODULE: ./components/container.tsx
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-=======
-var __jsx = external_react_default.a.createElement;
-
-function _extends() { _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; }; return _extends.apply(this, arguments); }
->>>>>>> Update gh-pages to output generated at c905054
-=======
-
->>>>>>> Update gh-pages to output generated at 0dc947b
-=======
-
->>>>>>> 2ff1061ef... Update gh-pages to output generated at ab9ff6d
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
@@ -922,19 +553,7 @@ function getSize(size) {
   return size === 'large' ? 20 : size === 'middle' ? 10 : size === 'small' ? 5 : size === 'none' ? 0 : size;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 const FlexComponent = (props, ref) => {
-=======
-const FlexComponent = props => {
->>>>>>> Update gh-pages to output generated at c905054
-=======
-const FlexComponent = (props, ref) => {
->>>>>>> Update gh-pages to output generated at e3ba89e
-=======
-const FlexComponent = (props, ref) => {
->>>>>>> 2ff1061ef... Update gh-pages to output generated at ab9ff6d
   const {
     direction = 'LR',
     wrap = true,
@@ -1033,11 +652,6 @@ const FlexComponent = (props, ref) => {
 
   defaultStyle = ObjectFilter(defaultStyle, (_, value) => value != 0);
   specialStyle = ObjectFilter(specialStyle, (_, value) => value != 0);
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 2ff1061ef... Update gh-pages to output generated at ab9ff6d
   return /*#__PURE__*/Object(jsx_runtime_["jsx"])("div", _objectSpread(_objectSpread({
     ref: ref,
     style: _objectSpread(_objectSpread(_objectSpread({}, fullWidth ? {
@@ -1051,36 +665,6 @@ const FlexComponent = (props, ref) => {
       children: child
     }, idx))
   }));
-<<<<<<< HEAD
-=======
-  return __jsx("div", _extends({
-=======
-  return /*#__PURE__*/Object(jsx_runtime_["jsx"])("div", _objectSpread(_objectSpread({
->>>>>>> Update gh-pages to output generated at 0dc947b
-    ref: ref,
-    style: _objectSpread(_objectSpread(_objectSpread({}, fullWidth ? {
-      width: '100%'
-    } : {}), containerStyles), style)
-<<<<<<< HEAD
-  }, restProps), list.map((child, idx) => __jsx(FlexItem, {
-    key: idx,
-    style: _objectSpread(_objectSpread(_objectSpread({}, fullWidth ? {
-      width: '100%'
-    } : {}), idx === specialPos ? specialStyle : defaultStyle), itemStyle)
-  }, child)));
->>>>>>> Update gh-pages to output generated at c905054
-=======
-  }, restProps), {}, {
-    children: list.map((child, idx) => /*#__PURE__*/Object(jsx_runtime_["jsx"])(FlexItem, {
-      style: _objectSpread(_objectSpread(_objectSpread({}, fullWidth ? {
-        width: '100%'
-      } : {}), idx === specialPos ? specialStyle : defaultStyle), itemStyle),
-      children: child
-    }, idx))
-  }));
->>>>>>> Update gh-pages to output generated at 0dc947b
-=======
->>>>>>> 2ff1061ef... Update gh-pages to output generated at ab9ff6d
 };
 
 const FlexItem = props => {
@@ -1110,11 +694,6 @@ const FlexItem = props => {
     restProps = _objectSpread(_objectSpread({}, restProps), restProps2);
   }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 2ff1061ef... Update gh-pages to output generated at ab9ff6d
   return /*#__PURE__*/Object(jsx_runtime_["jsx"])("div", _objectSpread(_objectSpread({
     style: style,
     className: className
@@ -1125,29 +704,6 @@ const FlexItem = props => {
 
 FlexItem.displayName = 'FlexItem';
 const Flex = Object.assign( /*#__PURE__*/external_react_default.a.forwardRef(FlexComponent), {
-<<<<<<< HEAD
-=======
-  return __jsx("div", _extends({
-    key: key,
-=======
-  return /*#__PURE__*/Object(jsx_runtime_["jsx"])("div", _objectSpread(_objectSpread({
->>>>>>> Update gh-pages to output generated at 0dc947b
-    style: style,
-    className: className
-  }, restProps), {}, {
-    children: child
-  }), key);
-};
-
-FlexItem.displayName = 'FlexItem';
-<<<<<<< HEAD
-const Flex = Object.assign(FlexComponent, {
->>>>>>> Update gh-pages to output generated at c905054
-=======
-const Flex = Object.assign( /*#__PURE__*/external_react_default.a.forwardRef(FlexComponent), {
->>>>>>> Update gh-pages to output generated at e3ba89e
-=======
->>>>>>> 2ff1061ef... Update gh-pages to output generated at ab9ff6d
   Item: FlexItem
 });
 
@@ -1184,11 +740,6 @@ module.exports = {
 
 /***/ }),
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> df22cdaf1... Update gh-pages to output generated at 18b38e6
 /***/ "wy2R":
 /***/ (function(module, exports) {
 
@@ -1196,13 +747,6 @@ module.exports = require("moment");
 
 /***/ }),
 
-<<<<<<< HEAD
-=======
->>>>>>> Update gh-pages to output generated at c905054
-=======
->>>>>>> 2ff1061ef... Update gh-pages to output generated at ab9ff6d
-=======
->>>>>>> df22cdaf1... Update gh-pages to output generated at 18b38e6
 /***/ "xnum":
 /***/ (function(module, exports) {
 

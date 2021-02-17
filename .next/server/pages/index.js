@@ -392,7 +392,7 @@ class Index extends react__WEBPACK_IMPORTED_MODULE_1___default.a.Component {
             marginTop: 20
           },
           children: /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(next_link__WEBPACK_IMPORTED_MODULE_3___default.a, {
-            href: "/archives?page=2",
+            href: "/archives",
             children: /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(_components_button__WEBPACK_IMPORTED_MODULE_9__[/* default */ "b"], {
               neumorphism: true,
               children: "\u67E5\u770B\u66F4\u591A"
