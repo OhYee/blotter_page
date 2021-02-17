@@ -194,7 +194,7 @@ class Index extends React.Component<IndexProps, IndexState> {
             callback={this.state.callback}
           />
           <Flex.Item className="textCenter" style={{ textAlign: 'center', marginTop: 20 }}>
-            <Link href="/archives?page=2">
+            <Link href="/archives">
               <Button neumorphism>查看更多</Button>
             </Link>
           </Flex.Item>
