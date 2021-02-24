@@ -5,6 +5,8 @@ import Head from 'next/head';
 import { withRouter } from 'next/router';
 import { WithRouterProps } from 'next/dist/client/with-router';
 
+import parse from 'html-react-parser';
+
 import { layout } from '@/utils/api';
 import { Context } from '@/utils/global';
 
@@ -128,7 +130,8 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
             相关讨论：https://github.com/vercel/next.js/issues/12437
             报错提示：https://err.sh/next.js/next-head-count-missing
         */}
-        {this.context.head && <div dangerouslySetInnerHTML={{ __html: this.context.head }}></div>}
+        {this.context.head && <Head children={parse(this.context.head)} />}
+        {/* {this.context.head && <div dangerouslySetInnerHTML={{ __html: this.context.head }}></div>} */}
       </div>
     );
   }
