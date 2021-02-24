@@ -2274,6 +2274,13 @@ module.exports = require("next/dist/next-server/lib/router-context.js");
 
 /***/ }),
 
+/***/ "OvnE":
+/***/ (function(module, exports) {
+
+module.exports = require("html-react-parser");
+
+/***/ }),
+
 /***/ "R0qt":
 /***/ (function(module, exports) {
 
@@ -2894,6 +2901,10 @@ var global = __webpack_require__("dSKx");
 // EXTERNAL MODULE: external "next/router"
 var router_ = __webpack_require__("4Q3z");
 
+// EXTERNAL MODULE: external "html-react-parser"
+var external_html_react_parser_ = __webpack_require__("OvnE");
+var external_html_react_parser_default = /*#__PURE__*/__webpack_require__.n(external_html_react_parser_);
+
 // EXTERNAL MODULE: ./utils/api.ts + 1 modules
 var api = __webpack_require__("AoAR");
 
@@ -3431,6 +3442,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
+
 class layout_BasicLayout extends external_react_default.a.Component {
   static async getInitialProps(args) {
     var r = await Object(api["q" /* layout */])();
@@ -3530,10 +3542,8 @@ class layout_BasicLayout extends external_react_default.a.Component {
           view: this.context.view,
           from: this.context.from
         })]
-      }), this.context.head && /*#__PURE__*/Object(jsx_runtime_["jsx"])("div", {
-        dangerouslySetInnerHTML: {
-          __html: this.context.head
-        }
+      }), this.context.head && /*#__PURE__*/Object(jsx_runtime_["jsx"])(head_default.a, {
+        children: external_html_react_parser_default()(this.context.head)
       })]
     });
   }
