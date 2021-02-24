@@ -3,7 +3,7 @@ import Head from 'next/head';
 
 import Card from '@/components/card';
 import Avatar from '@/components/avatar';
-import SVG, { Compass, IconName } from '@/components/svg';
+import SVG, { Compass, IconName, IconNames } from '@/components/svg';
 import Button, { A } from '@/components/button';
 import Link from 'next/link';
 import { Flex } from '@/components/container';
@@ -52,6 +52,11 @@ class Apps extends React.Component<AppsProps, AppsState> {
           icon: 'compass',
           style: { color: ' #f30000' },
         },
+        {
+          name: '席卡族文字编码',
+          link: '/apps/sheika',
+          icon: 'https://static.oyohyee.com/apps/sheika.svg',
+        },
       ],
     } as AppsProps;
   }
@@ -77,7 +82,11 @@ class Apps extends React.Component<AppsProps, AppsState> {
                       <Avatar src={item.img} style={{ fontSize: 64, ...item.style }} />
                     ) : (
                       <Avatar style={{ fontSize: 64, ...item.style }}>
-                        <SVG icon={item.icon} />
+                        {IconNames.indexOf(item.icon) === -1 ? (
+                          <img src={item.icon} />
+                        ) : (
+                          <SVG icon={item.icon} />
+                        )}
                       </Avatar>
                     )
                   }
