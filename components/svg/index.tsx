@@ -115,6 +115,7 @@ const icons = {
 };
 
 export declare type IconName = keyof typeof icons;
+export const IconNames = Object.keys(icons);
 
 export declare type SVGProps = ComponentProps<{
   style?: React.CSSProperties;
