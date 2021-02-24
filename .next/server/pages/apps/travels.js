@@ -88,7 +88,7 @@ module.exports =
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 21);
+/******/ 	return __webpack_require__(__webpack_require__.s = 22);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -233,7 +233,7 @@ exports.default = _default;
 
 /***/ }),
 
-/***/ 21:
+/***/ 22:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__("+Md4");
@@ -996,9 +996,9 @@ function parseProps(props) {
     classList,
     style,
     onClick: disabled ? () => {} : onClick,
-    icon: loading && !!icon ? /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(_components_svg__WEBPACK_IMPORTED_MODULE_2__[/* Loading */ "y"], {}) : icon,
+    icon: loading && !!icon ? /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(_components_svg__WEBPACK_IMPORTED_MODULE_2__[/* Loading */ "z"], {}) : icon,
     prefix,
-    suffix: loading && !icon ? /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(_components_svg__WEBPACK_IMPORTED_MODULE_2__[/* Loading */ "y"], {}) : suffix,
+    suffix: loading && !icon ? /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(_components_svg__WEBPACK_IMPORTED_MODULE_2__[/* Loading */ "z"], {}) : suffix,
     children,
     disabled: loading || disabled
   }, restProps);
@@ -1513,38 +1513,39 @@ exports.default = _default;
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "W", function() { return SVG; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "J", function() { return RSS; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "w", function() { return Light; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "t", function() { return IconNames; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "X", function() { return SVG; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "K", function() { return RSS; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "x", function() { return Light; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "g", function() { return Dark; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return Bar; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "v", function() { return Left; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "B", function() { return Message; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "K", function() { return Rocket; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "T", function() { return User; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "w", function() { return Left; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "C", function() { return Message; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "L", function() { return Rocket; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "U", function() { return User; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "m", function() { return Eye; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return Calendar; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Q", function() { return Tag; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "R", function() { return Tag; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "l", function() { return Edit; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "I", function() { return Qzone; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "x", function() { return Link; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "G", function() { return QQ; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "J", function() { return Qzone; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "y", function() { return Link; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "H", function() { return QQ; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "e", function() { return Close; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "k", function() { return Dots; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "F", function() { return Pre; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "D", function() { return Next; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "O", function() { return Success; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "M", function() { return Search; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "G", function() { return Pre; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "E", function() { return Next; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "P", function() { return Success; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "N", function() { return Search; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "s", function() { return Github; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "A", function() { return Mail; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "V", function() { return Zhihu; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "B", function() { return Mail; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "W", function() { return Zhihu; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return Alipay; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "U", function() { return Wechat; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "R", function() { return Triangle; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "V", function() { return Wechat; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "S", function() { return Triangle; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "o", function() { return Filter; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "y", function() { return Loading; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "z", function() { return Lock; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "H", function() { return Question; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "z", function() { return Loading; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "A", function() { return Lock; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "I", function() { return Question; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "i", function() { return Disconnect; });
 /* unused harmony export Compass */
 /* unused harmony export Home */
@@ -1552,21 +1553,21 @@ exports.default = _default;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "f", function() { return Comments; });
 /* unused harmony export IDCard */
 /* unused harmony export Mobile */
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "N", function() { return Star; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "O", function() { return Star; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "q", function() { return FullScreen; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "r", function() { return FullScreenExit; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return Arrow; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "E", function() { return Plus; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "C", function() { return Minus; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "u", function() { return Info; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "F", function() { return Plus; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "D", function() { return Minus; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "v", function() { return Info; });
 /* unused harmony export Warning */
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return Delete; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "t", function() { return Image; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "u", function() { return Image; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "n", function() { return EyeInvisible; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "L", function() { return Save; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "P", function() { return Sync; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "M", function() { return Save; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Q", function() { return Sync; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "p", function() { return Fold; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "S", function() { return Unfold; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "T", function() { return Unfold; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "j", function() { return Document; });
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("F5FC");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__);
@@ -1646,6 +1647,7 @@ const icons = {
   unfold: '<svg viewBox="64 64 896 896" data-icon="unfold" fill="currentColor" aria-hidden="true"><path d="M855 160.1l-189.2 23.5c-6.6.8-9.3 8.8-4.7 13.5l54.7 54.7-153.5 153.5a8.03 8.03 0 000 11.3l45.1 45.1c3.1 3.1 8.2 3.1 11.3 0l153.6-153.6 54.7 54.7a7.94 7.94 0 0013.5-4.7L863.9 169a7.9 7.9 0 00-8.9-8.9zM416.6 562.3a8.03 8.03 0 00-11.3 0L251.8 715.9l-54.7-54.7a7.94 7.94 0 00-13.5 4.7L160.1 855c-.6 5.2 3.7 9.5 8.9 8.9l189.2-23.5c6.6-.8 9.3-8.8 4.7-13.5l-54.7-54.7 153.6-153.6c3.1-3.1 3.1-8.2 0-11.3l-45.2-45z"></path></svg>',
   document: '<svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" fill="currentColor"><path d="M662.554 0H238.72C163.584 0 102.4 62.003 102.4 138.214v747.597c0 76.186 61.158 138.189 136.32 138.189h537.472c75.162 0 136.32-62.003 136.32-138.189V283.187L662.528 0z m20.096 260.403v-127.13l112.23 127.13H682.65zM154.778 117.504c0.058-37.339 30.319-67.593 67.657-67.635h394.756v272.896h244.403v578.227c-0.058 37.348-30.334 67.606-67.684 67.635H222.438c-37.351-0.029-67.628-30.287-67.686-67.63V117.503zM332.8 512h358.4c14.138 0 25.6-11.462 25.6-25.6s-11.462-25.6-25.6-25.6H332.8c-14.138 0-25.6 11.462-25.6 25.6s11.462 25.6 25.6 25.6z m0 128h358.4c14.138 0 25.6-11.462 25.6-25.6s-11.462-25.6-25.6-25.6H332.8c-14.138 0-25.6 11.462-25.6 25.6s11.462 25.6 25.6 25.6z m0 128h358.4c14.138 0 25.6-11.462 25.6-25.6s-11.462-25.6-25.6-25.6H332.8c-14.138 0-25.6 11.462-25.6 25.6s11.462 25.6 25.6 25.6z"></path></svg>'
 };
+const IconNames = Object.keys(icons);
 function SVG(props) {
   const {
     style,
@@ -4727,7 +4729,7 @@ class travel_map_TravelMap extends external_react_default.a.Component {
                 }, c.time))]
               })
             }),
-            children: /*#__PURE__*/Object(jsx_runtime_["jsx"])(svg["N" /* Star */], {
+            children: /*#__PURE__*/Object(jsx_runtime_["jsx"])(svg["O" /* Star */], {
               style: (() => {
                 const color = this.context.theme === 'default' ? 'red' : 'yellow';
                 const filter = `drop-shadow(0px 0px 10px ${color})`;

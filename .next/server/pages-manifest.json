@@ -20,6 +20,7 @@
   "/admin/variables": "pages/admin/variables.js",
   "/apps/crypto": "pages/apps/crypto.js",
   "/apps": "pages/apps.js",
+  "/apps/sheika": "pages/apps/sheika.js",
   "/apps/travels": "pages/apps/travels.js",
   "/archives": "pages/archives.js",
   "/comment": "pages/comment.js",
