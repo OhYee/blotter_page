@@ -24,10 +24,6 @@ export default class MyDocument extends Document {
       <Html>
         <Head>
           <meta content="utf-8" httpEquiv="encoding" />
-          <meta name="theme-color" content="#1565c0" />
-          <meta name="msapplication-TileColor" content="#1565c0" />
-          <meta name="msapplication-TileImage" content="/static/img/logo_196x196.png" />
-          <link rel="shortcut icon" href="/static/img/favicon.ico"></link>
         </Head>
         <body>
           <Main />
