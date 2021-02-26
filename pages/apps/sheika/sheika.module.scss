@@ -1,12 +1,13 @@
+@font-face {
+  font-family: 'SheikahGlyphs';
+  src: local('SheikahGlyphs'),
+    url('https://static.oyohyee.com/font/sheikahglyphs-regular-webfont.woff2') format('woff2'),
+    url('https://static.oyohyee.com/font/sheikahglyphs-regular-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
 .wrapper {
-  @font-face {
-    font-family: 'SheikahGlyphs';
-    src: local('SheikahGlyphs'),
-      url('https://static.oyohyee.com/font/sheikahglyphs-regular-webfont.woff2') format('woff2'),
-      url('https://static.oyohyee.com/font/sheikahglyphs-regular-webfont.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
-  }
   .sheika {
     font-family: SheikahGlyphs;
     color: #2d91f2;
