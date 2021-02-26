@@ -5,8 +5,8 @@
   "devFiles": [],
   "ampDevFiles": [],
   "lowPriorityFiles": [
-    "static/2XUKuDNXKkbWa5wHdnodc/_buildManifest.js",
-    "static/2XUKuDNXKkbWa5wHdnodc/_ssgManifest.js"
+    "static/MTnVDcxq9Q3k0SPoy3LhU/_buildManifest.js",
+    "static/MTnVDcxq9Q3k0SPoy3LhU/_ssgManifest.js"
   ],
   "pages": {
     "/": [
@@ -367,8 +367,8 @@
       "static/chunks/806c16aa9522aa251e8a23e3b4e1a261b89c31cf.d970f5b9cb6e5620d3db.js",
       "static/css/96c8471d5aad23705890.css",
       "static/chunks/806c16aa9522aa251e8a23e3b4e1a261b89c31cf_CSS.33fae6201fee986d0584.js",
-      "static/css/e1528cc74b92521e97e5.css",
-      "static/chunks/pages/apps/sheika-a8c75425f4c88481abde.js"
+      "static/css/07134928569900cfd657.css",
+      "static/chunks/pages/apps/sheika-b699bc04d2f02ea65b65.js"
     ],
     "/apps/travels": [
       "static/chunks/main-a7e1a23541db40a46da2.js",
