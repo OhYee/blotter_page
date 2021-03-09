@@ -176,7 +176,11 @@ class Archives extends React.Component<ArchivesProps, ArchivesState> {
                   data={this.props.posts.map((p) => ({
                     time: formatSecond(p.publish_time),
                     name: (
-                      <Flex direction={this.context.big_screen ? 'LR' : 'TB'} subAxis="flex-start" fullWidth={!this.context.big_screen}>
+                      <Flex
+                        direction={this.context.big_screen ? 'LR' : 'TB'}
+                        subAxis="flex-start"
+                        fullWidth={!this.context.big_screen}
+                      >
                         <Link href="/post/[url]" as={`/post/${p.url}`}>
                           <a className={textStyles.color} style={{ fontWeight: 'bolder' }}>
                             {p.title}
@@ -192,7 +196,7 @@ class Archives extends React.Component<ArchivesProps, ArchivesState> {
                   }))}
                   style={{
                     gridTemplateColumns: this.context.big_screen
-                      ? '150px 25px 1px auto'
+                      ? '150px 24px 1px auto'
                       : '75px 25px 1px auto',
                   }}
                 />
