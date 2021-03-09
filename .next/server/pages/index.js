@@ -1305,6 +1305,7 @@ module.exports = _typeof;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return setSVGLightbox; });
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("F5FC");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _utils_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("Hh1h");
 
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
@@ -1312,6 +1313,8 @@ function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (O
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
 
 function CreateBox(props) {
   const {
@@ -1417,7 +1420,8 @@ function Image(props) {
     width = '100%',
     maxHeight,
     clickable = false,
-    style
+    style,
+    className
   } = props;
   return /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("div", {
     className: "image-container",
@@ -1435,7 +1439,7 @@ function Image(props) {
       });
     },
     children: /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("div", {
-      className: "image",
+      className: Object(_utils_component__WEBPACK_IMPORTED_MODULE_1__[/* concat */ "a"])('image', className),
       style: {
         backgroundImage: `url('${thumbnail}')`
       }
@@ -1713,7 +1717,7 @@ class PostList extends react__WEBPACK_IMPORTED_MODULE_1___default.a.Component {
         direction: "TB",
         fullWidth: true,
         children: posts.map(post => /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("div", {
-          children: /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(_components_post_card__WEBPACK_IMPORTED_MODULE_3__[/* default */ "b"], {
+          children: /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(_components_post_card__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"], {
             post: post,
             loading: this.props.loading
           })
@@ -2979,8 +2983,8 @@ module.exports = {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CardContent; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return PostCard; });
+/* unused harmony export CardContent */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return PostCard; });
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("F5FC");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("cDcd");
@@ -2997,10 +3001,13 @@ module.exports = {
 /* harmony import */ var _utils_global__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__("dSKx");
 /* harmony import */ var _utils_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__("Hh1h");
 /* harmony import */ var _utils_time__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__("eSIs");
-/* harmony import */ var _styles_text_module_scss__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__("s0TQ");
-/* harmony import */ var _styles_text_module_scss__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_styles_text_module_scss__WEBPACK_IMPORTED_MODULE_13__);
-/* harmony import */ var _post_card_module_scss__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__("Uxvb");
-/* harmony import */ var _post_card_module_scss__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_post_card_module_scss__WEBPACK_IMPORTED_MODULE_14__);
+/* harmony import */ var _styles_shadow_module_scss__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__("tyXD");
+/* harmony import */ var _styles_shadow_module_scss__WEBPACK_IMPORTED_MODULE_13___default = /*#__PURE__*/__webpack_require__.n(_styles_shadow_module_scss__WEBPACK_IMPORTED_MODULE_13__);
+/* harmony import */ var _styles_text_module_scss__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__("s0TQ");
+/* harmony import */ var _styles_text_module_scss__WEBPACK_IMPORTED_MODULE_14___default = /*#__PURE__*/__webpack_require__.n(_styles_text_module_scss__WEBPACK_IMPORTED_MODULE_14__);
+/* harmony import */ var _post_card_module_scss__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__("Uxvb");
+/* harmony import */ var _post_card_module_scss__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_post_card_module_scss__WEBPACK_IMPORTED_MODULE_15__);
+
 
 
 
@@ -3024,11 +3031,11 @@ function CardContent(props) {
   } = props;
   const context = react__WEBPACK_IMPORTED_MODULE_1___default.a.useContext(_utils_global__WEBPACK_IMPORTED_MODULE_10__[/* Context */ "a"]);
   const title = [/*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("h2", {
-    className: Object(_utils_component__WEBPACK_IMPORTED_MODULE_11__[/* concat */ "a"])(_styles_text_module_scss__WEBPACK_IMPORTED_MODULE_13___default.a.color, _styles_text_module_scss__WEBPACK_IMPORTED_MODULE_13___default.a.ellipsis),
+    className: Object(_utils_component__WEBPACK_IMPORTED_MODULE_11__[/* concat */ "a"])(_styles_text_module_scss__WEBPACK_IMPORTED_MODULE_14___default.a.color, _styles_text_module_scss__WEBPACK_IMPORTED_MODULE_14___default.a.ellipsis),
     title: post.title,
     children: post.title
   }, "title"), /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("p", {
-    className: _styles_text_module_scss__WEBPACK_IMPORTED_MODULE_13___default.a.color,
+    className: _styles_text_module_scss__WEBPACK_IMPORTED_MODULE_14___default.a.color,
     children: post.abstract
   }, "abstract")];
   const publishTime = Object(_utils_time__WEBPACK_IMPORTED_MODULE_12__[/* formatSecond */ "b"])(post.publish_time);
@@ -3036,17 +3043,17 @@ function CardContent(props) {
   return /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsxs"])(_components_container__WEBPACK_IMPORTED_MODULE_6__[/* Flex */ "a"], {
     direction: "TB",
     fullWidth: true,
-    className: _post_card_module_scss__WEBPACK_IMPORTED_MODULE_14___default.a.post_card,
+    className: _post_card_module_scss__WEBPACK_IMPORTED_MODULE_15___default.a.post_card,
     children: [!inPost ? /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(next_link__WEBPACK_IMPORTED_MODULE_2___default.a, {
       href: "/post/[url]",
       as: `/post/${post.url}`,
       children: /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("a", {
-        className: _styles_text_module_scss__WEBPACK_IMPORTED_MODULE_13___default.a.color,
+        className: _styles_text_module_scss__WEBPACK_IMPORTED_MODULE_14___default.a.color,
         children: title
       })
     }) : title, /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsxs"])(_components_container__WEBPACK_IMPORTED_MODULE_6__[/* Flex */ "a"], {
       mainAxis: "flex-start",
-      className: _post_card_module_scss__WEBPACK_IMPORTED_MODULE_14___default.a.info,
+      className: _post_card_module_scss__WEBPACK_IMPORTED_MODULE_15___default.a.info,
       children: [/*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsxs"])(_components_container__WEBPACK_IMPORTED_MODULE_6__[/* Flex */ "a"], {
         mainAxis: "flex-start",
         mainSize: "small",
@@ -3106,18 +3113,25 @@ function CardContent(props) {
   });
 }
 function PostCard(props) {
+  const {
+    inset = false,
+    inPost = false,
+    loading = props.loading || typeof props.post === 'undefined'
+  } = props;
   const post = props.post;
-  const loading = props.loading || typeof props.post === 'undefined';
   return /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(_components_card__WEBPACK_IMPORTED_MODULE_5__[/* default */ "a"], {
-    neumorphism: true,
+    neumorphism: !inset,
+    neumorphismInset: inset,
     cover: !loading && post.head_image ? /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(_components_image__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"], {
       src: post.head_image,
       height: "300px",
       alt: `文章『${post.title}』的头图`,
-      title: post.title
+      title: post.title,
+      className: inset ? _styles_shadow_module_scss__WEBPACK_IMPORTED_MODULE_13___default.a.neumorphism_inset : ''
     }) : null,
     children: loading ? /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(_components_loading__WEBPACK_IMPORTED_MODULE_9__[/* default */ "a"], {}) : /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(CardContent, {
-      post: post
+      post: post,
+      inPost: inPost
     })
   });
 }
@@ -6100,7 +6114,7 @@ function Input(props) {
   const ref = external_react_default.a.useRef();
   const key = external_react_default.a.useMemo(() => Object(random["a" /* default */])(), []);
   const opts = external_react_default.a.useMemo(() => TransfromOptions(options), [options]);
-  external_react_default.a.useEffect(() => getValueCallback(() => !!ref ? ref.current.value : ''), [ref, getValueCallback]);
+  external_react_default.a.useEffect(() => getValueCallback(() => !!ref && !!ref.current ? ref.current.value : ''), [ref, getValueCallback]);
   external_react_default.a.useEffect(() => setValueCallback(value => {
     if (!!ref && !!ref.current && typeof value === 'string') ref.current.value = value;
   }), [ref, setValueCallback]);

@@ -754,6 +754,7 @@ const A = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.forwardRef(A
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return setSVGLightbox; });
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("F5FC");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _utils_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__("Hh1h");
 
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
@@ -761,6 +762,8 @@ function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (O
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+
 
 function CreateBox(props) {
   const {
@@ -866,7 +869,8 @@ function Image(props) {
     width = '100%',
     maxHeight,
     clickable = false,
-    style
+    style,
+    className
   } = props;
   return /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("div", {
     className: "image-container",
@@ -884,7 +888,7 @@ function Image(props) {
       });
     },
     children: /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("div", {
-      className: "image",
+      className: Object(_utils_component__WEBPACK_IMPORTED_MODULE_1__[/* concat */ "a"])('image', className),
       style: {
         backgroundImage: `url('${thumbnail}')`
       }
@@ -2966,7 +2970,7 @@ function Input(props) {
   const ref = external_react_default.a.useRef();
   const key = external_react_default.a.useMemo(() => Object(random["a" /* default */])(), []);
   const opts = external_react_default.a.useMemo(() => TransfromOptions(options), [options]);
-  external_react_default.a.useEffect(() => getValueCallback(() => !!ref ? ref.current.value : ''), [ref, getValueCallback]);
+  external_react_default.a.useEffect(() => getValueCallback(() => !!ref && !!ref.current ? ref.current.value : ''), [ref, getValueCallback]);
   external_react_default.a.useEffect(() => setValueCallback(value => {
     if (!!ref && !!ref.current && typeof value === 'string') ref.current.value = value;
   }), [ref, setValueCallback]);

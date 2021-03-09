@@ -3325,7 +3325,7 @@ function Input(props) {
   const ref = external_react_default.a.useRef();
   const key = external_react_default.a.useMemo(() => Object(random["a" /* default */])(), []);
   const opts = external_react_default.a.useMemo(() => TransfromOptions(options), [options]);
-  external_react_default.a.useEffect(() => getValueCallback(() => !!ref ? ref.current.value : ''), [ref, getValueCallback]);
+  external_react_default.a.useEffect(() => getValueCallback(() => !!ref && !!ref.current ? ref.current.value : ''), [ref, getValueCallback]);
   external_react_default.a.useEffect(() => setValueCallback(value => {
     if (!!ref && !!ref.current && typeof value === 'string') ref.current.value = value;
   }), [ref, setValueCallback]);
