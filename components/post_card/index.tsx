@@ -14,12 +14,15 @@ import { Context } from '@/utils/global';
 import { concat } from '@/utils/component';
 import moment, { formatSecond } from '@/utils/time';
 
+import shadowStyles from '@/styles/shadow.module.scss';
 import textStyles from '@/styles/text.module.scss';
 import styles from './post_card.module.scss';
 
 type PostCardProps = {
   post: Blotter.PostCard | undefined;
-  loading: boolean;
+  loading?: boolean;
+  inPost?: boolean;
+  inset?: boolean;
 };
 
 export function CardContent(props: { post: Blotter.PostCard; inPost?: boolean }) {
@@ -93,12 +96,17 @@ export function CardContent(props: { post: Blotter.PostCard; inPost?: boolean })
 }
 
 export default function PostCard(props: PostCardProps) {
+  const {
+    inset = false,
+    inPost = false,
+    loading = props.loading || typeof props.post === 'undefined',
+  } = props;
   const post = props.post as Blotter.PostCard;
-  const loading = props.loading || typeof props.post === 'undefined';
 
   return (
     <Card
-      neumorphism
+      neumorphism={!inset}
+      neumorphismInset={inset}
       cover={
         !loading && post.head_image ? (
           <Image
@@ -106,11 +114,12 @@ export default function PostCard(props: PostCardProps) {
             height="300px"
             alt={`文章『${post.title}』的头图`}
             title={post.title}
+            className={inset ? shadowStyles.neumorphism_inset : ''}
           />
         ) : null
       }
     >
-      {loading ? <Loading /> : <CardContent post={post} />}
+      {loading ? <Loading /> : <CardContent post={post} inPost={inPost} />}
     </Card>
   );
 }

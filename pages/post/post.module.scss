@@ -30,12 +30,12 @@
     }
     h1 {
       padding-bottom: 0.3em;
-      border-bottom: 1px solid var(--secondary);
+      border-bottom: 3px solid var(--secondary);
       font-size: 2em;
     }
     h2 {
       padding-bottom: 0.3em;
-      border-bottom: 1px solid var(--secondary);
+      border-bottom: 2px solid var(--secondary);
       font-size: 1.5em;
     }
     h3 {
@@ -186,6 +186,21 @@
           }
         }
       }
+    }
+
+    a,
+    b,
+    strong {
+      font-weight: bolder;
+      margin: 0 0.25em;
+    }
+
+    a {
+      color: var(--post-link);
+      transition: color var(--transition-time), border var(--transition-time);
+    }
+    a:hover {
+      color: var(--post-link-hover);
     }
   }
 }

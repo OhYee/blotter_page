@@ -5,7 +5,7 @@ import moment from '@/utils/moment';
 
 import Image, { setImageLightbox, setSVGLightbox } from '@/components/image';
 
-import { CardContent } from '@/components/post_card';
+import PostCard from '@/components/post_card';
 import Card from '@/components/card';
 import Anchor from '@/components/anchor';
 import Loading from '@/components/loading';
@@ -19,6 +19,8 @@ import { Context } from '@/utils/global';
 import styles from '@/pages/post/post.module.scss';
 
 interface PostContentProps {
+  prefix?: React.ReactNode;
+  suffix?: React.ReactNode;
   post: Blotter.Post;
 }
 
@@ -133,14 +135,10 @@ class PostContent extends Component<PostContentProps, PostContentState> {
         </Head>
 
         <Flex direction="TB" fullWidth>
-          <Card neumorphismInset>
-            <CardContent post={this.props.post} inPost />
-          </Card>
-
-          {this.renderTravel()}
-
+          <PostCard post={this.props.post} inset />
           {!!this.context.ad_text && <AD setting={this.context.ad_text} />}
-
+          {this.props.prefix}
+          {this.renderTravel()}
           {!!this.props.post.images && this.props.post.images.length > 0 ? (
             <Carousel
               images={this.props.post.images}
@@ -149,13 +147,12 @@ class PostContent extends Component<PostContentProps, PostContentState> {
               autoplay={5000}
             />
           ) : null}
-
           <section
             className="post-content"
             style={{ fontSize: this.context.big_screen ? 16 : 14 }}
             dangerouslySetInnerHTML={{ __html: this.props.post.content }}
           />
-
+          {this.props.suffix}
           {!!this.context.ad_inner && <AD setting={this.context.ad_inner} />}
         </Flex>
       </article>

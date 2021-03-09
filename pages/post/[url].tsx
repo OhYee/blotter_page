@@ -66,7 +66,7 @@ class PostPage extends React.Component<PostPageProps, PostPageState> {
           )}`;
           return (
             <Flex direction="TB" mainAxis="flex-start" fullWidth>
-              <Flex direction="LR">
+              <Flex direction="LR" wrap={false}>
                 <Flex.Item style={{ flex: '0 0 5em', display: 'flex', justifyContent: 'center' }}>
                   <Avatar src={context.avatar} style={{ width: '5em', height: '5em' }} />
                 </Flex.Item>
@@ -140,9 +140,12 @@ class PostPage extends React.Component<PostPageProps, PostPageState> {
             style={{ padding: this.context.big_screen ? 20 : 0 }}
             mainStyle={this.context.big_screen ? {} : { padding: 10 }}
           >
-            <PostContent post={this.props.post} />
+            <PostContent
+              post={this.props.post}
+              suffix={<Card neumorphismInset>{this.render_share()}</Card>}
+            />
           </Card>
-          <Card neumorphism>{this.render_share()}</Card>
+
           <Card neumorphism>
             <CommentPart url={`/post/${this.props.router.query.url as string}`} />
           </Card>
