@@ -101,7 +101,7 @@ export default function Input<SelectType>(props: InputProps<SelectType>) {
   const key = React.useMemo(() => randomString(), []);
 
   const opts = React.useMemo(() => TransfromOptions(options), [options]);
-  React.useEffect(() => getValueCallback(() => (!!ref ? ref.current.value : '')), [
+  React.useEffect(() => getValueCallback(() => (!!ref && !!ref.current ? ref.current.value : '')), [
     ref,
     getValueCallback,
   ]);
