@@ -1,4 +1,5 @@
 import { CSSProperties } from 'react';
+import { concat, ComponentProps } from '@/utils/component';
 
 function CreateBox(props: {
   src: string;
@@ -96,7 +97,7 @@ function CreateBox(props: {
   close.onclose = remove;
 }
 
-export default function Image(props: {
+export declare type ImageProps = ComponentProps<{
   src: string;
   thumbnail?: string;
   alt?: string;
@@ -106,7 +107,9 @@ export default function Image(props: {
   maxHeight?: number | string;
   width?: string;
   style?: CSSProperties;
-}) {
+}>;
+
+export default function Image(props: ImageProps) {
   const {
     src,
     thumbnail = src,
@@ -117,17 +120,24 @@ export default function Image(props: {
     maxHeight,
     clickable = false,
     style,
+    className,
   } = props;
   return (
     <div
       className="image-container"
-      style={{ height, width, maxHeight, cursor: clickable ? 'pointer' : 'unset', ...style }}
+      style={{
+        height,
+        width,
+        maxHeight,
+        cursor: clickable ? 'pointer' : 'unset',
+        ...style,
+      }}
       onClick={() => {
         if (clickable) CreateBox({ src, alt, title });
       }}
     >
       <div
-        className="image"
+        className={concat('image', className)}
         style={{
           backgroundImage: `url('${thumbnail}')`,
         }}
