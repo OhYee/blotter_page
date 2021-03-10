@@ -135,7 +135,7 @@ class PostContent extends Component<PostContentProps, PostContentState> {
         </Head>
 
         <Flex direction="TB" fullWidth>
-          <PostCard post={this.props.post} inset />
+          <PostCard post={this.props.post} inset inPost/>
           {!!this.context.ad_text && <AD setting={this.context.ad_text} />}
           {this.props.prefix}
           {this.renderTravel()}
