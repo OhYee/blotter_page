@@ -5734,7 +5734,8 @@ class post_content_PostContent extends external_react_["Component"] {
         fullWidth: true,
         children: [/*#__PURE__*/Object(jsx_runtime_["jsx"])(post_card["a" /* default */], {
           post: this.props.post,
-          inset: true
+          inset: true,
+          inPost: true
         }), !!this.context.ad_text && /*#__PURE__*/Object(jsx_runtime_["jsx"])(js["a" /* AD */], {
           setting: this.context.ad_text
         }), this.props.prefix, this.renderTravel(), !!this.props.post.images && this.props.post.images.length > 0 ? /*#__PURE__*/Object(jsx_runtime_["jsx"])(Carousel, {
