@@ -5,8 +5,8 @@
   "devFiles": [],
   "ampDevFiles": [],
   "lowPriorityFiles": [
-    "static/wp1r1Nqg1c1fvgwhZyVyG/_buildManifest.js",
-    "static/wp1r1Nqg1c1fvgwhZyVyG/_ssgManifest.js"
+    "static/LFq4nyKxKG5oAVFXv9nxl/_buildManifest.js",
+    "static/LFq4nyKxKG5oAVFXv9nxl/_ssgManifest.js"
   ],
   "pages": {
     "/": [
@@ -354,7 +354,7 @@
       "static/css/96c8471d5aad23705890.css",
       "static/chunks/806c16aa9522aa251e8a23e3b4e1a261b89c31cf_CSS.33fae6201fee986d0584.js",
       "static/css/cfb0ec3f51433d36c1b2.css",
-      "static/chunks/pages/apps/crypto-23dd1b2c860abe3c9a79.js"
+      "static/chunks/pages/apps/crypto-2371fc787208ebd90893.js"
     ],
     "/apps/sheika": [
       "static/chunks/main-a7e1a23541db40a46da2.js",
