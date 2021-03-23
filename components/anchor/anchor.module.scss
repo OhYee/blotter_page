@@ -50,7 +50,7 @@
     padding: 10px;
 
     background: var(--background);
-    transition: background var(--transition-time);
+    transition: box-shadow var(--transition-time), background var(--transition-time);
     a {
       display: block;
       text-overflow: ellipsis;
