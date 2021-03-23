@@ -7,8 +7,15 @@
   --link-hover: #468ace; // 超链接悬浮颜色
   --post-link: #df579b; // 超链接颜色
   --post-link-hover: #ff88cc; // 超链接颜色
-  --background: #f1f2f6; // 页面背景色（背景颜色）
+  --background: white; //#f1f2f6; // 页面背景色（背景颜色）
   --background-1: #fdfdfd; // 次要背景色（用于区分区域）
+
+  --code-color: #ff502c; // 行内代码前景色
+  --code-background: #fff5f5; // 行内代码背景
+  --code-border: 1px #ffaaaa dotted; // 行内代码边框
+  --code-fence-color: black; // 段代码前景
+  --code-fence-background: #f8f8f8; // 段代码背景
+  --code-fence-border: 1px #e7eaed solid; // 段代码边框
 
   --shadow: rgba(100, 100, 100, 0.3); // 阴影颜色
   --shadow-white: rgba(255, 255, 255, 0.75); // 白色阴影
@@ -25,13 +32,19 @@
   --transition-time: 0.25s ease-in-out 0.1s; // 动画时间
   --transition: all var(--transition-time); // 动画配置
 
+  --default-font: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB',
+    'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif, 'Apple Color Emoji',
+    'Segoe UI Emoji', 'Segoe UI Symbol';
+  --code-font: 'Lucida Console', Consolas, 'Courier', monospace, 'SFMono-Regular', 'Liberation Mono',
+    Menlo, Monaco, 'Andale Mono', 'Courier New';
+
   transition: var(--transition);
   color: var(--color);
   background: var(--background);
 
   &.dark {
-    --color: #f1f2f6;
-    --background: #333;
+    --color: #b8bfc6; //#f1f2f6;
+    --background: #363b40; //#333;
     --background-1: #151515;
     --primary-background: #1b4153;
     --secondary: #aaa;
@@ -45,5 +58,12 @@
     --warning-background: #9a8339;
     --error-color: #fff2f0;
     --error-background: #d35246;
+
+    --code-color: b8bfc6; // 行内代码前景色
+    --code-background: #565656; // 行内代码背景
+    --code-border: 1px #b8bfc6 dotted; // 行内代码边框
+    --code-fence-color: #b8bfc6; // 段代码前景
+    --code-fence-background: #333; // 段代码背景
+    --code-fence-border: 1px transparent solid; // 段代码边框
   }
 }

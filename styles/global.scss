@@ -1,8 +1,13 @@
 :root {
   font-size: 15px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB',
-    'Microsoft YaHei', 'Helvetica Neue', Helvetica, Arial, sans-serif, 'Apple Color Emoji',
-    'Segoe UI Emoji', 'Segoe UI Symbol';
+  font-family: var(--default-font);
+}
+
+hr {
+  border: none;
+  border-bottom: 3px var(--secondary) dashed;
+  transition: border var(--transition-time);
+
 }
 
 body {
@@ -18,11 +23,13 @@ blockquote {
 }
 
 :not(pre) > code {
-  background: #fff5f5;
-  color: #ff502c;
-  font-size: 0.87em;
-  border: 1px #ffaaaa dotted;
-  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+  font-family: var(--code-font);
+  color: var(--code-color);
+  background: var(--code-background);
+  border: var(--code-border);
+  transition: color var(--transition-time), background-color var(--transition-time),
+    border var(--transition-time);
+  font-size: 0.85em;
   padding: 0.1em 0.4em;
   margin: 0 0.25em;
   border-radius: 3px;
@@ -30,23 +37,22 @@ blockquote {
 }
 
 pre {
-  background-color: #f6f8fa !important;
   padding: 10px;
-  border-radius: 10px;
+  border-radius: 3px;
   max-height: 50vh;
   overflow: auto;
   line-height: 1.5em;
-  font-family: Menlo, Monaco, Consolas, 'Andale Mono', 'lucida console', 'Courier New', monospace;
+  font-family: var(--code-font);
+  font-size: 0.85em;
+  font-family: var(--code-font);
+  color: var(--code-fence-color);
+  background: var(--code-fence-background) !important;
+  border: var(--code-fence-border);
+  transition: color var(--transition-time), background-color var(--transition-time),
+    border var(--transition-time);
 }
 
 .dark {
-  :not(pre) > code {
-    background: #ff502c;
-    color: #fff5f5;
-  }
-  pre {
-    background-color: #0a0806 !important;
-  }
 }
 
 a {

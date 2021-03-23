@@ -188,11 +188,18 @@
       }
     }
 
+    code,
+    a,
+    b,
+    strong {
+      margin: 0 0.2em;
+    }
+
     a,
     b,
     strong {
       font-weight: bolder;
-      margin: 0 0.25em;
+      margin: 0 0.2em;
     }
 
     a {
