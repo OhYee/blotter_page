@@ -78,7 +78,7 @@ class TagDetail extends React.Component<TagDetailProps, TagDetailState> {
         return (
           <Link
             href="/tag/[tag]"
-            as={`/tag/${this.props.router.query.tag}?page=${page}&size=${this.props.size}`}
+            as={`/tag/${this.props.router.query.tag}?page=${current - 1}&size=${this.props.size}`}
             passHref
           >
             <A
@@ -93,7 +93,7 @@ class TagDetail extends React.Component<TagDetailProps, TagDetailState> {
         return (
           <Link
             href="/tag/[tag]"
-            as={`/tag/${this.props.router.query.tag}?page=${page}&size=${this.props.size}`}
+            as={`/tag/${this.props.router.query.tag}?page=${current + 1}&size=${this.props.size}`}
             passHref
           >
             <A
