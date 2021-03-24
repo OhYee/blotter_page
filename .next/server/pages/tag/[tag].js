@@ -1141,7 +1141,7 @@ class TagDetail extends react__WEBPACK_IMPORTED_MODULE_1___default.a.Component {
           {
             return /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(next_link__WEBPACK_IMPORTED_MODULE_4___default.a, {
               href: "/tag/[tag]",
-              as: `/tag/${this.props.router.query.tag}?page=${page}&size=${this.props.size}`,
+              as: `/tag/${this.props.router.query.tag}?page=${current - 1}&size=${this.props.size}`,
               passHref: true,
               children: /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(_components_button__WEBPACK_IMPORTED_MODULE_7__[/* A */ "a"], {
                 disabled: disabled || current - 1 < 1,
@@ -1155,7 +1155,7 @@ class TagDetail extends react__WEBPACK_IMPORTED_MODULE_1___default.a.Component {
           {
             return /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(next_link__WEBPACK_IMPORTED_MODULE_4___default.a, {
               href: "/tag/[tag]",
-              as: `/tag/${this.props.router.query.tag}?page=${page}&size=${this.props.size}`,
+              as: `/tag/${this.props.router.query.tag}?page=${current + 1}&size=${this.props.size}`,
               passHref: true,
               children: /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(_components_button__WEBPACK_IMPORTED_MODULE_7__[/* A */ "a"], {
                 disabled: disabled || current + 1 > pageNumber,
