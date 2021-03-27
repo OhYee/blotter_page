@@ -1,13 +1,13 @@
 :root {
   font-size: 15px;
   font-family: var(--default-font);
+  tab-size: 4;
 }
 
 hr {
   border: none;
   border-bottom: 3px var(--secondary) dashed;
   transition: border var(--transition-time);
-
 }
 
 body {
