@@ -41,7 +41,7 @@ else
     yarn &>>$LOG_FILE
     screen -S ${SCREEN_NAME} -X quit &>>$LOG_FILE
     screen -wipe &>>$LOG_FILE
-    screen -dmS ${SCREEN_NAME} yarn start &>>$LOG_FILE
+    screen -dmS ${SCREEN_NAME} 'yarn start 1>>front.log 2>>front.err' &>>$LOG_FILE
 
     func_log "rebuild at $(date -u '+%Y-%m-%d %H:%M:%S')"
 fi
