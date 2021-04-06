@@ -84,7 +84,7 @@ export default class MyApp extends App<MyAppProps, {}, MyAppState> {
         <Head>
           <title>{this.state.blog_name}</title>
           <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-          {this.state.grey ? (
+          {this.state.grey && (
             <style
               id="grey-style"
               type="text/css"
@@ -92,7 +92,12 @@ export default class MyApp extends App<MyAppProps, {}, MyAppState> {
                 __html: 'html{filter:gray;-webkit-filter: grayscale(100%);}',
               }}
             ></style>
-          ) : null}
+          )}
+          {/* 必须提前引入，否则渲染时，无法成功加载 mermaid */}
+          <script
+            type="text/javascript"
+            src="https://cdn.bootcdn.net/ajax/libs/mermaid/8.9.2/mermaid.min.js"
+          ></script>
         </Head>
         <Layout>
           {this.props.status != 0 ? (

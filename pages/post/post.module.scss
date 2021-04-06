@@ -92,7 +92,9 @@
       display: block;
       max-width: 100% !important;
       height: auto !important;
-      max-height: 75vh;
+      max-height: 50vh;
+      line-height: 1;
+      font-size: unset;
     }
 
     :global(.footnotes) hr {

@@ -60,9 +60,19 @@ class PostContent extends Component<PostContentProps, PostContentState> {
       tables[i].outerHTML = `<div class="${styles.table_wrapper}">${tables[i].outerHTML}</div>`;
     }
   }
+
+  drawMermaid() {
+    if (!!(window as any).mermaid) {
+      try {
+        (window as any).mermaid.init();
+      } catch {}
+    }
+  }
+
   componentDidMount() {
     this.resetImage();
     this.resetTable();
+    this.drawMermaid();
     if (this.isTravel()) {
       this.getTravelData();
     }
@@ -70,6 +80,7 @@ class PostContent extends Component<PostContentProps, PostContentState> {
   componentDidUpdate() {
     this.resetImage();
     this.resetTable();
+    this.drawMermaid();
   }
 
   isTravel = () => {
@@ -124,18 +135,18 @@ class PostContent extends Component<PostContentProps, PostContentState> {
     ) : (
       <article className={styles.post}>
         <Head>
-          {this.props.post.content.indexOf('katex') != -1 ? (
+          {this.props.post.content.indexOf('katex') != -1 && (
             <link
               rel="stylesheet"
               href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css"
               integrity="sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq"
               crossOrigin="anonymous"
             ></link>
-          ) : null}
+          )}
         </Head>
 
         <Flex direction="TB" fullWidth>
-          <PostCard post={this.props.post} inset inPost/>
+          <PostCard post={this.props.post} inset inPost />
           {!!this.context.ad_text && <AD setting={this.context.ad_text} />}
           {this.props.prefix}
           {this.renderTravel()}
