@@ -1456,6 +1456,13 @@ module.exports = require("react/jsx-runtime");
 
 /***/ }),
 
+/***/ "FNts":
+/***/ (function(module, exports) {
+
+module.exports = require("md-it-mermaid");
+
+/***/ }),
+
 /***/ "HXPj":
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -6077,9 +6084,18 @@ class post_content_PostContent extends external_react_["Component"] {
     }
   }
 
+  drawMermaid() {
+    if (!!window.mermaid) {
+      try {
+        window.mermaid.init();
+      } catch {}
+    }
+  }
+
   componentDidMount() {
     this.resetImage();
     this.resetTable();
+    this.drawMermaid();
 
     if (this.isTravel()) {
       this.getTravelData();
@@ -6089,18 +6105,19 @@ class post_content_PostContent extends external_react_["Component"] {
   componentDidUpdate() {
     this.resetImage();
     this.resetTable();
+    this.drawMermaid();
   }
 
   render() {
     return this.props.post === undefined ? /*#__PURE__*/Object(jsx_runtime_["jsx"])(loading["a" /* default */], {}) : /*#__PURE__*/Object(jsx_runtime_["jsxs"])("article", {
       className: post_module_default.a.post,
       children: [/*#__PURE__*/Object(jsx_runtime_["jsx"])(head_default.a, {
-        children: this.props.post.content.indexOf('katex') != -1 ? /*#__PURE__*/Object(jsx_runtime_["jsx"])("link", {
+        children: this.props.post.content.indexOf('katex') != -1 && /*#__PURE__*/Object(jsx_runtime_["jsx"])("link", {
           rel: "stylesheet",
           href: "https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css",
           integrity: "sha384-zB1R0rpPzHqg7Kpt0Aljp8JPLqbXI3bhnPWROx27a9N0Ll6ZP/+DiW/UqRcLbRjq",
           crossOrigin: "anonymous"
-        }) : null
+        })
       }), /*#__PURE__*/Object(jsx_runtime_["jsxs"])(container["a" /* Flex */], {
         direction: "TB",
         fullWidth: true,
@@ -7067,7 +7084,7 @@ const MD = __webpack_require__("XUTK")({
   html: true,
   linkify: true,
   breaks: true
-}).use(__webpack_require__("Ekt7")).use(__webpack_require__("sdgC")).use(__webpack_require__("/xJA")).use(__webpack_require__("1h7B")).use(__webpack_require__("mvJ0"));
+}).use(__webpack_require__("Ekt7")).use(__webpack_require__("sdgC")).use(__webpack_require__("/xJA")).use(__webpack_require__("1h7B")).use(__webpack_require__("mvJ0")).use(__webpack_require__("FNts"));
 
 
 

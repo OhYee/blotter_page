@@ -3658,13 +3658,16 @@ class _app_MyApp extends app_default.a {
         }), /*#__PURE__*/Object(jsx_runtime_["jsx"])("meta", {
           name: "viewport",
           content: "width=device-width, initial-scale=1.0"
-        }), this.state.grey ? /*#__PURE__*/Object(jsx_runtime_["jsx"])("style", {
+        }), this.state.grey && /*#__PURE__*/Object(jsx_runtime_["jsx"])("style", {
           id: "grey-style",
           type: "text/css",
           dangerouslySetInnerHTML: {
             __html: 'html{filter:gray;-webkit-filter: grayscale(100%);}'
           }
-        }) : null]
+        }), /*#__PURE__*/Object(jsx_runtime_["jsx"])("script", {
+          type: "text/javascript",
+          src: "https://cdn.bootcdn.net/ajax/libs/mermaid/8.9.2/mermaid.min.js"
+        })]
       }), /*#__PURE__*/Object(jsx_runtime_["jsx"])(Layout, {
         children: this.props.status != 0 ? /*#__PURE__*/Object(jsx_runtime_["jsx"])(_error["default"], {
           status: this.props.status
