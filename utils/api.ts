@@ -135,7 +135,8 @@ export const comments = async (
 };
 
 export const avatar = async (email: string, callback?: RequestCallback<{ avatar: string }>) => {
-  return await request('get', '/api/avatar', { email }, callback);
+  // avatar 如果获取失败，不提醒错误
+  return await request('get', '/api/avatar', { email }, callback, true);
 };
 
 export declare type AddCommentArgs = {
@@ -256,7 +257,7 @@ export const friendsSet = async (
 };
 
 export const view = async (url?: string, callback?: RequestCallback<void>) => {
-  return await request('get', '/api/view', { url }, callback);
+  return await request('get', '/api/view', { url }, callback, true);
 };
 
 export const menus = async (callback?: RequestCallback<Blotter.Menu[]>) => {
@@ -474,8 +475,6 @@ export const qiniu_rename_image = async (
   return await request('get', '/api/qiniu/image/rename', { bucket, key, new_key }, callback);
 };
 
-export const version = async (
-  callback?: RequestCallback<{version:string}>,
-) => {
+export const version = async (callback?: RequestCallback<{ version: string }>) => {
   return await request('get', '/api/version', {}, callback);
 };

@@ -52,9 +52,7 @@ const Editor: React.FC<{ id: string; closeEditorCallback?: () => void }> = (prop
       .then((r) => {
         if (ShowNotification(r)) {
           if (!!closeEditorCallback) closeEditorCallback();
-          else {
-            setRaw('');
-          }
+          else setRaw('');
           if (!!callback) callback();
         }
       })
