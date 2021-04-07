@@ -223,24 +223,35 @@ var external_axios_default = /*#__PURE__*/__webpack_require__.n(external_axios_)
 
 function parseURL(url) {
   return url.length > 0 && url[0] !== '/' || typeof document !== 'undefined' ? url : 'http://127.0.0.1:50000' + url;
-}
+} // export const requestAsync = async (method: 'post' | 'get', url: string, data: any) => {
+//   var r = await axios({
+//     method: method,
+//     url: parseURL(url),
+//     params: data,
+//   });
+//   return r.data;
+// };
+// export const requestCallback = (
+//   method: 'post' | 'get',
+//   url: string,
+//   data: any,
+//     callback: (data: any) => void,
+//   ignore_exception?:boolean,
+// ) => {
+//   axios({
+//     method: method,
+//     url: parseURL(url),
+//     params: data,
+//   })
+//     .then((data) => data.data)
+//     .then((data) => callback(data))
+//     .catch((err) => console.log(err));
+// };
 
-const requestAsync = async (method, url, data) => {
-  var r = await external_axios_default()({
-    method: method,
-    url: parseURL(url),
-    params: data
-  });
-  return r.data;
-};
-const requestCallback = (method, url, data, callback) => {
-  external_axios_default()({
-    method: method,
-    url: parseURL(url),
-    params: data
-  }).then(data => data.data).then(data => callback(data)).catch(err => console.log(err));
-};
-const request = async (method, url, data, callback) => {
+
+const request = async (method, url, data, callback, ignore_exception) => {
+  ignore_exception = typeof ignore_exception === 'undefined' ? false : ignore_exception;
+
   try {
     var r = await external_axios_default()({
       method: method,
@@ -251,15 +262,14 @@ const request = async (method, url, data, callback) => {
   } catch (e) {
     console.log(e);
 
-    if (typeof document !== 'undefined') {
-      Object(notification["b" /* message */])({
+    if (!ignore_exception) {
+      if (typeof document !== 'undefined') Object(notification["b" /* message */])({
         title: '请求发生错误',
         content: `${e}`,
         alertType: 'error'
       });
+      throw e;
     }
-
-    throw e;
   }
 
   if (callback) {
@@ -339,9 +349,10 @@ const comments = async (url, callback) => {
   }, callback);
 };
 const api_avatar = async (email, callback) => {
+  // avatar 如果获取失败，不提醒错误
   return await request('get', '/api/avatar', {
     email
-  }, callback);
+  }, callback, true);
 };
 const addComment = async (args, callback) => {
   return await request('post', '/api/comment/add', args, callback);
@@ -425,7 +436,7 @@ const friendsSet = async (friends, callback) => {
 const view = async (url, callback) => {
   return await request('get', '/api/view', {
     url
-  }, callback);
+  }, callback, true);
 };
 const api_menus = async callback => {
   return await request('get', '/api/menus', {}, callback);
@@ -551,7 +562,7 @@ const qiniu_rename_image = async (bucket, key, new_key, callback) => {
     new_key
   }, callback);
 };
-const version = async (callback) => {
+const version = async callback => {
   return await request('get', '/api/version', {}, callback);
 };
 
