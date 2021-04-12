@@ -1,10 +1,13 @@
 import { message } from '@/components/notification';
 import axios from 'axios';
+import { env } from 'process';
+
+const backendURI = !!process.env["backendURI"] ? process.env["backendURI"]: 'http://127.0.0.1:50000' 
 
 function parseURL(url: string): string {
   return (url.length > 0 && url[0] !== '/') || typeof document !== 'undefined'
     ? url
-    : 'http://127.0.0.1:50000' + url;
+    : backendURI + url;
 }
 
 // export const requestAsync = async (method: 'post' | 'get', url: string, data: any) => {
