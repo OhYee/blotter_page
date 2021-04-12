@@ -220,9 +220,10 @@ var external_axios_default = /*#__PURE__*/__webpack_require__.n(external_axios_)
 // CONCATENATED MODULE: ./utils/request.ts
 
 
+const backendURI = !!process.env["backendURI"] ? process.env["backendURI"] : 'http://127.0.0.1:50000';
 
 function parseURL(url) {
-  return url.length > 0 && url[0] !== '/' || typeof document !== 'undefined' ? url : 'http://127.0.0.1:50000' + url;
+  return url.length > 0 && url[0] !== '/' || typeof document !== 'undefined' ? url : backendURI + url;
 } // export const requestAsync = async (method: 'post' | 'get', url: string, data: any) => {
 //   var r = await axios({
 //     method: method,
