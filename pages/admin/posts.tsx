@@ -23,7 +23,8 @@ const defaultUp = false;
 
 interface T extends Blotter.PostCard {
   id: string;
-  published: boolean;
+  status: 0 | 1 | 2;
+  //   published: boolean;
 }
 
 interface AdminPostListProps extends ComponentProps<'base'> {}
@@ -86,7 +87,7 @@ class AdminPostList extends React.Component<AdminPostListProps, AdminPostListSta
       title: '标题',
       key: 'title',
       minWidth: '5em',
-      maxWidth: '15em',
+      maxWidth: '10em',
       tooltip: (text) => text,
       ellipsis: true,
       render: (text, record, index) => (
@@ -100,59 +101,8 @@ class AdminPostList extends React.Component<AdminPostListProps, AdminPostListSta
       key: 'url',
       tooltip: true,
       minWidth: '5em',
-      maxWidth: '15em',
+      maxWidth: '10em',
       ellipsis: true,
-    },
-    {
-      title: '发布时间',
-      key: 'publish_time',
-      tooltip: (text) => formatSecond(text),
-      sorter: true,
-      minWidth: '10em',
-      maxWidth: '15em',
-      ellipsis: true,
-      render: (text) => formatSecond(text),
-    },
-    {
-      title: '编辑时间',
-      key: 'edit_time',
-      tooltip: (text) => formatSecond(text),
-      sorter: true,
-      minWidth: '10em',
-      maxWidth: '15em',
-      ellipsis: true,
-      render: (text) => formatSecond(text),
-    },
-    {
-      title: '阅读量',
-      key: 'view',
-      tooltip: true,
-      sorter: true,
-      minWidth: '6em',
-      maxWidth: '15em',
-      ellipsis: true,
-    },
-    {
-      title: '已发布',
-      key: 'published',
-      sorter: true,
-      minWidth: '6em',
-      maxWidth: '15em',
-      render: (text, record, index) =>
-        text ? <Eye style={{ color: 'green' }} /> : <EyeInvisible style={{ color: 'red' }} />,
-    },
-    {
-      title: '标签',
-      key: 'tags',
-      minWidth: '10em',
-      maxWidth: '20em',
-      render: (text, record, index) => (
-        <Flex mainSize="small" subSize="small" mainAxis="flex-start">
-          {record.tags.map((tag) => (
-            <TagPart key={tag.short} tag={tag} />
-          ))}
-        </Flex>
-      ),
     },
     {
       title: '操作',
@@ -193,6 +143,64 @@ class AdminPostList extends React.Component<AdminPostListProps, AdminPostListSta
           </Popover>
         </Flex>
       ),
+    },
+
+    {
+      title: '阅读量',
+      key: 'view',
+      tooltip: true,
+      sorter: true,
+      minWidth: '6em',
+      maxWidth: '15em',
+      ellipsis: true,
+    },
+    {
+      title: '已发布',
+      key: 'status',
+      sorter: true,
+      minWidth: '6em',
+      maxWidth: '15em',
+      render: (text, record, index) =>
+        record.status == 2 ? (
+          <Eye style={{ color: 'green' }} />
+        ) : record.status == 1 ? (
+          <Eye style={{ color: 'orange' }} />
+        ) : (
+          <EyeInvisible style={{ color: 'red' }} />
+        ),
+    },
+    {
+      title: '标签',
+      key: 'tags',
+      minWidth: '10em',
+      maxWidth: '20em',
+      render: (text, record, index) => (
+        <Flex mainSize="small" subSize="small" mainAxis="flex-start">
+          {record.tags.map((tag) => (
+            <TagPart key={tag.short} tag={tag} />
+          ))}
+        </Flex>
+      ),
+    },
+    {
+      title: '发布时间',
+      key: 'publish_time',
+      tooltip: (text) => formatSecond(text),
+      sorter: true,
+      minWidth: '10em',
+      maxWidth: '15em',
+      ellipsis: true,
+      render: (text) => formatSecond(text),
+    },
+    {
+      title: '编辑时间',
+      key: 'edit_time',
+      tooltip: (text) => formatSecond(text),
+      sorter: true,
+      minWidth: '10em',
+      maxWidth: '15em',
+      ellipsis: true,
+      render: (text) => formatSecond(text),
     },
   ];
 

@@ -55,6 +55,22 @@ pre {
 .dark {
 }
 
+kbd {
+  background: linear-gradient(180deg, #eee, #fff);
+  color: black;
+  background-color: #eee;
+  border: 1px solid #cdd5d7;
+  border-radius: 6px;
+  box-shadow: 0 1px 2px 1px #cdd5d7;
+  font-family: Consolas, 'Liberation Mono', courier, monospace;
+  font-size: 0.9rem;
+  font-weight: 700;
+  line-height: 1;
+  margin: 3px;
+  padding: 4px 6px;
+  white-space: nowrap;
+}
+
 a {
   word-break: break-all;
   text-decoration: none;

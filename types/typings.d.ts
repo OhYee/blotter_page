@@ -82,7 +82,7 @@ declare namespace Blotter {
   interface PostAll extends Post {
     id: string;
     raw: string;
-    published: boolean;
+    status: 0 | 1 | 2;
   }
   interface Comment {
     id: string;
@@ -157,6 +157,7 @@ declare namespace Blotter {
     vmess: string;
     zhihu: string;
     server_chan: string;
+    easter_egg: string;
   }
 
   interface City {

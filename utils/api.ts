@@ -74,7 +74,7 @@ export const adminPosts = async (
   without_tags: Blotter.Tag[],
   callback?: RequestCallback<{
     total: number;
-    posts: (Blotter.PostCard & { id: string; published: boolean })[];
+    posts: (Blotter.PostCard & { id: string; status: 0 | 1 | 2 })[];
   }>,
 ) => {
   return await request(

@@ -88,23 +88,18 @@ function RenderImages() {
 }
 
 function RenderPreviewButton(props: { preview: 0 | 1 | 2; onPreviewClick: (s: number) => void }) {
-  const previews = ['编辑', '预览', '双栏'];
   const { preview, onPreviewClick } = props;
-
   return (
-    <Flex direction="TB" mainSize="small">
-      {previews.map((item, idx) => (
-        <Button
-          key={idx}
-          neumorphism
-          clicked={preview === idx}
-          size="small"
-          onClick={() => onPreviewClick(idx)}
-        >
-          {item}
-        </Button>
-      ))}
-    </Flex>
+    <Button.Group<0 | 1 | 2>
+      selected={preview}
+      buttons={[
+        { key: '编辑', value: 0 },
+        { key: '预览', value: 1 },
+        { key: '双栏', value: 2 },
+      ]}
+      direction="TB"
+      onClick={(key, value) => onPreviewClick(value)}
+    />
   );
 }
 

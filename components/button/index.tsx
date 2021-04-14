@@ -159,6 +159,9 @@ function ALink(props: ALinkProps, ref: React.LegacyRef<HTMLAnchorElement>) {
   );
 }
 
+import ButtonGroup from './group';
+export { ButtonGroup };
+
 // Next.js 的 Link  组件需要子组件可以接收 ref（用于修i该子元素的 href）
-export default React.forwardRef(Button);
+export default Object.assign(React.forwardRef(Button), { Group: ButtonGroup });
 export const A = React.forwardRef(ALink);

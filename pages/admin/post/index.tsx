@@ -80,7 +80,8 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
       view: 0,
       publish_time: now,
       edit_time: now,
-      published: false,
+      //   published: false,
+      status: 0,
       raw: '',
       content: '',
       tags: [],
@@ -198,7 +199,7 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
       title: this.state.title,
       url: this.state.url,
       keywords: this.state.keywords,
-      published: this.state.published,
+      status: this.state.status,
       abstract: this.state.abstract,
       view: this.state.view,
       head_image: this.state.head_image,
@@ -313,13 +314,25 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
             value={this.state.head_image}
             onChange={(head_image) => this.setState({ head_image })}
           />
-          <CheckBox
+          {/* <CheckBox
             switchStyle
             checkText="发布"
             uncheckText="草稿"
             value={this.state.published}
             onChange={(published) => this.setState({ published })}
+          /> */}
+          <Button.Group<0 | 1 | 2>
+            selected={this.state.status}
+            buttons={[
+              { key: '草稿', value: 0 },
+              { key: '隐藏', value: 1 },
+              { key: '发布', value: 2 },
+            ]}
+            onClick={(key, value) => {
+              this.setState({ status: value });
+            }}
           />
+
           <Button
             neumorphism
             onClick={() => {
