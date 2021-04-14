@@ -264,7 +264,8 @@ const defaultContext = {
     qq_connected: false,
     github_connected: false,
     self: false
-  }
+  },
+  easter_egg: ''
 };
 const Context = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createContext(defaultContext);
 function getTimeTheme() {
