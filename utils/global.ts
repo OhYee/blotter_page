@@ -25,7 +25,7 @@ export const defaultContext: GlobalProps = {
   ad_show: '',
   ad_inner: '',
   ad_text: '',
-  front_version:  formatDate(getConfig().publicRuntimeConfig.version),
+  front_version: formatDate(getConfig().publicRuntimeConfig.version),
   back_version: 'UNKNOWN',
   user: {
     id: '000000000000000000000000',
@@ -45,6 +45,7 @@ export const defaultContext: GlobalProps = {
     github_connected: false,
     self: false,
   },
+  easter_egg: '',
 };
 
 export const Context = React.createContext(defaultContext);
@@ -74,6 +75,7 @@ export declare interface GlobalProps {
   ad_text: string;
   front_version: string;
   back_version: string;
+  easter_egg: string;
 }
 
 export function getTimeTheme() {

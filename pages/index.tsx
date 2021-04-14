@@ -10,12 +10,14 @@ import { Left } from '@/components/svg';
 import PostSearch from '@/components/post_search';
 import Card from '@/components/card';
 import Button from '@/components/button';
+import { EasterEgg } from '@/components/svg';
 
 import { Context } from '@/utils/global';
 import { indexPosts, tagsSearch } from '@/utils/api';
 import { waitUntil } from '@/utils/debounce';
 
 import styles from './index.module.scss';
+import Notification from '@/components/notification';
 
 interface IndexProps extends React.ComponentProps<'base'> {
   posts: Blotter.PostCard[];
@@ -35,9 +37,13 @@ interface IndexState {
   without_tags: Blotter.Tag[];
   show: boolean;
   search_height: number;
+  easter_egg: string;
 }
 
 class Index extends React.Component<IndexProps, IndexState> {
+  static contextType = Context;
+  context!: React.ContextType<typeof Context>;
+
   static defaultProps = { posts: [] };
   ref = React.createRef<HTMLDivElement>();
   static async getInitialProps(args: NextPageContext) {
@@ -62,8 +68,58 @@ class Index extends React.Component<IndexProps, IndexState> {
       without_tags: [],
       show: false,
       search_height: 100,
+      easter_egg: '',
     };
   }
+
+  componentDidMount() {
+    this.easterEggInit();
+  }
+
+  componentWillUnmount() {
+    this.easterEggDestory();
+  }
+
+  easterEggInit = () => {
+    const { easter_egg } = this.context;
+    console.log(easter_egg);
+    if (!!easter_egg) {
+      const easterEggDo = this.easterEggWrapper();
+      document.addEventListener('keyup', easterEggDo);
+      (this as any).easterEggDo = easterEggDo;
+    }
+  };
+  easterEggDestory = () => {
+    const { easterEggDo } = this as any;
+    if (!!easterEggDo) document.removeEventListener('keyup', easterEggDo);
+  };
+  easterEggWrapper = () => {
+    var cache = '';
+    const { easter_egg } = this.context;
+    const kv = easter_egg.split(/\s/).filter((s) => s.length > 0);
+    var mxL = 0;
+    var eggs = {};
+    var i = 0;
+    while (i + 1 < kv.length) {
+      eggs[kv[i]] = kv[i + 1];
+      mxL = Math.max(mxL, kv[i].length);
+      i += 2;
+    }
+    return (e: KeyboardEvent) => {
+      cache += e.key;
+      cache = cache.slice(-mxL);
+      console.log(cache);
+      for (const k of Object.keys(eggs))
+        if (cache.slice(-k.length) == k) {
+          Notification.message({
+            alertType: 'info',
+            title: '恭喜你，触发了一个彩蛋！',
+            content: '赶快去看一下彩蛋是什么吧',
+          });
+          this.setState({ easter_egg: eggs[k] });
+        }
+    };
+  };
 
   onPageChange = (page: number, size?: number) => {
     if (typeof size === 'undefined') {
@@ -183,6 +239,21 @@ class Index extends React.Component<IndexProps, IndexState> {
               />
             </div>
           </Card>
+
+          {!!this.state.easter_egg && (
+            <Notification
+              icon={<EasterEgg />}
+              title="你发现了一个彩蛋"
+              content={
+                <Link href={this.state.easter_egg} passHref>
+                  <a>点击查看彩蛋内容</a>
+                </Link>
+              }
+              onClose={() => {
+                this.setState({ easter_egg: '' });
+              }}
+            />
+          )}
 
           <PostList
             posts={this.state.posts}
