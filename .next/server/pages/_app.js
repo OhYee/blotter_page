@@ -3176,15 +3176,21 @@ function Sider(props) {
           maxWidth: collapsed ? big_screen ? 80 : 0 : 200 // 苹果设备在 width = 0 时会恢复宽度，设置 max-width 来避免该问题
 
         },
-        children: [/*#__PURE__*/Object(jsx_runtime_["jsx"])("div", {}), /*#__PURE__*/Object(jsx_runtime_["jsx"])("img", {
-          src: avatar,
-          width: "100%" // 在 Ubuntu 的 Chrome 上，点击 menu 项时，图片会奇怪地变大。删除 height 参数解决
-          ,
+        children: [/*#__PURE__*/Object(jsx_runtime_["jsx"])("div", {}), /*#__PURE__*/Object(jsx_runtime_["jsx"])(container["a" /* Flex */].Item, {
           style: {
-            background: 'white',
-            borderRadius: '100px',
-            maxWidth: '120px'
-          }
+            width: '100%' // Firefox 下，未设置宽度会导致外层宽度为 0 （logo 不显示）
+
+          },
+          children: /*#__PURE__*/Object(jsx_runtime_["jsx"])("img", {
+            src: avatar,
+            width: "100%" // 在 Ubuntu 的 Chrome 上，点击 menu 项时，图片会奇怪地变大。删除 height 参数解决
+            ,
+            style: {
+              background: 'white',
+              borderRadius: '100px',
+              maxWidth: '120px'
+            }
+          })
         }), !user.existed ? /*#__PURE__*/Object(jsx_runtime_["jsx"])("a", {
           onClick: onLoginClick,
           style: {
