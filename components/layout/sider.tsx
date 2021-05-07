@@ -62,13 +62,18 @@ export default function Sider(props: {
           }}
         >
           <div />
-
-          <img
-            src={avatar}
-            width="100%"
-            // 在 Ubuntu 的 Chrome 上，点击 menu 项时，图片会奇怪地变大。删除 height 参数解决
-            style={{ background: 'white', borderRadius: '100px', maxWidth: '120px' }}
-          />
+          <Flex.Item
+            style={{
+              width: '100%', // Firefox 下，未设置宽度会导致外层宽度为 0 （logo 不显示）
+            }}
+          >
+            <img
+              src={avatar}
+              width="100%"
+              // 在 Ubuntu 的 Chrome 上，点击 menu 项时，图片会奇怪地变大。删除 height 参数解决
+              style={{ background: 'white', borderRadius: '100px', maxWidth: '120px' }}
+            />
+          </Flex.Item>
           {!user.existed ? (
             <a onClick={onLoginClick} style={{ cursor: 'pointer' }}>
               <Avatar>
