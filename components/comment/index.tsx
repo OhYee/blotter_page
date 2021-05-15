@@ -51,8 +51,8 @@ const Editor: React.FC<{ id: string; closeEditorCallback?: () => void }> = (prop
     addComment({ url, reply: id, email, recv, raw })
       .then((r) => {
         if (ShowNotification(r)) {
+          setRaw('');
           if (!!closeEditorCallback) closeEditorCallback();
-          else setRaw('');
           if (!!callback) callback();
         }
       })
