@@ -347,6 +347,13 @@ export const commentSet = async (
   return await request('get', `/api/admin/comment/set`, { id, ad, recv, show }, callback);
 };
 
+export const commentDelete = async (
+  id: string,
+  callback?: RequestCallback<Blotter.APIResponse>,
+) => {
+  return await request('get', `/api/admin/comment/delete`, { id }, callback);
+};
+
 export const userSet = async (
   username: string,
   email: string,

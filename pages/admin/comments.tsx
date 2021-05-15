@@ -3,7 +3,7 @@ import React from 'react';
 import Head from 'next/head';
 
 import Card from '@/components/card';
-import { Tooltip } from '@/components/popover';
+import Popover, { Tooltip } from '@/components/popover';
 import Avatar from '@/components/avatar';
 import { CheckBox } from '@/components/input';
 import Button from '@/components/button';
@@ -12,7 +12,7 @@ import { Flex } from '@/components/container';
 import Loading from '@/components/loading';
 
 import { Context } from '@/utils/global';
-import { commentsAdmin, commentSet } from '@/utils/api';
+import { commentDelete, commentsAdmin, commentSet } from '@/utils/api';
 import moment from '@/utils/moment';
 import ShowNotification from '@/utils/notification';
 
@@ -62,6 +62,7 @@ function Comment(
                 {time.fromNow()}
               </span>
             </Tooltip>
+            <span className={concat(textStyles.secondary, textStyles.em75)}>{comment.id}</span>
           </Flex>
           {!!comment.reply_comment && comment.reply_comment.id !== '000000000000000000000000' ? (
             <div style={{ borderLeft: '#ccc 5px solid', paddingLeft: 10 }}>
@@ -162,20 +163,49 @@ class AdminComments extends React.Component<AdminCommentsProps, AdminCommentsSta
                               </CheckBox>
                             ))}
                           </Flex>
-                          <Button
-                            neumorphism
-                            onClick={async (e) => {
-                              const r = await commentSet(
-                                comment.id,
-                                comment.ad,
-                                comment.recv,
-                                comment.show,
-                              );
-                              ShowNotification(r);
-                            }}
-                          >
-                            保存
-                          </Button>
+                          <Flex direction="LR">
+                            <Popover
+                              shadow
+                              card
+                              trigger={['click']}
+                              component={
+                                <Card>
+                                  <span>真的要删除么？</span>
+                                  <Button
+                                    onClick={async () => {
+                                      if (ShowNotification(await commentDelete(comment.id)))
+                                        this.getData();
+                                    }}
+                                    danger
+                                    neumorphism
+                                    primary
+                                    size="small"
+                                  >
+                                    删除！
+                                  </Button>
+                                </Card>
+                              }
+                            >
+                              <Button neumorphism danger>
+                                删除
+                              </Button>
+                            </Popover>
+
+                            <Button
+                              neumorphism
+                              onClick={async (e) => {
+                                const r = await commentSet(
+                                  comment.id,
+                                  comment.ad,
+                                  comment.recv,
+                                  comment.show,
+                                );
+                                ShowNotification(r);
+                              }}
+                            >
+                              保存
+                            </Button>
+                          </Flex>
                         </Flex>
                       </Flex.Item>
                     </Flex>
