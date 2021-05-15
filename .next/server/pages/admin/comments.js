@@ -205,6 +205,9 @@ function Comment(props) {
               className: Object(_utils_component__WEBPACK_IMPORTED_MODULE_15__[/* concat */ "a"])(_styles_text_module_scss__WEBPACK_IMPORTED_MODULE_16___default.a.secondary, _styles_text_module_scss__WEBPACK_IMPORTED_MODULE_16___default.a.em75),
               children: time.fromNow()
             })
+          }), /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("span", {
+            className: Object(_utils_component__WEBPACK_IMPORTED_MODULE_15__[/* concat */ "a"])(_styles_text_module_scss__WEBPACK_IMPORTED_MODULE_16___default.a.secondary, _styles_text_module_scss__WEBPACK_IMPORTED_MODULE_16___default.a.em75),
+            children: comment.id
           })]
         }), !!comment.reply_comment && comment.reply_comment.id !== '000000000000000000000000' ? /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("div", {
           style: {
@@ -232,7 +235,7 @@ class AdminComments extends react__WEBPACK_IMPORTED_MODULE_1___default.a.Compone
       this.setState({
         loading: true
       });
-      var r = await Object(_utils_api__WEBPACK_IMPORTED_MODULE_12__[/* commentsAdmin */ "k"])(this.state.page, this.state.size);
+      var r = await Object(_utils_api__WEBPACK_IMPORTED_MODULE_12__[/* commentsAdmin */ "l"])(this.state.page, this.state.size);
       this.setState({
         data: r.comments,
         total: r.total,
@@ -339,13 +342,39 @@ class AdminComments extends react__WEBPACK_IMPORTED_MODULE_1___default.a.Compone
                         }),
                         children: item.value
                       }))
-                    }), /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(_components_button__WEBPACK_IMPORTED_MODULE_7__[/* default */ "b"], {
-                      neumorphism: true,
-                      onClick: async e => {
-                        const r = await Object(_utils_api__WEBPACK_IMPORTED_MODULE_12__[/* commentSet */ "i"])(comment.id, comment.ad, comment.recv, comment.show);
-                        Object(_utils_notification__WEBPACK_IMPORTED_MODULE_14__[/* default */ "a"])(r);
-                      },
-                      children: "\u4FDD\u5B58"
+                    }), /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsxs"])(_components_container__WEBPACK_IMPORTED_MODULE_9__[/* Flex */ "a"], {
+                      direction: "LR",
+                      children: [/*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(_components_popover__WEBPACK_IMPORTED_MODULE_4__[/* default */ "d"], {
+                        shadow: true,
+                        card: true,
+                        trigger: ['click'],
+                        component: /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsxs"])(_components_card__WEBPACK_IMPORTED_MODULE_3__[/* default */ "a"], {
+                          children: [/*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("span", {
+                            children: "\u771F\u7684\u8981\u5220\u9664\u4E48\uFF1F"
+                          }), /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(_components_button__WEBPACK_IMPORTED_MODULE_7__[/* default */ "b"], {
+                            onClick: async () => {
+                              if (Object(_utils_notification__WEBPACK_IMPORTED_MODULE_14__[/* default */ "a"])(await Object(_utils_api__WEBPACK_IMPORTED_MODULE_12__[/* commentDelete */ "i"])(comment.id))) this.getData();
+                            },
+                            danger: true,
+                            neumorphism: true,
+                            primary: true,
+                            size: "small",
+                            children: "\u5220\u9664\uFF01"
+                          })]
+                        }),
+                        children: /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(_components_button__WEBPACK_IMPORTED_MODULE_7__[/* default */ "b"], {
+                          neumorphism: true,
+                          danger: true,
+                          children: "\u5220\u9664"
+                        })
+                      }), /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(_components_button__WEBPACK_IMPORTED_MODULE_7__[/* default */ "b"], {
+                        neumorphism: true,
+                        onClick: async e => {
+                          const r = await Object(_utils_api__WEBPACK_IMPORTED_MODULE_12__[/* commentSet */ "j"])(comment.id, comment.ad, comment.recv, comment.show);
+                          Object(_utils_notification__WEBPACK_IMPORTED_MODULE_14__[/* default */ "a"])(r);
+                        },
+                        children: "\u4FDD\u5B58"
+                      })]
                     })]
                   })
                 })]
@@ -446,52 +475,53 @@ module.exports = {
 "use strict";
 
 // EXPORTS
-__webpack_require__.d(__webpack_exports__, "z", function() { return /* binding */ posts; });
-__webpack_require__.d(__webpack_exports__, "o", function() { return /* binding */ indexPosts; });
+__webpack_require__.d(__webpack_exports__, "A", function() { return /* binding */ posts; });
+__webpack_require__.d(__webpack_exports__, "p", function() { return /* binding */ indexPosts; });
 __webpack_require__.d(__webpack_exports__, "f", function() { return /* binding */ archives; });
-__webpack_require__.d(__webpack_exports__, "J", function() { return /* binding */ tagPosts; });
+__webpack_require__.d(__webpack_exports__, "K", function() { return /* binding */ tagPosts; });
 __webpack_require__.d(__webpack_exports__, "d", function() { return /* binding */ adminPosts; });
-__webpack_require__.d(__webpack_exports__, "l", function() { return /* binding */ api_friends; });
-__webpack_require__.d(__webpack_exports__, "q", function() { return /* binding */ layout; });
-__webpack_require__.d(__webpack_exports__, "K", function() { return /* binding */ tags; });
-__webpack_require__.d(__webpack_exports__, "w", function() { return /* binding */ api_post; });
+__webpack_require__.d(__webpack_exports__, "m", function() { return /* binding */ api_friends; });
+__webpack_require__.d(__webpack_exports__, "r", function() { return /* binding */ layout; });
+__webpack_require__.d(__webpack_exports__, "L", function() { return /* binding */ tags; });
+__webpack_require__.d(__webpack_exports__, "x", function() { return /* binding */ api_post; });
 __webpack_require__.d(__webpack_exports__, "c", function() { return /* binding */ adminPost; });
-__webpack_require__.d(__webpack_exports__, "j", function() { return /* binding */ comments; });
+__webpack_require__.d(__webpack_exports__, "k", function() { return /* binding */ comments; });
 __webpack_require__.d(__webpack_exports__, "g", function() { return /* binding */ api_avatar; });
 __webpack_require__.d(__webpack_exports__, "b", function() { return /* binding */ addComment; });
-__webpack_require__.d(__webpack_exports__, "t", function() { return /* binding */ markdown; });
-__webpack_require__.d(__webpack_exports__, "L", function() { return /* binding */ tagsSearch; });
-__webpack_require__.d(__webpack_exports__, "r", function() { return /* binding */ login; });
-__webpack_require__.d(__webpack_exports__, "s", function() { return /* binding */ logout; });
-__webpack_require__.d(__webpack_exports__, "p", function() { return /* binding */ info; });
-__webpack_require__.d(__webpack_exports__, "y", function() { return /* binding */ postEdit; });
-__webpack_require__.d(__webpack_exports__, "x", function() { return /* binding */ postDelete; });
+__webpack_require__.d(__webpack_exports__, "u", function() { return /* binding */ markdown; });
+__webpack_require__.d(__webpack_exports__, "M", function() { return /* binding */ tagsSearch; });
+__webpack_require__.d(__webpack_exports__, "s", function() { return /* binding */ login; });
+__webpack_require__.d(__webpack_exports__, "t", function() { return /* binding */ logout; });
+__webpack_require__.d(__webpack_exports__, "q", function() { return /* binding */ info; });
+__webpack_require__.d(__webpack_exports__, "z", function() { return /* binding */ postEdit; });
+__webpack_require__.d(__webpack_exports__, "y", function() { return /* binding */ postDelete; });
 __webpack_require__.d(__webpack_exports__, "e", function() { return /* binding */ adminTags; });
-__webpack_require__.d(__webpack_exports__, "I", function() { return /* binding */ tagEdit; });
-__webpack_require__.d(__webpack_exports__, "H", function() { return /* binding */ tagDelete; });
-__webpack_require__.d(__webpack_exports__, "m", function() { return /* binding */ friendsSet; });
-__webpack_require__.d(__webpack_exports__, "T", function() { return /* binding */ view; });
-__webpack_require__.d(__webpack_exports__, "u", function() { return /* binding */ api_menus; });
-__webpack_require__.d(__webpack_exports__, "v", function() { return /* binding */ menusSet; });
-__webpack_require__.d(__webpack_exports__, "n", function() { return /* binding */ githubRepos; });
+__webpack_require__.d(__webpack_exports__, "J", function() { return /* binding */ tagEdit; });
+__webpack_require__.d(__webpack_exports__, "I", function() { return /* binding */ tagDelete; });
+__webpack_require__.d(__webpack_exports__, "n", function() { return /* binding */ friendsSet; });
+__webpack_require__.d(__webpack_exports__, "U", function() { return /* binding */ view; });
+__webpack_require__.d(__webpack_exports__, "v", function() { return /* binding */ api_menus; });
+__webpack_require__.d(__webpack_exports__, "w", function() { return /* binding */ menusSet; });
+__webpack_require__.d(__webpack_exports__, "o", function() { return /* binding */ githubRepos; });
 __webpack_require__.d(__webpack_exports__, "a", function() { return /* binding */ about; });
-__webpack_require__.d(__webpack_exports__, "R", function() { return /* binding */ variables; });
-__webpack_require__.d(__webpack_exports__, "S", function() { return /* binding */ variablesSet; });
-__webpack_require__.d(__webpack_exports__, "k", function() { return /* binding */ commentsAdmin; });
-__webpack_require__.d(__webpack_exports__, "i", function() { return /* binding */ commentSet; });
-__webpack_require__.d(__webpack_exports__, "P", function() { return /* binding */ userSet; });
+__webpack_require__.d(__webpack_exports__, "S", function() { return /* binding */ variables; });
+__webpack_require__.d(__webpack_exports__, "T", function() { return /* binding */ variablesSet; });
+__webpack_require__.d(__webpack_exports__, "l", function() { return /* binding */ commentsAdmin; });
+__webpack_require__.d(__webpack_exports__, "j", function() { return /* binding */ commentSet; });
+__webpack_require__.d(__webpack_exports__, "i", function() { return /* binding */ commentDelete; });
+__webpack_require__.d(__webpack_exports__, "Q", function() { return /* binding */ userSet; });
 __webpack_require__.d(__webpack_exports__, "h", function() { return /* binding */ checkUsername; });
-__webpack_require__.d(__webpack_exports__, "F", function() { return /* binding */ register; });
-__webpack_require__.d(__webpack_exports__, "Q", function() { return /* binding */ users; });
-__webpack_require__.d(__webpack_exports__, "G", function() { return /* binding */ reset_password; });
-__webpack_require__.d(__webpack_exports__, "M", function() { return /* binding */ travels_get; });
-__webpack_require__.d(__webpack_exports__, "O", function() { return /* binding */ travels_set; });
-__webpack_require__.d(__webpack_exports__, "N", function() { return /* binding */ travels_get_url; });
-__webpack_require__.d(__webpack_exports__, "B", function() { return /* binding */ qiniu_get_buckets; });
-__webpack_require__.d(__webpack_exports__, "C", function() { return /* binding */ qiniu_get_images; });
-__webpack_require__.d(__webpack_exports__, "D", function() { return /* binding */ qiniu_get_token; });
-__webpack_require__.d(__webpack_exports__, "A", function() { return /* binding */ qiniu_delete_image; });
-__webpack_require__.d(__webpack_exports__, "E", function() { return /* binding */ qiniu_rename_image; });
+__webpack_require__.d(__webpack_exports__, "G", function() { return /* binding */ register; });
+__webpack_require__.d(__webpack_exports__, "R", function() { return /* binding */ users; });
+__webpack_require__.d(__webpack_exports__, "H", function() { return /* binding */ reset_password; });
+__webpack_require__.d(__webpack_exports__, "N", function() { return /* binding */ travels_get; });
+__webpack_require__.d(__webpack_exports__, "P", function() { return /* binding */ travels_set; });
+__webpack_require__.d(__webpack_exports__, "O", function() { return /* binding */ travels_get_url; });
+__webpack_require__.d(__webpack_exports__, "C", function() { return /* binding */ qiniu_get_buckets; });
+__webpack_require__.d(__webpack_exports__, "D", function() { return /* binding */ qiniu_get_images; });
+__webpack_require__.d(__webpack_exports__, "E", function() { return /* binding */ qiniu_get_token; });
+__webpack_require__.d(__webpack_exports__, "B", function() { return /* binding */ qiniu_delete_image; });
+__webpack_require__.d(__webpack_exports__, "F", function() { return /* binding */ qiniu_rename_image; });
 
 // UNUSED EXPORTS: postExist, tagExisted, githubUser, githubRepo, version
 
@@ -766,6 +796,11 @@ const commentSet = async (id, ad, recv, show, callback) => {
     ad,
     recv,
     show
+  }, callback);
+};
+const commentDelete = async (id, callback) => {
+  return await request('get', `/api/admin/comment/delete`, {
+    id
   }, callback);
 };
 const userSet = async (username, email, avatar, ns_id, ns_name, ac_name, ac_island, qq, password, callback) => {

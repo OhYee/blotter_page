@@ -238,52 +238,53 @@ module.exports = {
 "use strict";
 
 // EXPORTS
-__webpack_require__.d(__webpack_exports__, "z", function() { return /* binding */ posts; });
-__webpack_require__.d(__webpack_exports__, "o", function() { return /* binding */ indexPosts; });
+__webpack_require__.d(__webpack_exports__, "A", function() { return /* binding */ posts; });
+__webpack_require__.d(__webpack_exports__, "p", function() { return /* binding */ indexPosts; });
 __webpack_require__.d(__webpack_exports__, "f", function() { return /* binding */ archives; });
-__webpack_require__.d(__webpack_exports__, "J", function() { return /* binding */ tagPosts; });
+__webpack_require__.d(__webpack_exports__, "K", function() { return /* binding */ tagPosts; });
 __webpack_require__.d(__webpack_exports__, "d", function() { return /* binding */ adminPosts; });
-__webpack_require__.d(__webpack_exports__, "l", function() { return /* binding */ api_friends; });
-__webpack_require__.d(__webpack_exports__, "q", function() { return /* binding */ layout; });
-__webpack_require__.d(__webpack_exports__, "K", function() { return /* binding */ tags; });
-__webpack_require__.d(__webpack_exports__, "w", function() { return /* binding */ api_post; });
+__webpack_require__.d(__webpack_exports__, "m", function() { return /* binding */ api_friends; });
+__webpack_require__.d(__webpack_exports__, "r", function() { return /* binding */ layout; });
+__webpack_require__.d(__webpack_exports__, "L", function() { return /* binding */ tags; });
+__webpack_require__.d(__webpack_exports__, "x", function() { return /* binding */ api_post; });
 __webpack_require__.d(__webpack_exports__, "c", function() { return /* binding */ adminPost; });
-__webpack_require__.d(__webpack_exports__, "j", function() { return /* binding */ comments; });
+__webpack_require__.d(__webpack_exports__, "k", function() { return /* binding */ comments; });
 __webpack_require__.d(__webpack_exports__, "g", function() { return /* binding */ api_avatar; });
 __webpack_require__.d(__webpack_exports__, "b", function() { return /* binding */ addComment; });
-__webpack_require__.d(__webpack_exports__, "t", function() { return /* binding */ markdown; });
-__webpack_require__.d(__webpack_exports__, "L", function() { return /* binding */ tagsSearch; });
-__webpack_require__.d(__webpack_exports__, "r", function() { return /* binding */ login; });
-__webpack_require__.d(__webpack_exports__, "s", function() { return /* binding */ logout; });
-__webpack_require__.d(__webpack_exports__, "p", function() { return /* binding */ info; });
-__webpack_require__.d(__webpack_exports__, "y", function() { return /* binding */ postEdit; });
-__webpack_require__.d(__webpack_exports__, "x", function() { return /* binding */ postDelete; });
+__webpack_require__.d(__webpack_exports__, "u", function() { return /* binding */ markdown; });
+__webpack_require__.d(__webpack_exports__, "M", function() { return /* binding */ tagsSearch; });
+__webpack_require__.d(__webpack_exports__, "s", function() { return /* binding */ login; });
+__webpack_require__.d(__webpack_exports__, "t", function() { return /* binding */ logout; });
+__webpack_require__.d(__webpack_exports__, "q", function() { return /* binding */ info; });
+__webpack_require__.d(__webpack_exports__, "z", function() { return /* binding */ postEdit; });
+__webpack_require__.d(__webpack_exports__, "y", function() { return /* binding */ postDelete; });
 __webpack_require__.d(__webpack_exports__, "e", function() { return /* binding */ adminTags; });
-__webpack_require__.d(__webpack_exports__, "I", function() { return /* binding */ tagEdit; });
-__webpack_require__.d(__webpack_exports__, "H", function() { return /* binding */ tagDelete; });
-__webpack_require__.d(__webpack_exports__, "m", function() { return /* binding */ friendsSet; });
-__webpack_require__.d(__webpack_exports__, "T", function() { return /* binding */ view; });
-__webpack_require__.d(__webpack_exports__, "u", function() { return /* binding */ api_menus; });
-__webpack_require__.d(__webpack_exports__, "v", function() { return /* binding */ menusSet; });
-__webpack_require__.d(__webpack_exports__, "n", function() { return /* binding */ githubRepos; });
+__webpack_require__.d(__webpack_exports__, "J", function() { return /* binding */ tagEdit; });
+__webpack_require__.d(__webpack_exports__, "I", function() { return /* binding */ tagDelete; });
+__webpack_require__.d(__webpack_exports__, "n", function() { return /* binding */ friendsSet; });
+__webpack_require__.d(__webpack_exports__, "U", function() { return /* binding */ view; });
+__webpack_require__.d(__webpack_exports__, "v", function() { return /* binding */ api_menus; });
+__webpack_require__.d(__webpack_exports__, "w", function() { return /* binding */ menusSet; });
+__webpack_require__.d(__webpack_exports__, "o", function() { return /* binding */ githubRepos; });
 __webpack_require__.d(__webpack_exports__, "a", function() { return /* binding */ about; });
-__webpack_require__.d(__webpack_exports__, "R", function() { return /* binding */ variables; });
-__webpack_require__.d(__webpack_exports__, "S", function() { return /* binding */ variablesSet; });
-__webpack_require__.d(__webpack_exports__, "k", function() { return /* binding */ commentsAdmin; });
-__webpack_require__.d(__webpack_exports__, "i", function() { return /* binding */ commentSet; });
-__webpack_require__.d(__webpack_exports__, "P", function() { return /* binding */ userSet; });
+__webpack_require__.d(__webpack_exports__, "S", function() { return /* binding */ variables; });
+__webpack_require__.d(__webpack_exports__, "T", function() { return /* binding */ variablesSet; });
+__webpack_require__.d(__webpack_exports__, "l", function() { return /* binding */ commentsAdmin; });
+__webpack_require__.d(__webpack_exports__, "j", function() { return /* binding */ commentSet; });
+__webpack_require__.d(__webpack_exports__, "i", function() { return /* binding */ commentDelete; });
+__webpack_require__.d(__webpack_exports__, "Q", function() { return /* binding */ userSet; });
 __webpack_require__.d(__webpack_exports__, "h", function() { return /* binding */ checkUsername; });
-__webpack_require__.d(__webpack_exports__, "F", function() { return /* binding */ register; });
-__webpack_require__.d(__webpack_exports__, "Q", function() { return /* binding */ users; });
-__webpack_require__.d(__webpack_exports__, "G", function() { return /* binding */ reset_password; });
-__webpack_require__.d(__webpack_exports__, "M", function() { return /* binding */ travels_get; });
-__webpack_require__.d(__webpack_exports__, "O", function() { return /* binding */ travels_set; });
-__webpack_require__.d(__webpack_exports__, "N", function() { return /* binding */ travels_get_url; });
-__webpack_require__.d(__webpack_exports__, "B", function() { return /* binding */ qiniu_get_buckets; });
-__webpack_require__.d(__webpack_exports__, "C", function() { return /* binding */ qiniu_get_images; });
-__webpack_require__.d(__webpack_exports__, "D", function() { return /* binding */ qiniu_get_token; });
-__webpack_require__.d(__webpack_exports__, "A", function() { return /* binding */ qiniu_delete_image; });
-__webpack_require__.d(__webpack_exports__, "E", function() { return /* binding */ qiniu_rename_image; });
+__webpack_require__.d(__webpack_exports__, "G", function() { return /* binding */ register; });
+__webpack_require__.d(__webpack_exports__, "R", function() { return /* binding */ users; });
+__webpack_require__.d(__webpack_exports__, "H", function() { return /* binding */ reset_password; });
+__webpack_require__.d(__webpack_exports__, "N", function() { return /* binding */ travels_get; });
+__webpack_require__.d(__webpack_exports__, "P", function() { return /* binding */ travels_set; });
+__webpack_require__.d(__webpack_exports__, "O", function() { return /* binding */ travels_get_url; });
+__webpack_require__.d(__webpack_exports__, "C", function() { return /* binding */ qiniu_get_buckets; });
+__webpack_require__.d(__webpack_exports__, "D", function() { return /* binding */ qiniu_get_images; });
+__webpack_require__.d(__webpack_exports__, "E", function() { return /* binding */ qiniu_get_token; });
+__webpack_require__.d(__webpack_exports__, "B", function() { return /* binding */ qiniu_delete_image; });
+__webpack_require__.d(__webpack_exports__, "F", function() { return /* binding */ qiniu_rename_image; });
 
 // UNUSED EXPORTS: postExist, tagExisted, githubUser, githubRepo, version
 
@@ -558,6 +559,11 @@ const commentSet = async (id, ad, recv, show, callback) => {
     ad,
     recv,
     show
+  }, callback);
+};
+const commentDelete = async (id, callback) => {
+  return await request('get', `/api/admin/comment/delete`, {
+    id
   }, callback);
 };
 const userSet = async (username, email, avatar, ns_id, ns_name, ac_name, ac_island, qq, password, callback) => {
@@ -1624,7 +1630,7 @@ function BucketSelector(props) {
 
   function initial() {
     setLoading(true);
-    Object(_utils_api__WEBPACK_IMPORTED_MODULE_12__[/* qiniu_get_buckets */ "B"])().then(r => {
+    Object(_utils_api__WEBPACK_IMPORTED_MODULE_12__[/* qiniu_get_buckets */ "C"])().then(r => {
       setBuckets(r.buckets);
       setPrefixList(Array.from(new Set([{
         key: '无前缀',
@@ -1672,7 +1678,7 @@ function Upload(props) {
   } = props;
 
   const upload = async file => {
-    const token = (await Object(_utils_api__WEBPACK_IMPORTED_MODULE_12__[/* qiniu_get_token */ "D"])(bucket)).token;
+    const token = (await Object(_utils_api__WEBPACK_IMPORTED_MODULE_12__[/* qiniu_get_token */ "E"])(bucket)).token;
     const filename = !!prefix ? `${prefix}/${file.name}` : file.name;
     const observable = qiniu_js__WEBPACK_IMPORTED_MODULE_2__["upload"](file, filename, token, {}, {});
     const subscription = observable.subscribe({
@@ -1774,7 +1780,7 @@ function imageList(props, ref) {
     var thisID = id + 1;
     setID(thisID); // setID((i) => (idRef.current = thisID = i + 1));
 
-    Object(_utils_api__WEBPACK_IMPORTED_MODULE_12__[/* qiniu_get_images */ "C"])(b, p, m, group_number).then(r => {
+    Object(_utils_api__WEBPACK_IMPORTED_MODULE_12__[/* qiniu_get_images */ "D"])(b, p, m, group_number).then(r => {
       if (idRef.current === thisID) {
         setImages({
           method: !!m ? 'concat' : 'initial',
@@ -1832,7 +1838,7 @@ function imageList(props, ref) {
               children: [/*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(_components_button__WEBPACK_IMPORTED_MODULE_10__[/* default */ "b"], {
                 icon: /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(_components_svg__WEBPACK_IMPORTED_MODULE_9__[/* Save */ "N"], {}),
                 onClick: async () => {
-                  if (Object(_utils_notification__WEBPACK_IMPORTED_MODULE_14__[/* default */ "a"])(await Object(_utils_api__WEBPACK_IMPORTED_MODULE_12__[/* qiniu_rename_image */ "E"])(bucket, image.key, image.new_key))) initial();
+                  if (Object(_utils_notification__WEBPACK_IMPORTED_MODULE_14__[/* default */ "a"])(await Object(_utils_api__WEBPACK_IMPORTED_MODULE_12__[/* qiniu_rename_image */ "F"])(bucket, image.key, image.new_key))) initial();
                 }
               }), /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(_components_popover__WEBPACK_IMPORTED_MODULE_6__[/* default */ "d"], {
                 trigger: ['click'],
@@ -1846,7 +1852,7 @@ function imageList(props, ref) {
                       neumorphism: true,
                       size: "small",
                       onClick: async () => {
-                        if (Object(_utils_notification__WEBPACK_IMPORTED_MODULE_14__[/* default */ "a"])(await Object(_utils_api__WEBPACK_IMPORTED_MODULE_12__[/* qiniu_delete_image */ "A"])(bucket, image.key))) initial();
+                        if (Object(_utils_notification__WEBPACK_IMPORTED_MODULE_14__[/* default */ "a"])(await Object(_utils_api__WEBPACK_IMPORTED_MODULE_12__[/* qiniu_delete_image */ "B"])(bucket, image.key))) initial();
                       },
                       children: "\u5220\u9664"
                     })]
