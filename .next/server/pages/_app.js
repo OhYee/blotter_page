@@ -3184,8 +3184,9 @@ function Sider(props) {
         },
         children: [/*#__PURE__*/Object(jsx_runtime_["jsx"])("div", {}), /*#__PURE__*/Object(jsx_runtime_["jsx"])(container["a" /* Flex */].Item, {
           style: {
-            width: '100%' // Firefox 下，未设置宽度会导致外层宽度为 0 （logo 不显示）
-
+            width: '100%',
+            // Firefox 下，未设置宽度会导致外层宽度为 0 （logo 不显示）
+            textAlign: 'center'
           },
           children: /*#__PURE__*/Object(jsx_runtime_["jsx"])("img", {
             src: avatar,
