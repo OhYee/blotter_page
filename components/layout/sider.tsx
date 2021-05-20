@@ -65,6 +65,7 @@ export default function Sider(props: {
           <Flex.Item
             style={{
               width: '100%', // Firefox 下，未设置宽度会导致外层宽度为 0 （logo 不显示）
+			  textAlign: 'center',
             }}
           >
             <img
