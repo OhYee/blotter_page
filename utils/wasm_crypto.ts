@@ -24,7 +24,7 @@ export type Crypto = WASMPackage<{
 }>;
 
 async function initialCrypto(callback?: () => void): Promise<Crypto> {
-  return await initialWASM('/static/crypto.wasm', 'ohyee_crypto', callback);
+  return await initialWASM('//static.oyohyee.com/crypto.wasm', 'ohyee_crypto', callback);
 }
 
 export default initialCrypto;
