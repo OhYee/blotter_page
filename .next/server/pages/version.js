@@ -326,7 +326,8 @@ const defaultContext = {
     github_connected: false,
     self: false
   },
-  easter_egg: ''
+  easter_egg: '',
+  notification: ''
 };
 const Context = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createContext(defaultContext);
 function getTimeTheme() {
