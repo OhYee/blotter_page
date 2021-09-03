@@ -35,7 +35,6 @@ import { markdown, adminPost, postExist, postEdit } from '@/utils/api';
 import { setLocalStorage, getLocalStorage, removeLocalStorage } from '@/utils/storage';
 
 import styles from './post.module.scss';
-import { exception } from 'console';
 
 interface PostEditProps extends React.ComponentProps<'base'>, WithRouterProps {}
 
@@ -281,7 +280,8 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
             placeholder="文章链接"
             prefix="/post/"
             value={this.state.url}
-            onChange={(url) => this.setState({ url })}
+            // 限制只允许小写 url
+            onChange={(url) => this.setState({ url: !!url ?url.toLowerCase():url })}
           />
           <InputNumber
             label="阅读量"
