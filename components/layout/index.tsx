@@ -15,9 +15,10 @@ import SiderRenderer from '@/components/layout/sider';
 import FooterRenderer from '@/components/layout/footer';
 import FixedButton from '@/components/layout/fixed_button';
 import { Flex } from '@/components/container';
+import Notification, { message } from '@/components/notification';
 
 import { concat } from '@/utils/component';
-import { message } from '../notification';
+import { setLocalStorage, getLocalStorage, removeLocalStorage } from '@/utils/storage';
 
 interface BasicLayoutProps extends ComponentProps<'base'>, WithRouterProps {}
 interface BasicLayoutState {
@@ -26,6 +27,7 @@ interface BasicLayoutState {
   password: string;
   okDisabled: boolean;
   feedback: boolean;
+  notify: boolean;
 }
 
 class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
@@ -45,12 +47,20 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
       password: '',
       okDisabled: false,
       feedback: false,
+      notify: false,
     };
   }
 
   componentDidMount() {
     this.context.callback({ big_screen: document.body.clientWidth > 1024 });
     window.addEventListener('resize', this.onResize);
+
+    this.setState({
+      notify:
+        !!this.context.notification &&
+        getLocalStorage('notification') !== this.context.notification,
+    });
+
     // 苹果用户提醒
     // https://github.com/facebook/react/issues/17258
     var issafariBrowser = /Safari/.test(navigator.userAgent) && !/Chrome/.test(navigator.userAgent);
@@ -117,6 +127,18 @@ class BasicLayout extends React.Component<BasicLayoutProps, BasicLayoutState> {
           }}
           itemStyle={{ width: '100%' }}
         >
+          {this.state.notify && (
+            <Notification
+              title="提醒"
+              content={this.context.notification}
+              isHTML
+              onClose={() => {
+                setLocalStorage('notification', this.context.notification);
+                this.setState({ notify: false });
+              }}
+            />
+          )}
+
           {this.props.children}
           <FooterRenderer
             beian={this.context.beian}

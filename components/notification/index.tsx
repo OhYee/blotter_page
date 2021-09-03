@@ -16,6 +16,7 @@ export declare type NotificationProps = ComponentProps<{
   content?: React.ReactNode;
   onClose?: () => void;
   shadow?: boolean;
+  isHTML?: boolean;
 }>;
 
 function Notification(props: NotificationProps) {
@@ -27,6 +28,7 @@ function Notification(props: NotificationProps) {
     className,
     onClose,
     shadow = false,
+    isHTML = false,
     ...restProps
   } = props;
   return (
@@ -53,7 +55,15 @@ function Notification(props: NotificationProps) {
               {title} {!!onClose && <Close style={{ float: 'right' }} onClick={onClose} />}
             </div>
           )}
-          {content && <div className={styles.content}>{content}</div>}
+          {content &&
+            (isHTML ? (
+              <div
+                className={styles.content}
+                dangerouslySetInnerHTML={{ __html: `<div>${content.toString()}</div>` }}
+              />
+            ) : (
+              <div className={styles.content}>{content}</div>
+            ))}
         </Flex>
       </Flex.Item>
     </Flex>

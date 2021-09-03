@@ -46,6 +46,7 @@ export const defaultContext: GlobalProps = {
     self: false,
   },
   easter_egg: '',
+  notification: '',
 };
 
 export const Context = React.createContext(defaultContext);
@@ -76,6 +77,7 @@ export declare interface GlobalProps {
   front_version: string;
   back_version: string;
   easter_egg: string;
+  notification: string;
 }
 
 export function getTimeTheme() {

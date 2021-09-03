@@ -108,6 +108,8 @@ export const layout = async (
     email: string;
     github: string;
     friends: Blotter.FriendSimple[];
+    easter_eggs: string;
+    notification: string;
   }>,
 ) => {
   return await request('get', '/api/layout', {}, callback);
