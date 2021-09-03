@@ -58,10 +58,10 @@ export default function TextArea(props: TextAreaProps) {
   const ref = React.useRef<HTMLTextAreaElement>();
   const key = React.useMemo(() => randomString(), []);
 
-  React.useEffect(() => getValueCallback(() => (!!ref ? ref.current.value : '')), [
-    ref,
-    getValueCallback,
-  ]);
+  React.useEffect(
+    () => getValueCallback(() => (!!ref && ref.current ? ref.current.value : '')),
+    [ref, getValueCallback],
+  );
   /*
      TODO: 尽管原则上 setValueCallback 不需要判断
      但是在 ctypto.tsx 页面切换 UInt8Array 输入框的单选框时，在成功 setValue 后会奇怪地调用一次 setValue(undefined)，导致出错
