@@ -73,27 +73,6 @@ class AboutPage extends React.Component<AboutPageProps, AboutPageState> {
       this.setState({ repos, loading: false });
     }
   }
-  render_pay = () => {
-    const socialMedia: {
-      name: string;
-      icon: React.ReactNode;
-    }[] = [
-      { name: 'wechat', icon: <Wechat /> },
-      { name: 'alipay', icon: <Alipay /> },
-    ];
-    return (
-      <Flex mainAxis="space-around">
-        {socialMedia.map((item) => (
-          <Button
-            key={item.name}
-            size="large"
-            icon={item.icon}
-            onClick={() => showQR(item.name as 'wechat' | 'alipay')}
-          />
-        ))}
-      </Flex>
-    );
-  };
   render_social = () => {
     const socialMedia: {
       raw: string;
@@ -320,7 +299,6 @@ class AboutPage extends React.Component<AboutPageProps, AboutPageState> {
             <div dangerouslySetInnerHTML={{ __html: this.props.description }}></div>
           </If>
 
-          {this.render_pay()}
           {this.render_social()}
 
           <Flex.Item style={{ textAlign: 'initial' }}>
