@@ -354,7 +354,7 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
             onChange={(e) => {
               this.setState((state) => {
                 var { data } = state;
-                data[index].posts[idx].time = e;
+                data[index].posts[idx].time = e / 1000;
                 data.map((d) => {
                   d.posts = d.posts.map((dd) => dd);
                   return d;
