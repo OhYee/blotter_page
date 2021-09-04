@@ -258,6 +258,10 @@ export const friendsSet = async (
   return await request('post', '/api/admin/friends/set', { friends }, callback);
 };
 
+export const friendsSpider = async (callback?: RequestCallback<Blotter.APIResponse>) => {
+  return await request('get', '/api/admin/friends/spider', {}, callback);
+};
+
 export const view = async (url?: string, callback?: RequestCallback<void>) => {
   return await request('get', '/api/view', { url }, callback, true);
 };

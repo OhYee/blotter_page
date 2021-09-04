@@ -11,7 +11,7 @@ import Input, { CheckBox, DatePicker } from '@/components/input';
 import { Delete, Plus, Save } from '@/components/svg';
 
 import { Context } from '@/utils/global';
-import { friends, friendsSet } from '@/utils/api';
+import { friends, friendsSet, friendsSpider } from '@/utils/api';
 import ShowNotification from '@/utils/notification';
 import randomString from '@/utils/random';
 
@@ -305,6 +305,19 @@ class AdminFriendList extends React.Component<AdminFriendListProps, AdminFriendL
       >
         自动排序
       </Button>
+      <Button
+        neumorphism
+        loading={this.state.submitLoading}
+        onClick={async () => {
+          this.setState({ submitLoading: true });
+          var r = await friendsSpider();
+          ShowNotification(r);
+          this.setState({ submitLoading: false });
+        }}
+      >
+        订阅更新
+      </Button>
+
       <Button
         neumorphism
         primary
