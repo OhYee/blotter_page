@@ -507,53 +507,54 @@ module.exports = {
 "use strict";
 
 // EXPORTS
-__webpack_require__.d(__webpack_exports__, "A", function() { return /* binding */ posts; });
-__webpack_require__.d(__webpack_exports__, "p", function() { return /* binding */ indexPosts; });
+__webpack_require__.d(__webpack_exports__, "B", function() { return /* binding */ posts; });
+__webpack_require__.d(__webpack_exports__, "q", function() { return /* binding */ indexPosts; });
 __webpack_require__.d(__webpack_exports__, "f", function() { return /* binding */ archives; });
-__webpack_require__.d(__webpack_exports__, "K", function() { return /* binding */ tagPosts; });
+__webpack_require__.d(__webpack_exports__, "L", function() { return /* binding */ tagPosts; });
 __webpack_require__.d(__webpack_exports__, "d", function() { return /* binding */ adminPosts; });
 __webpack_require__.d(__webpack_exports__, "m", function() { return /* binding */ api_friends; });
-__webpack_require__.d(__webpack_exports__, "r", function() { return /* binding */ layout; });
-__webpack_require__.d(__webpack_exports__, "L", function() { return /* binding */ tags; });
-__webpack_require__.d(__webpack_exports__, "x", function() { return /* binding */ api_post; });
+__webpack_require__.d(__webpack_exports__, "s", function() { return /* binding */ layout; });
+__webpack_require__.d(__webpack_exports__, "M", function() { return /* binding */ tags; });
+__webpack_require__.d(__webpack_exports__, "y", function() { return /* binding */ api_post; });
 __webpack_require__.d(__webpack_exports__, "c", function() { return /* binding */ adminPost; });
 __webpack_require__.d(__webpack_exports__, "k", function() { return /* binding */ comments; });
 __webpack_require__.d(__webpack_exports__, "g", function() { return /* binding */ api_avatar; });
 __webpack_require__.d(__webpack_exports__, "b", function() { return /* binding */ addComment; });
-__webpack_require__.d(__webpack_exports__, "u", function() { return /* binding */ markdown; });
-__webpack_require__.d(__webpack_exports__, "M", function() { return /* binding */ tagsSearch; });
-__webpack_require__.d(__webpack_exports__, "s", function() { return /* binding */ login; });
-__webpack_require__.d(__webpack_exports__, "t", function() { return /* binding */ logout; });
-__webpack_require__.d(__webpack_exports__, "q", function() { return /* binding */ info; });
-__webpack_require__.d(__webpack_exports__, "z", function() { return /* binding */ postEdit; });
-__webpack_require__.d(__webpack_exports__, "y", function() { return /* binding */ postDelete; });
+__webpack_require__.d(__webpack_exports__, "v", function() { return /* binding */ markdown; });
+__webpack_require__.d(__webpack_exports__, "N", function() { return /* binding */ tagsSearch; });
+__webpack_require__.d(__webpack_exports__, "t", function() { return /* binding */ login; });
+__webpack_require__.d(__webpack_exports__, "u", function() { return /* binding */ logout; });
+__webpack_require__.d(__webpack_exports__, "r", function() { return /* binding */ info; });
+__webpack_require__.d(__webpack_exports__, "A", function() { return /* binding */ postEdit; });
+__webpack_require__.d(__webpack_exports__, "z", function() { return /* binding */ postDelete; });
 __webpack_require__.d(__webpack_exports__, "e", function() { return /* binding */ adminTags; });
-__webpack_require__.d(__webpack_exports__, "J", function() { return /* binding */ tagEdit; });
-__webpack_require__.d(__webpack_exports__, "I", function() { return /* binding */ tagDelete; });
+__webpack_require__.d(__webpack_exports__, "K", function() { return /* binding */ tagEdit; });
+__webpack_require__.d(__webpack_exports__, "J", function() { return /* binding */ tagDelete; });
 __webpack_require__.d(__webpack_exports__, "n", function() { return /* binding */ friendsSet; });
-__webpack_require__.d(__webpack_exports__, "U", function() { return /* binding */ view; });
-__webpack_require__.d(__webpack_exports__, "v", function() { return /* binding */ api_menus; });
-__webpack_require__.d(__webpack_exports__, "w", function() { return /* binding */ menusSet; });
-__webpack_require__.d(__webpack_exports__, "o", function() { return /* binding */ githubRepos; });
+__webpack_require__.d(__webpack_exports__, "o", function() { return /* binding */ friendsSpider; });
+__webpack_require__.d(__webpack_exports__, "V", function() { return /* binding */ view; });
+__webpack_require__.d(__webpack_exports__, "w", function() { return /* binding */ api_menus; });
+__webpack_require__.d(__webpack_exports__, "x", function() { return /* binding */ menusSet; });
+__webpack_require__.d(__webpack_exports__, "p", function() { return /* binding */ githubRepos; });
 __webpack_require__.d(__webpack_exports__, "a", function() { return /* binding */ about; });
-__webpack_require__.d(__webpack_exports__, "S", function() { return /* binding */ variables; });
-__webpack_require__.d(__webpack_exports__, "T", function() { return /* binding */ variablesSet; });
+__webpack_require__.d(__webpack_exports__, "T", function() { return /* binding */ variables; });
+__webpack_require__.d(__webpack_exports__, "U", function() { return /* binding */ variablesSet; });
 __webpack_require__.d(__webpack_exports__, "l", function() { return /* binding */ commentsAdmin; });
 __webpack_require__.d(__webpack_exports__, "j", function() { return /* binding */ commentSet; });
 __webpack_require__.d(__webpack_exports__, "i", function() { return /* binding */ commentDelete; });
-__webpack_require__.d(__webpack_exports__, "Q", function() { return /* binding */ userSet; });
+__webpack_require__.d(__webpack_exports__, "R", function() { return /* binding */ userSet; });
 __webpack_require__.d(__webpack_exports__, "h", function() { return /* binding */ checkUsername; });
-__webpack_require__.d(__webpack_exports__, "G", function() { return /* binding */ register; });
-__webpack_require__.d(__webpack_exports__, "R", function() { return /* binding */ users; });
-__webpack_require__.d(__webpack_exports__, "H", function() { return /* binding */ reset_password; });
-__webpack_require__.d(__webpack_exports__, "N", function() { return /* binding */ travels_get; });
-__webpack_require__.d(__webpack_exports__, "P", function() { return /* binding */ travels_set; });
-__webpack_require__.d(__webpack_exports__, "O", function() { return /* binding */ travels_get_url; });
-__webpack_require__.d(__webpack_exports__, "C", function() { return /* binding */ qiniu_get_buckets; });
-__webpack_require__.d(__webpack_exports__, "D", function() { return /* binding */ qiniu_get_images; });
-__webpack_require__.d(__webpack_exports__, "E", function() { return /* binding */ qiniu_get_token; });
-__webpack_require__.d(__webpack_exports__, "B", function() { return /* binding */ qiniu_delete_image; });
-__webpack_require__.d(__webpack_exports__, "F", function() { return /* binding */ qiniu_rename_image; });
+__webpack_require__.d(__webpack_exports__, "H", function() { return /* binding */ register; });
+__webpack_require__.d(__webpack_exports__, "S", function() { return /* binding */ users; });
+__webpack_require__.d(__webpack_exports__, "I", function() { return /* binding */ reset_password; });
+__webpack_require__.d(__webpack_exports__, "O", function() { return /* binding */ travels_get; });
+__webpack_require__.d(__webpack_exports__, "Q", function() { return /* binding */ travels_set; });
+__webpack_require__.d(__webpack_exports__, "P", function() { return /* binding */ travels_get_url; });
+__webpack_require__.d(__webpack_exports__, "D", function() { return /* binding */ qiniu_get_buckets; });
+__webpack_require__.d(__webpack_exports__, "E", function() { return /* binding */ qiniu_get_images; });
+__webpack_require__.d(__webpack_exports__, "F", function() { return /* binding */ qiniu_get_token; });
+__webpack_require__.d(__webpack_exports__, "C", function() { return /* binding */ qiniu_delete_image; });
+__webpack_require__.d(__webpack_exports__, "G", function() { return /* binding */ qiniu_rename_image; });
 
 // UNUSED EXPORTS: postExist, tagExisted, githubUser, githubRepo, version
 
@@ -780,6 +781,9 @@ const friendsSet = async (friends, callback) => {
   return await request('post', '/api/admin/friends/set', {
     friends
   }, callback);
+};
+const friendsSpider = async callback => {
+  return await request('get', '/api/admin/friends/spider', {}, callback);
 };
 const view = async (url, callback) => {
   return await request('get', '/api/view', {
@@ -2102,7 +2106,7 @@ class Travel extends react__WEBPACK_IMPORTED_MODULE_1___default.a.Component {
       const CityInput = this.CityInput;
 
       const onSearch = async value => {
-        const r = await Object(_utils_api__WEBPACK_IMPORTED_MODULE_9__[/* posts */ "A"])({
+        const r = await Object(_utils_api__WEBPACK_IMPORTED_MODULE_9__[/* posts */ "B"])({
           search: value,
           search_fields: 'title',
           with_tags: this.state.tagID
@@ -2262,7 +2266,7 @@ class Travel extends react__WEBPACK_IMPORTED_MODULE_1___default.a.Component {
   }
 
   async componentDidMount() {
-    Object(_utils_api__WEBPACK_IMPORTED_MODULE_9__[/* tagsSearch */ "M"])('游记').then(r => {
+    Object(_utils_api__WEBPACK_IMPORTED_MODULE_9__[/* tagsSearch */ "N"])('游记').then(r => {
       const tags = r.tags.filter(item => item.name === '游记' && item.short === 'travels');
       if (tags.length > 0) this.setState({
         tagID: tags[0].id
@@ -2271,7 +2275,7 @@ class Travel extends react__WEBPACK_IMPORTED_MODULE_1___default.a.Component {
     this.setState({
       loading: true
     });
-    Object(_utils_api__WEBPACK_IMPORTED_MODULE_9__[/* travels_get */ "N"])().then(r => this.setState({
+    Object(_utils_api__WEBPACK_IMPORTED_MODULE_9__[/* travels_get */ "O"])().then(r => this.setState({
       cities: r.travels
     })).catch(console.error).finally(() => this.setState({
       loading: false
@@ -2305,7 +2309,7 @@ class Travel extends react__WEBPACK_IMPORTED_MODULE_1___default.a.Component {
               this.setState({
                 loading: true
               });
-              Object(_utils_api__WEBPACK_IMPORTED_MODULE_9__[/* travels_set */ "P"])(this.state.cities).then(_utils_notification__WEBPACK_IMPORTED_MODULE_10__[/* default */ "a"]).catch(console.error).finally(() => this.setState({
+              Object(_utils_api__WEBPACK_IMPORTED_MODULE_9__[/* travels_set */ "Q"])(this.state.cities).then(_utils_notification__WEBPACK_IMPORTED_MODULE_10__[/* default */ "a"]).catch(console.error).finally(() => this.setState({
                 loading: false
               }));
             },
