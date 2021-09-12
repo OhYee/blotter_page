@@ -13,9 +13,12 @@ import Card from '@/components/card';
 import Avatar from '@/components/avatar';
 import Button, { A } from '@/components/button';
 import Anchor from '@/components/anchor';
+import Notification from '@/components/notification';
 
 import { post, view } from '@/utils/api';
 import { Context } from '@/utils/global';
+
+import moment from 'moment';
 
 import './post.module.scss';
 
@@ -142,6 +145,19 @@ class PostPage extends React.Component<PostPageProps, PostPageState> {
           >
             <PostContent
               post={this.props.post}
+              prefix={
+                // 超过 3 个月的文章，给出提示
+                new Date().getTime() - this.props.post.edit_time > 3 * 30 * 24 * 60 * 60 * 1000 && (
+                  <Notification
+                    alertType="warning"
+                    title="注意"
+                    content={`这是一篇最后编辑于 ${moment(
+                      this.props.post.edit_time,
+                      'X',
+                    ).fromNow()} 的文章，其内容可能与目前实际情况差异较大，请注意甄别`}
+                  />
+                )
+              }
               suffix={<Card neumorphismInset>{this.render_share()}</Card>}
             />
           </Card>
