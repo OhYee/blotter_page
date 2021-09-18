@@ -1258,7 +1258,8 @@ const defaultContext = {
     self: false
   },
   easter_egg: '',
-  notification: ''
+  notification: '',
+  footer: ''
 };
 const Context = /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_0___default.a.createContext(defaultContext);
 function getTimeTheme() {
