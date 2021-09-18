@@ -147,7 +147,7 @@ class PostPage extends React.Component<PostPageProps, PostPageState> {
               post={this.props.post}
               prefix={
                 // 超过 3 个月的文章，给出提示
-                new Date().getTime() - this.props.post.edit_time > 3 * 30 * 24 * 60 * 60 * 1000 && (
+                (new Date().getTime() / 1000 - this.props.post.edit_time) / 3600 / 24 > 30 * 3 && (
                   <Notification
                     alertType="warning"
                     title="注意"
