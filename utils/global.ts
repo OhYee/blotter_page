@@ -4,7 +4,7 @@ import getConfig from 'next/config';
 import { formatDate } from './time';
 
 export const defaultContext: GlobalProps = {
-  callback: () => {},
+  callback: () => { },
   menus: [],
   beian: '',
   view: 0,
@@ -47,6 +47,7 @@ export const defaultContext: GlobalProps = {
   },
   easter_egg: '',
   notification: '',
+  footer: '',
 };
 
 export const Context = React.createContext(defaultContext);
@@ -78,6 +79,7 @@ export declare interface GlobalProps {
   back_version: string;
   easter_egg: string;
   notification: string;
+  footer: string;
 }
 
 export function getTimeTheme() {

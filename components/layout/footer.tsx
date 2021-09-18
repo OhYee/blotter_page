@@ -24,13 +24,14 @@ export default function Footer(props: {
         <RSS style={{ color: '#EE802F' }} />
         <a href="/rss.xml">RSS订阅</a>
       </Flex>
-      <div>全站访问量 {view}</div>
       <Flex>
         <div>
           {from} – {new Date().getFullYear()}
         </div>
-        <a href="http://beian.miit.gov.cn/">{beian}</a>
+        <div>全站访问量 {view}</div>
       </Flex>
+      {context.footer && <div dangerouslySetInnerHTML={{ __html: context.footer }} />}
+      <a href="http://beian.miit.gov.cn/">{beian}</a>
       <div>
         Powered by <a href="https://github.com/OhYee/blotter">Blotter</a>
         (Go + React)
