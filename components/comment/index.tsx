@@ -14,10 +14,12 @@ import { concat, ComponentProps } from '@/utils/component';
 import { comments, avatar, addComment } from '@/utils/api';
 import { Context } from '@/utils/global';
 import ShowNotification from '@/utils/notification';
+import { message } from '@/components/notification';
 
 import shadowStyles from '@/styles/shadow.module.scss';
 import textStyles from '@/styles/text.module.scss';
 import styles from './comment.module.scss';
+import { waitUntil } from '@/utils/debounce';
 
 const emailRep = /^([A-Za-z0-9_\-\.\u4e00-\u9fa5])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,8})$/;
 const adWarning = <b>广告评论，已被屏蔽</b>;
@@ -48,18 +50,34 @@ const Editor: React.FC<{ id: string; closeEditorCallback?: () => void }> = (prop
 
   const onSubmitClick = async () => {
     setLoading(true);
-    addComment({ url, reply: id, email, recv, raw })
-      .then((r) => {
-        if (ShowNotification(r)) {
-          setRaw('');
-          if (!!closeEditorCallback) closeEditorCallback();
-          if (!!callback) callback();
-        }
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    waitUntil(
+      'addComment',
+      () => {
+        addComment({ url, reply: id, email, recv, raw })
+          .then((r) => {
+            if (r.success) {
+              message({ title: r.title, content: r.content, alertType: 'success' });
+              setRaw('');
+              if (!!closeEditorCallback) closeEditorCallback();
+              if (!!callback) callback();
+            } else {
+              message({
+                title: r.title,
+                content: `${r.content}. 注意，由于未知原因，即使评论成功仍然可能报错，请二次鉴别是否真正评论成功`,
+                alertType: 'warning',
+              });
+              if (!!callback) callback();
+            }
+          })
+          .finally(() => {
+            setLoading(false);
+          });
+      },
+      1000,
+    );
   };
+
+  
   const onEmailBlur = () => {
     avatar(email, (data) => setAvatarURL(data.avatar));
   };
