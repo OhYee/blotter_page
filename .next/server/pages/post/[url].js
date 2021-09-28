@@ -268,43 +268,6 @@ module.exports = require("next/router");
 
 /***/ }),
 
-/***/ "5D78":
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ShowNotification; });
-/* unused harmony export H5Notification */
-/* harmony import */ var _components_notification__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__("wvHr");
-
-function ShowNotification(res) {
-  if (res.success) {
-    Object(_components_notification__WEBPACK_IMPORTED_MODULE_0__[/* message */ "b"])({
-      title: res.title,
-      content: res.content,
-      alertType: 'success'
-    });
-  } else {
-    Object(_components_notification__WEBPACK_IMPORTED_MODULE_0__[/* message */ "b"])({
-      title: res.title,
-      content: res.content,
-      alertType: 'error'
-    });
-  }
-
-  return res.success;
-}
-function H5Notification(msg) {
-  if (typeof document !== 'undefined') {
-    Notification.requestPermission();
-    new Notification('通知', {
-      body: msg,
-      icon: '/static/img/logo_196x196.png'
-    });
-  }
-}
-
-/***/ }),
-
 /***/ "6D7l":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -604,6 +567,8 @@ var external_axios_default = /*#__PURE__*/__webpack_require__.n(external_axios_)
 // CONCATENATED MODULE: ./utils/request.ts
 
 
+// 超时时间 15 秒
+external_axios_default.a.defaults.timeout = 15 * 1000;
 const backendURI = !!process.env["backendURI"] ? process.env["backendURI"] : 'http://127.0.0.1:50000';
 
 function parseURL(url) {
@@ -1468,13 +1433,15 @@ module.exports = require("react/jsx-runtime");
 /* harmony import */ var _utils_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__("Hh1h");
 /* harmony import */ var _utils_api__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__("AoAR");
 /* harmony import */ var _utils_global__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__("dSKx");
-/* harmony import */ var _utils_notification__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__("5D78");
+/* harmony import */ var _components_notification__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__("wvHr");
 /* harmony import */ var _styles_shadow_module_scss__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__("tyXD");
 /* harmony import */ var _styles_shadow_module_scss__WEBPACK_IMPORTED_MODULE_15___default = /*#__PURE__*/__webpack_require__.n(_styles_shadow_module_scss__WEBPACK_IMPORTED_MODULE_15__);
 /* harmony import */ var _styles_text_module_scss__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__("s0TQ");
 /* harmony import */ var _styles_text_module_scss__WEBPACK_IMPORTED_MODULE_16___default = /*#__PURE__*/__webpack_require__.n(_styles_text_module_scss__WEBPACK_IMPORTED_MODULE_16__);
 /* harmony import */ var _comment_module_scss__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__("2Ux7");
 /* harmony import */ var _comment_module_scss__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_comment_module_scss__WEBPACK_IMPORTED_MODULE_17__);
+/* harmony import */ var _utils_debounce__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__("y0/X");
+
 
 
 
@@ -1540,21 +1507,35 @@ const Editor = props => {
 
   const onSubmitClick = async () => {
     setLoading(true);
-    Object(_utils_api__WEBPACK_IMPORTED_MODULE_12__[/* addComment */ "b"])({
-      url,
-      reply: id,
-      email,
-      recv,
-      raw
-    }).then(r => {
-      if (Object(_utils_notification__WEBPACK_IMPORTED_MODULE_14__[/* default */ "a"])(r)) {
-        setRaw('');
-        if (!!closeEditorCallback) closeEditorCallback();
-        if (!!callback) callback();
-      }
-    }).finally(() => {
-      setLoading(false);
-    });
+    Object(_utils_debounce__WEBPACK_IMPORTED_MODULE_18__[/* waitUntil */ "a"])('addComment', () => {
+      Object(_utils_api__WEBPACK_IMPORTED_MODULE_12__[/* addComment */ "b"])({
+        url,
+        reply: id,
+        email,
+        recv,
+        raw
+      }).then(r => {
+        if (r.success) {
+          Object(_components_notification__WEBPACK_IMPORTED_MODULE_14__[/* message */ "b"])({
+            title: r.title,
+            content: r.content,
+            alertType: 'success'
+          });
+          setRaw('');
+          if (!!closeEditorCallback) closeEditorCallback();
+          if (!!callback) callback();
+        } else {
+          Object(_components_notification__WEBPACK_IMPORTED_MODULE_14__[/* message */ "b"])({
+            title: r.title,
+            content: `${r.content}. 注意，由于未知原因，即使评论成功仍然可能报错，请二次鉴别是否真正评论成功`,
+            alertType: 'warning'
+          });
+          if (!!callback) callback();
+        }
+      }).finally(() => {
+        setLoading(false);
+      });
+    }, 1000);
   };
 
   const onEmailBlur = () => {

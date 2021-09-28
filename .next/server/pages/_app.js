@@ -602,6 +602,8 @@ var external_axios_default = /*#__PURE__*/__webpack_require__.n(external_axios_)
 // CONCATENATED MODULE: ./utils/request.ts
 
 
+// 超时时间 15 秒
+external_axios_default.a.defaults.timeout = 15 * 1000;
 const backendURI = !!process.env["backendURI"] ? process.env["backendURI"] : 'http://127.0.0.1:50000';
 
 function parseURL(url) {
