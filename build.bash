@@ -8,4 +8,4 @@ fi
 
 IMAGE="ohyee/blotter_page:${TAG}"
 echo $IMAGE
-docker build --no-cache -t ${IMAGE} .
+docker build -t ${IMAGE} .
