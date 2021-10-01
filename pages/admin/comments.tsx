@@ -12,7 +12,7 @@ import { Flex } from '@/components/container';
 import Loading from '@/components/loading';
 
 import { Context } from '@/utils/global';
-import { commentDelete, commentsAdmin, commentSet } from '@/utils/api';
+import { commentDelete, commentsAdmin, commentSet, commentsAvatar } from '@/utils/api';
 import moment from '@/utils/moment';
 import ShowNotification from '@/utils/notification';
 
@@ -133,7 +133,20 @@ class AdminComments extends React.Component<AdminCommentsProps, AdminCommentsSta
               </Head>
 
               <Flex fullWidth direction="TB">
-                <p>共 {this.state.total} 条评论</p>
+                <Flex direction="LR">
+                  <p>共 {this.state.total} 条评论</p>
+                  <Button
+                    neumorphism
+                    loading={this.state.loading}
+                    onClick={async () => {
+                      this.setState({ loading: true });
+                      ShowNotification(await commentsAvatar());
+                      this.setState({ loading: false });
+                    }}
+                  >
+                    更新头像
+                  </Button>
+                </Flex>
                 <Loading loading={this.state.loading}>
                   {this.state.data.map((comment, idx) => (
                     <Flex key={comment.id} mainAxis="space-between" wrap={!context.big_screen}>

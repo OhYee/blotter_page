@@ -360,6 +360,12 @@ export const commentDelete = async (
   return await request('get', `/api/admin/comment/delete`, { id }, callback);
 };
 
+export const commentsAvatar = async (
+  callback?: RequestCallback<Blotter.APIResponse>,
+) => {
+  return await request('get', `/api/admin/comments/avatar`, {}, callback);
+};
+
 export const userSet = async (
   username: string,
   email: string,
