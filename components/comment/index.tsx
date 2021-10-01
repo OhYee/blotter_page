@@ -20,6 +20,7 @@ import shadowStyles from '@/styles/shadow.module.scss';
 import textStyles from '@/styles/text.module.scss';
 import styles from './comment.module.scss';
 import { waitUntil } from '@/utils/debounce';
+import { getLocalStorage, setLocalStorage } from '@/utils/storage';
 
 const emailRep = /^([A-Za-z0-9_\-\.\u4e00-\u9fa5])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,8})$/;
 const adWarning = <b>广告评论，已被屏蔽</b>;
@@ -44,7 +45,7 @@ const Editor: React.FC<{ id: string; closeEditorCallback?: () => void }> = (prop
   const [avatarURL, setAvatarURL] = React.useState('');
   const [loading, setLoading] = React.useState(false);
   const { url, callback } = React.useContext(CommentContext);
-  const [email, setEmail] = React.useState('');
+  const [email, setEmail] = React.useState(getLocalStorage('email') || '');
   const [raw, setRaw] = React.useState('');
   const [recv, setRecv] = React.useState(true);
 
@@ -53,6 +54,7 @@ const Editor: React.FC<{ id: string; closeEditorCallback?: () => void }> = (prop
     waitUntil(
       'addComment',
       () => {
+        setLocalStorage('email', email);
         addComment({ url, reply: id, email, recv, raw })
           .then((r) => {
             if (r.success) {
@@ -77,7 +79,6 @@ const Editor: React.FC<{ id: string; closeEditorCallback?: () => void }> = (prop
     );
   };
 
-  
   const onEmailBlur = () => {
     avatar(email, (data) => setAvatarURL(data.avatar));
   };
