@@ -165,54 +165,55 @@ module.exports = {
 "use strict";
 
 // EXPORTS
-__webpack_require__.d(__webpack_exports__, "B", function() { return /* binding */ posts; });
-__webpack_require__.d(__webpack_exports__, "q", function() { return /* binding */ indexPosts; });
+__webpack_require__.d(__webpack_exports__, "C", function() { return /* binding */ posts; });
+__webpack_require__.d(__webpack_exports__, "r", function() { return /* binding */ indexPosts; });
 __webpack_require__.d(__webpack_exports__, "f", function() { return /* binding */ archives; });
-__webpack_require__.d(__webpack_exports__, "L", function() { return /* binding */ tagPosts; });
+__webpack_require__.d(__webpack_exports__, "M", function() { return /* binding */ tagPosts; });
 __webpack_require__.d(__webpack_exports__, "d", function() { return /* binding */ adminPosts; });
-__webpack_require__.d(__webpack_exports__, "m", function() { return /* binding */ api_friends; });
-__webpack_require__.d(__webpack_exports__, "s", function() { return /* binding */ layout; });
-__webpack_require__.d(__webpack_exports__, "M", function() { return /* binding */ tags; });
-__webpack_require__.d(__webpack_exports__, "y", function() { return /* binding */ api_post; });
+__webpack_require__.d(__webpack_exports__, "n", function() { return /* binding */ api_friends; });
+__webpack_require__.d(__webpack_exports__, "t", function() { return /* binding */ layout; });
+__webpack_require__.d(__webpack_exports__, "N", function() { return /* binding */ tags; });
+__webpack_require__.d(__webpack_exports__, "z", function() { return /* binding */ api_post; });
 __webpack_require__.d(__webpack_exports__, "c", function() { return /* binding */ adminPost; });
 __webpack_require__.d(__webpack_exports__, "k", function() { return /* binding */ comments; });
 __webpack_require__.d(__webpack_exports__, "g", function() { return /* binding */ api_avatar; });
 __webpack_require__.d(__webpack_exports__, "b", function() { return /* binding */ addComment; });
-__webpack_require__.d(__webpack_exports__, "v", function() { return /* binding */ markdown; });
-__webpack_require__.d(__webpack_exports__, "N", function() { return /* binding */ tagsSearch; });
-__webpack_require__.d(__webpack_exports__, "t", function() { return /* binding */ login; });
-__webpack_require__.d(__webpack_exports__, "u", function() { return /* binding */ logout; });
-__webpack_require__.d(__webpack_exports__, "r", function() { return /* binding */ info; });
-__webpack_require__.d(__webpack_exports__, "A", function() { return /* binding */ postEdit; });
-__webpack_require__.d(__webpack_exports__, "z", function() { return /* binding */ postDelete; });
+__webpack_require__.d(__webpack_exports__, "w", function() { return /* binding */ markdown; });
+__webpack_require__.d(__webpack_exports__, "O", function() { return /* binding */ tagsSearch; });
+__webpack_require__.d(__webpack_exports__, "u", function() { return /* binding */ login; });
+__webpack_require__.d(__webpack_exports__, "v", function() { return /* binding */ logout; });
+__webpack_require__.d(__webpack_exports__, "s", function() { return /* binding */ info; });
+__webpack_require__.d(__webpack_exports__, "B", function() { return /* binding */ postEdit; });
+__webpack_require__.d(__webpack_exports__, "A", function() { return /* binding */ postDelete; });
 __webpack_require__.d(__webpack_exports__, "e", function() { return /* binding */ adminTags; });
-__webpack_require__.d(__webpack_exports__, "K", function() { return /* binding */ tagEdit; });
-__webpack_require__.d(__webpack_exports__, "J", function() { return /* binding */ tagDelete; });
-__webpack_require__.d(__webpack_exports__, "n", function() { return /* binding */ friendsSet; });
-__webpack_require__.d(__webpack_exports__, "o", function() { return /* binding */ friendsSpider; });
-__webpack_require__.d(__webpack_exports__, "V", function() { return /* binding */ view; });
-__webpack_require__.d(__webpack_exports__, "w", function() { return /* binding */ api_menus; });
-__webpack_require__.d(__webpack_exports__, "x", function() { return /* binding */ menusSet; });
-__webpack_require__.d(__webpack_exports__, "p", function() { return /* binding */ githubRepos; });
+__webpack_require__.d(__webpack_exports__, "L", function() { return /* binding */ tagEdit; });
+__webpack_require__.d(__webpack_exports__, "K", function() { return /* binding */ tagDelete; });
+__webpack_require__.d(__webpack_exports__, "o", function() { return /* binding */ friendsSet; });
+__webpack_require__.d(__webpack_exports__, "p", function() { return /* binding */ friendsSpider; });
+__webpack_require__.d(__webpack_exports__, "W", function() { return /* binding */ view; });
+__webpack_require__.d(__webpack_exports__, "x", function() { return /* binding */ api_menus; });
+__webpack_require__.d(__webpack_exports__, "y", function() { return /* binding */ menusSet; });
+__webpack_require__.d(__webpack_exports__, "q", function() { return /* binding */ githubRepos; });
 __webpack_require__.d(__webpack_exports__, "a", function() { return /* binding */ about; });
-__webpack_require__.d(__webpack_exports__, "T", function() { return /* binding */ variables; });
-__webpack_require__.d(__webpack_exports__, "U", function() { return /* binding */ variablesSet; });
+__webpack_require__.d(__webpack_exports__, "U", function() { return /* binding */ variables; });
+__webpack_require__.d(__webpack_exports__, "V", function() { return /* binding */ variablesSet; });
 __webpack_require__.d(__webpack_exports__, "l", function() { return /* binding */ commentsAdmin; });
 __webpack_require__.d(__webpack_exports__, "j", function() { return /* binding */ commentSet; });
 __webpack_require__.d(__webpack_exports__, "i", function() { return /* binding */ commentDelete; });
-__webpack_require__.d(__webpack_exports__, "R", function() { return /* binding */ userSet; });
+__webpack_require__.d(__webpack_exports__, "m", function() { return /* binding */ commentsAvatar; });
+__webpack_require__.d(__webpack_exports__, "S", function() { return /* binding */ userSet; });
 __webpack_require__.d(__webpack_exports__, "h", function() { return /* binding */ checkUsername; });
-__webpack_require__.d(__webpack_exports__, "H", function() { return /* binding */ register; });
-__webpack_require__.d(__webpack_exports__, "S", function() { return /* binding */ users; });
-__webpack_require__.d(__webpack_exports__, "I", function() { return /* binding */ reset_password; });
-__webpack_require__.d(__webpack_exports__, "O", function() { return /* binding */ travels_get; });
-__webpack_require__.d(__webpack_exports__, "Q", function() { return /* binding */ travels_set; });
-__webpack_require__.d(__webpack_exports__, "P", function() { return /* binding */ travels_get_url; });
-__webpack_require__.d(__webpack_exports__, "D", function() { return /* binding */ qiniu_get_buckets; });
-__webpack_require__.d(__webpack_exports__, "E", function() { return /* binding */ qiniu_get_images; });
-__webpack_require__.d(__webpack_exports__, "F", function() { return /* binding */ qiniu_get_token; });
-__webpack_require__.d(__webpack_exports__, "C", function() { return /* binding */ qiniu_delete_image; });
-__webpack_require__.d(__webpack_exports__, "G", function() { return /* binding */ qiniu_rename_image; });
+__webpack_require__.d(__webpack_exports__, "I", function() { return /* binding */ register; });
+__webpack_require__.d(__webpack_exports__, "T", function() { return /* binding */ users; });
+__webpack_require__.d(__webpack_exports__, "J", function() { return /* binding */ reset_password; });
+__webpack_require__.d(__webpack_exports__, "P", function() { return /* binding */ travels_get; });
+__webpack_require__.d(__webpack_exports__, "R", function() { return /* binding */ travels_set; });
+__webpack_require__.d(__webpack_exports__, "Q", function() { return /* binding */ travels_get_url; });
+__webpack_require__.d(__webpack_exports__, "E", function() { return /* binding */ qiniu_get_buckets; });
+__webpack_require__.d(__webpack_exports__, "F", function() { return /* binding */ qiniu_get_images; });
+__webpack_require__.d(__webpack_exports__, "G", function() { return /* binding */ qiniu_get_token; });
+__webpack_require__.d(__webpack_exports__, "D", function() { return /* binding */ qiniu_delete_image; });
+__webpack_require__.d(__webpack_exports__, "H", function() { return /* binding */ qiniu_rename_image; });
 
 // UNUSED EXPORTS: postExist, tagExisted, githubUser, githubRepo, version
 
@@ -498,6 +499,9 @@ const commentDelete = async (id, callback) => {
   return await request('get', `/api/admin/comment/delete`, {
     id
   }, callback);
+};
+const commentsAvatar = async (callback) => {
+  return await request('get', `/api/admin/comments/avatar`, {}, callback);
 };
 const userSet = async (username, email, avatar, ns_id, ns_name, ac_name, ac_island, qq, password, callback) => {
   return await request('get', `/api/user/set`, {
@@ -856,6 +860,8 @@ module.exports = require("react/jsx-runtime");
 /* harmony import */ var _comment_module_scss__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__("2Ux7");
 /* harmony import */ var _comment_module_scss__WEBPACK_IMPORTED_MODULE_17___default = /*#__PURE__*/__webpack_require__.n(_comment_module_scss__WEBPACK_IMPORTED_MODULE_17__);
 /* harmony import */ var _utils_debounce__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__("y0/X");
+/* harmony import */ var _utils_storage__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__("K92R");
+
 
 
 
@@ -916,13 +922,14 @@ const Editor = props => {
     url,
     callback
   } = react__WEBPACK_IMPORTED_MODULE_1___default.a.useContext(CommentContext);
-  const [email, setEmail] = react__WEBPACK_IMPORTED_MODULE_1___default.a.useState('');
+  const [email, setEmail] = react__WEBPACK_IMPORTED_MODULE_1___default.a.useState(Object(_utils_storage__WEBPACK_IMPORTED_MODULE_19__[/* getLocalStorage */ "a"])('email') || '');
   const [raw, setRaw] = react__WEBPACK_IMPORTED_MODULE_1___default.a.useState('');
   const [recv, setRecv] = react__WEBPACK_IMPORTED_MODULE_1___default.a.useState(true);
 
   const onSubmitClick = async () => {
     setLoading(true);
     Object(_utils_debounce__WEBPACK_IMPORTED_MODULE_18__[/* waitUntil */ "a"])('addComment', () => {
+      Object(_utils_storage__WEBPACK_IMPORTED_MODULE_19__[/* setLocalStorage */ "d"])('email', email);
       Object(_utils_api__WEBPACK_IMPORTED_MODULE_12__[/* addComment */ "b"])({
         url,
         reply: id,
@@ -1349,6 +1356,64 @@ function Avatar(props) {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return concat; });
 function concat(...classList) {
   return classList.filter(s => !!s).join(' ');
+}
+
+/***/ }),
+
+/***/ "K92R":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return setCookie; });
+/* unused harmony export getCookie */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "d", function() { return setLocalStorage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return getLocalStorage; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return removeLocalStorage; });
+/* unused harmony export clearLocalStorage */
+function setCookie(key, value, exdays) {
+  var d = new Date();
+  d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
+  var expires = 'expires=' + d.toUTCString();
+  document.cookie = key + '=' + value + '; ' + expires;
+}
+function getCookie(key) {
+  if (typeof document !== 'undefined') {
+    var name = key + '=';
+    var ca = document.cookie.split(';');
+
+    for (var i = 0; i < ca.length; i++) {
+      var c = ca[i].trim();
+      if (c.indexOf(name) == 0) return c.substring(name.length, c.length);
+    }
+  }
+
+  return '';
+}
+function setLocalStorage(key, value) {
+  if (typeof document !== 'undefined') {
+    localStorage.setItem(key, value);
+  }
+}
+function getLocalStorage(key) {
+  if (typeof document !== 'undefined') {
+    const value = localStorage.getItem(key);
+
+    if (value != null) {
+      return value;
+    }
+  }
+
+  return '';
+}
+function removeLocalStorage(key) {
+  if (typeof document !== 'undefined') {
+    localStorage.removeItem(key);
+  }
+}
+function clearLocalStorage(key) {
+  if (typeof document !== 'undefined') {
+    localStorage.clear();
+  }
 }
 
 /***/ }),
