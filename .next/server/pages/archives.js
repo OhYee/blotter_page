@@ -573,7 +573,7 @@ var external_axios_default = /*#__PURE__*/__webpack_require__.n(external_axios_)
 
 // 超时时间 15 秒
 external_axios_default.a.defaults.timeout = 15 * 1000;
-const backendURI = !!process.env["backendURI"] ? process.env["backendURI"] : 'http://127.0.0.1:50000';
+const backendURI = !!process.env['backendURI'] ? process.env['backendURI'] : 'http://127.0.0.1:50000';
 
 function parseURL(url) {
   return url.length > 0 && url[0] !== '/' || typeof document !== 'undefined' ? url : backendURI + url;
@@ -611,7 +611,8 @@ const request = async (method, url, data, callback, ignore_exception) => {
       method: method,
       url: parseURL(url),
       params: method === 'get' ? data : undefined,
-      data: method === 'post' ? data : undefined
+      data: method === 'post' ? data : undefined,
+      withCredentials: true
     });
   } catch (e) {
     console.log(e);
@@ -626,7 +627,7 @@ const request = async (method, url, data, callback, ignore_exception) => {
     }
   }
 
-  if (callback) {
+  if (!!callback) {
     callback(r.data);
   }
 
