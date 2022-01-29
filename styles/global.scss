@@ -1,4 +1,38 @@
-:root {
+@font-face {
+  font-family: 'shetumodengxiaofangti';
+  font-display: swap;
+  src: url('//static.oyohyee.com/font/shetumodengxiaofangti.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+// bitter 英文字体
+@font-face {
+  font-family: 'bitter';
+  font-display: swap;
+  src: url('https://cdn.jsdelivr.net/gh/OhYee/cdn@master/font/bitter.woff') format('woff');
+}
+
+// 鸿蒙字体
+@font-face {
+  font-family: 'harmony';
+  font-display: swap;
+  src: url('https://cdn.jsdelivr.net/gh/OhYee/cdn@master/font/harmony.woff2') format('woff2');
+}
+
+// 阿里巴巴普惠体
+@font-face {
+  font-family: 'alibabapuhuiti';
+  font-display: swap;
+  src: url('//at.alicdn.com/t/webfont_6u7eiz3v8pq.eot'); /* IE9*/
+  src: url('//at.alicdn.com/t/webfont_6u7eiz3v8pq.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('//at.alicdn.com/t/webfont_6u7eiz3v8pq.woff2') format('woff2'),
+  url('//at.alicdn.com/t/webfont_6u7eiz3v8pq.woff') format('woff'), /* chrome、firefox */
+  url('//at.alicdn.com/t/webfont_6u7eiz3v8pq.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+  url('//at.alicdn.com/t/webfont_6u7eiz3v8pq.svg#Alibaba-PuHuiTi-Regular') format('svg'); /* iOS 4.1- */
+}   
+
+:root, body {
   font-size: 15px;
   font-family: var(--default-font);
   tab-size: 4;

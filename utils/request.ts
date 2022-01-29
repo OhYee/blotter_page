@@ -5,7 +5,9 @@ import { env } from 'process';
 // 超时时间 15 秒
 axios.defaults.timeout = 15 * 1000;
 
-const backendURI = !!process.env["backendURI"] ? process.env["backendURI"]: 'http://127.0.0.1:50000' 
+export const backendURI = !!process.env['backendURI']
+  ? process.env['backendURI']
+  : 'http://127.0.0.1:50000';
 
 function parseURL(url: string): string {
   return (url.length > 0 && url[0] !== '/') || typeof document !== 'undefined'
@@ -53,6 +55,7 @@ export const request = async <T>(
       url: parseURL(url),
       params: method === 'get' ? data : undefined,
       data: method === 'post' ? data : undefined,
+      withCredentials: true,
     });
   } catch (e) {
     console.log(e);
@@ -63,7 +66,7 @@ export const request = async <T>(
     }
   }
 
-  if (callback) {
+  if (!!callback) {
     callback(r.data);
   }
   return r.data;

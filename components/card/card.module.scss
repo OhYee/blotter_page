@@ -1,7 +1,11 @@
 .card {
   // 据说加个圆角会好一点
-  border-radius: 3px;
+  border-radius: 20px;
   .main {
     padding: 20px;
+  }
+
+  :global(.image-container), :global(.image) {
+    border-radius:20px 20px 0 0 !important;
   }
 }
