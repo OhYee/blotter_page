@@ -791,17 +791,19 @@ const adminTags = async (keyword, page, number, sort_field, sort_inc, callback) 
     number: number,
     offset: (page - 1) * number,
     sort_field,
-    sort_inc
+    sort_inc,
+    all: true
   }, callback);
 };
-const tagEdit = async (id, name, short, color, icon, description, callback) => {
+const tagEdit = async (id, name, short, color, icon, description, hide, callback) => {
   return await request('get', '/api/admin/tag/edit', {
     id,
     name,
     short,
     color,
     icon,
-    description
+    description,
+    hide
   }, callback);
 };
 const tagDelete = async (id, callback) => {

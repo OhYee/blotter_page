@@ -757,17 +757,19 @@ const adminTags = async (keyword, page, number, sort_field, sort_inc, callback) 
     number: number,
     offset: (page - 1) * number,
     sort_field,
-    sort_inc
+    sort_inc,
+    all: true
   }, callback);
 };
-const tagEdit = async (id, name, short, color, icon, description, callback) => {
+const tagEdit = async (id, name, short, color, icon, description, hide, callback) => {
   return await request('get', '/api/admin/tag/edit', {
     id,
     name,
     short,
     color,
     icon,
-    description
+    description,
+    hide
   }, callback);
 };
 const tagDelete = async (id, callback) => {
@@ -4382,6 +4384,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 
+
 const defaultSortField = 'count';
 const defaultSortInc = false;
 
@@ -4476,6 +4479,26 @@ class AdminTagList extends react__WEBPACK_IMPORTED_MODULE_1___default.a.Componen
       maxWidth: '12em',
       ellipsis: true
     }, {
+      title: '是否隐藏',
+      key: 'hidden',
+      minWidth: '6em',
+      maxWidth: '12em',
+      render: (_, recoder, idx) => /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(_components_input__WEBPACK_IMPORTED_MODULE_9__[/* CheckBox */ "a"], {
+        switchStyle: true,
+        checkText: "\u662F",
+        uncheckText: "\u5426",
+        value: !!this.state.data[idx].hide,
+        onChange: value => this.setState(state => {
+          var {
+            data
+          } = state;
+          data[idx].hide = value;
+          return {
+            data
+          };
+        })
+      })
+    }, {
       title: '操作',
       key: 'op',
       minWidth: '12em',
@@ -4530,7 +4553,8 @@ class AdminTagList extends react__WEBPACK_IMPORTED_MODULE_1___default.a.Componen
           color: '',
           icon: '',
           count: 0,
-          description: ''
+          description: '',
+          hide: false
         });
         data = data.map(d => d);
         return {
@@ -4541,7 +4565,7 @@ class AdminTagList extends react__WEBPACK_IMPORTED_MODULE_1___default.a.Componen
 
     _defineProperty(this, "onEdit", async idx => {
       var tag = this.state.data[idx];
-      var r = await Object(_utils_api__WEBPACK_IMPORTED_MODULE_13__[/* tagEdit */ "L"])(tag.id, tag.name, tag.short, tag.color, tag.icon, tag.description);
+      var r = await Object(_utils_api__WEBPACK_IMPORTED_MODULE_13__[/* tagEdit */ "L"])(tag.id, tag.name, tag.short, tag.color, tag.icon, tag.description, tag.hide);
       Object(_utils_notification__WEBPACK_IMPORTED_MODULE_14__[/* default */ "a"])(r);
     });
 
