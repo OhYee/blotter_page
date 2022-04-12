@@ -217,7 +217,7 @@ export const adminTags = async (
   return await request(
     'get',
     '/api/tags',
-    { keyword, number: number, offset: (page - 1) * number, sort_field, sort_inc },
+    { keyword, number: number, offset: (page - 1) * number, sort_field, sort_inc, all:true},
     callback,
   );
 };
@@ -229,12 +229,13 @@ export const tagEdit = async (
   color: string,
   icon: string,
   description: string,
+  hide:boolean,
   callback?: RequestCallback<Blotter.APIResponse>,
 ) => {
   return await request(
     'get',
     '/api/admin/tag/edit',
-    { id, name, short, color, icon, description },
+    { id, name, short, color, icon, description, hide },
     callback,
   );
 };

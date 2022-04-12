@@ -17,6 +17,8 @@ import { adminTags, tagDelete, tagEdit } from '@/utils/api';
 import ShowNotification from '@/utils/notification';
 import { waitUntil } from '@/utils/debounce';
 import randomString from '@/utils/random';
+import { CheckBox, Radio } from '@/components/input';
+
 
 interface T extends Blotter.TagWithCount {}
 
@@ -36,6 +38,8 @@ interface AdminTagListState {
 
 const defaultSortField = 'count';
 const defaultSortInc = false;
+
+
 
 class AdminTagList extends React.Component<AdminTagListProps, AdminTagListState> {
   static defaultProps = {};
@@ -149,6 +153,27 @@ class AdminTagList extends React.Component<AdminTagListProps, AdminTagListState>
       ellipsis: true,
     },
     {
+      title: '是否隐藏',
+      key: 'hidden',
+      minWidth: '6em',
+      maxWidth: '12em',
+      render:(_,recoder,idx)=>(
+        <CheckBox
+        switchStyle={true}
+        checkText="是"
+        uncheckText="否"
+        value={!!this.state.data[idx].hide}
+        onChange={(value) =>
+          this.setState((state) => {
+            var { data } = state;
+            data[idx].hide = value;
+            return { data };
+          })
+        }
+      />
+      ),
+    },
+    {
       title: '操作',
       key: 'op',
       minWidth: '12em',
@@ -200,6 +225,7 @@ class AdminTagList extends React.Component<AdminTagListProps, AdminTagListState>
         icon: '',
         count: 0,
         description: '',
+        hide: false,
       });
       data = data.map((d) => d);
       return { data };
@@ -208,7 +234,7 @@ class AdminTagList extends React.Component<AdminTagListProps, AdminTagListState>
 
   onEdit = async (idx: number) => {
     var tag = this.state.data[idx];
-    var r = await tagEdit(tag.id, tag.name, tag.short, tag.color, tag.icon, tag.description);
+    var r = await tagEdit(tag.id, tag.name, tag.short, tag.color, tag.icon, tag.description,tag.hide);
     ShowNotification(r);
   };
 
