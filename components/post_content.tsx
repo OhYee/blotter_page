@@ -12,6 +12,7 @@ import Loading from '@/components/loading';
 import Carousel from '@/components/carousel';
 import { Flex } from '@/components/container';
 import { AD } from '@/components/js';
+import {Modal} from '@/components/popover';
 
 import { travels_get_url } from '@/utils/api';
 import { Context } from '@/utils/global';
@@ -26,6 +27,7 @@ interface PostContentProps {
 
 interface PostContentState {
   travel?: Blotter.Travel;
+  disgusting?: boolean;
 }
 
 class PostContent extends Component<PostContentProps, PostContentState> {
@@ -33,7 +35,7 @@ class PostContent extends Component<PostContentProps, PostContentState> {
   context!: React.ContextType<typeof Context>;
   constructor(props) {
     super(props);
-    this.state = { travel: undefined };
+    this.state = {travel: undefined,disgusting:false};
   }
   resetImage() {
     const containers = document.getElementsByClassName('image');
@@ -73,6 +75,9 @@ class PostContent extends Component<PostContentProps, PostContentState> {
     this.resetImage();
     this.resetTable();
     this.drawMermaid();
+    if (this.isDisgust){
+      this.setState({disgusting:true});
+    }
     if (this.isTravel()) {
       this.getTravelData();
     }
@@ -87,6 +92,12 @@ class PostContent extends Component<PostContentProps, PostContentState> {
     return (
       this.props.post.tags.filter((item) => item.name === '游记' && item.short === 'travels')
         .length > 0
+    );
+  };
+
+  isDisgust = () => {
+    return (
+      this.props.post.url.substring(-8) === 'disgust1' 
     );
   };
 
@@ -148,6 +159,10 @@ class PostContent extends Component<PostContentProps, PostContentState> {
         <Flex direction="TB" fullWidth>
           <PostCard post={this.props.post} inset inPost />
           {!!this.context.ad_text && <AD setting={this.context.ad_text} />}
+          <Modal show={this.state.disgusting} onClose={() => this.setState({disgusting:false})} style={{ maxWidth: 500, width: '90%' }}>
+                <p>欢迎来看我最深最阴暗最恶心的角落</p>
+                <p>Welcome to the darkest part of me</p>
+          </Modal>
           {this.props.prefix}
           {this.renderTravel()}
           {!!this.props.post.images && this.props.post.images.length > 0 ? (
