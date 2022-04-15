@@ -74,6 +74,8 @@ declare namespace Blotter {
     tags: Tag[];
     head_image: string;
     length: number;
+    pop:boolean;
+    poptext:string;
   }
   interface Post extends PostCard {
     content: string;

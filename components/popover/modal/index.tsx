@@ -14,7 +14,7 @@ export declare type ModalProps = ComponentProps<{ show?: boolean; onClose?: () =
 const ModalContent = (props: ModalProps) => {
   const { onClose, className, style, children } = props;
   return (
-    <div>
+    <div className={styles.wrapper}>
       <div className={concat(className, styles.modal)} style={style}>
         <Card style={{ background: 'var(--background)' }}>
           {!!onClose ? (

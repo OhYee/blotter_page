@@ -27,7 +27,6 @@ interface PostContentProps {
 
 interface PostContentState {
   travel?: Blotter.Travel;
-  disgusting?: boolean;
 }
 
 class PostContent extends Component<PostContentProps, PostContentState> {
@@ -35,7 +34,7 @@ class PostContent extends Component<PostContentProps, PostContentState> {
   context!: React.ContextType<typeof Context>;
   constructor(props) {
     super(props);
-    this.state = {travel: undefined,disgusting:false};
+    this.state = {travel: undefined};
   }
   resetImage() {
     const containers = document.getElementsByClassName('image');
@@ -75,13 +74,23 @@ class PostContent extends Component<PostContentProps, PostContentState> {
     this.resetImage();
     this.resetTable();
     this.drawMermaid();
-    if (this.isDisgust){
-      this.setState({disgusting:true});
-    }
-    if (this.isTravel()) {
+      
+    if (!!this.isTravel()) {
       this.getTravelData();
     }
+    if (!!this.props.post.poptext){
+      var poptext = this.props.post.poptext.replace(/\n/g, '<br/>');
+      Modal.info({children:<div
+        style={{ wordBreak: 'break-all' ,display:'flex',
+              justifyContent:'center',alignItems:'center',
+              minWidth: '20em' , minHeight: '5em',
+              textAlign: 'center', lineHeight: '1.5em',}}
+        dangerouslySetInnerHTML={{ __html:  poptext }}
+      ></div>}
+      )
+    }
   }
+  
   componentDidUpdate() {
     this.resetImage();
     this.resetTable();
@@ -95,11 +104,6 @@ class PostContent extends Component<PostContentProps, PostContentState> {
     );
   };
 
-  isDisgust = () => {
-    return (
-      this.props.post.url.substring(-8) === 'disgust1' 
-    );
-  };
 
   getTravelData = () => {
     travels_get_url(this.props.post.url)
@@ -159,10 +163,10 @@ class PostContent extends Component<PostContentProps, PostContentState> {
         <Flex direction="TB" fullWidth>
           <PostCard post={this.props.post} inset inPost />
           {!!this.context.ad_text && <AD setting={this.context.ad_text} />}
-          <Modal show={this.state.disgusting} onClose={() => this.setState({disgusting:false})} style={{ maxWidth: 500, width: '90%' }}>
-                <p>欢迎来看我最深最阴暗最恶心的角落</p>
-                <p>Welcome to the darkest part of me</p>
-          </Modal>
+          {/* <Modal show={this.state.popfilter} onClose={() => this.setState({popfilter:false})} style={{ maxWidth: 500, width: '90%' }}>
+            
+            </Modal> */}
+          
           {this.props.prefix}
           {this.renderTravel()}
           {!!this.props.post.images && this.props.post.images.length > 0 ? (
