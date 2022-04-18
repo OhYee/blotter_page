@@ -108,7 +108,7 @@ export const layout = async (
     email: string;
     github: string;
     friends: Blotter.FriendSimple[];
-    easter_eggs: string;
+    // easter_eggs: string;
     notification: string;
   }>,
 ) => {
@@ -129,6 +129,9 @@ export const adminPost = async (url: string, callback?: RequestCallback<Blotter.
   return await request('get', '/api/admin/post', { url }, callback);
 };
 
+export const postEgg =async (word:string,callback?:RequestCallback<Blotter.EggResponse>) => {
+  return await request('get','/api/eggs',{word},callback)
+}
 export const comments = async (
   url: string,
   callback?: RequestCallback<{ total: number; comments: Blotter.Comment[] }>,
