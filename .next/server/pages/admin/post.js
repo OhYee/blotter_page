@@ -624,55 +624,56 @@ module.exports = {
 "use strict";
 
 // EXPORTS
-__webpack_require__.d(__webpack_exports__, "C", function() { return /* binding */ posts; });
+__webpack_require__.d(__webpack_exports__, "D", function() { return /* binding */ posts; });
 __webpack_require__.d(__webpack_exports__, "r", function() { return /* binding */ indexPosts; });
 __webpack_require__.d(__webpack_exports__, "f", function() { return /* binding */ archives; });
-__webpack_require__.d(__webpack_exports__, "M", function() { return /* binding */ tagPosts; });
+__webpack_require__.d(__webpack_exports__, "N", function() { return /* binding */ tagPosts; });
 __webpack_require__.d(__webpack_exports__, "d", function() { return /* binding */ adminPosts; });
 __webpack_require__.d(__webpack_exports__, "n", function() { return /* binding */ api_friends; });
 __webpack_require__.d(__webpack_exports__, "t", function() { return /* binding */ layout; });
-__webpack_require__.d(__webpack_exports__, "N", function() { return /* binding */ tags; });
+__webpack_require__.d(__webpack_exports__, "O", function() { return /* binding */ tags; });
 __webpack_require__.d(__webpack_exports__, "z", function() { return /* binding */ api_post; });
 __webpack_require__.d(__webpack_exports__, "c", function() { return /* binding */ adminPost; });
+__webpack_require__.d(__webpack_exports__, "C", function() { return /* binding */ postEgg; });
 __webpack_require__.d(__webpack_exports__, "k", function() { return /* binding */ comments; });
 __webpack_require__.d(__webpack_exports__, "g", function() { return /* binding */ api_avatar; });
 __webpack_require__.d(__webpack_exports__, "b", function() { return /* binding */ addComment; });
 __webpack_require__.d(__webpack_exports__, "w", function() { return /* binding */ markdown; });
-__webpack_require__.d(__webpack_exports__, "O", function() { return /* binding */ tagsSearch; });
+__webpack_require__.d(__webpack_exports__, "P", function() { return /* binding */ tagsSearch; });
 __webpack_require__.d(__webpack_exports__, "u", function() { return /* binding */ login; });
 __webpack_require__.d(__webpack_exports__, "v", function() { return /* binding */ logout; });
 __webpack_require__.d(__webpack_exports__, "s", function() { return /* binding */ info; });
 __webpack_require__.d(__webpack_exports__, "B", function() { return /* binding */ postEdit; });
 __webpack_require__.d(__webpack_exports__, "A", function() { return /* binding */ postDelete; });
 __webpack_require__.d(__webpack_exports__, "e", function() { return /* binding */ adminTags; });
-__webpack_require__.d(__webpack_exports__, "L", function() { return /* binding */ tagEdit; });
-__webpack_require__.d(__webpack_exports__, "K", function() { return /* binding */ tagDelete; });
+__webpack_require__.d(__webpack_exports__, "M", function() { return /* binding */ tagEdit; });
+__webpack_require__.d(__webpack_exports__, "L", function() { return /* binding */ tagDelete; });
 __webpack_require__.d(__webpack_exports__, "o", function() { return /* binding */ friendsSet; });
 __webpack_require__.d(__webpack_exports__, "p", function() { return /* binding */ friendsSpider; });
-__webpack_require__.d(__webpack_exports__, "W", function() { return /* binding */ view; });
+__webpack_require__.d(__webpack_exports__, "X", function() { return /* binding */ view; });
 __webpack_require__.d(__webpack_exports__, "x", function() { return /* binding */ api_menus; });
 __webpack_require__.d(__webpack_exports__, "y", function() { return /* binding */ menusSet; });
 __webpack_require__.d(__webpack_exports__, "q", function() { return /* binding */ githubRepos; });
 __webpack_require__.d(__webpack_exports__, "a", function() { return /* binding */ about; });
-__webpack_require__.d(__webpack_exports__, "U", function() { return /* binding */ variables; });
-__webpack_require__.d(__webpack_exports__, "V", function() { return /* binding */ variablesSet; });
+__webpack_require__.d(__webpack_exports__, "V", function() { return /* binding */ variables; });
+__webpack_require__.d(__webpack_exports__, "W", function() { return /* binding */ variablesSet; });
 __webpack_require__.d(__webpack_exports__, "l", function() { return /* binding */ commentsAdmin; });
 __webpack_require__.d(__webpack_exports__, "j", function() { return /* binding */ commentSet; });
 __webpack_require__.d(__webpack_exports__, "i", function() { return /* binding */ commentDelete; });
 __webpack_require__.d(__webpack_exports__, "m", function() { return /* binding */ commentsAvatar; });
-__webpack_require__.d(__webpack_exports__, "S", function() { return /* binding */ userSet; });
+__webpack_require__.d(__webpack_exports__, "T", function() { return /* binding */ userSet; });
 __webpack_require__.d(__webpack_exports__, "h", function() { return /* binding */ checkUsername; });
-__webpack_require__.d(__webpack_exports__, "I", function() { return /* binding */ register; });
-__webpack_require__.d(__webpack_exports__, "T", function() { return /* binding */ users; });
-__webpack_require__.d(__webpack_exports__, "J", function() { return /* binding */ reset_password; });
-__webpack_require__.d(__webpack_exports__, "P", function() { return /* binding */ travels_get; });
-__webpack_require__.d(__webpack_exports__, "R", function() { return /* binding */ travels_set; });
-__webpack_require__.d(__webpack_exports__, "Q", function() { return /* binding */ travels_get_url; });
-__webpack_require__.d(__webpack_exports__, "E", function() { return /* binding */ qiniu_get_buckets; });
-__webpack_require__.d(__webpack_exports__, "F", function() { return /* binding */ qiniu_get_images; });
-__webpack_require__.d(__webpack_exports__, "G", function() { return /* binding */ qiniu_get_token; });
-__webpack_require__.d(__webpack_exports__, "D", function() { return /* binding */ qiniu_delete_image; });
-__webpack_require__.d(__webpack_exports__, "H", function() { return /* binding */ qiniu_rename_image; });
+__webpack_require__.d(__webpack_exports__, "J", function() { return /* binding */ register; });
+__webpack_require__.d(__webpack_exports__, "U", function() { return /* binding */ users; });
+__webpack_require__.d(__webpack_exports__, "K", function() { return /* binding */ reset_password; });
+__webpack_require__.d(__webpack_exports__, "Q", function() { return /* binding */ travels_get; });
+__webpack_require__.d(__webpack_exports__, "S", function() { return /* binding */ travels_set; });
+__webpack_require__.d(__webpack_exports__, "R", function() { return /* binding */ travels_get_url; });
+__webpack_require__.d(__webpack_exports__, "F", function() { return /* binding */ qiniu_get_buckets; });
+__webpack_require__.d(__webpack_exports__, "G", function() { return /* binding */ qiniu_get_images; });
+__webpack_require__.d(__webpack_exports__, "H", function() { return /* binding */ qiniu_get_token; });
+__webpack_require__.d(__webpack_exports__, "E", function() { return /* binding */ qiniu_delete_image; });
+__webpack_require__.d(__webpack_exports__, "I", function() { return /* binding */ qiniu_rename_image; });
 
 // UNUSED EXPORTS: postExist, tagExisted, githubUser, githubRepo, version
 
@@ -811,6 +812,11 @@ const api_post = async (url, callback) => {
 const adminPost = async (url, callback) => {
   return await request('get', '/api/admin/post', {
     url
+  }, callback);
+};
+const postEgg = async (word, callback) => {
+  return await request('get', '/api/eggs', {
+    word
   }, callback);
 };
 const comments = async (url, callback) => {
@@ -3788,7 +3794,7 @@ function BucketSelector(props) {
 
   function initial() {
     setLoading(true);
-    Object(_utils_api__WEBPACK_IMPORTED_MODULE_12__[/* qiniu_get_buckets */ "E"])().then(r => {
+    Object(_utils_api__WEBPACK_IMPORTED_MODULE_12__[/* qiniu_get_buckets */ "F"])().then(r => {
       setBuckets(r.buckets);
       setPrefixList(Array.from(new Set([{
         key: '无前缀',
@@ -3836,7 +3842,7 @@ function Upload(props) {
   } = props;
 
   const upload = async file => {
-    const token = (await Object(_utils_api__WEBPACK_IMPORTED_MODULE_12__[/* qiniu_get_token */ "G"])(bucket)).token;
+    const token = (await Object(_utils_api__WEBPACK_IMPORTED_MODULE_12__[/* qiniu_get_token */ "H"])(bucket)).token;
     const filename = !!prefix ? `${prefix}/${file.name}` : file.name;
     const observable = qiniu_js__WEBPACK_IMPORTED_MODULE_2__["upload"](file, filename, token, {}, {});
     const subscription = observable.subscribe({
@@ -3938,7 +3944,7 @@ function imageList(props, ref) {
     var thisID = id + 1;
     setID(thisID); // setID((i) => (idRef.current = thisID = i + 1));
 
-    Object(_utils_api__WEBPACK_IMPORTED_MODULE_12__[/* qiniu_get_images */ "F"])(b, p, m, group_number).then(r => {
+    Object(_utils_api__WEBPACK_IMPORTED_MODULE_12__[/* qiniu_get_images */ "G"])(b, p, m, group_number).then(r => {
       if (idRef.current === thisID) {
         setImages({
           method: !!m ? 'concat' : 'initial',
@@ -3996,7 +4002,7 @@ function imageList(props, ref) {
               children: [/*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(_components_button__WEBPACK_IMPORTED_MODULE_10__[/* default */ "b"], {
                 icon: /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(_components_svg__WEBPACK_IMPORTED_MODULE_9__[/* Save */ "M"], {}),
                 onClick: async () => {
-                  if (Object(_utils_notification__WEBPACK_IMPORTED_MODULE_14__[/* default */ "a"])(await Object(_utils_api__WEBPACK_IMPORTED_MODULE_12__[/* qiniu_rename_image */ "H"])(bucket, image.key, image.new_key))) initial();
+                  if (Object(_utils_notification__WEBPACK_IMPORTED_MODULE_14__[/* default */ "a"])(await Object(_utils_api__WEBPACK_IMPORTED_MODULE_12__[/* qiniu_rename_image */ "I"])(bucket, image.key, image.new_key))) initial();
                 }
               }), /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(_components_popover__WEBPACK_IMPORTED_MODULE_6__[/* default */ "d"], {
                 trigger: ['click'],
@@ -4010,7 +4016,7 @@ function imageList(props, ref) {
                       neumorphism: true,
                       size: "small",
                       onClick: async () => {
-                        if (Object(_utils_notification__WEBPACK_IMPORTED_MODULE_14__[/* default */ "a"])(await Object(_utils_api__WEBPACK_IMPORTED_MODULE_12__[/* qiniu_delete_image */ "D"])(bucket, image.key))) initial();
+                        if (Object(_utils_notification__WEBPACK_IMPORTED_MODULE_14__[/* default */ "a"])(await Object(_utils_api__WEBPACK_IMPORTED_MODULE_12__[/* qiniu_delete_image */ "E"])(bucket, image.key))) initial();
                       },
                       children: "\u5220\u9664"
                     })]
@@ -4227,7 +4233,7 @@ class TagSearch extends react__WEBPACK_IMPORTED_MODULE_1___default.a.Component {
           this.setState({
             loading: true
           });
-          Object(_utils_api__WEBPACK_IMPORTED_MODULE_7__[/* tagsSearch */ "O"])(value).then(r => this.setState({
+          Object(_utils_api__WEBPACK_IMPORTED_MODULE_7__[/* tagsSearch */ "P"])(value).then(r => this.setState({
             options: r.tags
           })).finally(() => this.setState({
             loading: false
@@ -4637,7 +4643,6 @@ const defaultContext = {
     github_connected: false,
     self: false
   },
-  easter_egg: '',
   notification: '',
   footer: ''
 };
@@ -6078,6 +6083,9 @@ function Carousel(props) {
 // EXTERNAL MODULE: ./components/js.tsx
 var js = __webpack_require__("N5zP");
 
+// EXTERNAL MODULE: ./components/popover/index.tsx + 4 modules
+var popover = __webpack_require__("rffq");
+
 // EXTERNAL MODULE: ./utils/api.ts + 1 modules
 var api = __webpack_require__("AoAR");
 
@@ -6107,6 +6115,7 @@ function post_content_defineProperty(obj, key, value) { if (key in obj) { Object
 
 
 
+
 class post_content_PostContent extends external_react_["Component"] {
   constructor(props) {
     super(props);
@@ -6118,7 +6127,7 @@ class post_content_PostContent extends external_react_["Component"] {
     });
 
     post_content_defineProperty(this, "getTravelData", () => {
-      Object(api["Q" /* travels_get_url */])(this.props.post.url).then(r => {
+      Object(api["R" /* travels_get_url */])(this.props.post.url).then(r => {
         if (r.exist) {
           this.setState({
             travel: r.travel
@@ -6212,8 +6221,29 @@ class post_content_PostContent extends external_react_["Component"] {
     this.resetTable();
     this.drawMermaid();
 
-    if (this.isTravel()) {
+    if (!!this.isTravel()) {
       this.getTravelData();
+    }
+
+    if (!!this.props.post.poptext) {
+      var poptext = this.props.post.poptext.replace(/\n/g, '<br/>');
+      popover["b" /* Modal */].info({
+        children: /*#__PURE__*/Object(jsx_runtime_["jsx"])("div", {
+          style: {
+            wordBreak: 'break-all',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            minWidth: '20em',
+            minHeight: '5em',
+            textAlign: 'center',
+            lineHeight: '1.5em'
+          },
+          dangerouslySetInnerHTML: {
+            __html: poptext
+          }
+        })
+      });
     }
   }
 
@@ -6335,8 +6365,10 @@ module.exports = {
 // Exports
 module.exports = {
 	"modal": "modal_modal__kb4G9",
+	"scaleDraw": "modal_scaleDraw__2LXxS",
 	"dimmed": "modal_dimmed__FzE9w",
-	"dimmed-change": "modal_dimmed-change__AQurc"
+	"dimmed-change": "modal_dimmed-change__AQurc",
+	"wrapper": "modal_wrapper__1Tm1-"
 };
 
 
@@ -7058,6 +7090,7 @@ const ModalContent = props => {
     children
   } = props;
   return /*#__PURE__*/Object(jsx_runtime_["jsxs"])("div", {
+    className: modal_module_default.a.wrapper,
     children: [/*#__PURE__*/Object(jsx_runtime_["jsx"])("div", {
       className: Object(utils_component["a" /* concat */])(className, modal_module_default.a.modal),
       style: style,
@@ -7309,6 +7342,8 @@ class PostEdit extends react__WEBPACK_IMPORTED_MODULE_1___default.a.Component {
         keywords: this.state.keywords,
         status: this.state.status,
         abstract: this.state.abstract,
+        pop: this.state.pop,
+        poptext: this.state.poptext,
         view: this.state.view,
         head_image: this.state.head_image,
         tags: this.state.tags,
@@ -7501,6 +7536,14 @@ class PostEdit extends react__WEBPACK_IMPORTED_MODULE_1___default.a.Component {
               });
             },
             children: "\u5BFC\u5165\u56FE\u7247"
+          }), /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(_components_input__WEBPACK_IMPORTED_MODULE_6__[/* CheckBox */ "a"], {
+            switchStyle: true,
+            checkText: "\u4F7F\u7528\u5F39\u7A97",
+            uncheckText: "\u4E0D\u4F7F\u7528\u5F39\u7A97",
+            value: !!this.state.pop,
+            onChange: value => this.setState({
+              pop: value
+            })
           })]
         }), /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(_components_tag_search__WEBPACK_IMPORTED_MODULE_11__[/* default */ "a"], {
           onAdd: this.tagOnAdd,
@@ -7514,6 +7557,15 @@ class PostEdit extends react__WEBPACK_IMPORTED_MODULE_1___default.a.Component {
           value: this.state.abstract,
           onChange: abstract => this.setState({
             abstract
+          })
+        }), /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(_components_input__WEBPACK_IMPORTED_MODULE_6__[/* TextArea */ "g"], {
+          label: "\u5F39\u7A97\u6587\u5B57",
+          rows: 4,
+          spellCheck: "false",
+          placeholder: "\u5F39\u7A97\u6587\u5B57",
+          value: this.state.poptext,
+          onChange: poptext => this.setState({
+            poptext
           })
         }), /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(_components_container__WEBPACK_IMPORTED_MODULE_7__[/* Flex */ "a"], {
           direction: "TB",
@@ -7622,6 +7674,8 @@ class PostEdit extends react__WEBPACK_IMPORTED_MODULE_1___default.a.Component {
       title: '',
       url: '',
       abstract: '',
+      pop: false,
+      poptext: '',
       head_image: '',
       view: 0,
       publish_time: _now,

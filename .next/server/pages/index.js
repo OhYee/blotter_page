@@ -263,17 +263,38 @@ class Index extends react__WEBPACK_IMPORTED_MODULE_1___default.a.Component {
 
     _defineProperty(this, "ref", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_1___default.a.createRef());
 
-    _defineProperty(this, "easterEggInit", () => {
-      const {
-        easter_egg
-      } = this.context;
-      console.log(easter_egg);
+    _defineProperty(this, "easterEggPost", word => {
+      Object(_utils_api__WEBPACK_IMPORTED_MODULE_11__[/* postEgg */ "C"])(word).then(res => {
+        this.setState({
+          easter_success: res.success,
+          easter_egg: res.url,
+          easter_min_length: res.minlength,
+          easter_max_length: res.maxlength
+        });
 
-      if (!!easter_egg) {
-        const easterEggDo = this.easterEggWrapper();
-        document.addEventListener('keyup', easterEggDo);
-        this.easterEggDo = easterEggDo;
-      }
+        if (res.maxlength == 0) {
+          this.setState({
+            easter_min_length: 100
+          });
+        }
+
+        console.log(this.state);
+
+        if (this.state.easter_success) {
+          _components_notification__WEBPACK_IMPORTED_MODULE_14__[/* default */ "a"].message({
+            alertType: 'info',
+            title: '恭喜你，触发了一个彩蛋！',
+            content: '赶快去看一下彩蛋是什么吧'
+          });
+        }
+      });
+    });
+
+    _defineProperty(this, "easterEggInit", () => {
+      const easterEggDo = this.easterEggWrapper();
+      document.addEventListener('keyup', easterEggDo);
+      this.easterEggDo = easterEggDo;
+      this.easterEggPost('');
     });
 
     _defineProperty(this, "easterEggDestory", () => {
@@ -285,35 +306,15 @@ class Index extends react__WEBPACK_IMPORTED_MODULE_1___default.a.Component {
 
     _defineProperty(this, "easterEggWrapper", () => {
       var cache = '';
-      const {
-        easter_egg
-      } = this.context;
-      const kv = easter_egg.split(/\s/).filter(s => s.length > 0);
-      var mxL = 0;
-      var eggs = {};
-      var i = 0;
-
-      while (i + 1 < kv.length) {
-        eggs[kv[i]] = kv[i + 1];
-        mxL = Math.max(mxL, kv[i].length);
-        i += 2;
-      }
-
       return e => {
         cache += e.key;
-        cache = cache.slice(-mxL);
-        console.log(cache);
 
-        for (const k of Object.keys(eggs)) if (cache.slice(-k.length) == k) {
-          _components_notification__WEBPACK_IMPORTED_MODULE_14__[/* default */ "a"].message({
-            alertType: 'info',
-            title: '恭喜你，触发了一个彩蛋！',
-            content: '赶快去看一下彩蛋是什么吧'
-          });
-          this.setState({
-            easter_egg: eggs[k]
-          });
+        if (cache.length >= this.state.easter_min_length && cache.length <= this.state.easter_max_length + 1) {
+          this.easterEggPost(cache);
         }
+
+        cache = cache.slice(-this.state.easter_max_length);
+        console.log(cache, this.state.easter_max_length);
       };
     });
 
@@ -345,7 +346,7 @@ class Index extends react__WEBPACK_IMPORTED_MODULE_1___default.a.Component {
         var tags = [];
 
         if (this.state.search !== '') {
-          tags = (await Object(_utils_api__WEBPACK_IMPORTED_MODULE_11__[/* tagsSearch */ "O"])(this.state.search)).tags;
+          tags = (await Object(_utils_api__WEBPACK_IMPORTED_MODULE_11__[/* tagsSearch */ "P"])(this.state.search)).tags;
         }
 
         this.setState({
@@ -379,7 +380,10 @@ class Index extends react__WEBPACK_IMPORTED_MODULE_1___default.a.Component {
       without_tags: [],
       show: false,
       search_height: 100,
-      easter_egg: ''
+      easter_egg: '',
+      easter_min_length: 1,
+      easter_max_length: 100,
+      easter_success: false
     };
   }
 
@@ -445,7 +449,7 @@ class Index extends react__WEBPACK_IMPORTED_MODULE_1___default.a.Component {
               }
             })
           })]
-        }), !!this.state.easter_egg && /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(_components_notification__WEBPACK_IMPORTED_MODULE_14__[/* default */ "a"], {
+        }), !!this.state.easter_success && /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(_components_notification__WEBPACK_IMPORTED_MODULE_14__[/* default */ "a"], {
           icon: /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(_components_svg__WEBPACK_IMPORTED_MODULE_6__[/* EasterEgg */ "k"], {}),
           title: "\u4F60\u53D1\u73B0\u4E86\u4E00\u4E2A\u5F69\u86CB",
           content: /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(next_link__WEBPACK_IMPORTED_MODULE_3___default.a, {
@@ -457,7 +461,8 @@ class Index extends react__WEBPACK_IMPORTED_MODULE_1___default.a.Component {
           }),
           onClose: () => {
             this.setState({
-              easter_egg: ''
+              easter_egg: '',
+              easter_success: false
             });
           }
         }), /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(_components_post_list__WEBPACK_IMPORTED_MODULE_5__[/* default */ "a"], {
@@ -783,55 +788,56 @@ module.exports = {
 "use strict";
 
 // EXPORTS
-__webpack_require__.d(__webpack_exports__, "C", function() { return /* binding */ posts; });
+__webpack_require__.d(__webpack_exports__, "D", function() { return /* binding */ posts; });
 __webpack_require__.d(__webpack_exports__, "r", function() { return /* binding */ indexPosts; });
 __webpack_require__.d(__webpack_exports__, "f", function() { return /* binding */ archives; });
-__webpack_require__.d(__webpack_exports__, "M", function() { return /* binding */ tagPosts; });
+__webpack_require__.d(__webpack_exports__, "N", function() { return /* binding */ tagPosts; });
 __webpack_require__.d(__webpack_exports__, "d", function() { return /* binding */ adminPosts; });
 __webpack_require__.d(__webpack_exports__, "n", function() { return /* binding */ api_friends; });
 __webpack_require__.d(__webpack_exports__, "t", function() { return /* binding */ layout; });
-__webpack_require__.d(__webpack_exports__, "N", function() { return /* binding */ tags; });
+__webpack_require__.d(__webpack_exports__, "O", function() { return /* binding */ tags; });
 __webpack_require__.d(__webpack_exports__, "z", function() { return /* binding */ api_post; });
 __webpack_require__.d(__webpack_exports__, "c", function() { return /* binding */ adminPost; });
+__webpack_require__.d(__webpack_exports__, "C", function() { return /* binding */ postEgg; });
 __webpack_require__.d(__webpack_exports__, "k", function() { return /* binding */ comments; });
 __webpack_require__.d(__webpack_exports__, "g", function() { return /* binding */ api_avatar; });
 __webpack_require__.d(__webpack_exports__, "b", function() { return /* binding */ addComment; });
 __webpack_require__.d(__webpack_exports__, "w", function() { return /* binding */ markdown; });
-__webpack_require__.d(__webpack_exports__, "O", function() { return /* binding */ tagsSearch; });
+__webpack_require__.d(__webpack_exports__, "P", function() { return /* binding */ tagsSearch; });
 __webpack_require__.d(__webpack_exports__, "u", function() { return /* binding */ login; });
 __webpack_require__.d(__webpack_exports__, "v", function() { return /* binding */ logout; });
 __webpack_require__.d(__webpack_exports__, "s", function() { return /* binding */ info; });
 __webpack_require__.d(__webpack_exports__, "B", function() { return /* binding */ postEdit; });
 __webpack_require__.d(__webpack_exports__, "A", function() { return /* binding */ postDelete; });
 __webpack_require__.d(__webpack_exports__, "e", function() { return /* binding */ adminTags; });
-__webpack_require__.d(__webpack_exports__, "L", function() { return /* binding */ tagEdit; });
-__webpack_require__.d(__webpack_exports__, "K", function() { return /* binding */ tagDelete; });
+__webpack_require__.d(__webpack_exports__, "M", function() { return /* binding */ tagEdit; });
+__webpack_require__.d(__webpack_exports__, "L", function() { return /* binding */ tagDelete; });
 __webpack_require__.d(__webpack_exports__, "o", function() { return /* binding */ friendsSet; });
 __webpack_require__.d(__webpack_exports__, "p", function() { return /* binding */ friendsSpider; });
-__webpack_require__.d(__webpack_exports__, "W", function() { return /* binding */ view; });
+__webpack_require__.d(__webpack_exports__, "X", function() { return /* binding */ view; });
 __webpack_require__.d(__webpack_exports__, "x", function() { return /* binding */ api_menus; });
 __webpack_require__.d(__webpack_exports__, "y", function() { return /* binding */ menusSet; });
 __webpack_require__.d(__webpack_exports__, "q", function() { return /* binding */ githubRepos; });
 __webpack_require__.d(__webpack_exports__, "a", function() { return /* binding */ about; });
-__webpack_require__.d(__webpack_exports__, "U", function() { return /* binding */ variables; });
-__webpack_require__.d(__webpack_exports__, "V", function() { return /* binding */ variablesSet; });
+__webpack_require__.d(__webpack_exports__, "V", function() { return /* binding */ variables; });
+__webpack_require__.d(__webpack_exports__, "W", function() { return /* binding */ variablesSet; });
 __webpack_require__.d(__webpack_exports__, "l", function() { return /* binding */ commentsAdmin; });
 __webpack_require__.d(__webpack_exports__, "j", function() { return /* binding */ commentSet; });
 __webpack_require__.d(__webpack_exports__, "i", function() { return /* binding */ commentDelete; });
 __webpack_require__.d(__webpack_exports__, "m", function() { return /* binding */ commentsAvatar; });
-__webpack_require__.d(__webpack_exports__, "S", function() { return /* binding */ userSet; });
+__webpack_require__.d(__webpack_exports__, "T", function() { return /* binding */ userSet; });
 __webpack_require__.d(__webpack_exports__, "h", function() { return /* binding */ checkUsername; });
-__webpack_require__.d(__webpack_exports__, "I", function() { return /* binding */ register; });
-__webpack_require__.d(__webpack_exports__, "T", function() { return /* binding */ users; });
-__webpack_require__.d(__webpack_exports__, "J", function() { return /* binding */ reset_password; });
-__webpack_require__.d(__webpack_exports__, "P", function() { return /* binding */ travels_get; });
-__webpack_require__.d(__webpack_exports__, "R", function() { return /* binding */ travels_set; });
-__webpack_require__.d(__webpack_exports__, "Q", function() { return /* binding */ travels_get_url; });
-__webpack_require__.d(__webpack_exports__, "E", function() { return /* binding */ qiniu_get_buckets; });
-__webpack_require__.d(__webpack_exports__, "F", function() { return /* binding */ qiniu_get_images; });
-__webpack_require__.d(__webpack_exports__, "G", function() { return /* binding */ qiniu_get_token; });
-__webpack_require__.d(__webpack_exports__, "D", function() { return /* binding */ qiniu_delete_image; });
-__webpack_require__.d(__webpack_exports__, "H", function() { return /* binding */ qiniu_rename_image; });
+__webpack_require__.d(__webpack_exports__, "J", function() { return /* binding */ register; });
+__webpack_require__.d(__webpack_exports__, "U", function() { return /* binding */ users; });
+__webpack_require__.d(__webpack_exports__, "K", function() { return /* binding */ reset_password; });
+__webpack_require__.d(__webpack_exports__, "Q", function() { return /* binding */ travels_get; });
+__webpack_require__.d(__webpack_exports__, "S", function() { return /* binding */ travels_set; });
+__webpack_require__.d(__webpack_exports__, "R", function() { return /* binding */ travels_get_url; });
+__webpack_require__.d(__webpack_exports__, "F", function() { return /* binding */ qiniu_get_buckets; });
+__webpack_require__.d(__webpack_exports__, "G", function() { return /* binding */ qiniu_get_images; });
+__webpack_require__.d(__webpack_exports__, "H", function() { return /* binding */ qiniu_get_token; });
+__webpack_require__.d(__webpack_exports__, "E", function() { return /* binding */ qiniu_delete_image; });
+__webpack_require__.d(__webpack_exports__, "I", function() { return /* binding */ qiniu_rename_image; });
 
 // UNUSED EXPORTS: postExist, tagExisted, githubUser, githubRepo, version
 
@@ -970,6 +976,11 @@ const api_post = async (url, callback) => {
 const adminPost = async (url, callback) => {
   return await request('get', '/api/admin/post', {
     url
+  }, callback);
+};
+const postEgg = async (word, callback) => {
+  return await request('get', '/api/eggs', {
+    word
   }, callback);
 };
 const comments = async (url, callback) => {
@@ -3674,7 +3685,7 @@ class TagSearch extends react__WEBPACK_IMPORTED_MODULE_1___default.a.Component {
           this.setState({
             loading: true
           });
-          Object(_utils_api__WEBPACK_IMPORTED_MODULE_7__[/* tagsSearch */ "O"])(value).then(r => this.setState({
+          Object(_utils_api__WEBPACK_IMPORTED_MODULE_7__[/* tagsSearch */ "P"])(value).then(r => this.setState({
             options: r.tags
           })).finally(() => this.setState({
             loading: false
@@ -4094,7 +4105,6 @@ const defaultContext = {
     github_connected: false,
     self: false
   },
-  easter_egg: '',
   notification: '',
   footer: ''
 };
@@ -5440,8 +5450,10 @@ module.exports = {
 // Exports
 module.exports = {
 	"modal": "modal_modal__kb4G9",
+	"scaleDraw": "modal_scaleDraw__2LXxS",
 	"dimmed": "modal_dimmed__FzE9w",
-	"dimmed-change": "modal_dimmed-change__AQurc"
+	"dimmed-change": "modal_dimmed-change__AQurc",
+	"wrapper": "modal_wrapper__1Tm1-"
 };
 
 
@@ -6120,6 +6132,7 @@ const ModalContent = props => {
     children
   } = props;
   return /*#__PURE__*/Object(jsx_runtime_["jsxs"])("div", {
+    className: modal_module_default.a.wrapper,
     children: [/*#__PURE__*/Object(jsx_runtime_["jsx"])("div", {
       className: Object(utils_component["a" /* concat */])(className, modal_module_default.a.modal),
       style: style,

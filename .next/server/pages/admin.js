@@ -1257,7 +1257,6 @@ const defaultContext = {
     github_connected: false,
     self: false
   },
-  easter_egg: '',
   notification: '',
   footer: ''
 };

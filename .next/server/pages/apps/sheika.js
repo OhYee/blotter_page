@@ -1162,7 +1162,6 @@ const defaultContext = {
     github_connected: false,
     self: false
   },
-  easter_egg: '',
   notification: '',
   footer: ''
 };
@@ -1256,8 +1255,10 @@ module.exports = {
 // Exports
 module.exports = {
 	"modal": "modal_modal__kb4G9",
+	"scaleDraw": "modal_scaleDraw__2LXxS",
 	"dimmed": "modal_dimmed__FzE9w",
-	"dimmed-change": "modal_dimmed-change__AQurc"
+	"dimmed-change": "modal_dimmed-change__AQurc",
+	"wrapper": "modal_wrapper__1Tm1-"
 };
 
 
@@ -1772,6 +1773,7 @@ const ModalContent = props => {
     children
   } = props;
   return /*#__PURE__*/Object(jsx_runtime_["jsxs"])("div", {
+    className: modal_module_default.a.wrapper,
     children: [/*#__PURE__*/Object(jsx_runtime_["jsx"])("div", {
       className: Object(utils_component["a" /* concat */])(className, modal_module_default.a.modal),
       style: style,
