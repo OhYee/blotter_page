@@ -119,7 +119,7 @@ class Index extends React.Component<IndexProps, IndexState> {
     return (e: KeyboardEvent) => {
       cache += e.key;
       if (cache.length >= this.state.easter_min_length && 
-                  cache.length <= this.state.easter_max_length) {
+                  cache.length <= this.state.easter_max_length + 1) {
         this.easterEggPost(cache)
       }
       cache = cache.slice(-this.state.easter_max_length);
