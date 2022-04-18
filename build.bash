@@ -6,6 +6,6 @@ if [[ $1 == 'test' ]]; then
     TAG="test"
 fi
 
-IMAGE="ohyee/blotter_page:${TAG}"
+IMAGE="ooordinary/blotter_page:${TAG}"
 echo $IMAGE
 docker build -t ${IMAGE} .

@@ -6,18 +6,19 @@ import Link from 'next/link';
 
 import { Flex } from '@/components/container';
 import PostList from '@/components/post_list';
-import { Left } from '@/components/svg';
+import { Left, Success } from '@/components/svg';
 import PostSearch from '@/components/post_search';
 import Card from '@/components/card';
 import Button from '@/components/button';
 import { EasterEgg } from '@/components/svg';
 
 import { Context } from '@/utils/global';
-import { indexPosts, tagsSearch } from '@/utils/api';
+import { indexPosts, postEgg, tagsSearch } from '@/utils/api';
 import { waitUntil } from '@/utils/debounce';
 
 import styles from './index.module.scss';
 import Notification from '@/components/notification';
+import internal from 'stream';
 
 interface IndexProps extends React.ComponentProps<'base'> {
   posts: Blotter.PostCard[];
@@ -38,6 +39,9 @@ interface IndexState {
   show: boolean;
   search_height: number;
   easter_egg: string;
+  easter_min_length: number;
+  easter_max_length: number;
+  easter_success:boolean;
 }
 
 class Index extends React.Component<IndexProps, IndexState> {
@@ -69,6 +73,9 @@ class Index extends React.Component<IndexProps, IndexState> {
       show: false,
       search_height: 100,
       easter_egg: '',
+      easter_min_length:1,
+      easter_max_length:100,
+      easter_success: false,
     };
   }
 
@@ -79,45 +86,45 @@ class Index extends React.Component<IndexProps, IndexState> {
   componentWillUnmount() {
     this.easterEggDestory();
   }
-
+  easterEggPost = (word:string) => {
+    postEgg(word).then(res => {
+      this.setState({easter_success:res.success,easter_egg: res.url, easter_min_length: res.minlength, easter_max_length: res.maxlength});
+      if (res.maxlength == 0) {
+        this.setState({easter_min_length:100})
+      }
+      console.log(this.state)
+      if (this.state.easter_success) {
+            Notification.message({
+                  alertType: 'info',
+                  title: '恭喜你，触发了一个彩蛋！',
+                  content: '赶快去看一下彩蛋是什么吧',
+                });
+            }
+    
+    
+  });
+  }
   easterEggInit = () => {
-    const { easter_egg } = this.context;
-    console.log(easter_egg);
-    if (!!easter_egg) {
-      const easterEggDo = this.easterEggWrapper();
-      document.addEventListener('keyup', easterEggDo);
-      (this as any).easterEggDo = easterEggDo;
+    const easterEggDo = this.easterEggWrapper();
+    document.addEventListener('keyup', easterEggDo);
+    (this as any).easterEggDo = easterEggDo;
+    this.easterEggPost('')
     }
-  };
   easterEggDestory = () => {
     const { easterEggDo } = this as any;
     if (!!easterEggDo) document.removeEventListener('keyup', easterEggDo);
   };
   easterEggWrapper = () => {
     var cache = '';
-    const { easter_egg } = this.context;
-    const kv = easter_egg.split(/\s/).filter((s) => s.length > 0);
-    var mxL = 0;
-    var eggs = {};
-    var i = 0;
-    while (i + 1 < kv.length) {
-      eggs[kv[i]] = kv[i + 1];
-      mxL = Math.max(mxL, kv[i].length);
-      i += 2;
-    }
     return (e: KeyboardEvent) => {
       cache += e.key;
-      cache = cache.slice(-mxL);
-      console.log(cache);
-      for (const k of Object.keys(eggs))
-        if (cache.slice(-k.length) == k) {
-          Notification.message({
-            alertType: 'info',
-            title: '恭喜你，触发了一个彩蛋！',
-            content: '赶快去看一下彩蛋是什么吧',
-          });
-          this.setState({ easter_egg: eggs[k] });
-        }
+      if (cache.length >= this.state.easter_min_length && 
+                  cache.length <= this.state.easter_max_length + 1) {
+        this.easterEggPost(cache)
+      }
+      cache = cache.slice(-this.state.easter_max_length);
+      console.log(cache,this.state.easter_max_length);
+       
     };
   };
 
@@ -240,7 +247,7 @@ class Index extends React.Component<IndexProps, IndexState> {
             </div>
           </Card>
 
-          {!!this.state.easter_egg && (
+          {!!this.state.easter_success && (
             <Notification
               icon={<EasterEgg />}
               title="你发现了一个彩蛋"
@@ -250,7 +257,7 @@ class Index extends React.Component<IndexProps, IndexState> {
                 </Link>
               }
               onClose={() => {
-                this.setState({ easter_egg: '' });
+                this.setState({ easter_egg: '' ,easter_success:false});
               }}
             />
           )}

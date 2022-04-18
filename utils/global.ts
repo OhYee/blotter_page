@@ -45,7 +45,6 @@ export const defaultContext: GlobalProps = {
     github_connected: false,
     self: false,
   },
-  easter_egg: '',
   notification: '',
   footer: '',
 };
@@ -77,7 +76,6 @@ export declare interface GlobalProps {
   ad_text: string;
   front_version: string;
   back_version: string;
-  easter_egg: string;
   notification: string;
   footer: string;
 }

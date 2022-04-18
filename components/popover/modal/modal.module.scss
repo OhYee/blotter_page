@@ -1,9 +1,13 @@
 .modal {
   position: fixed;
   z-index: 6;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  // left: 50%;
+  // top: 50%;
+  // transform: translate(-50%, -50%);
+  animation-name: scaleDraw; /*关键帧名称*/
+  animation-timing-function: ease-in-out; /*动画的速度曲线*/
+  animation-iteration-count: 1;  /*动画播放的次数*/
+  animation-duration: 0.5s; /*动画所花费的时间*/
 }
 
 .dimmed {
@@ -17,4 +21,33 @@
   animation-iteration-count: 1;
   animation-fill-mode: forwards;
   z-index: 5;
+}
+.wrapper{
+  position: absolute;
+  z-index: 6;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@keyframes scaleDraw {  /*定义关键帧、scaleDrew是需要绑定到选择器的关键帧名称*/
+  // 0%{
+  //   transform: scale(0.5) translate(-100%, -100%);  /*开始为原始大小*/
+  // } 
+  0%{
+    transform: scale(0);
+  }
+  50%{
+      transform: scale(1.2); /*放大1.1倍*/
+  }
+  100%{
+      transform: scale(1);
+  }
+  // 75%{
+  //     transform: scale(1.1) translate(-50%, -50%);
+  // }
 }

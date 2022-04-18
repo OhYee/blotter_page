@@ -75,6 +75,8 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
       title: '',
       url: '',
       abstract: '',
+      pop:false,
+      poptext:'',
       head_image: '',
       view: 0,
       publish_time: now,
@@ -200,6 +202,8 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
       keywords: this.state.keywords,
       status: this.state.status,
       abstract: this.state.abstract,
+      pop: this.state.pop,
+      poptext: this.state.poptext,
       view: this.state.view,
       head_image: this.state.head_image,
       tags: this.state.tags,
@@ -367,6 +371,18 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
           >
             导入图片
           </Button>
+          
+          <CheckBox
+            
+            switchStyle={true}
+            checkText="使用弹窗"
+            uncheckText="不使用弹窗"
+            value={!!this.state.pop}
+            onChange={(value) =>
+              this.setState({pop:value})
+            }
+          />
+            
         </Flex>
 
         <TagSearch onAdd={this.tagOnAdd} onDelete={this.tagOnDelete} tags={this.state.tags} />
@@ -380,6 +396,15 @@ class PostEdit extends React.Component<PostEditProps, PostEditState> {
           onChange={(abstract) => this.setState({ abstract })}
         />
 
+        <TextArea
+          label="弹窗文字"
+          rows={4}
+          spellCheck="false"
+          placeholder="弹窗文字"
+          value={this.state.poptext}
+          onChange={(poptext) => this.setState({ poptext })}
+        />
+        
         <Flex
           direction="TB"
           subAxis="flex-end"

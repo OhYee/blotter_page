@@ -47,6 +47,12 @@ declare namespace Blotter {
     title: string;
     content: string;
   }
+  interface EggResponse{
+    success: boolean;
+    minlength:number;
+    maxlength:number;
+    url:string;
+  }
   interface Menu {
     icon: string;
     name: string;
@@ -74,6 +80,8 @@ declare namespace Blotter {
     tags: Tag[];
     head_image: string;
     length: number;
+    pop:boolean;
+    poptext:string;
   }
   interface Post extends PostCard {
     content: string;

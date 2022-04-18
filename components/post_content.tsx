@@ -12,6 +12,7 @@ import Loading from '@/components/loading';
 import Carousel from '@/components/carousel';
 import { Flex } from '@/components/container';
 import { AD } from '@/components/js';
+import {Modal} from '@/components/popover';
 
 import { travels_get_url } from '@/utils/api';
 import { Context } from '@/utils/global';
@@ -33,7 +34,7 @@ class PostContent extends Component<PostContentProps, PostContentState> {
   context!: React.ContextType<typeof Context>;
   constructor(props) {
     super(props);
-    this.state = { travel: undefined };
+    this.state = {travel: undefined};
   }
   resetImage() {
     const containers = document.getElementsByClassName('image');
@@ -73,10 +74,23 @@ class PostContent extends Component<PostContentProps, PostContentState> {
     this.resetImage();
     this.resetTable();
     this.drawMermaid();
-    if (this.isTravel()) {
+      
+    if (!!this.isTravel()) {
       this.getTravelData();
     }
+    if (!!this.props.post.poptext){
+      var poptext = this.props.post.poptext.replace(/\n/g, '<br/>');
+      Modal.info({children:<div
+        style={{ wordBreak: 'break-all' ,display:'flex',
+              justifyContent:'center',alignItems:'center',
+              minWidth: '20em' , minHeight: '5em',
+              textAlign: 'center', lineHeight: '1.5em',}}
+        dangerouslySetInnerHTML={{ __html:  poptext }}
+      ></div>}
+      )
+    }
   }
+  
   componentDidUpdate() {
     this.resetImage();
     this.resetTable();
@@ -89,6 +103,7 @@ class PostContent extends Component<PostContentProps, PostContentState> {
         .length > 0
     );
   };
+
 
   getTravelData = () => {
     travels_get_url(this.props.post.url)
@@ -148,6 +163,10 @@ class PostContent extends Component<PostContentProps, PostContentState> {
         <Flex direction="TB" fullWidth>
           <PostCard post={this.props.post} inset inPost />
           {!!this.context.ad_text && <AD setting={this.context.ad_text} />}
+          {/* <Modal show={this.state.popfilter} onClose={() => this.setState({popfilter:false})} style={{ maxWidth: 500, width: '90%' }}>
+            
+            </Modal> */}
+          
           {this.props.prefix}
           {this.renderTravel()}
           {!!this.props.post.images && this.props.post.images.length > 0 ? (
