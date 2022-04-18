@@ -66,7 +66,7 @@ class AdminVariables extends React.Component<AdminVariablesProps, AdminVariables
         vmess: '',
         zhihu: '',
         server_chan: '',
-        // easter_egg: '',
+        easter_egg: '',
       },
     };
   }

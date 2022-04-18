@@ -49,7 +49,8 @@ declare namespace Blotter {
   }
   interface EggResponse{
     success: boolean;
-    length:number;
+    minlength:number;
+    maxlength:number;
     url:string;
   }
   interface Menu {
@@ -165,6 +166,7 @@ declare namespace Blotter {
     vmess: string;
     zhihu: string;
     server_chan: string;
+    easter_egg: string;
   }
 
   interface City {

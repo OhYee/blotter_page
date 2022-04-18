@@ -39,7 +39,8 @@ interface IndexState {
   show: boolean;
   search_height: number;
   easter_egg: string;
-  easter_length: number;
+  easter_min_length: number;
+  easter_max_length: number;
   easter_success:boolean;
 }
 
@@ -72,7 +73,8 @@ class Index extends React.Component<IndexProps, IndexState> {
       show: false,
       search_height: 100,
       easter_egg: '',
-      easter_length:1,
+      easter_min_length:1,
+      easter_max_length:100,
       easter_success: false,
     };
   }
@@ -86,7 +88,11 @@ class Index extends React.Component<IndexProps, IndexState> {
   }
   easterEggPost = (word:string) => {
     postEgg(word).then(res => {
-      this.setState({easter_success:res.success,easter_egg: res.url, easter_length: res.length});
+      this.setState({easter_success:res.success,easter_egg: res.url, easter_min_length: res.minlength, easter_max_length: res.maxlength});
+      if (res.maxlength == 0) {
+        this.setState({easter_min_length:100})
+      }
+      console.log(this.state)
       if (this.state.easter_success) {
             Notification.message({
                   alertType: 'info',
@@ -94,7 +100,6 @@ class Index extends React.Component<IndexProps, IndexState> {
                   content: '赶快去看一下彩蛋是什么吧',
                 });
             }
-      console.log(this.state)
     
     
   });
@@ -103,6 +108,7 @@ class Index extends React.Component<IndexProps, IndexState> {
     const easterEggDo = this.easterEggWrapper();
     document.addEventListener('keyup', easterEggDo);
     (this as any).easterEggDo = easterEggDo;
+    this.easterEggPost('')
     }
   easterEggDestory = () => {
     const { easterEggDo } = this as any;
@@ -110,16 +116,14 @@ class Index extends React.Component<IndexProps, IndexState> {
   };
   easterEggWrapper = () => {
     var cache = '';
-    var mxL = this.state.easter_length;
-    
     return (e: KeyboardEvent) => {
       cache += e.key;
-      if (cache.length >= mxL) {
+      if (cache.length >= this.state.easter_min_length && 
+                  cache.length <= this.state.easter_max_length) {
         this.easterEggPost(cache)
-        mxL = this.state.easter_length;
       }
-      cache = cache.slice(-mxL);
-      console.log(cache,mxL);
+      cache = cache.slice(-this.state.easter_max_length);
+      console.log(cache,this.state.easter_max_length);
        
     };
   };
