@@ -139,6 +139,7 @@ const Editor: React.FC<{ id: string; closeEditorCallback?: () => void }> = (prop
                     邮箱地址不会在前端渲染，可以避免被扫描工具记录，但仍可能通过头像地址逆推出邮箱
                   </p>
                   <p>评论内容请遵守相应法律法规，并且请不要发布广告</p>
+                  <p>您发言的 IP 地址将会被记录，但不会被公开，取而代之的是显示对应的地级市地址</p>
                 </Card>
               }
             >
@@ -254,6 +255,7 @@ const Comment: React.FC<{
                   {time.fromNow()}
                 </span>
               </Tooltip>
+              <span className={concat(textStyles.secondary, textStyles.em75)}>{comment.position}</span>
             </Flex>
             <div>
               {comment.ad ? (

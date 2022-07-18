@@ -63,6 +63,8 @@ function Comment(
               </span>
             </Tooltip>
             <span className={concat(textStyles.secondary, textStyles.em75)}>{comment.id}</span>
+            <span className={concat(textStyles.secondary, textStyles.em75)}>{comment.ip}</span>
+            <span className={concat(textStyles.secondary, textStyles.em75)}>{comment.position}</span>
           </Flex>
           {!!comment.reply_comment && comment.reply_comment.id !== '000000000000000000000000' ? (
             <div style={{ borderLeft: '#ccc 5px solid', paddingLeft: 10 }}>

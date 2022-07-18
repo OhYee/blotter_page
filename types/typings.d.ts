@@ -104,6 +104,8 @@ declare namespace Blotter {
     ad: boolean;
     show: boolean;
     recv: boolean;
+    ip?: string;
+    position: string;
   }
   interface FriendSimple {
     link: string;
