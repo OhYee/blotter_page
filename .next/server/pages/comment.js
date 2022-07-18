@@ -1052,6 +1052,8 @@ const Editor = props => {
                 children: "\u90AE\u7BB1\u5730\u5740\u4E0D\u4F1A\u5728\u524D\u7AEF\u6E32\u67D3\uFF0C\u53EF\u4EE5\u907F\u514D\u88AB\u626B\u63CF\u5DE5\u5177\u8BB0\u5F55\uFF0C\u4F46\u4ECD\u53EF\u80FD\u901A\u8FC7\u5934\u50CF\u5730\u5740\u9006\u63A8\u51FA\u90AE\u7BB1"
               }), /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("p", {
                 children: "\u8BC4\u8BBA\u5185\u5BB9\u8BF7\u9075\u5B88\u76F8\u5E94\u6CD5\u5F8B\u6CD5\u89C4\uFF0C\u5E76\u4E14\u8BF7\u4E0D\u8981\u53D1\u5E03\u5E7F\u544A"
+              }), /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("p", {
+                children: "\u60A8\u53D1\u8A00\u7684 IP \u5730\u5740\u5C06\u4F1A\u88AB\u8BB0\u5F55\uFF0C\u4F46\u4E0D\u4F1A\u88AB\u516C\u5F00\uFF0C\u53D6\u800C\u4EE3\u4E4B\u7684\u662F\u663E\u793A\u5BF9\u5E94\u7684\u5730\u7EA7\u5E02\u5730\u5740"
               })]
             }),
             children: /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])(_components_svg__WEBPACK_IMPORTED_MODULE_6__[/* Question */ "I"], {})
@@ -1182,6 +1184,9 @@ const Comment = props => {
                 className: Object(_utils_component__WEBPACK_IMPORTED_MODULE_11__[/* concat */ "a"])(_styles_text_module_scss__WEBPACK_IMPORTED_MODULE_16___default.a.secondary, _styles_text_module_scss__WEBPACK_IMPORTED_MODULE_16___default.a.em75),
                 children: time.fromNow()
               })
+            }), /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("span", {
+              className: Object(_utils_component__WEBPACK_IMPORTED_MODULE_11__[/* concat */ "a"])(_styles_text_module_scss__WEBPACK_IMPORTED_MODULE_16___default.a.secondary, _styles_text_module_scss__WEBPACK_IMPORTED_MODULE_16___default.a.em75),
+              children: comment.position
             })]
           }), /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("div", {
             children: comment.ad ? adWarning : comment.show ? /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsxs"])("div", {

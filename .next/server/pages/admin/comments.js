@@ -208,6 +208,12 @@ function Comment(props) {
           }), /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("span", {
             className: Object(_utils_component__WEBPACK_IMPORTED_MODULE_15__[/* concat */ "a"])(_styles_text_module_scss__WEBPACK_IMPORTED_MODULE_16___default.a.secondary, _styles_text_module_scss__WEBPACK_IMPORTED_MODULE_16___default.a.em75),
             children: comment.id
+          }), /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("span", {
+            className: Object(_utils_component__WEBPACK_IMPORTED_MODULE_15__[/* concat */ "a"])(_styles_text_module_scss__WEBPACK_IMPORTED_MODULE_16___default.a.secondary, _styles_text_module_scss__WEBPACK_IMPORTED_MODULE_16___default.a.em75),
+            children: comment.ip
+          }), /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("span", {
+            className: Object(_utils_component__WEBPACK_IMPORTED_MODULE_15__[/* concat */ "a"])(_styles_text_module_scss__WEBPACK_IMPORTED_MODULE_16___default.a.secondary, _styles_text_module_scss__WEBPACK_IMPORTED_MODULE_16___default.a.em75),
+            children: comment.position
           })]
         }), !!comment.reply_comment && comment.reply_comment.id !== '000000000000000000000000' ? /*#__PURE__*/Object(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__["jsx"])("div", {
           style: {
