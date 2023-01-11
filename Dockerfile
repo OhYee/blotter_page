@@ -17,7 +17,8 @@ WORKDIR /data/blotter_page
 RUN echo "4"
 
 # build code
-COPY ./ /data/blotter_page
+COPY . .
+# COPY ./ /data/blotter_page
 RUN echo "5"
 COPY --from=deps /data/blotter_page/node_modules ./node_modules
 RUN echo "6"
