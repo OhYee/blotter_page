@@ -14,12 +14,13 @@ RUN echo "3"
 FROM node:16.5.0 AS builder
 
 WORKDIR /data/blotter_page
-RUN echo "4"
+RUN ls 
 
 # build code
 COPY . .
 # COPY ./ /data/blotter_page
-RUN echo "5"
+RUN ls
+
 COPY --from=deps /data/blotter_page/node_modules ./node_modules
 RUN echo "6"
 RUN yarn build && yarn install --production --ignore-scripts --prefer-offline
