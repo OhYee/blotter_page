@@ -300,13 +300,13 @@ var external_axios_default = /*#__PURE__*/__webpack_require__.n(external_axios_)
 
 // CONCATENATED MODULE: ./utils/request.ts
 
+ // 超时时间 15 秒
 
-// 超时时间 15 秒
 external_axios_default.a.defaults.timeout = 15 * 1000;
-const backendURI = !!process.env['backendURI'] ? process.env['backendURI'] : 'http://127.0.0.1:50000';
+const backendURI = !!process.env['backendURI'] || 'http://127.0.0.1:50000';
 
 function parseURL(url) {
-  return url.length > 0 && url[0] !== '/' || typeof document !== 'undefined' ? url : backendURI + url;
+  return backendURI + url;
 } // export const requestAsync = async (method: 'post' | 'get', url: string, data: any) => {
 //   var r = await axios({
 //     method: method,
