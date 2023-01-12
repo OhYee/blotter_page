@@ -1,18 +1,13 @@
 import { message } from '@/components/notification';
 import axios from 'axios';
-import { env } from 'process';
 
 // 超时时间 15 秒
 axios.defaults.timeout = 15 * 1000;
 
-export const backendURI = !!process.env['backendURI']
-  ? process.env['backendURI']
-  : 'http://127.0.0.1:50000';
+export const backendURI = !!process.env['backendURI'] ||  'http://127.0.0.1:50000'
 
 function parseURL(url: string): string {
-  return (url.length > 0 && url[0] !== '/') || typeof document !== 'undefined'
-    ? url
-    : backendURI + url;
+  return backendURI + url;
 }
 
 // export const requestAsync = async (method: 'post' | 'get', url: string, data: any) => {
